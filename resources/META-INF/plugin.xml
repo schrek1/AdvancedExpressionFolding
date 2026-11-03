@@ -11,6 +11,14 @@
     <extensions defaultExtensionNs="com.intellij">
         <lang.foldingBuilder language="JAVA"
                              implementationClass="com.intellij.advancedExpressionFolding.AdvancedExpressionFoldingBuilder"/>
+        <codeInsight.declarativeInlayProvider language="JAVA"
+                                              implementationClass="com.intellij.advancedExpressionFolding.extension.clazz.SummaryParentOverrideInlayProvider"
+                                              isEnabledByDefault="true"
+                                              group="OTHER_GROUP"
+                                              providerId="advancedExpressionFolding.summaryParentOverride"
+                                              bundle="messages.AdvancedExpressionFoldingBundle"
+                                              nameKey="inlay.summary.parent.override.name"
+                                              descriptionKey="inlay.summary.parent.override.description"/>
         <applicationService
                 serviceImplementation="com.intellij.advancedExpressionFolding.AdvancedExpressionFoldingSettings"/>
         <editorFactoryListener implementation="com.intellij.advancedExpressionFolding.FoldingEditorCreatedListener"/>

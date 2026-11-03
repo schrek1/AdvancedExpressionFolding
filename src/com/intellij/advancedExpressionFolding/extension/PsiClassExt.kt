@@ -3,7 +3,7 @@ package com.intellij.advancedExpressionFolding.extension
 import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.extension.clazz.AnnotationExt
 import com.intellij.advancedExpressionFolding.extension.clazz.MethodDefaultParameterExt
-import com.intellij.advancedExpressionFolding.extension.clazz.SummaryParentOverrideExt.addParentSummary
+import com.intellij.advancedExpressionFolding.extension.clazz.SummaryParentOverrideExt.rememberParentOfOverriddenMethods
 import com.intellij.psi.*
 
 object PsiClassExt : BaseExtension() {
@@ -14,10 +14,10 @@ object PsiClassExt : BaseExtension() {
 
     @JvmStatic
     fun createExpression(clazz: PsiClass): Expression? {
-        val list = exprList()
-        list.addIfEnabled(summaryParentOverride) {
-            clazz.addParentSummary()
+        if (summaryParentOverride) {
+            clazz.rememberParentOfOverriddenMethods()
         }
+        val list = exprList()
         list.addIfEnabled(methodDefaultParameters) {
             MethodDefaultParameterExt.enhanceMethodsWithDefaultParams(clazz)
         }
