@@ -218,6 +218,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#expressionfunc")
         }
 
+        registerCheckbox(state::expressionFuncEquals, "Single-Expression Function with = instead of braces (needs Code Folding › One-line methods off)") {
+            example(ExpressionFuncEqualsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#expressionfuncequals")
+        }
+
         registerCheckbox(state::dynamic, "Dynamic names for methods based on \$user.home/dynamic-ajf2.toml") {
             example(DynamicTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#dynamic")
