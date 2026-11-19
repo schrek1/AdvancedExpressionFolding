@@ -1,0 +1,118 @@
+# Stable release of the fork: every push to schreko_stable (a merged PR) is tested, built under the fork's own plugin id
+# and released as <upstream pluginVersion>-schreko.N: the zip on a GitHub Release, the plugin repository on GitHub Pages.
+# IDEs subscribe once to https://schrek1.github.io/AdvancedExpressionFolding/updatePlugins.xml.
+# The fork's own id keeps the Marketplace from offering upstream's release as an update over the fork.
+name: Stable release
+
+on:
+  push:
+    branches: [ schreko_stable ]
+  workflow_dispatch:
+
+concurrency:
+  group: stable-release
+  cancel-in-progress: false
+
+env:
+  UPSTREAM_ID: com.github.advanced-java-folding2
+  PLUGIN_ID: com.github.advanced-java-folding2.schreko
+  PLUGIN_NAME: Advanced Java Folding 2 (schreko)
+
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.base_url }}/updatePlugins.xml
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # The version and the release notes come from the previous stable tag.
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: zulu
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v5
+
+      - name: Test
+        run: ./gradlew test
+
+      - name: Version and release notes
+        id: version
+        run: |
+          upstream=$(sed -n 's/^pluginVersion *= *//p' gradle.properties)
+          previous=$(git tag -l '*-schreko.*' | awk -F'-schreko.' '{print $2, $0}' | sort -n | tail -1 | cut -d' ' -f2)
+          n=$(( ${previous##*-schreko.} + 1 ))
+          version="$upstream-schreko.$n"
+          [ -z "$(git tag -l "$version")" ] || { echo "$version is already tagged"; exit 1; }
+          if [ -n "$previous" ]; then
+            git log --first-parent --format='- %s' "$previous..HEAD" > notes.md
+          else
+            echo "- First stable release of the fork, on upstream $upstream" > notes.md
+          fi
+          cat notes.md
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Fork plugin id
+        run: |
+          # Every literal of the id is rewritten: plugin.xml qualifies the extension points by it, the code looks them up.
+          grep -q "<id>$UPSTREAM_ID</id>" resources/META-INF/plugin.xml
+          grep -q '<name>Advanced Java Folding 2 (Fork)</name>' resources/META-INF/plugin.xml
+          grep -rlZ --fixed-strings "$UPSTREAM_ID" src resources | xargs -0 sed -i "s/$UPSTREAM_ID/$PLUGIN_ID/g"
+          sed -i "s|<name>Advanced Java Folding 2 (Fork)</name>|<name>$PLUGIN_NAME</name>|" resources/META-INF/plugin.xml
+          git diff --stat
+
+      - name: Build
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          ./gradlew buildPlugin -PpluginVersion="$VERSION"
+          ls build/distributions/*-"$VERSION".zip
+
+      - name: GitHub Release and its tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: >-
+          gh release create "$VERSION" build/distributions/*-"$VERSION".zip --target "$GITHUB_SHA"
+          --title "$VERSION" --notes-file notes.md
+
+      - name: Plugin repository
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          zip=$(basename build/distributions/*-"$VERSION".zip)
+          since=$(sed -n 's/^pluginSinceBuild *= *//p' gradle.properties)
+          until=$(sed -n 's/^pluginUntilBuild *= *//p' gradle.properties)
+          notes=$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/^- \(.*\)$/<li>\1<\/li>/' notes.md)
+          mkdir site
+          cat > site/updatePlugins.xml <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <plugins>
+            <plugin id="$PLUGIN_ID" url="https://github.com/$GITHUB_REPOSITORY/releases/download/$VERSION/$zip" version="$VERSION">
+              <idea-version since-build="$since" until-build="$until"/>
+              <name>$PLUGIN_NAME</name>
+              <vendor url="https://github.com/$GITHUB_REPOSITORY">schrek1</vendor>
+              <description><![CDATA[Fork of Advanced Expression Folding 2: upstream plus the fork's features.
+                Branch <a href="https://github.com/$GITHUB_REPOSITORY/tree/schreko_stable">schreko_stable</a>.]]></description>
+              <change-notes><![CDATA[<ul>$notes</ul>]]></change-notes>
+            </plugin>
+          </plugins>
+          EOF
+          cat site/updatePlugins.xml
+
+      - uses: actions/configure-pages@v6
+        id: pages
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+      - uses: actions/deploy-pages@v5
