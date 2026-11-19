@@ -233,6 +233,13 @@ Simplifies single-expression functions.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ExpressionFuncTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ExpressionFuncTestData-folded.java)
 
+## expressionFuncEquals
+### Single-Expression Function with = instead of braces
+Shows a single-expression function Kotlin-style, `String value() = name()`, instead of `String value() { name() }`.
+Works together with `expressionFunc` and needs IntelliJ's own *Settings › Editor › General › Code Folding › One-line methods* turned off: that fold wraps the braces and would hide the `=`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ExpressionFuncEqualsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ExpressionFuncEqualsTestData-folded.java)
+
 ## dynamic
 ### Dynamic names for methods based on $user.home/dynamic-ajf2.toml
 Applies dynamic naming to methods based on a configuration file.

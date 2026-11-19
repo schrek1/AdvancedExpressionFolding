@@ -1,5 +1,6 @@
 package com.intellij.advancedExpressionFolding.folding.base.folding
 
+import com.intellij.codeInsight.folding.JavaCodeFoldingSettings
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -70,6 +71,22 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
 
     @Test
     fun expressionFuncTestData() = testCase.runFoldingTest(foldingState()::expressionFunc)
+
+    // IntelliJ's own "One-line methods" fold wraps the braces and would hide the `=`, so the option requires it off
+    @Test
+    fun expressionFuncEqualsTestData() {
+        val javaFolding = JavaCodeFoldingSettings.getInstance()
+        val oneLineMethodsBefore = javaFolding.isCollapseOneLineMethods
+        javaFolding.isCollapseOneLineMethods = false
+        try {
+            testCase.runFoldingTest(
+                foldingState()::expressionFunc,
+                foldingState()::expressionFuncEquals,
+            )
+        } finally {
+            javaFolding.isCollapseOneLineMethods = oneLineMethodsBefore
+        }
+    }
 
     @Test
     fun patternMatchingInstanceofTestData() = testCase.runFoldingTest(foldingState()::patternMatchingInstanceof)

@@ -33,14 +33,15 @@ object SingleExpressionFunctionExt : BaseExtension() {
         val body = method.body!!
         val whitespaces = body.children.filter {
             it.isWhitespace()
-        }.map {
-            it.expr(" ")
         }
         val endingSemicolon = statement.children.lastOrNull().asInstance<PsiJavaToken>()//;
         val exprList = arrayOf<PsiElement?>(endingSemicolon).mapNotNull {
             it.exprHide()
         }.toMutableList<Expression?>()
-        exprList.addAll(whitespaces)
+        whitespaces.forEach {
+            exprList.add(it.expr(if (expressionFuncEquals && it == whitespaces.last()) "" else " "))
+        }
+        exprList.addEqualsInsteadOfBraces(body)
 
         exprList.add(getAnyExpression(body))
         exprList.add(singleExpression)
@@ -62,13 +63,8 @@ object SingleExpressionFunctionExt : BaseExtension() {
         val exprList = sequenceOf(keyword, keywordNextWhitespace).mapNotNull {
             it.exprHide()
         }.toMutableList<Expression?>()
-        exprList.add(preBracketSpace.expr(" "))
-
-        // there are conflicts with default intellij single line method folding
-        //val braceLeft = returnPrevSpace?.prevSibling
-        //val braceRight = preBracketSpace.nextSibling
-        //exprList.add(braceLeft?.expr("= "))
-
+        exprList.add(preBracketSpace.expr(if (expressionFuncEquals) "" else " "))
+        method.body?.let { exprList.addEqualsInsteadOfBraces(it) }
         exprList.add(returnPrevSpace?.expr(" "))
         exprList.add(endingSemicolon?.exprHide())
         exprList.add(singleExpression)
@@ -77,6 +73,13 @@ object SingleExpressionFunctionExt : BaseExtension() {
             method.foldForLiteral(exprList)
         }
         return exprList.exprWrap(method, group())
+    }
+
+    private fun MutableList<Expression?>.addEqualsInsteadOfBraces(body: PsiCodeBlock) {
+        if (expressionFuncEquals) {
+            add(body.lBrace?.expr("="))
+            add(body.rBrace?.exprHide())
+        }
     }
 
     private fun PsiMethod.foldForLiteral(

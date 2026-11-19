@@ -10,8 +10,11 @@ import kotlin.reflect.KMutableProperty0
 class FullFoldingTest : FoldingTest() {
 
     @Suppress("DEPRECATION")
-    override fun assignState(turnOnProperties: Array<out KMutableProperty0<Boolean>>) = AdvancedExpressionFoldingSettings.Companion.getInstance()
-        .enableAll(state::emojify, state::finalEmoji, state::arithmeticExpressions)
+    override fun assignState(turnOnProperties: Array<out KMutableProperty0<Boolean>>) = with(AdvancedExpressionFoldingSettings.Companion.getInstance()) {
+        // the settings are shared across tests: an excluded option would keep what the previous test left on
+        disableAll()
+        enableAll(state::emojify, state::finalEmoji, state::arithmeticExpressions, state::expressionFuncEquals)
+    }
 
     override fun getTestFileName(testName: String): String {
         val baseFile = super.getTestFileName(testName)

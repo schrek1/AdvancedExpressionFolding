@@ -8,6 +8,7 @@ interface IKotlinLanguageState {
     var println: Boolean
     var destructuring: Boolean
     var expressionFunc: Boolean
+    var expressionFuncEquals: Boolean
     var methodDefaultParameters: Boolean
     var patternMatchingInstanceof: Boolean
     var constructorReferenceNotation: Boolean
@@ -22,6 +23,7 @@ data class KotlinLanguageState(
     override var println: Boolean = true,
     override var destructuring: Boolean = false,
     override var expressionFunc: Boolean = true,
+    override var expressionFuncEquals: Boolean = false,
     override var methodDefaultParameters: Boolean = true,
     override var patternMatchingInstanceof: Boolean = true,
     override var constructorReferenceNotation: Boolean = true,
