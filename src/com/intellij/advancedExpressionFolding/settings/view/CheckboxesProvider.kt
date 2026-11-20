@@ -206,6 +206,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdirtyoff")
         }
 
+        registerCheckbox(state::lombokUtilityClass, "Display a class of static members as Lombok @UtilityClass") {
+            example(LombokUtilityClassTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokutilityclass")
+        }
+
         row {
             cell(JBLabel("Regex to disable Lombok folding (matched classes won’t be folded)"))
         }
