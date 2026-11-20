@@ -15,6 +15,7 @@ interface IKotlinLanguageState {
     var constructorReferenceNotation: Boolean
     var arithmeticExpressions: Boolean
     var kotlinPreconditions: Boolean
+    var repeatLoop: Boolean
 }
 
 data class KotlinLanguageState(
@@ -32,4 +33,5 @@ data class KotlinLanguageState(
     override var constructorReferenceNotation: Boolean = true,
     override var arithmeticExpressions: Boolean = false,
     override var kotlinPreconditions: Boolean = false,
+    override var repeatLoop: Boolean = true,
 ) : IKotlinLanguageState
