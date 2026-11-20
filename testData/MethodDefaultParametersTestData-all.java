@@ -108,7 +108,7 @@ public class MethodDefaultParametersTestData {
 
     class VarargDefaults <fold text='{...}' expand='true'>{
         public String varargMethod(String prefix, String... items<fold text=' = "default")' expand='true'>)</fold><fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>prefix + String.join(",", items)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>prefix + <fold text='' expand='false'>String.join(",", </fold>items<fold text='.joinToString(",")' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
         <fold text='' expand='true'>public String varargMethod(String prefix)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
             </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>varargMethod(prefix, "default")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>

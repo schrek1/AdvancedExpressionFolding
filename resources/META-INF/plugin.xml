@@ -161,6 +161,7 @@
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.EqualsMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.PrintlnMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.SubstringOrSubListMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.StringJoinMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.ToStringMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.ValueOfMethodCall"/>
 
