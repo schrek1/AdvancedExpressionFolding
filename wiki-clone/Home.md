@@ -246,6 +246,13 @@ Prevents all Lombok folding for classes matching the pattern
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokPatternOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokPatternOffTestData-folded.java)
 
+## lombokDelegate
+### Forwarding methods as Lombok @Delegate
+Hides public methods that only pass their parameters on to the same-named method of a field, and marks that field with @Delegate.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokDelegateTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokDelegateTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokDelegate)
+
 ## expressionFunc
 ### Single-Expression Function
 Simplifies single-expression functions.
