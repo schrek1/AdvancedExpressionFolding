@@ -188,6 +188,12 @@ Simplifies single-statement code blocks in control flow statements for read-only
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ControlFlowSingleStatementTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ControlFlowSingleStatementTestData-folded.java)
 
+## guardIfOneLiner
+### Guard if with a simple return on one line
+Shows a guard `if` whose braces hold only `return` of a simple value (a literal, a variable, an empty collection or `Optional.empty()`) on one line, in editable files too. An `if` with `else`, more statements, a comment or a computed value stays as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/GuardIfOneLinerTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/GuardIfOneLinerTestData-folded.java)
+
 ## controlFlowMultiStatementCodeBlockCollapse
 ### Control flow multi-statement code block braces (read-only files, deprecated)
 Simplifies multi-statement code blocks in control flow statements for read-only files (deprecated).

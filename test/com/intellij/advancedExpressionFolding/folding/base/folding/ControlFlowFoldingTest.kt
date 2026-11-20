@@ -15,6 +15,9 @@ interface ControlFlowFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun guardIfOneLinerTestData() = testCase.runFoldingTest(foldingState()::guardIfOneLiner)
+
+    @Test
     fun compactControlFlowTestData() = testCase.runFoldingTest(foldingState()::compactControlFlowSyntaxCollapse)
 
     @Test

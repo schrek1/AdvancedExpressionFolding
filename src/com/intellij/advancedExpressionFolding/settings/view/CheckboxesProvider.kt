@@ -177,6 +177,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#controlflowsinglestatementcodeblockcollapse")
         }
 
+        registerCheckbox(state::guardIfOneLiner, "Guard if with a simple return on one line") {
+            example(GuardIfOneLinerTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#guardifoneliner")
+        }
+
         registerCheckbox(
             state::controlFlowMultiStatementCodeBlockCollapse,
             "Control flow multi-statement code block braces (read-only files, deprecated)"
