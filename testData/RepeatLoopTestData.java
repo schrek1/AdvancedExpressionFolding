@@ -5,24 +5,24 @@ import java.util.List;
 public class RepeatLoopTestData {
 
     void unusedIndex(int retries) <fold text='{...}' expand='true'>{
-        <fold text='repeat(' expand='false'>for (int i = 0; i < </fold>retries<fold text=')' expand='false'>; i++)</fold> <fold text='{...}' expand='true'>{
+        <fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'>int i = 0; i < </fold>retries<fold text='' expand='false'>; i++</fold>) <fold text='{...}' expand='true'>{
             ping();
         }</fold>
     }</fold>
 
     void prefixIncrement(int retries) <fold text='{...}' expand='true'>{
-        <fold text='repeat(' expand='false'>for (int attempt = 0; attempt < </fold>retries<fold text=')' expand='false'>; ++attempt)</fold> <fold text='{...}' expand='true'>{
+        <fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'>int attempt = 0; attempt < </fold>retries<fold text='' expand='false'>; ++attempt</fold>) <fold text='{...}' expand='true'>{
             ping();
         }</fold>
     }</fold>
 
     void longIndexAndSingleStatement(long count) <fold text='{...}' expand='true'>{
-        <fold text='repeat(' expand='false'>for (long i = 0L; i < </fold>count<fold text=')' expand='false'>; i++)</fold>
+        <fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'>long i = 0L; i < </fold>count<fold text='' expand='false'>; i++</fold>)
             ping();
     }</fold>
 
     void boundFromCall(List<String> names) <fold text='{...}' expand='true'>{
-        <fold text='repeat(' expand='false'>for (int i = 0; i < </fold>names.size()<fold text=')' expand='false'>; i++)</fold> <fold text='{...}' expand='true'>{
+        <fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'>int i = 0; i < </fold>names.size()<fold text='' expand='false'>; i++</fold>) <fold text='{...}' expand='true'>{
             ping();
         }</fold>
     }</fold>

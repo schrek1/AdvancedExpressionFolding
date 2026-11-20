@@ -5,24 +5,24 @@ import java.util.List;
 public class RepeatLoopTestData {
 
     void unusedIndex(int retries) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='repeat(' expand='false'>for (<fold text='val' expand='false'>int</fold> i = 0; i < </fold>retries<fold text=')' expand='false'>; i++)</fold> <fold text='{...}' expand='true'>{
+        </fold><fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'><fold text='val' expand='false'>int</fold> i = 0; i < </fold>retries<fold text='' expand='false'>; i++</fold>) <fold text='{...}' expand='true'>{
             ping();
         }</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     void prefixIncrement(int retries) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='repeat(' expand='false'>for (<fold text='val' expand='false'>int</fold> attempt = 0; attempt < </fold>retries<fold text=')' expand='false'>; ++attempt)</fold> <fold text='{...}' expand='true'>{
+        </fold><fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'><fold text='val' expand='false'>int</fold> attempt = 0; attempt < </fold>retries<fold text='' expand='false'>; ++attempt</fold>) <fold text='{...}' expand='true'>{
             ping();
         }</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     void longIndexAndSingleStatement(long count) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='repeat(' expand='false'>for (<fold text='val' expand='false'>long</fold> i = 0L; i < </fold>count<fold text=')' expand='false'>; i++)</fold>
+        </fold><fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'><fold text='val' expand='false'>long</fold> i = 0L; i < </fold>count<fold text='' expand='false'>; i++</fold>)
             ping();<fold text=' ' expand='true'>
     </fold>}</fold>
 
     void boundFromCall(List<String> names) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='repeat(' expand='false'>for (<fold text='val' expand='false'>int</fold> i = 0; i < </fold>names.size()<fold text=')' expand='false'>; i++)</fold> <fold text='{...}' expand='true'>{
+        </fold><fold text='repeat' expand='false'>for </fold>(<fold text='' expand='false'><fold text='val' expand='false'>int</fold> i = 0; i < </fold>names.size()<fold text='' expand='false'>; i++</fold>) <fold text='{...}' expand='true'>{
             ping();
         }</fold><fold text=' ' expand='true'>
     </fold>}</fold>

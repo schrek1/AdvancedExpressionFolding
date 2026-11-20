@@ -22,6 +22,7 @@ object RepeatLoopExt : BaseExtension() {
     /// Folds `for (int i = 0; i < n; i++)` into `repeat(n)` when the body never references `i`.
     fun getRepeatExpression(element: PsiForStatement): Expression? {
         if (!repeatLoop) return null
+        val lParenth = element.lParenth ?: return null
         val rParenth = element.rParenth ?: return null
         val index = ((element.initialization as? PsiDeclarationStatement)
             ?.declaredElements?.singleOrNull() as? PsiLocalVariable) ?: return null
@@ -37,7 +38,7 @@ object RepeatLoopExt : BaseExtension() {
         val indexUsed = SyntaxTraverser.psiTraverser(body)
             .any { it is PsiReferenceExpression && it.isReferenceTo(index) }
         if (indexUsed) return null
-        return RepeatStatement(element, count, rParenth)
+        return RepeatStatement(element, lParenth, count, rParenth)
     }
 
     private fun PsiExpression?.isIncrementOf(index: PsiLocalVariable): Boolean = when (this) {

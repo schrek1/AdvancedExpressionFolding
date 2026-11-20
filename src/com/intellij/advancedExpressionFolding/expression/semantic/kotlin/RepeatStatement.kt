@@ -10,11 +10,13 @@ import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiForStatement
 import com.intellij.psi.PsiJavaToken
 
-/// Loop header `for (int i = 0; i < count; i++)` shown as `repeat(count)`; `count` keeps its own foldings.
+/// Loop header `for (int i = 0; i < count; i++)` shown as `repeat(count)`; the parentheses stay real and `count`
+/// keeps its own foldings.
 class RepeatStatement(
     loop: PsiForStatement,
+    private val lParenth: PsiJavaToken,
     private val count: PsiExpression,
-    rParenth: PsiJavaToken,
+    private val rParenth: PsiJavaToken,
 ) : Expression(loop, TextRange.create(loop.textRange.startOffset, rParenth.textRange.endOffset)) {
 
     override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean = true
@@ -28,15 +30,21 @@ class RepeatStatement(
         return arrayOf(
             FoldingDescriptor(
                 element.node,
-                TextRange.create(textRange.startOffset, count.textRange.startOffset),
+                TextRange.create(textRange.startOffset, lParenth.textRange.startOffset),
                 group,
-                "repeat("
+                "repeat"
             ),
             FoldingDescriptor(
                 element.node,
-                TextRange.create(count.textRange.endOffset, textRange.endOffset),
+                TextRange.create(lParenth.textRange.endOffset, count.textRange.startOffset),
                 group,
-                ")"
+                ""
+            ),
+            FoldingDescriptor(
+                element.node,
+                TextRange.create(count.textRange.endOffset, rParenth.textRange.startOffset),
+                group,
+                ""
             ),
         )
     }
