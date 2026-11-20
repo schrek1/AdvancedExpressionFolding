@@ -455,9 +455,9 @@ public class EmojifyTestData {
             </fold>}</fold>
 
             public void methodWithNullCheck(String input) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-                </fold>if <fold text='' expand='false'>(</fold>input == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-                    return;
-                }</fold><fold text=' ' expand='true'>
+                </fold>if <fold text='' expand='false'>(</fold>input == null<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+                    </fold>return;<fold text='' expand='false'>
+                }</fold></fold><fold text=' ' expand='true'>
             </fold>}</fold>
 
             public String methodWithNullTernary(String input)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -528,9 +528,9 @@ public class EmojifyTestData {
             public void methodWithNullSynchronize() <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>String</fold> value = null;
                 synchronized (this) <fold text='{...}' expand='true'>{
-                    if <fold text='' expand='false'>(</fold>value == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-                        return;
-                    }</fold>
+                    if <fold text='' expand='false'>(</fold>value == null<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+                        </fold>return;<fold text='' expand='false'>
+                    }</fold></fold>
                 }</fold>
             }</fold>
 
