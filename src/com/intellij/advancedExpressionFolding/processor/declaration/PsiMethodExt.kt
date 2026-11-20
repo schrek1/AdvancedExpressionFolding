@@ -10,6 +10,7 @@ import com.intellij.advancedExpressionFolding.processor.language.kotlin.Nullable
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.SingleExpressionFunctionExt
 import com.intellij.advancedExpressionFolding.processor.lombok.InterfacePropertiesExt
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokPostConstructorExt
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokSneakyThrowsExt
 import com.intellij.advancedExpressionFolding.processor.lombok.SummaryParentOverrideExt
 import com.intellij.advancedExpressionFolding.processor.methodcall.dynamic.DynamicExt
 import com.intellij.openapi.editor.Document
@@ -38,6 +39,10 @@ object PsiMethodExt : BaseExtension() {
 
         list.addIfEnabled(lombok) {
             LombokPostConstructorExt.methodAnnotation(method)
+        }
+
+        list.addIfEnabled(lombokSneakyThrows) {
+            LombokSneakyThrowsExt.methodAnnotation(method)
         }
 
         list.forwardIfEnabled(overrideHide) {

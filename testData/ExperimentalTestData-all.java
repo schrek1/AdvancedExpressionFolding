@@ -13,19 +13,19 @@ public class ExperimentalTestData {
 
     public class SneakyThrowsExample implements Runnabl<fold text='e(1-run)' expand='true'>e</fold> <fold text='{...}' expand='true'>{
 
-        public String utf8ToStringMultiline(byte[] bytes) <fold text='{...}' expand='true'>{
-            <fold text='@SneakyThrows' expand='true'>try</fold> <fold text='{...}' expand='true'>{
-                <fold text='val' expand='false'>byte[]</fold> bytez = System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>;
-                return new String(bytez, "UTF-8");
-            }</fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>UnsupportedEncodingException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        <fold text='@SneakyThrows p' expand='true'>p</fold>ublic String utf8ToStringMultiline(byte[] bytes) <fold text='{...}' expand='true'>{
+            <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+                </fold><fold text='val' expand='false'>byte[]</fold> bytez = System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>;
+            <fold text='' expand='true'>    </fold>return new String(bytez, "UTF-8");<fold text='' expand='true'>
+            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>UnsupportedEncodingException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 throw new RuntimeException(e);
             }</fold></fold>
         }</fold>
 
-        public int parseInteger(String value) <fold text='{...}' expand='true'>{
-            <fold text='@SneakyThrows(IllegalArgumentException)' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
-            <fold text='' expand='true'>    </fold>return Integer.parseInt(value);<fold text='' expand='true'>
-            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>NumberFormatException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        <fold text='@SneakyThrows(IllegalArgumentException) p' expand='true'>p</fold>ublic int parseInteger(String value) <fold text='{...}' expand='true'>{
+            <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+                </fold>return Integer.parseInt(value);<fold text='' expand='true'>
+            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>NumberFormatException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 throw new IllegalArgumentException(e);
             }</fold></fold>
         }</fold>
@@ -42,26 +42,26 @@ public class ExperimentalTestData {
             return longValue;
         }</fold>
 
-        public void runMultiline() <fold text='{...}' expand='true'>{
-            <fold text='@SneakyThrows' expand='true'>try</fold> <fold text='{...}' expand='true'>{
-                <fold text='val' expand='false'>var</fold> throwable = new Throwable();
-                throw throwable;
-            }</fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>Throwable t<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        <fold text='@SneakyThrows p' expand='true'>p</fold>ublic void runMultiline() <fold text='{...}' expand='true'>{
+            <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+                </fold><fold text='val' expand='false'>var</fold> throwable = new Throwable();
+            <fold text='' expand='true'>    </fold>throw throwable;<fold text='' expand='true'>
+            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>Throwable t<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 throw new IllegalStateException(t);
             }</fold></fold>
         }</fold>
 
-        public String utf8ToString(byte[] bytes) <fold text='{...}' expand='true'>{
-            <fold text='@SneakyThrows' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
-            <fold text='' expand='true'>    </fold>return new String(System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>, "UTF-8");<fold text='' expand='true'>
-            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>UnsupportedEncodingException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        <fold text='@SneakyThrows p' expand='true'>p</fold>ublic String utf8ToString(byte[] bytes) <fold text='{...}' expand='true'>{
+            <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+                </fold>return new String(System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>, "UTF-8");<fold text='' expand='true'>
+            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>UnsupportedEncodingException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 throw new RuntimeException(e);
             }</fold></fold>
         }</fold>
-        public void run() <fold text='{...}' expand='true'>{
-            <fold text='@SneakyThrows' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
-            throw new Throwable();<fold text='' expand='true'>
-            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>Throwable t<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        <fold text='@SneakyThrows p' expand='true'>p</fold>ublic void run() <fold text='{...}' expand='true'>{
+            <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+            </fold>throw new Throwable();<fold text='' expand='true'>
+            </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>Throwable t<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 throw new IllegalStateException(t);
             }</fold></fold>
         }</fold>

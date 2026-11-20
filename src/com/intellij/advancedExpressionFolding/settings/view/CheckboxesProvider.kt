@@ -213,6 +213,11 @@ abstract class CheckboxesProvider {
             cell(createEditor(state::lombokPatternOff).component)
         }
 
+        registerCheckbox(state::lombokSneakyThrows, "Whole-method try/catch that only rethrows as @SneakyThrows") {
+            example(LombokSneakyThrowsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokSneakyThrows")
+        }
+
         registerCheckbox(state::expressionFunc, "Single-Expression Function") {
             example(ExpressionFuncTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#expressionfunc")
