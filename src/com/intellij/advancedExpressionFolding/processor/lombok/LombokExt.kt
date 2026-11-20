@@ -10,6 +10,7 @@ import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.fi
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.fieldOptimizationsPerField
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.foldData
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.foldProperties
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokDelegateExt.foldDelegate
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFoldingAnnotation.*
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.interfaceSupport
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.isFinder
@@ -43,6 +44,9 @@ object LombokExt : ILombokState by State()() {
             }
             classLevelAnnotations += foldProperties(methodTypeToMethodsMap, fieldsMap, fieldLevelAnnotations)
             classLevelAnnotations += foldData(methodTypeToMethodsMap, fieldsMap, fieldLevelAnnotations)
+            if (lombokDelegate) {
+                foldDelegate(methodTypeToMethodsMap, fieldsMap, fieldLevelAnnotations)
+            }
         }
         classOptimizations(classLevelAnnotations)
         fieldOptimizations(fieldLevelAnnotations)
