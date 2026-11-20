@@ -246,6 +246,13 @@ Prevents all Lombok folding for classes matching the pattern
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokPatternOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokPatternOffTestData-folded.java)
 
+## lombokStandardException
+### Lombok: exception with standard constructors as @StandardException
+Folds an exception whose four standard constructors only pass their arguments to `super(...)` into `@StandardException`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokStandardExceptionTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokStandardExceptionTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokStandardException)
+
 ## expressionFunc
 ### Single-Expression Function
 Simplifies single-expression functions.

@@ -13,6 +13,7 @@ import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.fo
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFoldingAnnotation.*
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.interfaceSupport
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.isFinder
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokStandardExceptionExt.foldStandardException
 import com.intellij.advancedExpressionFolding.processor.lombok.MethodType.*
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.ILombokState
@@ -33,10 +34,15 @@ object LombokExt : ILombokState by State()() {
 
         classLevelAnnotations += foldLog(this.fields)
         classLevelAnnotations += foldBuilder()
-        classLevelAnnotations += foldNoArgsConstructor(this.constructors)
+        val standardException = if (lombokStandardException) foldStandardException() else emptyList()
+        classLevelAnnotations += standardException
+        val constructors = this.constructors.filterNot { constructor ->
+            standardException.any { constructor in it.elementsToHide }
+        }.toTypedArray()
+        classLevelAnnotations += foldNoArgsConstructor(constructors)
 
         createFieldMap(this)?.let { fieldsMap ->
-            classLevelAnnotations += foldArgsConstructor(this.constructors, fieldsMap.values, fieldLevelAnnotations)
+            classLevelAnnotations += foldArgsConstructor(constructors, fieldsMap.values, fieldLevelAnnotations)
 
             val methodTypeToMethodsMap = methodsNotStatic.groupBy {
                 it.findMethodType()
