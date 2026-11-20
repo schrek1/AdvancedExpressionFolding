@@ -226,6 +226,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdirtyoff")
         }
 
+        registerCheckbox(state::lombokNonNull, "Leading parameter null checks as Lombok @NonNull") {
+            example(LombokNonNullTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokNonNull")
+        }
+
         row {
             cell(JBLabel("Regex to disable Lombok folding (matched classes won’t be folded)"))
         }

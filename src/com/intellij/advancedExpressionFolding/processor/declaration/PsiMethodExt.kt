@@ -9,6 +9,7 @@ import com.intellij.advancedExpressionFolding.processor.language.kotlin.Nullable
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.NullableExt.readCheckNotNullMethods
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.SingleExpressionFunctionExt
 import com.intellij.advancedExpressionFolding.processor.lombok.InterfacePropertiesExt
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokNonNullExt
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokPostConstructorExt
 import com.intellij.advancedExpressionFolding.processor.methodcall.dynamic.DynamicExt
 import com.intellij.openapi.editor.Document
@@ -64,6 +65,9 @@ object PsiMethodExt : BaseExtension() {
         }
 
         val list = exprList(readCheckNotNullMethods(parameter, document))
+        list.addIfEnabled(lombokNonNull) {
+            LombokNonNullExt.parameterAnnotation(parameter)
+        }
         list += fieldAnnotationExpression(
             parameter.annotations,
             parameter.typeElement,
