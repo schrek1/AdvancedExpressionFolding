@@ -206,6 +206,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdirtyoff")
         }
 
+        registerCheckbox(state::lombokStandardException, "Lombok: exception with standard constructors as @StandardException") {
+            example(LombokStandardExceptionTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokstandardexception")
+        }
+
         row {
             cell(JBLabel("Regex to disable Lombok folding (matched classes won’t be folded)"))
         }
