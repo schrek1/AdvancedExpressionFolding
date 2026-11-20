@@ -40,6 +40,10 @@ jobs:
           java-version: 21
 
       - uses: gradle/actions/setup-gradle@v5
+        with:
+          # schreko_stable is not the default branch, so the cache would stay read-only and empty. Some rolled-out
+          # runners answer "Could not find" for ordinary artifacts; with the cache they only download what changed.
+          cache-read-only: false
 
       - name: Test
         run: ./gradlew test
