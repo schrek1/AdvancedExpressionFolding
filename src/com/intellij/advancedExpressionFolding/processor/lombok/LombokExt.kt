@@ -27,6 +27,10 @@ object LombokExt : ILombokState by State()() {
         if (isInterface) {
             return interfaceSupport() ?: emptyList()
         }
+        // the outer class hides this builder whole, its own annotations would only leak into that fold
+        if (lombokBuilder && LombokBuilderExt.isExactBuilder(this)) {
+            return emptyList()
+        }
 
         val classLevelAnnotations = mutableListOf<ClassLevelAnnotation>()
         val fieldLevelAnnotations = mutableListOf<FieldLevelAnnotation>()
@@ -63,7 +67,11 @@ object LombokExt : ILombokState by State()() {
             it.name?.endsWith("Builder") == true
         }.mapNotNull {
             val namelessBuilder = it.name == "${name}Builder"
-            if (namelessBuilder) {
+            val exactBuilderFactory = if (lombokBuilder) LombokBuilderExt.exactBuilderFactory(this, it) else null
+            if (exactBuilderFactory != null) {
+                val arguments = if (namelessBuilder || it.name == "Builder") emptyList() else listOfNotNull(it.name)
+                ClassLevelAnnotation(LOMBOK_EXACT_BUILDER, listOf(exactBuilderFactory, it), arguments = arguments)
+            } else if (namelessBuilder) {
                 ClassLevelAnnotation(LOMBOK_BUILDER, emptyList())
             } else if (it.name != null){
                 ClassLevelAnnotation(LOMBOK_BUILDER, emptyList(), arguments = listOf(it.name!!))
