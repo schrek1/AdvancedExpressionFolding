@@ -2,6 +2,7 @@ package com.intellij.advancedExpressionFolding.processor.core
 
 import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.controlflow.CompactControlFlowExpression
+import com.intellij.advancedExpressionFolding.processor.controlflow.CatchRethrowExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.ForStatementExpressionExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.IfExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.LoopExt
@@ -9,6 +10,7 @@ import com.intellij.advancedExpressionFolding.processor.controlflow.PsiTryStatem
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiCatchSection
+import com.intellij.psi.PsiCodeBlock
 import com.intellij.psi.PsiDoWhileStatement
 import com.intellij.psi.PsiForeachStatement
 import com.intellij.psi.PsiForStatement
@@ -67,4 +69,11 @@ class CatchSectionBuilder : BuildExpression<PsiCatchSection>(PsiCatchSection::cl
             TextRange.create(l.textRange.startOffset, r.textRange.endOffset)
         )
     }
+}
+
+class CatchRethrowBuilder : BuildExpression<PsiCodeBlock>(PsiCodeBlock::class.java) {
+    override fun checkConditions(element: PsiCodeBlock) = catchRethrow
+
+    override fun buildExpression(element: PsiCodeBlock, document: Document, synthetic: Boolean) =
+        CatchRethrowExt.createExpression(element)
 }
