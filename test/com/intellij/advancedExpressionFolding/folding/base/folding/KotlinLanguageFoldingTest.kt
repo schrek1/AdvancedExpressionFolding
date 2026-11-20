@@ -44,6 +44,12 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun repeatLoopTestData() = testCase.runFoldingTest(
+        foldingState()::repeatLoop,
+        foldingState()::rangeExpressionsCollapse,
+    )
+
+    @Test
     fun printlnTestData() = testCase.runFoldingTest(foldingState()::println)
 
     @Test

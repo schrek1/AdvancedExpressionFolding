@@ -95,6 +95,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#rangeexpressionscollapse")
         }
 
+        registerCheckbox(state::repeatLoop, "Counting for loops with an unused index as repeat(n)") {
+            example(RepeatLoopTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#repeatloop")
+        }
+
         registerCheckbox(state::checkExpressionsCollapse, "Null-safe calls") {
             example(ElvisTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#checkexpressionscollapse")
