@@ -7,6 +7,7 @@ import com.intellij.advancedExpressionFolding.processor.controlflow.IfExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.LoopExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.PsiTryStatementExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.PreconditionExt
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.TodoExt
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiCatchSection
@@ -57,6 +58,7 @@ class TryStatementBuilder : BuildExpression<PsiTryStatement>(PsiTryStatement::cl
 class ThrowStatementBuilder : BuildExpression<PsiThrowStatement>(PsiThrowStatement::class.java) {
     override fun buildExpression(element: PsiThrowStatement, document: Document, synthetic: Boolean) =
         PreconditionExt.getThrowExpression(element, document)
+            ?: if (todo) TodoExt.createExpression(element, document) else null
 }
 
 class CatchSectionBuilder : BuildExpression<PsiCatchSection>(PsiCatchSection::class.java) {

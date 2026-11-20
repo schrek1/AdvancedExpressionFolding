@@ -52,7 +52,7 @@ public class KotlinPreconditionsTestData {
             throw new IllegalArgumentException("order");
         }</fold>
         if <fold text='' expand='false'>(</fold>order.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new UnsupportedOperationException("order");
+            <fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>("order");
         }</fold>
         if <fold text='' expand='false'>(</fold>order.<fold text='blank' expand='false'>isBlank()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             throw new IllegalArgumentException("order", cause);
