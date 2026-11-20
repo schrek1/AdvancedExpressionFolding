@@ -55,6 +55,13 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun objectDestructuringTestData() = testCase.runFoldingTest(
+        foldingState()::objectDestructuring,
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::varExpressionsCollapse,
+    )
+
+    @Test
     fun printlnTestData() = testCase.runFoldingTest(foldingState()::println)
 
     @Test

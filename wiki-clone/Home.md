@@ -175,6 +175,13 @@ Shows `for (Map.Entry<K, V> e : map.entrySet())` as `for ((key, value) in map)` 
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MapEntryDestructuringTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/mapEntryDestructuring)
 
+## objectDestructuring
+### Destructuring locals read from record accessors & getters
+Shows consecutive locals read from accessors of one object, such as `String customer = order.customer();` and `BigDecimal total = order.getTotal();`, as `val (customer, total) = order`, when each local is named after its accessor.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ObjectDestructuringTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ObjectDestructuringTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/objectDestructuring)
+
 ## println
 ### Simplify System.out.println to println
 Simplifies System.out.println calls to just println.
