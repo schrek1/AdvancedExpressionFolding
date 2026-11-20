@@ -303,6 +303,13 @@ Simplifies constructor references and inline field initialization.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MethodDefaultParametersTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/methodDefaultParameters)
 
+## singletonObject
+### Singleton as Kotlin `object`
+Shows an eager singleton (static instance, private empty constructor, static getter) as `object`, hiding the instance field, the constructor and the getter.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SingletonObjectTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SingletonObjectTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/singletonObject)
+
 ## pseudoAnnotations
 ### Pseudo-annotations for main method generation
 Provides pseudo-annotations like @Main that automatically generate main methods for testing and prototyping.
