@@ -154,6 +154,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#println")
         }
 
+        registerCheckbox(state::todo, "Simplify throw new UnsupportedOperationException to TODO") {
+            example(TodoTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#todo")
+        }
+
         registerCheckbox(
             state::controlFlowSingleStatementCodeBlockCollapse,
             "Control flow single-statement code block braces (read-only files)"
