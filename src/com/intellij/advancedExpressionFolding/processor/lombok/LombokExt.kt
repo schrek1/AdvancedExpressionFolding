@@ -33,7 +33,7 @@ object LombokExt : ILombokState by State()() {
 
         classLevelAnnotations += foldLog(this.fields)
         classLevelAnnotations += foldBuilder()
-        classLevelAnnotations += foldNoArgsConstructor(this.constructors)
+        classLevelAnnotations += foldNoArgsConstructor(constructors.filterNot { it.isIgnored() }.toTypedArray())
 
         createFieldMap(this)?.let { fieldsMap ->
             classLevelAnnotations += foldArgsConstructor(this.constructors, fieldsMap.values, fieldLevelAnnotations)
