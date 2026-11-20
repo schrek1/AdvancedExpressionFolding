@@ -213,6 +213,13 @@ Prevents folding of Lombok-generated getters and setters that have been modified
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokDirtyOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokDirtyOffTestData-folded.java)
 
+## lombokNonNull
+### Leading parameter null checks as Lombok @NonNull
+Hides the null checks at the start of a method body and shows `@NonNull` on each checked parameter instead: `Objects.requireNonNull(p[, "message"])` and `if (p == null) throw new NullPointerException(...)` (or `IllegalArgumentException`).
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokNonNullTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokNonNullTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokNonNull)
+
 ## lombokPatternOff
 ### Pattern to turn off Lombok folding
 Prevents all Lombok folding for classes matching the pattern
