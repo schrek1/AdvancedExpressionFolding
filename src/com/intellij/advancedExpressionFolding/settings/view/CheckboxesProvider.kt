@@ -266,6 +266,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdirtyoff")
         }
 
+        registerCheckbox(state::lombokBuilder, "Display hand-written Lombok-shaped builder as @Builder") {
+            example(LombokBuilderTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokbuilder")
+        }
+
         registerCheckbox(state::lombokDelegate, "Forwarding methods as Lombok @Delegate") {
             example(LombokDelegateTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdelegate")
