@@ -5,6 +5,7 @@ import com.intellij.advancedExpressionFolding.expression.semantic.WrapperExpress
 import com.intellij.advancedExpressionFolding.expression.semantic.kotlin.DestructuringExpression
 import com.intellij.advancedExpressionFolding.processor.asInstance
 import com.intellij.advancedExpressionFolding.processor.end
+import com.intellij.advancedExpressionFolding.processor.isIgnorable
 import com.intellij.advancedExpressionFolding.processor.realNextSibling
 import com.intellij.advancedExpressionFolding.processor.singleArgument
 import com.intellij.advancedExpressionFolding.processor.start
@@ -22,7 +23,10 @@ object PsiDeclarationStatementExt :
         element: PsiDeclarationStatement
     ): Expression? {
         if (destructuring) {
-            return createCollectionDestructuringExpression(element)
+            createCollectionDestructuringExpression(element)?.let { return it }
+        }
+        if (objectDestructuring) {
+            return createObjectDestructuringExpression(element)
         }
         return null
     }
@@ -42,6 +46,67 @@ object PsiDeclarationStatementExt :
                 Pair(nextStatement, it)
             }
         }.toList()
+        return createDestructuringExpression(element, list)
+    }
+
+    /**
+    @formatter:off
+
+    Customer customer = order.customer();
+    BigDecimal total = order.getTotal();
+    into
+    val (customer, total) = order
+    @formatter:on
+     */
+    private fun createObjectDestructuringExpression(element: PsiDeclarationStatement): WrapperExpression? {
+        val first = element.accessorCall() ?: return null
+        val qualifier = first.qualifierText()
+        val previous = generateSequence(element.prevSibling) { it.prevSibling }.firstOrNull { !it.isIgnorable() }
+        // the chain is built once, from its first statement
+        if (previous.asInstance<PsiDeclarationStatement>()?.accessorCall()?.qualifierText() == qualifier) {
+            return null
+        }
+        // `T q = (T) o;` right before: patternMatchingInstanceof folds these locals into `o instanceof T(a, b)`
+        val castQualifier = previous.asInstance<PsiDeclarationStatement>()?.asVariable()
+            ?.takeIf { it.name == qualifier && it.initializer is PsiTypeCastExpression }
+        if (patternMatchingInstanceof && castQualifier != null) {
+            return null
+        }
+        val list = generateSequence(Pair(element, first)) { (statement, _) ->
+            val nextStatement = statement.nextStatement()
+            nextStatement?.accessorCall()?.takeIf {
+                it.qualifierText() == qualifier
+            }?.let {
+                Pair(nextStatement, it)
+            }
+        }.toList()
+        return createDestructuringExpression(element, list)
+    }
+
+    private fun PsiMethodCallExpression.qualifierText(): String? = methodExpression.qualifierExpression?.text
+
+    /**
+     * `name = q.name()` on a record, or `name = q.getName()` / `q.isName()`, where `q` is a plain variable or field,
+     * so the folded `val (name, ...) = q` reads the same values and evaluates nothing twice.
+     */
+    private fun PsiDeclarationStatement.accessorCall(): PsiMethodCallExpression? {
+        val variable = asVariable() ?: return null
+        val call = variable.initializer.asInstance<PsiMethodCallExpression>() ?: return null
+        if (call.argumentList.expressionCount != 0) return null
+        if (call.methodExpression.qualifierExpression !is PsiReferenceExpression) return null
+        val methodName = call.methodExpression.referenceName ?: return null
+        val name = variable.name ?: return null
+        val isGetter = listOf("get", "is").any { prefix ->
+            methodName == prefix + name.replaceFirstChar { it.uppercaseChar() }
+        }
+        val isRecordAccessor = methodName == name && call.resolveMethod()?.containingClass?.isRecord == true
+        return call.takeIf { isGetter || isRecordAccessor }
+    }
+
+    private fun createDestructuringExpression(
+        element: PsiDeclarationStatement,
+        list: List<Pair<PsiDeclarationStatement, PsiExpression>>
+    ): WrapperExpression? {
         return list.takeIf {
             it.size >= 2
         }?.mapIndexed { index, (statement, array) ->
