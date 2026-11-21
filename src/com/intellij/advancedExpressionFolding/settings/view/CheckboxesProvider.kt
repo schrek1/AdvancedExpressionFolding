@@ -143,6 +143,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#fieldshift")
         }
 
+        registerCheckbox(state::builderNamedArguments, "Builder chain as constructor call Person(name = ...)") {
+            example(BuilderNamedArgumentsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#buildernamedarguments")
+        }
+
         registerCheckbox(state::destructuring, "Destructuring assignment for array & list") {
             example(DestructuringAssignmentArrayTestData::class, "array")
             example(DestructuringAssignmentListTestData::class, "list")
