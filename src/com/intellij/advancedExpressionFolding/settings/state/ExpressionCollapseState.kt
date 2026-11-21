@@ -15,6 +15,7 @@ interface IExpressionCollapseState {
     var fieldShift: Boolean
     var toBuilderCopy: Boolean
     var builderNamedArguments: Boolean
+    var getOrDefaultElvis: Boolean
 }
 
 data class ExpressionCollapseState(
@@ -32,4 +33,5 @@ data class ExpressionCollapseState(
     override var fieldShift: Boolean = true,
     override var toBuilderCopy: Boolean = true,
     override var builderNamedArguments: Boolean = true,
+    override var getOrDefaultElvis: Boolean = true,
 ) : IExpressionCollapseState

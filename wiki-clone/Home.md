@@ -24,6 +24,12 @@ Simplifies list and map access and modification expressions, as well as array an
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/GetSetPutTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/GetSetPutTestData-folded.java)
 
+## getOrDefaultElvis
+### Map.getOrDefault as map[key] ?: default
+Shows `map.getOrDefault(key, default)` as `map[key] ?: default`, where the result stands on its own (not as an operand of another operator).
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/GetOrDefaultElvisTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/GetOrDefaultElvisTestData-folded.java)
+
 ## concatenationExpressionsCollapse
 ### StringBuilder.append and Collection.add/remove expressions, interpolated Strings and Stream expressions
 Collapses various string and collection operations into more readable forms.
