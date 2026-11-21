@@ -9,6 +9,7 @@ import com.intellij.advancedExpressionFolding.expression.controlflow.ShortElvisE
 import com.intellij.advancedExpressionFolding.expression.literal.InterpolatedString
 import com.intellij.advancedExpressionFolding.expression.literal.StringLiteral
 import com.intellij.advancedExpressionFolding.expression.math.basic.Add
+import com.intellij.advancedExpressionFolding.expression.operation.collection.RangeChain
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt.getAnyExpression
 import com.intellij.advancedExpressionFolding.processor.expression.BinaryExpressionExt
@@ -311,18 +312,33 @@ object IfExt :
         document: Document
     ): Expression? {
         val operands = element.operands
-        for (i in 0 until operands.size - 1) {
+        val ranges = mutableListOf<Expression>()
+        var i = 0
+        while (i < operands.size - 1) {
             val a = operands[i]
             val b = operands[i + 1]
             val token = element.getTokenBeforeOperand(b)
-            if (token != null && token.text == "&&" && a is PsiBinaryExpression && b is PsiBinaryExpression) {
-                val expression = BinaryExpressionExt.getAndTwoBinaryExpressions(element, a, b, document)
-                if (expression != null) {
-                    return expression
-                }
+            val range = if (token != null && token.text == "&&" && a is PsiBinaryExpression && b is PsiBinaryExpression) {
+                BinaryExpressionExt.getAndTwoBinaryExpressions(element, a, b, document)
+            } else {
+                null
+            }
+            if (range != null) {
+                ranges += range
+                i += 2
+            } else {
+                i++
             }
         }
-        return null
+        return when (ranges.size) {
+            0 -> null
+            1 -> ranges.single()
+            else -> RangeChain(
+                element,
+                TextRange.create(ranges.first().textRange.startOffset, ranges.last().textRange.endOffset),
+                ranges
+            )
+        }
     }
 
     private fun getAddExpression(element: PsiPolyadicExpression, document: Document): Expression? {

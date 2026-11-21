@@ -13,6 +13,7 @@ import com.intellij.advancedExpressionFolding.expression.operation.basic.Greater
 import com.intellij.advancedExpressionFolding.expression.operation.collection.Range
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
 import com.intellij.advancedExpressionFolding.processor.argumentCount
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.InOperatorExt
 import com.intellij.advancedExpressionFolding.processor.util.Consts
 import com.intellij.advancedExpressionFolding.processor.util.Helper.eraseGenerics
 import com.intellij.advancedExpressionFolding.settings.State
@@ -239,6 +240,7 @@ object BinaryExpressionExt : IExpressionCollapseState by State()() {
         b: PsiBinaryExpression,
         document: Document
     ): Expression? {
+        InOperatorExt.createRange(parent, a, b)?.let { return it }
         if (!rangeExpressionsCollapse) {
             return null
         }
