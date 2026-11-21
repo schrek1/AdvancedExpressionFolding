@@ -74,6 +74,12 @@ Allows for a postfix notation for LocalDate literals.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LocalDateLiteralPostfixTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LocalDateLiteralPostfixTestData-folded.java)
 
+## durationLiteralCollapse
+### Duration literals (e.g. 30.seconds, sleep(500.milliseconds))
+Shows `Duration.ofSeconds(30)` as `30.seconds` and `TimeUnit.MILLISECONDS.sleep(500)` as `sleep(500.milliseconds)`. Only a plain number literal folds; a variable, a computed or negative value and two-argument factories stay as they are.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/DurationLiteralTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/DurationLiteralTestData-folded.java)
+
 ## castExpressionsCollapse
 ### Type cast expressions
 Simplifies type casting operations.

@@ -180,6 +180,8 @@
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.date.AfterDateMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.date.BeforeDateMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.date.CreateDateFactoryMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.date.DurationFactoryMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.date.TimeUnitSleepMethodCall"/>
 
         <!-- Nullable Method Calls -->
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.nullable.CheckNotNullMethodCall"/>
