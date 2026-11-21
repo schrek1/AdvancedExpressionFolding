@@ -7,6 +7,7 @@ import com.intellij.advancedExpressionFolding.expression.operation.basic.Append
 import com.intellij.advancedExpressionFolding.expression.operation.basic.Equal
 import com.intellij.advancedExpressionFolding.expression.operation.basic.GreaterEqual
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.InOperatorExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IDateOperationsState
@@ -41,6 +42,9 @@ object PrefixExpressionExt :
         operand: PsiExpression,
         document: Document
     ): Expression? {
+        if (operand is PsiMethodCallExpression) {
+            InOperatorExt.createNegatedMembership(element, operand)?.let { return it }
+        }
         if (comparingLocalDatesCollapse && operand is PsiMethodCallExpression) {
             val info = MethodCallInformation.tryGet(operand, document, "isBefore", "isAfter", "before", "after")
             if (info != null) {

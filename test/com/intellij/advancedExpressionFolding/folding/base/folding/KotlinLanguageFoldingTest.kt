@@ -92,6 +92,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
 
     @Test
     fun methodDefaultParametersTestData() = testCase.runFoldingTest(foldingState()::methodDefaultParameters)
+
+    @Test
+    fun inOperatorTestData() = testCase.runFoldingTest(foldingState()::inOperator)
 }
 
 @Disabled("Split from FoldingTest")

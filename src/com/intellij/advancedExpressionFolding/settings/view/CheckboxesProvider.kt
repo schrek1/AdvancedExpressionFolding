@@ -95,6 +95,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#rangeexpressionscollapse")
         }
 
+        registerCheckbox(state::inOperator, "Membership and ranges as in / !in") {
+            example(InOperatorTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#inoperator")
+        }
+
         registerCheckbox(state::checkExpressionsCollapse, "Null-safe calls") {
             example(ElvisTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#checkexpressionscollapse")

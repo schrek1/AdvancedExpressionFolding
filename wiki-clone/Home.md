@@ -78,6 +78,13 @@ Collapses for loops and range expressions into more concise forms.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ForRangeTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ForRangeTestData-folded.java)
 
+## inOperator
+### Membership and ranges as in / !in
+Shows `c.contains(x)` as `x in c`, `!c.contains(x)` as `x !in c`, `m.containsKey(k)` as `k in m`, `x >= a && x <= b` as `x in a..b` and `x >= a && x < b` as `x in a..<b`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/InOperatorTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/InOperatorTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/inOperator)
+
 ## checkExpressionsCollapse
 ### Null-safe calls
 Simplifies null-safe call operations.
