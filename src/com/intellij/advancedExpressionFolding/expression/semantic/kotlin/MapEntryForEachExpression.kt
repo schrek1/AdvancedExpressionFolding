@@ -34,12 +34,17 @@ class MapEntryForEachExpression(
         parent: Expression?
     ): Array<FoldingDescriptor> {
         val group = FoldingGroup.newGroup(MapEntryForEachExpression::class.java.name)
+        // the whitespace before the map stays real text
+        var headerEnd = map.textRange.startOffset
+        while (document.charsSequence[headerEnd - 1].isWhitespace()) {
+            headerEnd--
+        }
         val descriptors = mutableListOf(
             FoldingDescriptor(
                 element.node,
-                TextRange.create(entry.textRange.startOffset, map.textRange.startOffset),
+                TextRange.create(entry.textRange.startOffset, headerEnd),
                 group,
-                header
+                if (headerEnd < map.textRange.startOffset) header.trimEnd() else header
             ),
             FoldingDescriptor(
                 element.node,

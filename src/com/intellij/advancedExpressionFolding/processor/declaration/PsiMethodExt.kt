@@ -11,6 +11,7 @@ import com.intellij.advancedExpressionFolding.processor.language.kotlin.SingleEx
 import com.intellij.advancedExpressionFolding.processor.lombok.InterfacePropertiesExt
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokNonNullExt
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokPostConstructorExt
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokSneakyThrowsExt
 import com.intellij.advancedExpressionFolding.processor.methodcall.dynamic.DynamicExt
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.PsiMethod
@@ -34,6 +35,10 @@ object PsiMethodExt : BaseExtension() {
 
         list.addIfEnabled(lombok) {
             LombokPostConstructorExt.methodAnnotation(method)
+        }
+
+        list.addIfEnabled(lombokSneakyThrows) {
+            LombokSneakyThrowsExt.methodAnnotation(method)
         }
 
         list.forwardIfEnabled(overrideHide) {

@@ -74,6 +74,12 @@ Allows for a postfix notation for LocalDate literals.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LocalDateLiteralPostfixTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LocalDateLiteralPostfixTestData-folded.java)
 
+## durationLiteralCollapse
+### Duration literals (e.g. 30.seconds, sleep(500.milliseconds))
+Shows `Duration.ofSeconds(30)` as `30.seconds` and `TimeUnit.MILLISECONDS.sleep(500)` as `sleep(500.milliseconds)`. Only a plain number literal folds; a variable, a computed or negative value and two-argument factories stay as they are.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/DurationLiteralTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/DurationLiteralTestData-folded.java)
+
 ## castExpressionsCollapse
 ### Type cast expressions
 Simplifies type casting operations.
@@ -85,6 +91,18 @@ Simplifies type casting operations.
 Collapses for loops and range expressions into more concise forms.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ForRangeTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ForRangeTestData-folded.java)
+
+## kotlinRangeLoops
+### For loops in Kotlin range syntax
+Shows the folded counting loop as a Kotlin range, `for (i in 0..<n)` instead of `for (int i : [0, n))`. Needs `rangeExpressionsCollapse`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinRangeLoopsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinRangeLoopsTestData-folded.java)
+
+## repeatLoop
+### Counting for loops with an unused index as repeat(n)
+Shows `for (int i = 0; i < n; i++)` as `repeat(n)` when the body never reads or writes `i`. A loop that uses its index keeps the range form.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/RepeatLoopTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/RepeatLoopTestData-folded.java)
 
 ## checkExpressionsCollapse
 ### Null-safe calls
@@ -98,6 +116,12 @@ Provides extended null-safe if operations.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/IfNullSafeData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IfNullSafeData-folded.java)
 - [Documentation](../features/null-safe-if.md)
+
+## nullOrEmpty
+### Null-or-empty checks as isNullOrEmpty() / isNotEmpty()
+Shows `x == null || x.isEmpty()` as `x.isNullOrEmpty()` and `x != null && !x.isEmpty()` as `x.isNotEmpty()`; `length()` / `size()` compared with `0` count too, and so do the null-safe `isEmpty(x)` / `isNotEmpty(x)` of Apache Commons and Spring utility classes.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/NullOrEmptyTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/NullOrEmptyTestData-folded.java)
 
 ## kotlinQuickReturn
 ### Kotlin quick return
@@ -122,6 +146,12 @@ Represents Java Optional types using Kotlin-style null-safe syntax.
 Represents Java stream operations using Groovy-style spread operator syntax.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SpreadTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SpreadTestData-folded.java)
+
+## streamPredicates
+### Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none
+Shows `anyMatch` / `allMatch` / `noneMatch` on a collection's or an array's stream as Kotlin's `any` / `all` / `none`; the predicate keeps its own text.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/StreamPredicateTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/StreamPredicateTestData-folded.java)
 
 ## lombok
 ### Display Java bean as Lombok
@@ -160,6 +190,12 @@ Shows `person.toBuilder().name("Alice").age(31).build()` as `person.copy(name = 
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ToBuilderCopyTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ToBuilderCopyTestData-folded.java)
 
+## builderNamedArguments
+### Builder chain as constructor call Person(name = ...)
+Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/BuilderNamedArgumentsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/BuilderNamedArgumentsTestData-folded.java)
+
 ## destructuring
 ### Destructuring assignment for array & list
 Implements destructuring assignments for arrays and lists.
@@ -175,12 +211,25 @@ Shows `for (Map.Entry<K, V> e : map.entrySet())` as `for ((key, value) in map)` 
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/MapEntryDestructuringTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MapEntryDestructuringTestData-folded.java)
 
+## objectDestructuring
+### Destructuring locals read from record accessors & getters
+Shows consecutive locals read from accessors of one object, such as `String customer = order.customer();` and `BigDecimal total = order.getTotal();`, as `val (customer, total) = order`, when each local is named after its accessor.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ObjectDestructuringTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ObjectDestructuringTestData-folded.java)
+
 ## println
 ### Simplify System.out.println to println
 Simplifies System.out.println calls to just println.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/PrintlnTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/PrintlnTestData-folded.java)
 - [Documentation](../features/println-simplification.md)
+
+## todo
+### Simplify throw new UnsupportedOperationException to TODO
+Folds `throw new UnsupportedOperationException("reason")` into Kotlin-style `TODO("reason")`, keeping the reason.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/TodoTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/TodoTestData-folded.java)
+- [Documentation](../features/todo.md)
 
 ## controlFlowSingleStatementCodeBlockCollapse
 ### Control flow single-statement code block braces (read-only files)
@@ -245,11 +294,29 @@ Hides the null checks at the start of a method body and shows `@NonNull` on each
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokNonNullTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokNonNullTestData-folded.java)
 
+## lombokBuilder
+### Display hand-written Lombok-shaped builder as @Builder
+Hides a hand-written builder that has exactly the shape Lombok `@Builder` generates and shows `@Builder` on the class. A builder with anything extra (validation or defaults, an extra method, a different argument order) keeps the `@HasBuilder` label.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokBuilderTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokBuilderTestData-folded.java)
+
 ## lombokPatternOff
 ### Pattern to turn off Lombok folding
 Prevents all Lombok folding for classes matching the pattern
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokPatternOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokPatternOffTestData-folded.java)
+
+## lombokDelegate
+### Forwarding methods as Lombok @Delegate
+Hides public methods that only pass their parameters on to the same-named method of a field, and marks that field with @Delegate.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokDelegateTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokDelegateTestData-folded.java)
+
+## lombokUtilityClass
+### Display a class of static members as Lombok @UtilityClass
+Shows a class with only static members and a private constructor as `@UtilityClass`, hiding the constructor and the `static` and `final` modifiers.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokUtilityClassTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokUtilityClassTestData-folded.java)
 
 ## expressionFunc
 ### Single-Expression Function
@@ -298,6 +365,12 @@ Applies pattern matching to `instanceof` checks for more concise and readable co
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/PatternMatchingRecordPatternTestData-folded.java)
 - [Documentation](../features/pattern-matching-instanceof.md)
 
+## instanceofSwitch
+### instanceof chain as pattern switch
+Shows an `if / else if` chain of `instanceof` checks on one variable as a Java pattern switch: `case Circle c -> ...`, with a final `else` as `default -> ...`. Every branch must hold exactly one statement; a chain with a guarded condition, another condition, a comment or a different variable stays as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/InstanceofSwitchTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/InstanceofSwitchTestData-folded.java)
+
 ## summaryParentOverride
 ### Displays a folded summary of overridden methods from parent classes and interfaces
 Provides a concise view of inherited method overrides, reducing redundant code duplication.
@@ -317,6 +390,12 @@ Simplifies constructor references and inline field initialization.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MethodDefaultParametersTestData-folded.java)
 - [Documentation](../features/method-default-parameters.md)
 
+## lazyProperty
+### Null-checked lazy getter as by lazy property
+Shows a private field and the null-checked lazy getter right below it (`if (field == null) { field = init; } return field;`) as one Kotlin-style `val field by lazy { init }` line; the field name and `init` stay real code. A field with an initializer, a getter elsewhere in the class, a getter with more statements or an `else`, or a field assigned anywhere else stays as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LazyPropertyTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LazyPropertyTestData-folded.java)
+
 ## pseudoAnnotations
 ### Pseudo-annotations for main method generation
 Provides pseudo-annotations like @Main that automatically generate main methods for testing and prototyping.
@@ -335,6 +414,12 @@ Hides @Override annotations to reduce visual clutter and focus on method impleme
 Hides @SuppressWarnings annotations on methods to reduce visual clutter. Currently implemented only for methods.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SuppressWarningsHideTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SuppressWarningsHideTestData-folded.java)
+
+## catchRethrow
+### Catch block that only wraps and rethrows as rethrow
+Shows a catch block whose only statement wraps the caught exception, `throw new RuntimeException(e);`, as `rethrow` (`rethrow as X` for another wrapper type). A block with a message, more statements, a comment or a different cause stays as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/CatchRethrowTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/CatchRethrowTestData-folded.java)
 
 ## experimental
 ### Experimental features

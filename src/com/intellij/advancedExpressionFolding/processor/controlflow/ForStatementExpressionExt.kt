@@ -10,6 +10,7 @@ import com.intellij.advancedExpressionFolding.expression.operation.basic.Variabl
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
 import com.intellij.advancedExpressionFolding.processor.argumentCount
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.RepeatLoopExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IControlFlowState
@@ -37,6 +38,7 @@ object ForStatementExpressionExt :
     IControlFlowState by State()() {
 
     fun getForStatementExpression(element: PsiForStatement, document: Document): Expression? {
+        RepeatLoopExt.getRepeatExpression(element)?.let { return it }
         val lParenth = element.lParenth
         val rParenth = element.rParenth
         val initialization = element.initialization
