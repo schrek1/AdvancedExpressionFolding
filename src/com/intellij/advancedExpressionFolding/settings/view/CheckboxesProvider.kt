@@ -95,6 +95,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#rangeexpressionscollapse")
         }
 
+        registerCheckbox(state::kotlinRangeLoops, "For loops in Kotlin range syntax: for (i in 0..<n)") {
+            example(KotlinRangeLoopsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinrangeloops")
+        }
+
         registerCheckbox(state::checkExpressionsCollapse, "Null-safe calls") {
             example(ElvisTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#checkexpressionscollapse")

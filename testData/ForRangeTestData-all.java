@@ -18,10 +18,10 @@ public class ForRangeTestData {
                                 [i];</fold>
                 <fold text='' expand='false'>System.out.</fold>println(arg);
         }</fold>
-                for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>0<fold text=', ' expand='false'>; i < </fold>args.length<fold text=')' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+                for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='..<' expand='false'>; i < </fold>args.length<fold text='' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                         <fold text='' expand='false'>System.out.</fold>println(i);
         }</fold>
-                for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>0<fold text=', ' expand='false'>; i <= </fold>args.length - 1<fold text=']' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+                for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='..' expand='false'>; i <= </fold>args.length - 1<fold text='' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                         <fold text='' expand='false'>System.out.</fold>println(i);
         }</fold>
                         <fold text='val' expand='false'>List<String></fold> list = <fold text='[]' expand='false'>new ArrayList<>()</fold>;
