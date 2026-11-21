@@ -10,6 +10,7 @@ import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiJavaFile
+import com.intellij.psi.PsiKeyword
 
 object AnnotationExt {
 
@@ -45,7 +46,8 @@ object AnnotationExt {
         val elementsToHide = changes.map {
             it.elementsToHide
         }.flatten()
-        val elementsToFold = elementsToHide.mapNotNull { method ->
+        // A hidden modifier keyword brings its own trailing whitespace; its leading one must stay.
+        val elementsToFold = elementsToHide.filterNot { it is PsiKeyword }.mapNotNull { method ->
             method.prevWhiteSpace()
         } + elementsToHide
         val classLevelAnnotations = ClassAnnotationExpression(clazz, changes.map { hidingAnnotation ->
