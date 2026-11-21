@@ -379,6 +379,13 @@ Simplifies constructor references and inline field initialization.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MethodDefaultParametersTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/methodDefaultParameters)
 
+## singletonObject
+### Singleton as Kotlin `object`
+Shows an eager singleton (static instance, private empty constructor, static getter) as `object`, hiding the instance field, the constructor and the getter.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SingletonObjectTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SingletonObjectTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/singletonObject)
+
 ## lazyProperty
 ### Null-checked lazy getter as by lazy property
 Shows a private field and the null-checked lazy getter right below it (`if (field == null) { field = init; } return field;`) as one Kotlin-style `val field by lazy { init }` line; the field name and `init` stay real code. A field with an initializer, a getter elsewhere in the class, a getter with more statements or an `else`, or a field assigned anywhere else stays as it is.

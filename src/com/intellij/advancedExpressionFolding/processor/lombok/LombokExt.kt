@@ -39,7 +39,7 @@ object LombokExt : ILombokState by State()() {
         val standardException = if (lombokStandardException) foldStandardException() else emptyList()
         classLevelAnnotations += standardException
         val constructors = this.constructors.filterNot { constructor ->
-            standardException.any { constructor in it.elementsToHide }
+            constructor.isIgnored() || standardException.any { constructor in it.elementsToHide }
         }.toTypedArray()
         val utilityClass = if (lombokUtilityClass) foldUtilityClass() else null
         if (utilityClass != null) {
