@@ -8,7 +8,15 @@ Shows argument and state checks the way Kotlin writes them.
 - Any other `throw new IllegalStateException(message)` becomes `error(message)`.
 - `Objects.requireNonNull(value[, message])` becomes `requireNotNull(value)[ { message }]`.
 
-The condition is shown in its positive form when that is exact (`!x` → `x`, `==` ↔ `!=`), otherwise as `!(...)`.
+The condition is shown negated, written out when that is exactly equivalent, otherwise as `!(...)`:
+
+- `!x` → `x`, and `x` → `!x` for a variable, method call or array element;
+- `==` ↔ `!=`;
+- `<` ↔ `>=` and `<=` ↔ `>` when both sides are integral (`int`, `long`, `short`, `byte`, `char` or their boxes);
+  `float` and `double` keep `!(...)`, because with NaN `!(x <= 0)` is not `x > 0`;
+- `&&` ↔ `||` when every operand can be negated this way, in the same order (`order == null || order.isEmpty()`
+  → `order != null && !order.isEmpty()`); an `&&` inside `||` without parentheses keeps `!(...)`.
+
 The message is kept as written, so it still folds into an interpolated string when that option is on.
 Not folded: more statements in the `if`, an `else` branch, other exception types, a cause argument,
 and a `Supplier` message for `requireNonNull`.
@@ -24,6 +32,9 @@ examples/data/KotlinPreconditionsTestData.java:
         if (!connected) {
             throw new IllegalStateException("Not connected");
         }
+        if (sku == null || sku.isEmpty()) {
+            throw new IllegalArgumentException("sku");
+        }
         throw new IllegalStateException("Unknown state " + state);
 ```
 
@@ -32,6 +43,7 @@ folded/KotlinPreconditionsTestData-folded.java:
         require(order != null) { "order" }
         requireNotNull(customer) { "customer" };
         check(connected) { "Not connected" }
+        require(sku != null && !sku.isEmpty()) { "sku" }
         error("Unknown state " + state);
 ```
 

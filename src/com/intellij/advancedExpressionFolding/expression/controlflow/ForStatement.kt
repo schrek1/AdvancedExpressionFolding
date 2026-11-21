@@ -4,11 +4,14 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.operation.collection.Range
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IControlFlowState
+import com.intellij.advancedExpressionFolding.settings.state.IExpressionCollapseState
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.FoldingGroup
 import com.intellij.openapi.util.TextRange
+import com.intellij.psi.PsiDeclarationStatement
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiVariable
 import com.intellij.psi.PsiForStatement
 
 class ForStatement(
@@ -19,8 +22,10 @@ class ForStatement(
     startInclusive: Boolean,
     endRange: Expression,
     endInclusive: Boolean,
+    private val step: LoopStep? = null,
 ) : Range(statement, textRange, operand, startRange, startInclusive, endRange, endInclusive),
-    IControlFlowState by State()() {
+    IControlFlowState by State()(),
+    IExpressionCollapseState by State()() {
 
     init {
         separator = FOR_SEPARATOR
@@ -32,6 +37,16 @@ class ForStatement(
         parent: Expression?
     ): Array<FoldingDescriptor> {
         val descriptors = mutableListOf(*super.buildFoldRegions(element, document, parent))
+        val loopVariable = (statement.initialization as? PsiDeclarationStatement)?.declaredElements?.singleOrNull() as? PsiVariable
+        if (kotlinRangeLoops && loopVariable != null && loopVariable.textRange.startOffset < operand.textRange.startOffset) {
+            // Kotlin declares the loop variable without a type: `for (i in 0..<n)`
+            descriptors += FoldingDescriptor(
+                element.node,
+                TextRange.create(loopVariable.textRange.startOffset, operand.textRange.startOffset),
+                descriptors.first().group,
+                ""
+            )
+        }
         if (compactControlFlowSyntaxCollapse && statement.lParenth != null && statement.rParenth != null) {
             val parenthesesRange = TextRange.create(
                 statement.lParenth!!.textRange.startOffset,
@@ -45,7 +60,28 @@ class ForStatement(
         return descriptors.toTypedArray()
     }
 
+    override fun openingPrefix(): String = if (kotlinRangeLoops) " in " else super.openingPrefix()
+
+    override fun delimiter(): String = when {
+        !kotlinRangeLoops -> super.delimiter()
+        step?.descending == true -> " downTo "
+        isEndInclusive() -> ".."
+        else -> "..<"
+    }
+
+    override fun closingSuffix(): String {
+        val step = step ?: return if (kotlinRangeLoops) "" else super.closingSuffix()
+        if (kotlinRangeLoops) {
+            return if (step.amountWritten) " step " else ""
+        }
+        val sign = if (step.descending) "-" else ""
+        return super.closingSuffix() + " step " + sign + if (step.amountWritten) "" else "1"
+    }
+
     companion object {
         const val FOR_SEPARATOR: String = ":"
     }
 }
+
+/** A loop update other than `i++`; a written amount (`i += 2`) stays real text after the fold, without its sign. */
+class LoopStep(val descending: Boolean, val amountWritten: Boolean)

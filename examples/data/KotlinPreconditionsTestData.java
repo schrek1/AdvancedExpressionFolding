@@ -35,6 +35,42 @@ public class KotlinPreconditionsTestData {
         }
     }
 
+    public void restock(String sku, int stock, long reserved, Integer limit, char grade, double price, Object item) {
+        if (stock < 0) {
+            throw new IllegalArgumentException("stock");
+        }
+        if (reserved > stock) {
+            throw new IllegalStateException("over-reserved");
+        }
+        if (grade >= 'C') {
+            throw new IllegalArgumentException("grade");
+        }
+        if (limit != null && limit >= 10) {
+            throw new IllegalArgumentException("limit");
+        }
+        if (sku == null || sku.isEmpty()) {
+            throw new IllegalArgumentException("sku");
+        }
+        if (sku.isBlank() || !(stock < 5 || reserved == 0)) {
+            throw new IllegalStateException("restock");
+        }
+        if (!(!connected)) {
+            throw new IllegalStateException("connected");
+        }
+        if (price <= 0) {
+            throw new IllegalArgumentException("price");
+        }
+        if (sku == null || price < 1.0) {
+            throw new IllegalArgumentException("cheap");
+        }
+        if (sku == null || stock < 0 && reserved > 0) {
+            throw new IllegalArgumentException("mixed");
+        }
+        if (item instanceof String) {
+            throw new IllegalArgumentException("item");
+        }
+    }
+
     public String describe(int state) {
         switch (state) {
             case 0:

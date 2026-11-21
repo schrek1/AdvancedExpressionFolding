@@ -11,6 +11,21 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     fun forRangeTestData() = testCase.runFoldingTest(foldingState()::rangeExpressionsCollapse)
 
     @Test
+    fun kotlinRangeLoopsTestData() = testCase.runFoldingTest(
+        foldingState()::rangeExpressionsCollapse,
+        foldingState()::kotlinRangeLoops,
+    )
+
+    @Test
+    fun reverseSteppedLoopsTestData() = testCase.runFoldingTest(
+        foldingState()::reverseSteppedLoopsCollapse,
+        foldingState()::kotlinRangeLoops,
+    )
+
+    @Test
+    fun reverseSteppedLoopsIntervalTestData() = testCase.runFoldingTest(foldingState()::reverseSteppedLoopsCollapse)
+
+    @Test
     fun stringBuilderTestData() = testCase.runFoldingTest(foldingState()::concatenationExpressionsCollapse)
 
     @Test
@@ -18,6 +33,9 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
 
     @Test
     fun getSetPutTestData() = testCase.runFoldingTest(foldingState()::getExpressionsCollapse)
+
+    @Test
+    fun getOrDefaultElvisTestData() = testCase.runFoldingTest(foldingState()::getOrDefaultElvis)
 
     @Test
     fun sliceTestData() = testCase.runFoldingTest(foldingState()::slicingExpressionsCollapse)
@@ -60,6 +78,9 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
 
     @Test
     fun toBuilderCopyTestData() = testCase.runFoldingTest(foldingState()::toBuilderCopy)
+
+    @Test
+    fun builderNamedArgumentsTestData() = testCase.runFoldingTest(foldingState()::builderNamedArguments)
 }
 
 @Disabled("Split from FoldingTest")

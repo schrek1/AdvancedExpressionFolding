@@ -10,7 +10,9 @@ import com.intellij.advancedExpressionFolding.processor.argumentCount
 import com.intellij.advancedExpressionFolding.processor.controlflow.MapEntryDestructuringExt
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
 import com.intellij.advancedExpressionFolding.processor.language.FieldShiftExt
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.InOperatorExt
 import com.intellij.advancedExpressionFolding.processor.logger.LoggerBracketsExt
+import com.intellij.advancedExpressionFolding.processor.lombok.BuilderNamedArgumentsExt
 import com.intellij.advancedExpressionFolding.processor.lombok.ToBuilderCopyExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper.eraseGenerics
 import com.intellij.advancedExpressionFolding.processor.util.Helper.guessNamelessPropertyName
@@ -44,7 +46,10 @@ object MethodCallExpressionExt :
         val qualifier = referenceExpression.qualifierExpression
 
         ToBuilderCopyExt.createExpression(element, document)?.let { return it }
+        BuilderNamedArgumentsExt.createExpression(element, document)?.let { return it }
         FieldShiftExt.createExpression(element, document, qualifier)?.let { return it }
+
+        InOperatorExt.createMembership(element)?.let { return it }
 
         useMethodCallFactory(identifier, referenceExpression, document, qualifier, element)?.let { return it }
 

@@ -5,22 +5,19 @@ import com.intellij.advancedExpressionFolding.expression.literal.InterpolatedStr
 import com.intellij.advancedExpressionFolding.expression.semantic.kotlin.PreconditionExpression
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt.getAnyExpression
 import com.intellij.advancedExpressionFolding.processor.end
+import com.intellij.advancedExpressionFolding.processor.expression.ExactNegation
 import com.intellij.advancedExpressionFolding.processor.start
 import com.intellij.advancedExpressionFolding.processor.toTextRange
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.JavaTokenType
-import com.intellij.psi.PsiBinaryExpression
 import com.intellij.psi.PsiBlockStatement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiIfStatement
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiNewExpression
-import com.intellij.psi.PsiParenthesizedExpression
-import com.intellij.psi.PsiPrefixExpression
 import com.intellij.psi.PsiThrowStatement
 import com.intellij.psi.util.PsiTreeUtil
 
@@ -31,9 +28,6 @@ object PreconditionExt : IKotlinLanguageState by State()() {
 
     private const val ILLEGAL_ARGUMENT = "java.lang.IllegalArgumentException"
     private const val ILLEGAL_STATE = "java.lang.IllegalStateException"
-
-    // `!(a == b)` is exactly `a != b` for every operand type; relational operators are not (NaN).
-    private val NEGATED_EQUALITY = mapOf(JavaTokenType.EQEQ to "!=", JavaTokenType.NE to "==")
 
     private class PreconditionThrow(val exceptionType: String, val message: PsiExpression?)
 
@@ -76,46 +70,28 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         val throwStatement = guardThrow(element) ?: return null
         val thrown = preconditionThrow(throwStatement) ?: return null
         val condition = element.condition ?: return null
+        val lParenth = element.lParenth ?: return null
+        val rParenth = element.rParenth ?: return null
         val function = if (thrown.exceptionType == ILLEGAL_ARGUMENT) "require" else "check"
 
+        // The `if` parentheses stay real text and become the call's parentheses.
         val gaps = mutableListOf<Pair<TextRange, String>>()
         val shownCondition = mutableListOf<PsiElement>()
-        val opening = (element.start() to condition.start()).toTextRange()
-        var closing = ")"
-        val negatedEquality = (condition as? PsiBinaryExpression)
-            ?.takeIf { it.rOperand != null }
-            ?.let { NEGATED_EQUALITY[it.operationTokenType] }
-        val negatedOperand = (condition as? PsiPrefixExpression)
-            ?.takeIf { it.operationTokenType == JavaTokenType.EXCL }
-            ?.operand
-        when {
-            negatedOperand != null -> {
-                gaps += opening to "$function("
-                gaps += (condition as PsiPrefixExpression).operationSign.textRange to ""
-                val parenthesized = (negatedOperand as? PsiParenthesizedExpression)
-                    ?.takeIf { it.expression != null && it.lastChild.text == ")" }
-                if (parenthesized != null) {
-                    gaps += parenthesized.firstChild.textRange to ""
-                    gaps += parenthesized.lastChild.textRange to ""
-                    shownCondition += parenthesized.expression!!
-                } else {
-                    shownCondition += negatedOperand
-                }
+        var closing = ""
+        val negation = ExactNegation.of(condition)
+        if (negation == null) {
+            gaps += (element.start() to lParenth.start()).toTextRange() to "$function(!"
+            closing = ")"
+            shownCondition += condition
+        } else {
+            gaps += if (negation.prefix.isEmpty()) {
+                (element.start() to lParenth.start()).toTextRange() to function
+            } else {
+                // A leading `!` needs a covered character to stand in, so the `(` joins the opening.
+                (element.start() to condition.start()).toTextRange() to "$function(${negation.prefix}"
             }
-
-            negatedEquality != null -> {
-                val binary = condition as PsiBinaryExpression
-                gaps += opening to "$function("
-                gaps += binary.operationSign.textRange to negatedEquality
-                shownCondition += binary.lOperand
-                shownCondition += binary.rOperand!!
-            }
-
-            else -> {
-                gaps += opening to "$function(!("
-                closing = "))"
-                shownCondition += condition
-            }
+            gaps += negation.gaps
+            shownCondition += negation.shown
         }
 
         val message = thrown.message
@@ -124,17 +100,17 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         val rBrace = block?.rBrace
         when {
             message == null ->
-                gaps += (condition.end() to element.end()).toTextRange() to closing
+                gaps += (rParenth.end() to element.end()).toTextRange() to closing
 
             // The braces stay real text: a gap across them would cut through the block's own `{...}` fold.
             lBrace != null && rBrace != null -> {
-                gaps += (condition.end() to lBrace.start()).toTextRange() to "$closing "
+                gaps += (rParenth.end() to lBrace.start()).toTextRange() to "$closing "
                 gaps += (lBrace.end() to message.start()).toTextRange() to " "
                 gaps += (message.end() to rBrace.start()).toTextRange() to " "
             }
 
             else -> {
-                gaps += (condition.end() to message.start()).toTextRange() to "$closing { "
+                gaps += (rParenth.end() to message.start()).toTextRange() to "$closing { "
                 gaps += (message.end() to element.end()).toTextRange() to " }"
             }
         }
@@ -153,9 +129,10 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         if (enclosingIf != null && guardThrow(enclosingIf) == element) {
             return null
         }
-        val exception = element.exception ?: return null
+        val exception = element.exception as? PsiNewExpression ?: return null
+        val arguments = exception.argumentList ?: return null
         val gaps = mutableListOf(
-            (element.start() to message.start()).toTextRange() to "error(",
+            (element.start() to arguments.start()).toTextRange() to "error",
             (message.end() to exception.end()).toTextRange() to ")",
         )
         return PreconditionExpression(element, gaps, listOf(gaps.attachMessage(message, document)))
@@ -170,7 +147,7 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         if (!kotlinPreconditions || (message != null && !message.isString())) {
             return null
         }
-        val gaps = mutableListOf((element.start() to value.start()).toTextRange() to "requireNotNull(")
+        val gaps = mutableListOf((element.start() to element.argumentList.start()).toTextRange() to "requireNotNull")
         if (message != null) {
             gaps += (value.end() to message.start()).toTextRange() to ") { "
             gaps += (message.end() to element.end()).toTextRange() to " }"

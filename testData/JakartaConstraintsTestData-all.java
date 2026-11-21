@@ -39,36 +39,36 @@ public class JakartaConstraintsTestData {
 
     public void notFoldedAfterStatement(int quantity) <fold text='{...}' expand='true'>{
         <fold text='' expand='false'>System.out.</fold>println(<fold text='"start"' expand='false'>"start"</fold>);
-        <fold text='require(!(' expand='false'>if (</fold>quantity < 1<fold text=')) { ' expand='false'>) throw new IllegalArgumentException(</fold>"quantity"<fold text=' }' expand='false'>);</fold>
+        <fold text='require' expand='false'>if </fold>(quantity <fold text='>=' expand='false'><</fold> 1)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"quantity"<fold text=' }' expand='false'>);</fold>
     }</fold>
 
     public void notFoldedOtherException(String sku)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='check(!(' expand='false'>if (</fold>sku.<fold text='blank' expand='false'>isBlank()</fold><fold text=')) { ' expand='false'>) throw new IllegalStateException(</fold>"sku"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='check(!' expand='false'>if (</fold>sku.<fold text='blank' expand='false'>isBlank()</fold>)<fold text=' { ' expand='false'> throw new IllegalStateException(</fold>"sku"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void notFoldedDecimalBound(double weight)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='require(!(' expand='false'>if (</fold>weight < 1.5<fold text=')) { ' expand='false'>) throw new IllegalArgumentException(</fold>"weight"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='require(!' expand='false'>if </fold>(weight < 1.5)<fold text=') { ' expand='false'> throw new IllegalArgumentException(</fold>"weight"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void notFoldedOptional(Optional<String> note) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='require(!(' expand='false'>if (</fold>note.<fold text='empty' expand='false'>isEmpty()</fold><fold text=')) { ' expand='false'>) throw new IllegalArgumentException(</fold>"note"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'>
+        </fold><fold text='require(!' expand='false'>if (</fold>note.<fold text='empty' expand='false'>isEmpty()</fold>)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"note"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     public void notFoldedConstantBound(List<String> items) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='require(!(' expand='false'>if (</fold>items.size() > MAX_ITEMS<fold text=')) { ' expand='false'>) throw new IllegalArgumentException(</fold>"items"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'>
+        </fold><fold text='require' expand='false'>if </fold>(items.size() <fold text='<=' expand='false'>></fold> MAX_ITEMS)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"items"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     public void notFoldedEquality(int quantity)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='require(' expand='false'>if (</fold>quantity <fold text='!=' expand='false'>==</fold> 0<fold text=') { ' expand='false'>) throw new IllegalArgumentException(</fold>"quantity"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='require' expand='false'>if </fold>(quantity <fold text='!=' expand='false'>==</fold> 0)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"quantity"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void notFoldedField(int quantity)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='require(!(' expand='false'>if (</fold>stock < 1<fold text=')) { ' expand='false'>) throw new IllegalArgumentException(</fold>"stock"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='require' expand='false'>if </fold>(stock <fold text='>=' expand='false'><</fold> 1)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"stock"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void onlyFirstMinOfParameter<fold text='(@Min(1) ' expand='true'>(</fold>int quantity) <fold text='{...}' expand='true'>{<fold text='' expand='true'>
         </fold><fold text='' expand='true'>if (quantity < 1) throw new IllegalArgumentException("quantity");</fold>
-        <fold text='require(!(' expand='false'>if (</fold>quantity < 2<fold text=')) { ' expand='false'>) throw new IllegalArgumentException(</fold>"quantity"<fold text=' }' expand='false'>);</fold>
+        <fold text='require' expand='false'>if </fold>(quantity <fold text='>=' expand='false'><</fold> 2)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"quantity"<fold text=' }' expand='false'>);</fold>
     }</fold>
 
     public void notFoldedBranches(int quantity) <fold text='{...}' expand='true'>{

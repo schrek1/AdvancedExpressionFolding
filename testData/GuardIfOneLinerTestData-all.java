@@ -126,9 +126,9 @@ public class GuardIfOneLinerTestData {
     }</fold>
 
     void throwGuard(String name) <fold text='{...}' expand='true'>{
-        <fold text='assert' expand='false'>if</fold> <fold text='' expand='false'>(</fold>name <fold text='!=' expand='false'>==</fold> null) <fold text='{...}' expand='true'>{
-          <fold text=':' expand='false'> </fold> <fold text='' expand='false'>throw new IllegalArgumentException(</fold>"name"<fold text='' expand='false'>);
-        }</fold></fold>
+        <fold text='require' expand='false'>if </fold>(name <fold text='!=' expand='false'>==</fold> null) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
+            throw new IllegalArgumentException(</fold>"name"<fold text=' ' expand='false'>);
+        </fold>}</fold>
         <fold text='' expand='false'>System.out.</fold>println(name);
     }</fold>
 
