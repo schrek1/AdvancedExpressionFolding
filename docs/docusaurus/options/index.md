@@ -178,6 +178,12 @@ Shows `person.toBuilder().name("Alice").age(31).build()` as `person.copy(name = 
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ToBuilderCopyTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ToBuilderCopyTestData-folded.java)
 
+## builderNamedArguments
+### Builder chain as constructor call Person(name = ...)
+Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/BuilderNamedArgumentsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/BuilderNamedArgumentsTestData-folded.java)
+
 ## destructuring
 ### Destructuring assignment for array & list
 Implements destructuring assignments for arrays and lists.
