@@ -26,7 +26,13 @@ interface LombokFoldingTest : FoldingTestSection {
     )
 
     @Test
-    fun interfaceExtensionPropertiesTestData() = testCase.runFoldingTest(
+    fun lombokStandardExceptionTestData() = testCase.runFoldingTest(
+        foldingState()::lombok,
+        foldingState()::lombokStandardException,
+    )
+
+    @Test
+    fun interfaceExtensionPropertiesTestData()= testCase.runFoldingTest(
         foldingState()::interfaceExtensionProperties,
         foldingState()::lombok,
         foldingState()::nullable,
