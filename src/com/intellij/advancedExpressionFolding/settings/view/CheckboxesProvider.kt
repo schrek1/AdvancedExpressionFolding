@@ -125,6 +125,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streamspread")
         }
 
+        registerCheckbox(state::streamPredicates, "Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none") {
+            example(StreamPredicateTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streampredicates")
+        }
+
         registerCheckbox(state::logFolding, "Log folding") {
             example(LogBrackets::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#logfolding")

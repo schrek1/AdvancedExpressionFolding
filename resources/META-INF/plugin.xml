@@ -196,6 +196,7 @@
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.stream.StreamFilterMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.stream.StreamMapMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.stream.StreamMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.stream.StreamPredicateMethodCall"/>
     </extensions>
 
     <!-- ========================================== -->

@@ -115,6 +115,13 @@ Represents Java stream operations using Groovy-style spread operator syntax.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SpreadTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SpreadTestData-folded.java)
 
+## streamPredicates
+### Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none
+Shows `anyMatch` / `allMatch` / `noneMatch` on a collection's or an array's stream as Kotlin's `any` / `all` / `none`; the predicate keeps its own text.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/StreamPredicateTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/StreamPredicateTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/streamPredicates)
+
 ## lombok
 ### Display Java bean as Lombok
 Represents Java beans using Lombok-style annotations.
