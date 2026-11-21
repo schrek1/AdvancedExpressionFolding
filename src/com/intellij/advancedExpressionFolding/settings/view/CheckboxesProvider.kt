@@ -49,6 +49,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#getexpressionscollapse")
         }
 
+        registerCheckbox(state::getOrDefaultElvis, "Map.getOrDefault as map[key] ?: default") {
+            example(GetOrDefaultElvisTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#getordefaultelvis")
+        }
+
         registerCheckbox(
             state::concatenationExpressionsCollapse,
             "StringBuilder.append and Collection.add/remove expressions, interpolated Strings and Stream expressions"
@@ -100,9 +105,20 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#rangeexpressionscollapse")
         }
 
+        registerCheckbox(state::kotlinRangeLoops, "For loops in Kotlin range syntax: for (i in 0..<n)") {
+            example(KotlinRangeLoopsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinrangeloops")
+        }
+
         registerCheckbox(state::repeatLoop, "Counting for loops with an unused index as repeat(n)") {
             example(RepeatLoopTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#repeatloop")
+        }
+
+        registerCheckbox(state::reverseSteppedLoopsCollapse, "For loops, reverse and stepped ranges") {
+            example(ReverseSteppedLoopsTestData::class)
+            example(ReverseSteppedLoopsIntervalTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#reversesteppedloopscollapse")
         }
 
         registerCheckbox(state::checkExpressionsCollapse, "Null-safe calls") {
@@ -113,6 +129,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::ifNullSafe, "Extended null-safe ifs") {
             example(IfNullSafeData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#ifnullsafe")
+        }
+
+        registerCheckbox(state::nullOrEmpty, "Null-or-empty checks as isNullOrEmpty() / isNotEmpty()") {
+            example(NullOrEmptyTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#nullorempty")
         }
 
         registerCheckbox(state::kotlinQuickReturn, "Kotlin quick return") {
@@ -140,6 +161,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streamspread")
         }
 
+        registerCheckbox(state::streamPredicates, "Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none") {
+            example(StreamPredicateTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streampredicates")
+        }
+
         registerCheckbox(state::logFolding, "Log folding") {
             example(LogBrackets::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#logfolding")
@@ -163,6 +189,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#tobuildercopy")
         }
 
+        registerCheckbox(state::builderNamedArguments, "Builder chain as constructor call Person(name = ...)") {
+            example(BuilderNamedArgumentsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#buildernamedarguments")
+        }
+
         registerCheckbox(state::destructuring, "Destructuring assignment for array & list") {
             example(DestructuringAssignmentArrayTestData::class, "array")
             example(DestructuringAssignmentListTestData::class, "list")
@@ -172,6 +203,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::mapEntryDestructuring, "Destructuring for-each over Map.entrySet() as (key, value)") {
             example(MapEntryDestructuringTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#mapentrydestructuring")
+        }
+
+        registerCheckbox(state::objectDestructuring, "Destructuring locals read from record accessors & getters") {
+            example(ObjectDestructuringTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#objectdestructuring")
         }
 
         registerCheckbox(state::println, "Simplify System.out.println to println") {
@@ -241,6 +277,26 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdirtyoff")
         }
 
+        registerCheckbox(state::lombokNonNull, "Leading parameter null checks as Lombok @NonNull") {
+            example(LombokNonNullTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokNonNull")
+        }
+
+        registerCheckbox(state::lombokBuilder, "Display hand-written Lombok-shaped builder as @Builder") {
+            example(LombokBuilderTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokbuilder")
+        }
+
+        registerCheckbox(state::lombokDelegate, "Forwarding methods as Lombok @Delegate") {
+            example(LombokDelegateTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdelegate")
+        }
+
+        registerCheckbox(state::lombokUtilityClass, "Display a class of static members as Lombok @UtilityClass") {
+            example(LombokUtilityClassTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokutilityclass")
+        }
+
         registerCheckbox(state::lombokStandardException, "Lombok: exception with standard constructors as @StandardException") {
             example(LombokStandardExceptionTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokstandardexception")
@@ -251,6 +307,11 @@ abstract class CheckboxesProvider {
         }
         row {
             cell(createEditor(state::lombokPatternOff).component)
+        }
+
+        registerCheckbox(state::lombokSneakyThrows, "Whole-method try/catch that only rethrows as @SneakyThrows") {
+            example(LombokSneakyThrowsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokSneakyThrows")
         }
 
         registerCheckbox(state::expressionFunc, "Single-Expression Function") {
@@ -292,6 +353,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#patternmatchinginstanceof")
         }
 
+        registerCheckbox(state::instanceofSwitch, "instanceof chain as pattern switch") {
+            example(InstanceofSwitchTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#instanceofswitch")
+        }
+
         registerCheckbox(
             state::summaryParentOverride,
             "Displays a folded summary of overridden methods from parent classes and interfaces."
@@ -312,6 +378,11 @@ abstract class CheckboxesProvider {
             example(MethodDefaultParametersTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#methodDefaultParameters")
         }
+
+        registerCheckbox(state::lazyProperty, "Null-checked lazy getter as by lazy property") {
+            example(LazyPropertyTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lazyproperty")
+        }
         registerCheckbox(state::overrideHide, "Hide @Override annotation") {
             example(OverrideHideTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#overrideHide")
@@ -323,6 +394,14 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::pseudoAnnotations, "Pseudo-annotations: @Main, @Loggable") {
             example(PseudoAnnotationsMainTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#pseudoAnnotations")
+        }
+        registerCheckbox(state::singletonObject, "Singleton as Kotlin object") {
+            example(SingletonObjectTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#singletonObject")
+        }
+        registerCheckbox(state::joinToString, "String.join(sep, items) as items.joinToString(sep)") {
+            example(StringJoinTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#joinToString")
         }
         registerCheckbox(state::catchRethrow, "Catch block that only wraps and rethrows as rethrow") {
             example(CatchRethrowTestData::class)

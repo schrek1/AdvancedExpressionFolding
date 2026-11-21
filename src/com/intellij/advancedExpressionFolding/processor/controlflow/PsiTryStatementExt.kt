@@ -4,6 +4,7 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.semantic.HideExpression
 import com.intellij.advancedExpressionFolding.processor.*
 import com.intellij.advancedExpressionFolding.processor.core.BaseExtension
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokSneakyThrowsExt.isWholeMethodRethrow
 import com.intellij.advancedExpressionFolding.processor.lombok.MethodBodyInspector.rethrownException
 import com.intellij.psi.PsiStatement
 import com.intellij.psi.PsiTryStatement
@@ -14,7 +15,7 @@ object PsiTryStatementExt : BaseExtension() {
     fun createExpression(element: PsiTryStatement) = element.createSneakyThrows()
 
     fun PsiTryStatement.createSneakyThrows(): Expression? {
-        if (!experimental || !isSimpleTryCatch()) return null
+        if (!experimental || !isSimpleTryCatch() || isWholeMethodRethrow()) return null
 
         val catchBlock = catchSections.singleOrNull()?.takeIf {
             it.catchBlock?.statements?.singleOrNull() != null
@@ -52,7 +53,7 @@ object PsiTryStatementExt : BaseExtension() {
         return list.exprWrap(this, group())
     }
 
-    private fun String.selectivelyAddException() = this != "RuntimeException" && this != "IllegalStateException"
+    fun String.selectivelyAddException() = this != "RuntimeException" && this != "IllegalStateException"
 
     /**
      * Folds extra indentation spaces before a single statement in a try block.

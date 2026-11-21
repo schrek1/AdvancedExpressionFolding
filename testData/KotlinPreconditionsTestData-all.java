@@ -13,11 +13,11 @@ public class KotlinPreconditionsTestData {
         </fold></fold>this.name = <fold text='requireNotNull' expand='false'>Objects.requireNonNull</fold>(name<fold text=') { ' expand='false'>, </fold>"name"<fold text=' }' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
-    public void ship(String order, String customer, int quantity) <fold text='{...}' expand='true'>{
-        <fold text='require' expand='false'>if </fold>(order <fold text='!=' expand='false'>==</fold> null) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
-            throw new IllegalArgumentException(</fold>"order"<fold text=' ' expand='false'>);
-        </fold>}</fold>
-        <fold text='requireNotNull' expand='false'>Objects.requireNonNull</fold>(customer<fold text=') { ' expand='false'>, </fold>"customer"<fold text=' }' expand='false'>)</fold>;
+    public void ship<fold text='(@NonNull ' expand='true'>(</fold>String order,<fold text=' @NonNull ' expand='true'> </fold>String customer, int quantity) <fold text='{...}' expand='true'>{<fold text='' expand='true'>
+        </fold><fold text='' expand='true'>if (order == null) <fold text='{...}' expand='true'>{
+            throw new IllegalArgumentException("order");
+        }</fold></fold><fold text='' expand='true'>
+        </fold><fold text='' expand='true'>Objects.requireNonNull(customer, "customer");</fold>
         <fold text='requireNotNull' expand='false'>requireNonNull</fold>(name);
         <fold text='require' expand='false'>if </fold>(quantity <fold text='>' expand='false'><=</fold> 0)<fold text=' { ' expand='false'>
             throw new IllegalArgumentException(</fold>"Quantity must be positive: <fold text='$' expand='false'>" + </fold>quantity<fold text='"' expand='false'>)</fold><fold text=' }' expand='false'>;</fold>

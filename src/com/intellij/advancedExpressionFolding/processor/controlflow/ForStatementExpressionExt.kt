@@ -5,6 +5,7 @@ import com.intellij.advancedExpressionFolding.expression.controlflow.CompactCont
 import com.intellij.advancedExpressionFolding.expression.controlflow.ForEachIndexedStatement
 import com.intellij.advancedExpressionFolding.expression.controlflow.ForEachStatement
 import com.intellij.advancedExpressionFolding.expression.controlflow.ForStatement
+import com.intellij.advancedExpressionFolding.expression.controlflow.LoopStep
 import com.intellij.advancedExpressionFolding.expression.literal.NumberLiteral
 import com.intellij.advancedExpressionFolding.expression.operation.basic.Variable
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
@@ -18,15 +19,19 @@ import com.intellij.advancedExpressionFolding.settings.state.IExpressionCollapse
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiArrayAccessExpression
+import com.intellij.psi.PsiAssignmentExpression
 import com.intellij.psi.PsiBinaryExpression
 import com.intellij.psi.PsiBlockStatement
 import com.intellij.psi.PsiDeclarationStatement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
+import com.intellij.psi.PsiExpressionStatement
 import com.intellij.psi.PsiForStatement
 import com.intellij.psi.PsiIdentifier
+import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiPostfixExpression
+import com.intellij.psi.PsiPrefixExpression
 import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiReferenceExpression
 import com.intellij.psi.PsiStatement
@@ -123,6 +128,9 @@ object ForStatementExpressionExt :
                 }
             }
         }
+        if (reverseSteppedLoopsCollapse) {
+            getSteppedForStatement(element, document)?.let { return it }
+        }
         if (element.condition != null && element.lParenth != null && element.rParenth != null &&
             compactControlFlowSyntaxCollapse
         ) {
@@ -132,6 +140,68 @@ object ForStatementExpressionExt :
             )
         }
         return null
+    }
+
+    private fun getSteppedForStatement(element: PsiForStatement, document: Document): Expression? {
+        val lParenth = element.lParenth ?: return null
+        val rParenth = element.rParenth ?: return null
+        val loopVariable = (element.initialization as? PsiDeclarationStatement)
+            ?.declaredElements?.singleOrNull() as? PsiVariable ?: return null
+        val initializer = loopVariable.initializer ?: return null
+        val identifier = loopVariable.nameIdentifier ?: return null
+        if (loopVariable.type.canonicalText != "int" && loopVariable.type.canonicalText != "long") {
+            return null
+        }
+        val condition = element.condition as? PsiBinaryExpression ?: return null
+        val conditionEnd = condition.rOperand ?: return null
+        if (!isReferenceTo(condition.lOperand as? PsiReferenceExpression, loopVariable)) {
+            return null
+        }
+        val update = (element.update as? PsiExpressionStatement)?.expression ?: return null
+        val step = stepOf(update, loopVariable) ?: return null
+        val sign = condition.operationSign.text
+        val expectedSigns = if (step.loopStep.descending) setOf(">", ">=") else setOf("<", "<=")
+        // Kotlin's `downTo` always includes its end
+        if (sign !in expectedSigns || kotlinRangeLoops && sign == ">") {
+            return null
+        }
+        return ForStatement(
+            element,
+            TextRange.create(lParenth.textRange.startOffset + 1, step.amount?.textRange?.startOffset ?: rParenth.textRange.startOffset),
+            Variable(identifier, identifier.textRange, null, identifier.text, false),
+            BuildExpressionExt.getAnyExpression(initializer, document),
+            true,
+            BuildExpressionExt.getAnyExpression(conditionEnd, document),
+            sign.endsWith("="),
+            step.loopStep
+        )
+    }
+
+    private class Step(val loopStep: LoopStep, val amount: PsiExpression? = null)
+
+    private fun stepOf(update: PsiExpression, loopVariable: PsiVariable): Step? = when (update) {
+        is PsiPostfixExpression -> Step(LoopStep(descending = true, amountWritten = false)).takeIf {
+            update.operationSign.text == "--" && isReferenceTo(update.operand as? PsiReferenceExpression, loopVariable)
+        }
+        is PsiPrefixExpression -> Step(LoopStep(descending = true, amountWritten = false)).takeIf {
+            update.operationSign.text == "--" && isReferenceTo(update.operand as? PsiReferenceExpression, loopVariable)
+        }
+        is PsiAssignmentExpression -> {
+            val amount = update.rExpression
+            // a literal or a variable only, so the `-` prefix of `-=` cannot change the meaning of a longer expression
+            if (amount !is PsiLiteralExpression && amount !is PsiReferenceExpression ||
+                !isReferenceTo(update.lExpression as? PsiReferenceExpression, loopVariable)
+            ) {
+                null
+            } else {
+                when (update.operationSign.text) {
+                    "+=" -> Step(LoopStep(descending = false, amountWritten = true), amount)
+                    "-=" -> Step(LoopStep(descending = true, amountWritten = true), amount)
+                    else -> null
+                }
+            }
+        }
+        else -> null
     }
 
     private fun buildIndexedOrSimpleForEach(

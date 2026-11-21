@@ -14,6 +14,8 @@ enum class LombokFoldingAnnotation(val annotation: String) {
     LOMBOK_HASHCODE("@HashCode"),
     LOMBOK_TO_STRING("@ToString"),
     LOMBOK_BUILDER("@HasBuilder"),
+    LOMBOK_EXACT_BUILDER("@Builder"),
+    LOMBOK_UTILITY_CLASS("@UtilityClass"),
 
     LOMBOK_NO_ARGS_CONSTRUCTOR("@NoArgsConstructor"),
     LOMBOK_ALL_ARGS_CONSTRUCTOR("@AllArgsConstructor"),
@@ -21,6 +23,7 @@ enum class LombokFoldingAnnotation(val annotation: String) {
 
     LOMBOK_FIELD_CONSTRUCTOR("@Constructor"),
     LOMBOK_POST_CONSTRUCTOR("@PostConstructor"),
+    LOMBOK_DELEGATE("@Delegate"),
     LOMBOK_STANDARD_EXCEPTION("@StandardException"),
 
     LOMBOK_DATA("@Data") {
