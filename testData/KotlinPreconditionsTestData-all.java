@@ -73,12 +73,12 @@ public class KotlinPreconditionsTestData {
 
     public String describe(int state) <fold text='{...}' expand='true'>{
         switch <fold text='' expand='false'>(</fold>state<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            case 0:
-                return "new";
-            case 1:
-                return "done";
-            default:
-                <fold text='error' expand='false'>throw new IllegalStateException</fold>("Unknown state <fold text='$' expand='false'>" + </fold>state<fold text='")' expand='false'>)</fold>;
+            case 0<fold text=' -> ' expand='false'>:
+                </fold>return "new";
+            case 1<fold text=' -> ' expand='false'>:
+                </fold>return "done";
+            default<fold text=' -> ' expand='false'>:
+                </fold><fold text='error' expand='false'>throw new IllegalStateException</fold>("Unknown state <fold text='$' expand='false'>" + </fold>state<fold text='")' expand='false'>)</fold>;
         }</fold>
     }</fold>
 

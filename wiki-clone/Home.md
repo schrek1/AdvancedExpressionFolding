@@ -473,6 +473,13 @@ Shows a catch block whose only statement wraps the caught exception, `throw new 
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/CatchRethrowTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/catchRethrow)
 
+## switchArrow
+### Classic switch as arrow switch
+Shows a classic `switch` whose every case is one statement ended by `break` (or a lone `return`/`throw`) as an arrow switch (`case A, B -> statement;`). Fall-through, a case with more statements, an empty case or a comment keeps the switch as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SwitchArrowTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SwitchArrowTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/switchArrow)
+
 ## experimental
 ### Experimental features
 Various experimental features for advanced code folding.
