@@ -26,6 +26,10 @@
             </className>
         </intentionAction>
 
+        <!-- Hides parameter name hints inside a folded `map[key] ?: default` -->
+        <codeInsight.parameterNameHintsSuppressor
+                implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.GetOrDefaultHintsSuppressor"/>
+
         <!-- Submits plugin errors to JetBrains Marketplace for diagnostics -->
         <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
 
@@ -174,6 +178,7 @@
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionsUnmodifiableListMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionsUnmodifiableSetMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionStreamMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapGetOrDefaultMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapPutMethodCall"/>
 
         <!-- Date Method Calls -->

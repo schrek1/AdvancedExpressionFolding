@@ -20,6 +20,9 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     fun getSetPutTestData() = testCase.runFoldingTest(foldingState()::getExpressionsCollapse)
 
     @Test
+    fun getOrDefaultElvisTestData() = testCase.runFoldingTest(foldingState()::getOrDefaultElvis)
+
+    @Test
     fun sliceTestData() = testCase.runFoldingTest(foldingState()::slicingExpressionsCollapse)
 
     @Test

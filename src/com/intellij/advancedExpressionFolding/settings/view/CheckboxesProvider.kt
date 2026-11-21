@@ -49,6 +49,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#getexpressionscollapse")
         }
 
+        registerCheckbox(state::getOrDefaultElvis, "Map.getOrDefault as map[key] ?: default") {
+            example(GetOrDefaultElvisTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#getordefaultelvis")
+        }
+
         registerCheckbox(
             state::concatenationExpressionsCollapse,
             "StringBuilder.append and Collection.add/remove expressions, interpolated Strings and Stream expressions"
