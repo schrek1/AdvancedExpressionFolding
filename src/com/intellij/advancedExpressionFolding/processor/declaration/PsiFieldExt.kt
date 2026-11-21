@@ -11,6 +11,7 @@ import com.intellij.advancedExpressionFolding.processor.prevWhiteSpace
 import com.intellij.advancedExpressionFolding.processor.takeIfSizeNot
 import com.intellij.advancedExpressionFolding.processor.language.java.ConstructorReferenceExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.ConstExt
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.LazyPropertyExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.NullableExt.fieldAnnotationExpression
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.NullableExt.findPropertyAnnotation
 import com.intellij.advancedExpressionFolding.processor.lombok.FieldLevelAnnotation
@@ -31,8 +32,11 @@ object PsiFieldExt : IKotlinLanguageState by State()() {
         } ?: return null
 
         val list = exprList()
+        val lazyPropertyExpression = if (lazyProperty) LazyPropertyExt.createExpression(field) else null
 
-        field.callback?.invoke()?.let { annotations: List<FieldLevelAnnotation> ->
+        field.callback?.invoke()?.filterNot { fieldLevelAnnotation ->
+            lazyPropertyExpression?.getter in fieldLevelAnnotation.method
+        }?.let { annotations: List<FieldLevelAnnotation> ->
 
             val annotationsAsString = mutableListOf<String>()
             val elementsToHide = mutableListOf<PsiElement?>()
@@ -62,6 +66,8 @@ object PsiFieldExt : IKotlinLanguageState by State()() {
         list.addIfEnabled(const) {
             ConstExt.fieldConstExpression(field, typeElement)
         }
+
+        list += lazyPropertyExpression
         return list.exprWrap(field)
     }
 
