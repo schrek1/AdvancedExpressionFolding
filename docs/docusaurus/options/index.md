@@ -306,6 +306,12 @@ Hides the null checks at the start of a method body and shows `@NonNull` on each
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokNonNullTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokNonNullTestData-folded.java)
 
+## jakartaConstraints
+### Leading parameter checks as Jakarta Validation constraints
+Hides the argument checks at the start of a method body and shows the matching Jakarta Validation constraint (`@Min`, `@Max`, `@Positive`, `@NotBlank`, `@NotEmpty`, `@Size`) on each checked parameter instead.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/JakartaConstraintsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/JakartaConstraintsTestData-folded.java)
+
 ## lombokBuilder
 ### Display hand-written Lombok-shaped builder as @Builder
 Hides a hand-written builder that has exactly the shape Lombok `@Builder` generates and shows `@Builder` on the class. A builder with anything extra (validation or defaults, an extra method, a different argument order) keeps the `@HasBuilder` label.

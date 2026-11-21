@@ -35,10 +35,10 @@ public class KotlinPreconditionsTestData {
         </fold>}</fold>
     }</fold>
 
-    public void restock(String sku, int stock, long reserved, Integer limit, char grade, double price, Object item) <fold text='{...}' expand='true'>{
-        <fold text='require' expand='false'>if </fold>(stock <fold text='>=' expand='false'><</fold> 0) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
-            throw new IllegalArgumentException(</fold>"stock"<fold text=' ' expand='false'>);
-        </fold>}</fold>
+    public void restock(String sku,<fold text=' @PositiveOrZero ' expand='true'> </fold>int stock, long reserved, Integer limit, char grade, double price, Object item) <fold text='{...}' expand='true'>{<fold text='' expand='true'>
+        </fold><fold text='' expand='true'>if (stock < 0) <fold text='{...}' expand='true'>{
+            throw new IllegalArgumentException("stock");
+        }</fold></fold>
         <fold text='check' expand='false'>if </fold>(reserved <fold text='<=' expand='false'>></fold> stock) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalStateException(</fold>"over-reserved"<fold text=' ' expand='false'>);
         </fold>}</fold>

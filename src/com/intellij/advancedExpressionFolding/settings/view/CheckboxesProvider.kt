@@ -287,6 +287,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokNonNull")
         }
 
+        registerCheckbox(state::jakartaConstraints, "Leading parameter checks as Jakarta Validation constraints") {
+            example(JakartaConstraintsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#jakartaConstraints")
+        }
+
         registerCheckbox(state::lombokBuilder, "Display hand-written Lombok-shaped builder as @Builder") {
             example(LombokBuilderTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokbuilder")
