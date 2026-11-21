@@ -41,8 +41,29 @@ class InterpolatedString(
             InterpolatedString::class.java.name + if (isHighlighted()) Expression.HIGHLIGHTED_GROUP_POSTFIX else ""
         )
         val descriptors = mutableListOf<FoldingDescriptor>()
+        val operandDescriptors = operands.map { operand ->
+            if (operand.supportsFoldRegions(document, this)) {
+                operand.buildFoldRegions(operand.element, document, this).toMutableList()
+            } else {
+                mutableListOf()
+            }
+        }
         var suffix = ""
-        if (firstIsQuoteCharacter) {
+        val leftHost = if (first !is CharSequenceLiteral && !firstIsQuoteCharacter) {
+            operandDescriptors.first().hostAt(document, first.textRange.startOffset, atStart = true)
+        } else {
+            null
+        }
+        if (leftHost != null) {
+            // the operand already folds at the string's start, so its placeholder opens the string
+            // and the real character before it keeps its colour
+            val opening = if (first.isPlainName()) "\"${'$'}" else "\"${'$'}{"
+            if (!first.isPlainName()) {
+                suffix = "}"
+            }
+            operandDescriptors.first().replace(leftHost, opening + leftHost.placeholderText)
+            foldTakenCharacter(document, first.textRange.startOffset - 1, overflowLeftPlaceholder, group, descriptors)
+        } else if (firstIsQuoteCharacter) {
             descriptors += FoldingDescriptor(
                 element.node,
                 TextRange.create(first.textRange.startOffset, first.textRange.endOffset),
@@ -143,7 +164,18 @@ class InterpolatedString(
             }
             val end = last.textRange.startOffset
             val overflowRightText = document.getText(overflowRightRange)
-            if (OVERFLOW_CHARACTERS.contains(overflowRightText)) {
+            val rightHost = operandDescriptors.last().hostAt(document, last.textRange.endOffset, atStart = false)
+            if (rightHost != null) {
+                descriptors += FoldingDescriptor(
+                    element.node,
+                    TextRange.create(start, end),
+                    group,
+                    if (last.isPlainName()) "$" else "${'$'}{"
+                )
+                val closing = (if (last.isPlainName()) "" else "}") + "\""
+                operandDescriptors.last().replace(rightHost, rightHost.placeholderText + closing)
+                foldTakenCharacter(document, last.textRange.endOffset, overflowRightPlaceholder, group, descriptors)
+            } else if (OVERFLOW_CHARACTERS.contains(overflowRightText)) {
                 val overflowText = overflowRightPlaceholder ?: overflowRightText
                 if (last.isPlainName()) {
                     descriptors += FoldingDescriptor(
@@ -181,12 +213,36 @@ class InterpolatedString(
                 )
             }
         }
-        for (operand in operands) {
-            if (operand.supportsFoldRegions(document, this)) {
-                descriptors += operand.buildFoldRegions(operand.element, document, this).toList()
-            }
-        }
+        operandDescriptors.forEach { descriptors += it }
         return descriptors.toTypedArray()
+    }
+
+    /// The operand's own fold that starts (or ends) exactly at `offset` and changes its text, the widest one.
+    private fun List<FoldingDescriptor>.hostAt(document: Document, offset: Int, atStart: Boolean): FoldingDescriptor? =
+        filter { if (atStart) it.range.startOffset == offset else it.range.endOffset == offset }
+            .filter { it.placeholderText != document.getText(it.range) }
+            .maxByOrNull { it.range.length }
+
+    private fun MutableList<FoldingDescriptor>.replace(host: FoldingDescriptor, placeholder: String) {
+        this[indexOf(host)] = FoldingDescriptor(host.element, host.range, host.group, placeholder)
+    }
+
+    /// A caller that took the neighbouring character out of its own fold (see `PreconditionExt`) still needs it
+    /// replaced by that fold's text, even though the string no longer borrows it.
+    private fun foldTakenCharacter(
+        document: Document,
+        offset: Int,
+        placeholder: String?,
+        group: FoldingGroup,
+        descriptors: MutableList<FoldingDescriptor>,
+    ) {
+        if (placeholder == null || offset < 0 || offset >= document.textLength) {
+            return
+        }
+        val range = TextRange.create(offset, offset + 1)
+        if (document.getText(range) != placeholder) {
+            descriptors += FoldingDescriptor(element.node, range, group, placeholder)
+        }
     }
 
     override fun isRightOverflow(): Boolean = operands.last() !is CharSequenceLiteral

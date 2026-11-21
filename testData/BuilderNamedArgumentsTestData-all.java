@@ -13,7 +13,7 @@ public class BuilderNamedArgumentsTestData {
         <fold text='val' expand='false'>Person</fold> mapped = Person<fold text='(' expand='false'>.builder()
                 .</fold>name<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getName()</fold>)<fold text='' expand='false'>
                 .build()</fold>;
-        <fold text='val' expand='false'>Person</fold> titled = Person.builder().name("Dr. <fold text='${' expand='false'>" + </fold>source.<fold text='name' expand='false'>getName()</fold><fold text='}")' expand='false'>)</fold>.build();
+        <fold text='val' expand='false'>Person</fold> titled = Person.builder().name("Dr. <fold text='${' expand='false'>" + </fold>source.<fold text='name}"' expand='false'>getName()</fold>).build();
         <fold text='val' expand='false'>Person</fold> commented = Person<fold text='(' expand='false'>.builder()</fold>
                 // a comment keeps the chain on its lines
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Dave"<fold text='' expand='false'>)</fold>

@@ -5,7 +5,7 @@ import java.util.List;
 public class KotlinRangeLoopsTestData {
     public void printOrders(List<String> orders, String[] items, int pageSize) <fold text='{...}' expand='true'>{
         for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='..<' expand='false'>; i < </fold>orders.size()<fold text='' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println<fold text='("$' expand='false'>(</fold>i<fold text='' expand='false'> + "</fold>: <fold text='${' expand='false'>" + </fold>orders<fold text='[' expand='false'>.get(</fold>i<fold text=']' expand='false'>)</fold><fold text='}")' expand='false'>)</fold>;
+            <fold text='' expand='false'>System.out.</fold>println<fold text='("$' expand='false'>(</fold>i<fold text='' expand='false'> + "</fold>: <fold text='${' expand='false'>" + </fold>orders<fold text='[' expand='false'>.get(</fold>i<fold text=']}"' expand='false'>)</fold>);
         }</fold>
         for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>page<fold text=' in ' expand='false'> = </fold>1<fold text='..' expand='false'>; page <= </fold>pageSize<fold text='' expand='false'>; page++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(page);
