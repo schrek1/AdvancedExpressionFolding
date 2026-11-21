@@ -70,21 +70,28 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         val throwStatement = guardThrow(element) ?: return null
         val thrown = preconditionThrow(throwStatement) ?: return null
         val condition = element.condition ?: return null
+        val lParenth = element.lParenth ?: return null
+        val rParenth = element.rParenth ?: return null
         val function = if (thrown.exceptionType == ILLEGAL_ARGUMENT) "require" else "check"
 
+        // The `if` parentheses stay real text and become the call's parentheses.
         val gaps = mutableListOf<Pair<TextRange, String>>()
         val shownCondition = mutableListOf<PsiElement>()
-        val opening = (element.start() to condition.start()).toTextRange()
-        var closing = ")"
+        var closing = ""
         val negation = ExactNegation.of(condition)
-        if (negation != null) {
-            gaps += opening to "$function(${negation.prefix}"
+        if (negation == null) {
+            gaps += (element.start() to lParenth.start()).toTextRange() to "$function(!"
+            closing = ")"
+            shownCondition += condition
+        } else {
+            gaps += if (negation.prefix.isEmpty()) {
+                (element.start() to lParenth.start()).toTextRange() to function
+            } else {
+                // A leading `!` needs a covered character to stand in, so the `(` joins the opening.
+                (element.start() to condition.start()).toTextRange() to "$function(${negation.prefix}"
+            }
             gaps += negation.gaps
             shownCondition += negation.shown
-        } else {
-            gaps += opening to "$function(!("
-            closing = "))"
-            shownCondition += condition
         }
 
         val message = thrown.message
@@ -93,17 +100,17 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         val rBrace = block?.rBrace
         when {
             message == null ->
-                gaps += (condition.end() to element.end()).toTextRange() to closing
+                gaps += (rParenth.end() to element.end()).toTextRange() to closing
 
             // The braces stay real text: a gap across them would cut through the block's own `{...}` fold.
             lBrace != null && rBrace != null -> {
-                gaps += (condition.end() to lBrace.start()).toTextRange() to "$closing "
+                gaps += (rParenth.end() to lBrace.start()).toTextRange() to "$closing "
                 gaps += (lBrace.end() to message.start()).toTextRange() to " "
                 gaps += (message.end() to rBrace.start()).toTextRange() to " "
             }
 
             else -> {
-                gaps += (condition.end() to message.start()).toTextRange() to "$closing { "
+                gaps += (rParenth.end() to message.start()).toTextRange() to "$closing { "
                 gaps += (message.end() to element.end()).toTextRange() to " }"
             }
         }
@@ -122,9 +129,10 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         if (enclosingIf != null && guardThrow(enclosingIf) == element) {
             return null
         }
-        val exception = element.exception ?: return null
+        val exception = element.exception as? PsiNewExpression ?: return null
+        val arguments = exception.argumentList ?: return null
         val gaps = mutableListOf(
-            (element.start() to message.start()).toTextRange() to "error(",
+            (element.start() to arguments.start()).toTextRange() to "error",
             (message.end() to exception.end()).toTextRange() to ")",
         )
         return PreconditionExpression(element, gaps, listOf(gaps.attachMessage(message, document)))
@@ -139,7 +147,7 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         if (!kotlinPreconditions || (message != null && !message.isString())) {
             return null
         }
-        val gaps = mutableListOf((element.start() to value.start()).toTextRange() to "requireNotNull(")
+        val gaps = mutableListOf((element.start() to element.argumentList.start()).toTextRange() to "requireNotNull")
         if (message != null) {
             gaps += (value.end() to message.start()).toTextRange() to ") { "
             gaps += (message.end() to element.end()).toTextRange() to " }"

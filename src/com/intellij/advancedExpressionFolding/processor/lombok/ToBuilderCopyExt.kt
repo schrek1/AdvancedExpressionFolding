@@ -44,15 +44,17 @@ object ToBuilderCopyExt : IExpressionCollapseState by State()() {
         if (!setters.all { it.isFieldSetterOf(builderClass, document) }) {
             return null
         }
+        toBuilder.dotOffset() ?: return null
         return NamedArgumentsCall(
             element = build,
-            openRange = TextRange(toBuilder.dotOffset() ?: return null, toBuilder.textRange.endOffset),
-            openText = ".copy(",
+            openRange = TextRange(toBuilder.nameStart() ?: return null, toBuilder.textRange.endOffset),
+            openText = "copy(",
             arguments = setters.map { setter ->
+                val name = setter.methodExpression.referenceNameElement?.textRange ?: return null
                 val value = setter.argumentList.expressions.single().textRange
                 NamedArgument(
-                    name = setter.methodExpression.referenceName!!,
-                    prefixRange = TextRange(setter.dotOffset() ?: return null, value.startOffset),
+                    separatorRange = TextRange(setter.dotOffset() ?: return null, name.startOffset),
+                    assignRange = TextRange(name.endOffset, value.startOffset),
                     suffixRange = TextRange(value.endOffset, setter.textRange.endOffset),
                 )
             },
@@ -76,6 +78,8 @@ object ToBuilderCopyExt : IExpressionCollapseState by State()() {
     private fun PsiMethodCallExpression.dotOffset() = methodExpression.children
         .firstOrNull { it is PsiJavaToken && it.tokenType == JavaTokenType.DOT }
         ?.textRange?.startOffset
+
+    private fun PsiMethodCallExpression.nameStart() = methodExpression.referenceNameElement?.textRange?.startOffset
 
     private fun PsiType?.resolveClass() = (this as? PsiClassType)?.resolve()
 
