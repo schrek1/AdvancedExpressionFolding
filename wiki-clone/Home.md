@@ -105,6 +105,13 @@ Provides extended null-safe if operations.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IfNullSafeData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/ifNullSafe)
 
+## nullOrEmpty
+### Null-or-empty checks as isNullOrEmpty() / isNotEmpty()
+Shows `x == null || x.isEmpty()` as `x.isNullOrEmpty()` and `x != null && !x.isEmpty()` as `x.isNotEmpty()`; `length()` / `size()` compared with `0` count too, and so do the null-safe `isEmpty(x)` / `isNotEmpty(x)` of Apache Commons and Spring utility classes.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/NullOrEmptyTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/NullOrEmptyTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/nullOrEmpty)
+
 ## kotlinQuickReturn
 ### Kotlin quick return
 Implements a quick return syntax similar to Kotlin.
