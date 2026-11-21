@@ -11,7 +11,7 @@ public class LombokUtilityClassTestData {
         <fold text='const' expand='false'>public <fold text='' expand='false'>static</fold><fold text='' expand='false'> </fold>final </fold><fold text='' expand='false'>int</fold> SCALE = 2;<fold text='' expand='false'>
 
         </fold><fold text='' expand='false'>private Money()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold>throw new UnsupportedOperationException()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold></fold>
 
         public <fold text='' expand='false'>static</fold><fold text='' expand='false'> </fold>BigDecimal round(BigDecimal value)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -55,7 +55,7 @@ public class LombokUtilityClassTestData {
     // not a utility class: has an instance method
     public static <fold text='' expand='false'>final</fold> class Shop <fold text='{...}' expand='true'>{
         private Shop()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold>throw new UnsupportedOperationException()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         public static Shop open()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -70,7 +70,7 @@ public class LombokUtilityClassTestData {
     // not a utility class: the constructor is not private
     public static <fold text='' expand='false'>final</fold> class Person <fold text='{...}' expand='true'>{
         public Person()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold>throw new UnsupportedOperationException()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         public static String greet(String name)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
