@@ -148,6 +148,13 @@ Represents Java stream operations using Groovy-style spread operator syntax.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SpreadTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SpreadTestData-folded.java)
 
+## streamPredicates
+### Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none
+Shows `anyMatch` / `allMatch` / `noneMatch` on a collection's or an array's stream as Kotlin's `any` / `all` / `none`; the predicate keeps its own text.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/StreamPredicateTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/StreamPredicateTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/streamPredicates)
+
 ## lombok
 ### Display Java bean as Lombok
 Represents Java beans using Lombok-style annotations.
@@ -186,6 +193,13 @@ Shows `person.toBuilder().name("Alice").age(31).build()` as `person.copy(name = 
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ToBuilderCopyTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/toBuilderCopy)
 
+## builderNamedArguments
+### Builder chain as constructor call Person(name = ...)
+Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/BuilderNamedArgumentsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/BuilderNamedArgumentsTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/builderNamedArguments)
+
 ## destructuring
 ### Destructuring assignment for array & list
 Implements destructuring assignments for arrays and lists.
@@ -201,6 +215,13 @@ Shows `for (Map.Entry<K, V> e : map.entrySet())` as `for ((key, value) in map)` 
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/MapEntryDestructuringTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MapEntryDestructuringTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/mapEntryDestructuring)
+
+## objectDestructuring
+### Destructuring locals read from record accessors & getters
+Shows consecutive locals read from accessors of one object, such as `String customer = order.customer();` and `BigDecimal total = order.getTotal();`, as `val (customer, total) = order`, when each local is named after its accessor.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ObjectDestructuringTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ObjectDestructuringTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/objectDestructuring)
 
 ## println
 ### Simplify System.out.println to println
@@ -280,6 +301,13 @@ Prevents all Lombok folding for classes matching the pattern
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokPatternOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokPatternOffTestData-folded.java)
 
+## lombokDelegate
+### Forwarding methods as Lombok @Delegate
+Hides public methods that only pass their parameters on to the same-named method of a field, and marks that field with @Delegate.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokDelegateTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokDelegateTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokDelegate)
+
 ## lombokUtilityClass
 ### Display a class of static members as Lombok @UtilityClass
 Shows a class with only static members and a private constructor as `@UtilityClass`, hiding the constructor and the `static` and `final` modifiers. A singleton with an `INSTANCE` of its own type stays unfolded.
@@ -350,6 +378,13 @@ Simplifies constructor references and inline field initialization.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/MethodDefaultParametersTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MethodDefaultParametersTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/methodDefaultParameters)
+
+## lazyProperty
+### Null-checked lazy getter as by lazy property
+Shows a private field and the null-checked lazy getter right below it (`if (field == null) { field = init; } return field;`) as one Kotlin-style `val field by lazy { init }` line; the field name and `init` stay real code. A field with an initializer, a getter elsewhere in the class, a getter with more statements or an `else`, or a field assigned anywhere else stays as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LazyPropertyTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LazyPropertyTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lazyProperty)
 
 ## pseudoAnnotations
 ### Pseudo-annotations for main method generation
