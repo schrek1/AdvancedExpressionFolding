@@ -70,8 +70,8 @@ object PsiMethodExt : BaseExtension() {
         }
 
         val list = exprList(readCheckNotNullMethods(parameter, document))
-        list.addIfEnabled(lombokNonNull) {
-            LombokNonNullExt.parameterAnnotation(parameter)
+        list.addIfEnabled(lombokNonNull || jakartaConstraints) {
+            LeadingParameterChecksExt.parameterAnnotation(parameter)
         }
         list += fieldAnnotationExpression(
             parameter.annotations,

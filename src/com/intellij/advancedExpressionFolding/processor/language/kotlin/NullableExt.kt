@@ -5,7 +5,7 @@ import com.intellij.advancedExpressionFolding.expression.semantic.kotlin.CheckNo
 import com.intellij.advancedExpressionFolding.expression.semantic.lombok.NullAnnotationExpression
 import com.intellij.advancedExpressionFolding.processor.*
 import com.intellij.advancedExpressionFolding.processor.core.getAnyExpression
-import com.intellij.advancedExpressionFolding.processor.lombok.LombokNonNullExt
+import com.intellij.advancedExpressionFolding.processor.declaration.LeadingParameterChecksExt
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
 import com.intellij.openapi.editor.Document
@@ -48,7 +48,7 @@ object NullableExt : IKotlinLanguageState by State()() {
         return element.parent.parent.asInstance<PsiMethod>()?.let {
             it.body?.statements
         }?.let { statements ->
-            val expressionMutableList = statements.asSequence().dropWhile(LombokNonNullExt::hides).map {
+            val expressionMutableList = statements.asSequence().dropWhile(LeadingParameterChecksExt::hides).map {
                 it.firstChild.asInstance<PsiMethodCallExpression>()
             }.takeWhile {
                 it != null

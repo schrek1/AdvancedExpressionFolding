@@ -87,7 +87,7 @@ public class GuardIfOneLinerTestData {
 
     List<String> moreThanOneStatement(List<String> items) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"empty"' expand='false'>"empty"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("empty");
             return List.of();
         }</fold>
         return items;

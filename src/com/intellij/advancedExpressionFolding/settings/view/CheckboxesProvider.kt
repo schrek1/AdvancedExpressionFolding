@@ -287,6 +287,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokNonNull")
         }
 
+        registerCheckbox(state::jakartaConstraints, "Leading parameter checks as Jakarta Validation constraints") {
+            example(JakartaConstraintsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#jakartaConstraints")
+        }
+
         registerCheckbox(state::lombokBuilder, "Display hand-written Lombok-shaped builder as @Builder") {
             example(LombokBuilderTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokbuilder")
@@ -411,6 +416,10 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::catchRethrow, "Catch block that only wraps and rethrows as rethrow") {
             example(CatchRethrowTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#catchRethrow")
+        }
+        registerCheckbox(state::switchArrow, "Classic switch as arrow switch") {
+            example(SwitchArrowTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#switchArrow")
         }
         // NEW OPTION
         registerCheckbox(state::memoryImprovement, "Memory improvements")

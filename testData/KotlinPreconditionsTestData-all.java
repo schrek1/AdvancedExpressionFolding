@@ -35,10 +35,10 @@ public class KotlinPreconditionsTestData {
         </fold>}</fold>
     }</fold>
 
-    public void restock(String sku, int stock, long reserved, Integer limit, char grade, double price, Object item) <fold text='{...}' expand='true'>{
-        <fold text='require' expand='false'>if </fold>(stock <fold text='>=' expand='false'><</fold> 0) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
-            throw new IllegalArgumentException(</fold>"stock"<fold text=' ' expand='false'>);
-        </fold>}</fold>
+    public void restock(String sku,<fold text=' @PositiveOrZero ' expand='true'> </fold>int stock, long reserved, Integer limit, char grade, double price, Object item) <fold text='{...}' expand='true'>{<fold text='' expand='true'>
+        </fold><fold text='' expand='true'>if (stock < 0) <fold text='{...}' expand='true'>{
+            throw new IllegalArgumentException("stock");
+        }</fold></fold>
         <fold text='check' expand='false'>if </fold>(reserved <fold text='<=' expand='false'>></fold> stock) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalStateException(</fold>"over-reserved"<fold text=' ' expand='false'>);
         </fold>}</fold>
@@ -73,18 +73,18 @@ public class KotlinPreconditionsTestData {
 
     public String describe(int state) <fold text='{...}' expand='true'>{
         switch <fold text='' expand='false'>(</fold>state<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            case 0:
-                return "new";
-            case 1:
-                return "done";
-            default:
-                <fold text='error' expand='false'>throw new IllegalStateException</fold>("Unknown state <fold text='$' expand='false'>" + </fold>state<fold text='")' expand='false'>)</fold>;
+            case 0<fold text=' -> ' expand='false'>:
+                </fold>return "new";
+            case 1<fold text=' -> ' expand='false'>:
+                </fold>return "done";
+            default<fold text=' -> ' expand='false'>:
+                </fold><fold text='error' expand='false'>throw new IllegalStateException</fold>("Unknown state <fold text='$' expand='false'>" + </fold>state<fold text='")' expand='false'>)</fold>;
         }</fold>
     }</fold>
 
     public void notFolded(String order, Exception cause) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>order == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"missing order"' expand='false'>"missing order"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("missing order");
             throw new IllegalArgumentException("order");
         }</fold>
         if <fold text='' expand='false'>(</fold>order.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{

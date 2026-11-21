@@ -11,7 +11,7 @@ public class OverrideHideTestData {
         <fold text='val' expand='false'>Runnable</fold> runner = <fold text='run() → { ' expand='false'>new Runnable() {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public void run() {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='false'>System.out.</fold>println(<fold text='"Running in anonymous class"' expand='false'>"Running in anonymous class"</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='false'>System.out.</fold>println("Running in anonymous class")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}
         }</fold>;
         runner.run();
@@ -26,23 +26,23 @@ public class OverrideHideTestData {
     }</fold>
     class Animal <fold text='{...}' expand='true'>{
         public void makeSound()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='false'>System.out.</fold>println(<fold text='"Animal makes a sound"' expand='false'>"Animal makes a sound"</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='false'>System.out.</fold>println("Animal makes a sound")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         public void eat()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='false'>System.out.</fold>println(<fold text='"Animal eats food"' expand='false'>"Animal eats food"</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='false'>System.out.</fold>println("Animal eats food")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
     class Dog extends Animal <fold text='{...}' expand='true'>{
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public void makeSound()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='false'>System.out.</fold>println(<fold text='"Dog barks"' expand='false'>"Dog barks"</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='false'>System.out.</fold>println("Dog barks")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public void eat()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='false'>System.out.</fold>println(<fold text='"Dog eats kibble"' expand='false'>"Dog eats kibble"</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='false'>System.out.</fold>println("Dog eats kibble")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 

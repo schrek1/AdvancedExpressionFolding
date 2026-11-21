@@ -210,13 +210,13 @@ public class ArithmeticExpressionsTestData {
         public void minMath() <fold text='{...}' expand='true'>{
             double a = 10.0;
             double b = 5.0;
-            blackhole = <fold text='min(' expand='false'>Math.min(</fold>a, b<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='min(' expand='false'>Math.min(</fold>a, b);
         }</fold>
 
         public void maxMath() <fold text='{...}' expand='true'>{
             double a = 10.0;
             double b = 5.0;
-            blackhole = <fold text='max(' expand='false'>Math.max(</fold>a, b<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='max(' expand='false'>Math.max(</fold>a, b);
         }</fold>
 
         public void powMath() <fold text='{...}' expand='true'>{
@@ -227,7 +227,7 @@ public class ArithmeticExpressionsTestData {
 
         public void acosMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='acos(' expand='false'>Math.acos(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='acos(' expand='false'>Math.acos(</fold>a);
         }</fold>
 
         public void absMath() <fold text='{...}' expand='true'>{
@@ -237,12 +237,12 @@ public class ArithmeticExpressionsTestData {
 
         public void asinMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='asin(' expand='false'>Math.asin(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='asin(' expand='false'>Math.asin(</fold>a);
         }</fold>
 
         public void atanMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='atan(' expand='false'>Math.atan(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='atan(' expand='false'>Math.atan(</fold>a);
         }</fold>
 
         public void atan2Math() <fold text='{...}' expand='true'>{
@@ -258,32 +258,32 @@ public class ArithmeticExpressionsTestData {
 
         public void ceilMath() <fold text='{...}' expand='true'>{
             double a = 8.5;
-            blackhole = <fold text='ceil(' expand='false'>Math.ceil(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='ceil(' expand='false'>Math.ceil(</fold>a);
         }</fold>
 
         public void cosMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='cos(' expand='false'>Math.cos(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='cos(' expand='false'>Math.cos(</fold>a);
         }</fold>
 
         public void coshMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='cosh(' expand='false'>Math.cosh(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='cosh(' expand='false'>Math.cosh(</fold>a);
         }</fold>
 
         public void floorMath() <fold text='{...}' expand='true'>{
             double a = 8.5;
-            blackhole = <fold text='floor(' expand='false'>Math.floor(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='floor(' expand='false'>Math.floor(</fold>a);
         }</fold>
 
         public void logMath() <fold text='{...}' expand='true'>{
             double a = 8.5;
-            blackhole = <fold text='ln(' expand='false'>Math.log(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='ln(' expand='false'>Math.log(</fold>a);
         }</fold>
 
         public void log10Math() <fold text='{...}' expand='true'>{
             double a = 8.5;
-            blackhole = <fold text='log(' expand='false'>Math.log10(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='log(' expand='false'>Math.log10(</fold>a);
         }</fold>
 
         public void randomMath()<fold text=' { ' expand='false'> {
@@ -292,52 +292,52 @@ public class ArithmeticExpressionsTestData {
 
         public void rintMath() <fold text='{...}' expand='true'>{
             double a = 8.5;
-            blackhole = <fold text='rint(' expand='false'>Math.rint(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='rint(' expand='false'>Math.rint(</fold>a);
         }</fold>
 
         public void roundMath() <fold text='{...}' expand='true'>{
             float a = 8.5f;
-            blackhole = <fold text='round(' expand='false'>Math.round(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='round(' expand='false'>Math.round(</fold>a);
         }</fold>
 
         public void sinMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='sin(' expand='false'>Math.sin(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='sin(' expand='false'>Math.sin(</fold>a);
         }</fold>
 
         public void sinhMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='sinh(' expand='false'>Math.sinh(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='sinh(' expand='false'>Math.sinh(</fold>a);
         }</fold>
 
         public void sqrtMath() <fold text='{...}' expand='true'>{
             double a = 4;
-            blackhole = <fold text='sqrt(' expand='false'>Math.sqrt(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='sqrt(' expand='false'>Math.sqrt(</fold>a);
         }</fold>
 
         public void tanMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='tan(' expand='false'>Math.tan(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='tan(' expand='false'>Math.tan(</fold>a);
         }</fold>
 
         public void tanhMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='tanh(' expand='false'>Math.tanh(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='tanh(' expand='false'>Math.tanh(</fold>a);
         }</fold>
 
         public void toDegreesMath() <fold text='{...}' expand='true'>{
             double a = 0.5;
-            blackhole = <fold text='toDegrees(' expand='false'>Math.toDegrees(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='toDegrees(' expand='false'>Math.toDegrees(</fold>a);
         }</fold>
 
         public void toRadiansMath() <fold text='{...}' expand='true'>{
             double a = 45;
-            blackhole = <fold text='toRadians(' expand='false'>Math.toRadians(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='toRadians(' expand='false'>Math.toRadians(</fold>a);
         }</fold>
 
         public void ulpMath() <fold text='{...}' expand='true'>{
             double a = 45;
-            blackhole = <fold text='ulp(' expand='false'>Math.ulp(</fold>a<fold text=')' expand='false'>)</fold>;
+            blackhole = <fold text='ulp(' expand='false'>Math.ulp(</fold>a);
         }</fold>
 
         public void expMath() <fold text='{...}' expand='true'>{

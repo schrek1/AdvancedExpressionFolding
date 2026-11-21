@@ -92,7 +92,8 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
         //TODO: default list size based on file size
         val allDescriptors = Lists.newArrayListWithCapacity<FoldingDescriptor>(1_000)
         BuildExpressionExt.collectFoldRegionsRecursively(element, document, Sets.newIdentityHashSet(), allDescriptors)
-        return allDescriptors.toTypedArray()
+        // a placeholder equal to the text it covers changes nothing but greys out real code
+        return allDescriptors.filterNot { it.placeholderText == document.getText(it.range) }.toTypedArray()
     }
 
     override fun getPlaceholderText(astNode: ASTNode) = null
