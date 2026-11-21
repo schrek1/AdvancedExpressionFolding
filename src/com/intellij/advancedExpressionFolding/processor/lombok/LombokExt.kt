@@ -14,6 +14,7 @@ import com.intellij.advancedExpressionFolding.processor.lombok.LombokFoldingAnno
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.interfaceSupport
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.isFinder
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokStandardExceptionExt.foldStandardException
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokUtilityClassExt.foldUtilityClass
 import com.intellij.advancedExpressionFolding.processor.lombok.MethodType.*
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.ILombokState
@@ -43,7 +44,12 @@ object LombokExt : ILombokState by State()() {
         val constructors = this.constructors.filterNot { constructor ->
             standardException.any { constructor in it.elementsToHide }
         }.toTypedArray()
-        classLevelAnnotations += foldNoArgsConstructor(constructors)
+        val utilityClass = if (lombokUtilityClass) foldUtilityClass() else null
+        if (utilityClass != null) {
+            classLevelAnnotations += utilityClass
+        } else {
+            classLevelAnnotations += foldNoArgsConstructor(constructors)
+        }
 
         createFieldMap(this)?.let { fieldsMap ->
             classLevelAnnotations += foldArgsConstructor(constructors, fieldsMap.values, fieldLevelAnnotations)
