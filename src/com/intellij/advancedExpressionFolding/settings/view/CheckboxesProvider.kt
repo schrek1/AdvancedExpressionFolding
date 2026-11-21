@@ -100,6 +100,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#rangeexpressionscollapse")
         }
 
+        registerCheckbox(state::kotlinRangeLoops, "For loops in Kotlin range syntax: for (i in 0..<n)") {
+            example(KotlinRangeLoopsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinrangeloops")
+        }
+
         registerCheckbox(state::repeatLoop, "Counting for loops with an unused index as repeat(n)") {
             example(RepeatLoopTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#repeatloop")
@@ -145,6 +150,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streamspread")
         }
 
+        registerCheckbox(state::streamPredicates, "Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none") {
+            example(StreamPredicateTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streampredicates")
+        }
+
         registerCheckbox(state::logFolding, "Log folding") {
             example(LogBrackets::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#logfolding")
@@ -168,6 +178,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#tobuildercopy")
         }
 
+        registerCheckbox(state::builderNamedArguments, "Builder chain as constructor call Person(name = ...)") {
+            example(BuilderNamedArgumentsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#buildernamedarguments")
+        }
+
         registerCheckbox(state::destructuring, "Destructuring assignment for array & list") {
             example(DestructuringAssignmentArrayTestData::class, "array")
             example(DestructuringAssignmentListTestData::class, "list")
@@ -177,6 +192,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::mapEntryDestructuring, "Destructuring for-each over Map.entrySet() as (key, value)") {
             example(MapEntryDestructuringTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#mapentrydestructuring")
+        }
+
+        registerCheckbox(state::objectDestructuring, "Destructuring locals read from record accessors & getters") {
+            example(ObjectDestructuringTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#objectdestructuring")
         }
 
         registerCheckbox(state::println, "Simplify System.out.println to println") {
@@ -249,6 +269,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::lombokBuilder, "Display hand-written Lombok-shaped builder as @Builder") {
             example(LombokBuilderTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokbuilder")
+        }
+
+        registerCheckbox(state::lombokDelegate, "Forwarding methods as Lombok @Delegate") {
+            example(LombokDelegateTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdelegate")
         }
 
         registerCheckbox(state::lombokUtilityClass, "Display a class of static members as Lombok @UtilityClass") {
@@ -326,6 +351,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::methodDefaultParameters, "Default parameter values inline for overloaded method") {
             example(MethodDefaultParametersTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#methodDefaultParameters")
+        }
+
+        registerCheckbox(state::lazyProperty, "Null-checked lazy getter as by lazy property") {
+            example(LazyPropertyTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lazyproperty")
         }
         registerCheckbox(state::overrideHide, "Hide @Override annotation") {
             example(OverrideHideTestData::class)

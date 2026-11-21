@@ -25,7 +25,7 @@ public class ToBuilderCopyTestData {
         <fold text='val' expand='false'>Person</fold> unchanged = person.toBuilder().build();
         <fold text='val' expand='false'>Person</fold> greeted = person.toBuilder().greet().name("Alice").build();
         <fold text='val' expand='false'>Person</fold> shouted = person.toBuilder().nameUpperCase("alice").build();
-        <fold text='val' expand='false'>Person</fold> fresh = Person.builder().name("Alice").build();
+        <fold text='val' expand='false'>Person</fold> fresh = Person<fold text='(' expand='false'>.builder().</fold>name<fold text=' = ' expand='false'>(</fold>"Alice")<fold text='' expand='false'>.build()</fold>;
         <fold text='val' expand='false'>String</fold> text = person.toBuilder().name("Alice").toString();
     }</fold>
 

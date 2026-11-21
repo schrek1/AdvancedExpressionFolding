@@ -62,6 +62,13 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun objectDestructuringTestData() = testCase.runFoldingTest(
+        foldingState()::objectDestructuring,
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::varExpressionsCollapse,
+    )
+
+    @Test
     fun repeatLoopTestData() = testCase.runFoldingTest(
         foldingState()::repeatLoop,
         foldingState()::rangeExpressionsCollapse,
@@ -144,6 +151,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
 
     @Test
     fun stringJoinTestData() = testCase.runFoldingTest(foldingState()::joinToString)
+
+    @Test
+    fun lazyPropertyTestData() = testCase.runFoldingTest(foldingState()::lazyProperty, foldingState()::lombok)
 }
 
 @Disabled("Split from FoldingTest")

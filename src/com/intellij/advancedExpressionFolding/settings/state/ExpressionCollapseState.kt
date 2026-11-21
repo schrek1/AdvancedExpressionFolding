@@ -8,10 +8,12 @@ interface IExpressionCollapseState {
     var getExpressionsCollapse: Boolean
     var getSetExpressionsCollapse: Boolean
     var rangeExpressionsCollapse: Boolean
+    var kotlinRangeLoops: Boolean
     var slicingExpressionsCollapse: Boolean
     var varExpressionsCollapse: Boolean
     var fieldShift: Boolean
     var toBuilderCopy: Boolean
+    var builderNamedArguments: Boolean
 }
 
 data class ExpressionCollapseState(
@@ -22,8 +24,10 @@ data class ExpressionCollapseState(
     override var getExpressionsCollapse: Boolean = true,
     override var getSetExpressionsCollapse: Boolean = true,
     override var rangeExpressionsCollapse: Boolean = true,
+    override var kotlinRangeLoops: Boolean = true,
     override var slicingExpressionsCollapse: Boolean = true,
     override var varExpressionsCollapse: Boolean = true,
     override var fieldShift: Boolean = true,
     override var toBuilderCopy: Boolean = true,
+    override var builderNamedArguments: Boolean = true,
 ) : IExpressionCollapseState

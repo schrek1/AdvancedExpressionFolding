@@ -23,6 +23,7 @@ enum class LombokFoldingAnnotation(val annotation: String) {
 
     LOMBOK_FIELD_CONSTRUCTOR("@Constructor"),
     LOMBOK_POST_CONSTRUCTOR("@PostConstructor"),
+    LOMBOK_DELEGATE("@Delegate"),
     LOMBOK_STANDARD_EXCEPTION("@StandardException"),
 
     LOMBOK_DATA("@Data") {

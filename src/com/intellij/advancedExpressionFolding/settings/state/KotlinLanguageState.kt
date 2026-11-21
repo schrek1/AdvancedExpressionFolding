@@ -10,6 +10,7 @@ interface IKotlinLanguageState {
     var todo: Boolean
     var destructuring: Boolean
     var mapEntryDestructuring: Boolean
+    var objectDestructuring: Boolean
     var expressionFunc: Boolean
     var expressionFuncEquals: Boolean
     var methodDefaultParameters: Boolean
@@ -19,6 +20,7 @@ interface IKotlinLanguageState {
     var kotlinPreconditions: Boolean
     var joinToString: Boolean
     var repeatLoop: Boolean
+    var lazyProperty: Boolean
 }
 
 data class KotlinLanguageState(
@@ -31,6 +33,7 @@ data class KotlinLanguageState(
     override var todo: Boolean = true,
     override var destructuring: Boolean = false,
     override var mapEntryDestructuring: Boolean = true,
+    override var objectDestructuring: Boolean = true,
     override var expressionFunc: Boolean = true,
     override var expressionFuncEquals: Boolean = false,
     override var methodDefaultParameters: Boolean = true,
@@ -40,4 +43,5 @@ data class KotlinLanguageState(
     override var kotlinPreconditions: Boolean = false,
     override var joinToString: Boolean = true,
     override var repeatLoop: Boolean = true,
+    override var lazyProperty: Boolean = true,
 ) : IKotlinLanguageState

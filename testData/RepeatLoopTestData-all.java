@@ -28,26 +28,26 @@ public class RepeatLoopTestData {
     </fold>}</fold>
 
     void readIndexKeepsRange(int count) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>0<fold text=', ' expand='false'>; i < </fold>count<fold text=')' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        </fold>for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='..<' expand='false'>; i < </fold>count<fold text='' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(i);
         }</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     void modifiedIndexKeepsRange(int count) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>for <fold text='' expand='false'>(</fold><fold text='var' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>0<fold text=', ' expand='false'>; i < </fold>count<fold text=')' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        </fold>for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='var' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='..<' expand='false'>; i < </fold>count<fold text='' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             i += 1;
             ping();
         }</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     void otherStartKeepsRange(int count) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>1<fold text=', ' expand='false'>; i < </fold>count<fold text=')' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        </fold>for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>1<fold text='..<' expand='false'>; i < </fold>count<fold text='' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             ping();
         }</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     void inclusiveBoundKeepsRange(int count) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>0<fold text=', ' expand='false'>; i <= </fold>count<fold text=']' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        </fold>for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='..' expand='false'>; i <= </fold>count<fold text='' expand='false'>; i++</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             ping();
         }</fold><fold text=' ' expand='true'>
     </fold>}</fold>
