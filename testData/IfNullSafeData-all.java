@@ -33,7 +33,7 @@ public class IfNullSafeData {
         if <fold text='' expand='false'>(</fold>user<fold text='?' expand='false'> != null
                 && user</fold>.<fold text='profile' expand='false'>getProfile()</fold><fold text='?' expand='false'> != null
                 && user.<fold text='profile' expand='false'>getProfile()</fold></fold>.<fold text='name' expand='false'>getName()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println("Name: <fold text='${' expand='false'>" + </fold>user.<fold text='profile' expand='false'>getProfile()</fold>.<fold text='name' expand='false'>getName()</fold><fold text='}")' expand='false'>)</fold>;
+            <fold text='' expand='false'>System.out.</fold>println("Name: <fold text='${' expand='false'>" + </fold>user.<fold text='profile' expand='false'>getProfile()</fold>.<fold text='name}"' expand='false'>getName()</fold>);
         }</fold>
         if <fold text='' expand='false'>(</fold>user<fold text='?' expand='false'> != null
                 && user</fold>.<fold text='profile' expand='false'>getProfile()</fold><fold text='?' expand='false'> != null
