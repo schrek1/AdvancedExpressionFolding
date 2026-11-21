@@ -10,6 +10,7 @@ interface IKotlinLanguageState {
     var expressionFunc: Boolean
     var methodDefaultParameters: Boolean
     var patternMatchingInstanceof: Boolean
+    var instanceofSwitch: Boolean
     var constructorReferenceNotation: Boolean
     var arithmeticExpressions: Boolean
 }
@@ -24,6 +25,7 @@ data class KotlinLanguageState(
     override var expressionFunc: Boolean = true,
     override var methodDefaultParameters: Boolean = true,
     override var patternMatchingInstanceof: Boolean = true,
+    override var instanceofSwitch: Boolean = true,
     override var constructorReferenceNotation: Boolean = true,
     override var arithmeticExpressions: Boolean = false,
 ) : IKotlinLanguageState
