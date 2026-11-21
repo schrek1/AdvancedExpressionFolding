@@ -22,6 +22,9 @@ interface ControlFlowFoldingTest : FoldingTestSection {
 
     @Test
     fun assertTestData() = testCase.runReadOnlyFoldingTest(foldingState()::assertsCollapse)
+
+    @Test
+    fun switchArrowTestData() = testCase.runFoldingTest(foldingState()::switchArrow)
 }
 
 @Disabled("Split from FoldingTest")
