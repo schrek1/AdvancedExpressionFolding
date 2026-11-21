@@ -18,18 +18,18 @@ public class SingletonObjectTestData {
     public static <fold text='' expand='false'>final</fold> <fold text='object' expand='true'>class</fold> Inventory <fold text='{...}' expand='true'>{<fold text='' expand='true'>
         </fold><fold text='' expand='true'>private <fold text='const' expand='false'>static final</fold> Inventory INSTANCE =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>Inventory</fold><fold text='' expand='true'>()</fold>;</fold>
 
-        private final List<String> items = <fold text='[]' expand='false'>new ArrayList<>()</fold>;<fold text='' expand='true'>
+        <fold text='@Delegate p' expand='false'>p</fold>rivate final List<String> items = <fold text='[]' expand='false'>new ArrayList<>()</fold>;<fold text='' expand='true'>
 
         </fold><fold text='' expand='true'>private Inventory() <fold text='{}' expand='true'>{
         }</fold></fold><fold text='' expand='true'>
 
         </fold><fold text='' expand='true'>public static Inventory getInstance()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
             </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>INSTANCE<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
-        </fold>}</fold></fold>
+        </fold>}</fold></fold><fold text='' expand='false'>
 
-        public void add(String item)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+        </fold><fold text='' expand='false'>public void add(String item)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
             </fold></fold>items<fold text=' += ' expand='false'>.add(</fold>item<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
-        </fold>}</fold>
+        </fold>}</fold></fold>
     }</fold>
 
     // Not folded: lazy initialization
@@ -80,12 +80,12 @@ public class SingletonObjectTestData {
     }</fold>
 
     // Not folded: utility class without an instance
-    static <fold text='' expand='false'>final</fold> class Prices <fold text='{...}' expand='true'>{
-        private Prices()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold>throw new UnsupportedOperationException()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
-        </fold>}</fold>
+    <fold text='@UtilityClass s' expand='false'>s</fold>tatic <fold text='' expand='false'>final</fold><fold text='' expand='false'> </fold>class Prices <fold text='{...}' expand='true'>{<fold text='' expand='false'>
+        </fold><fold text='' expand='false'>private Prices()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+            </fold></fold><fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold>}</fold></fold>
 
-        static int twice(int value)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+        <fold text='' expand='false'>static</fold><fold text='' expand='false'> </fold>int twice(int value)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
             </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>value * 2<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>

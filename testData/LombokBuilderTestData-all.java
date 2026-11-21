@@ -99,7 +99,7 @@ public class LombokBuilderTestData {
             }</fold>
 
             ValidatedStock build() <fold text='{...}' expand='true'>{
-                <fold text='check(!' expand='false'>if </fold>(quantity < 0)<fold text=') ' expand='false'> </fold><fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
+                <fold text='check' expand='false'>if </fold>(quantity <fold text='>=' expand='false'><</fold> 0) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
                     throw new IllegalStateException(</fold>"negative quantity"<fold text=' ' expand='false'>);
                 </fold>}</fold>
                 return new ValidatedStock(sku, quantity);
