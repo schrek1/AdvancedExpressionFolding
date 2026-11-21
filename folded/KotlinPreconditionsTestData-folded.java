@@ -17,13 +17,27 @@ public class KotlinPreconditionsTestData {
         require(order != null) { "order" }
         requireNotNull(customer) { "customer" };
         requireNotNull(name);
-        require(!(quantity <= 0)) { "Quantity must be positive: " + quantity }
+        require(quantity > 0) { "Quantity must be positive: " + quantity }
         require(quantity < 100)
     }
 
     public void send(String message) {
         check(connected) { "Not connected" }
         check(message == null) { "Already sent " + message }
+    }
+
+    public void restock(String sku, int stock, long reserved, Integer limit, char grade, double price, Object item) {
+        require(stock >= 0) { "stock" }
+        check(reserved <= stock) { "over-reserved" }
+        require(grade < 'C') { "grade" }
+        require(limit == null || limit < 10) { "limit" }
+        require(sku != null && !sku.isEmpty()) { "sku" }
+        check(!sku.isBlank() && (stock < 5 || reserved == 0)) { "restock" }
+        check(!connected) { "connected" }
+        require(!(price <= 0)) { "price" }
+        require(!(sku == null || price < 1.0)) { "cheap" }
+        require(!(sku == null || stock < 0 && reserved > 0)) { "mixed" }
+        require(!(item instanceof String)) { "item" }
     }
 
     public String describe(int state) {
