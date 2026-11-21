@@ -22,6 +22,7 @@ class ForStatement(
     startInclusive: Boolean,
     endRange: Expression,
     endInclusive: Boolean,
+    private val step: LoopStep? = null,
 ) : Range(statement, textRange, operand, startRange, startInclusive, endRange, endInclusive),
     IControlFlowState by State()(),
     IExpressionCollapseState by State()() {
@@ -61,11 +62,26 @@ class ForStatement(
 
     override fun openingPrefix(): String = if (kotlinRangeLoops) " in " else super.openingPrefix()
 
-    override fun delimiter(): String = if (kotlinRangeLoops) (if (isEndInclusive()) ".." else "..<") else super.delimiter()
+    override fun delimiter(): String = when {
+        !kotlinRangeLoops -> super.delimiter()
+        step?.descending == true -> " downTo "
+        isEndInclusive() -> ".."
+        else -> "..<"
+    }
 
-    override fun closingSuffix(): String = if (kotlinRangeLoops) "" else super.closingSuffix()
+    override fun closingSuffix(): String {
+        val step = step ?: return if (kotlinRangeLoops) "" else super.closingSuffix()
+        if (kotlinRangeLoops) {
+            return if (step.amountWritten) " step " else ""
+        }
+        val sign = if (step.descending) "-" else ""
+        return super.closingSuffix() + " step " + sign + if (step.amountWritten) "" else "1"
+    }
 
     companion object {
         const val FOR_SEPARATOR: String = ":"
     }
 }
+
+/** A loop update other than `i++`; a written amount (`i += 2`) stays real text after the fold, without its sign. */
+class LoopStep(val descending: Boolean, val amountWritten: Boolean)
