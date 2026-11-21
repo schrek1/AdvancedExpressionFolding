@@ -44,7 +44,7 @@ object IfExt :
     fun getSwitchStatement(element: PsiSwitchStatement): Expression? {
         val lParenth = element.lParenth ?: return null
         val rParenth = element.rParenth ?: return null
-        return if (element.expression != null && compactControlFlowSyntaxCollapse) {
+        val compactParentheses = if (element.expression != null && compactControlFlowSyntaxCollapse) {
             CompactControlFlowExpression(
                 element,
                 TextRange.create(lParenth.textRange.startOffset, rParenth.textRange.endOffset)
@@ -52,6 +52,7 @@ object IfExt :
         } else {
             null
         }
+        return SwitchArrowExt.createExpression(element, compactParentheses) ?: compactParentheses
     }
 
     fun getIfExpression(element: PsiIfStatement, document: Document): Expression? {

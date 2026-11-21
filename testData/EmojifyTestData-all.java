@@ -249,17 +249,17 @@ public class EmojifyTestData {
     public class EnumSwitchUsage <fold text='{...}' expand='true'>{
         public String getDayType(DayOfWeek day) <fold text='{...}' expand='true'>{
             switch <fold text='' expand='false'>(</fold>day<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-                case MONDAY:
-                case TUESDAY:
-                case WEDNESDAY:
-                case THURSDAY:
-                case FRIDAY:
-                    return "Weekday";
-                case SATURDAY:
-                case SUNDAY:
-                    return "Weekend";
-                default:
-                    return "Unknown";
+                case MONDAY<fold text=', ' expand='false'>:
+                case </fold>TUESDAY<fold text=', ' expand='false'>:
+                case </fold>WEDNESDAY<fold text=', ' expand='false'>:
+                case </fold>THURSDAY<fold text=', ' expand='false'>:
+                case </fold>FRIDAY<fold text=' -> ' expand='false'>:
+                    </fold>return "Weekday";
+                case SATURDAY<fold text=', ' expand='false'>:
+                case </fold>SUNDAY<fold text=' -> ' expand='false'>:
+                    </fold>return "Weekend";
+                default<fold text=' -> ' expand='false'>:
+                    </fold>return "Unknown";
             }</fold>
         }</fold>
     }</fold>

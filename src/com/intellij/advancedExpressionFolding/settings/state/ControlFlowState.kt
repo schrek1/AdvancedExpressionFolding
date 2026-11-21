@@ -5,6 +5,7 @@ interface IControlFlowState {
     var controlFlowMultiStatementCodeBlockCollapse: Boolean
     var controlFlowSingleStatementCodeBlockCollapse: Boolean
     var assertsCollapse: Boolean
+    var switchArrow: Boolean
 }
 
 data class ControlFlowState(
@@ -12,4 +13,5 @@ data class ControlFlowState(
     override var controlFlowMultiStatementCodeBlockCollapse: Boolean = false,
     override var controlFlowSingleStatementCodeBlockCollapse: Boolean = false,
     override var assertsCollapse: Boolean = true,
+    override var switchArrow: Boolean = true,
 ) : IControlFlowState
