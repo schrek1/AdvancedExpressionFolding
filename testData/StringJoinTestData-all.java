@@ -20,7 +20,7 @@ import java.util.Set;</fold>
         <fold text='val' expand='false'>String</fold> fromGetter = <fold text='' expand='false'>String.join(", ", </fold><fold text='names' expand='false'>getNames()</fold><fold text='.joinToString(", ")' expand='false'>)</fold>;
         <fold text='val' expand='false'>String</fold> fromIndex = <fold text='' expand='false'>String.join(";", </fold>rows<fold text='.getFirst' expand='false'>.get</fold>(<fold text='' expand='false'>0</fold>)<fold text='.joinToString(";")' expand='false'>)</fold>;
         <fold text='val' expand='false'>String</fold> fromArrayElement = <fold text='' expand='false'>String.join("-", </fold>table[0]<fold text='.joinToString("-")' expand='false'>)</fold>;
-        <fold text='val' expand='false'>String</fold> nested = "Names: <fold text='${' expand='false'>" + </fold><fold text='' expand='false'>String.join(", ", </fold>names<fold text='.joinToString(", ")' expand='false'>)</fold><fold text='}";' expand='false'>;</fold>
+        <fold text='val' expand='false'>String</fold> nested = "Names: <fold text='${' expand='false'>" + </fold><fold text='' expand='false'>String.join(", ", </fold>names<fold text='.joinToString(", ")}"' expand='false'>)</fold>;
         <fold text='' expand='false'>System.out.</fold>println(<fold text='' expand='false'>String.join(", ", </fold>names<fold text='.joinToString(", ")' expand='false'>)</fold>);
     }</fold>
 
