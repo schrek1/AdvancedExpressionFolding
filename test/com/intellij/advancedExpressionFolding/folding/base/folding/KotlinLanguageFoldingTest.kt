@@ -138,6 +138,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
         testCase.runFoldingTest(foldingState()::patternMatchingInstanceof)
 
     @Test
+    fun instanceofSwitchTestData() = testCase.runFoldingTest(foldingState()::instanceofSwitch)
+
+    @Test
     fun constructorReferenceNotationTestData() = testCase.runFoldingTest(foldingState()::constructorReferenceNotation)
 
     @Test

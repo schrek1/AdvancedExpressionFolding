@@ -347,6 +347,13 @@ Applies pattern matching to `instanceof` checks for more concise and readable co
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/PatternMatchingInstanceofTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/patternMatchingInstanceof)
 
+## instanceofSwitch
+### instanceof chain as pattern switch
+Shows an `if / else if` chain of `instanceof` checks on one variable as a Java pattern switch: `case Circle c -> ...`, with a final `else` as `default -> ...`. Every branch must hold exactly one statement; a chain with a guarded condition, another condition, a comment or a different variable stays as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/InstanceofSwitchTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/InstanceofSwitchTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/instanceofSwitch)
+
 ## summaryParentOverride
 ### Shows a summary of overridden methods after each parent class and interface, and the parent at each overriding method (inlay hints)
 Provides a concise view of inherited method overrides, reducing redundant code duplication.

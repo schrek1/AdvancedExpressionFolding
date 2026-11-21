@@ -317,6 +317,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#patternmatchinginstanceof")
         }
 
+        registerCheckbox(state::instanceofSwitch, "instanceof chain as pattern switch") {
+            example(InstanceofSwitchTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#instanceofswitch")
+        }
+
         registerCheckbox(
             state::summaryParentOverride,
             "Displays a folded summary of overridden methods from parent classes and interfaces."

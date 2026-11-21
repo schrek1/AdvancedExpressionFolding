@@ -1,0 +1,127 @@
+package data;
+
+public class InstanceofSwitchTestData {
+
+    sealed interface Shape permits Circle, Square, Triangle {
+    }
+
+    record Circle(double r) implements Shape {
+    }
+
+    record Square(double side) implements Shape {
+    }
+
+    record Triangle(double base, double height) implements Shape {
+    }
+
+    double area(Shape shape) {
+        double area = 0;
+        switch (shape) {
+            case Circle c -> area = Math.PI * c.r() * c.r();
+            case Square s -> area = s.side() * s.side();
+        }
+        return area;
+    }
+
+    String describe(Object value) {
+        switch (value) {
+            case Integer number -> return "number " + number;
+            case String text -> return "text " + text;
+            case Shape _ -> return "shape";
+            default -> return "unknown";
+        }
+    }
+
+    double recordPatterns(Shape shape) {
+        switch (shape) {
+            case Circle(double r) -> return r * r;
+            case Triangle(double base, double height) -> return base * height / 2;
+            default -> return 0;
+        }
+    }
+
+    String singleCheck(Object value) {
+        if (value instanceof String text) {
+            return text;
+        }
+        return "";
+    }
+
+    String singleCheckWithElse(Object value) {
+        if (value instanceof String text) {
+            return text;
+        } else {
+            return "";
+        }
+    }
+
+    String differentVariables(Object first, Object second) {
+        if (first instanceof String text) {
+            return text;
+        } else if (second instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String guardedCondition(Object value) {
+        if (value instanceof String text && !text.isEmpty()) {
+            return text;
+        } else if (value instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String otherConditionInChain(Object value) {
+        if (value instanceof String text) {
+            return text;
+        } else if (value == null) {
+            return "null";
+        } else if (value instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String multiStatementBranch(Object value) {
+        if (value instanceof String text) {
+            String trimmed = text.trim();
+            return trimmed;
+        } else if (value instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String methodCallSubject() {
+        if (load() instanceof String text) {
+            return text;
+        } else if (load() instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String commentInChain(Object value) {
+        if (value instanceof String text) {
+            // keeps the chain unfolded
+            return text;
+        } else if (value instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String withoutBraces(Object value) {
+        if (value instanceof String text)
+            return text;
+        else if (value instanceof Integer number)
+            return "number " + number;
+        return "";
+    }
+
+    private Object load() {
+        return "value";
+    }
+}
