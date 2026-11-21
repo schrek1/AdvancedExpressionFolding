@@ -48,7 +48,7 @@ public class NullOrEmptyTestData {
     public void notFolded(String name, String other, List<String> items, NullOrEmptyTestData data) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>boolean</fold> mixedVariables = name == null || other.<fold text='empty' expand='false'>isEmpty()</fold>;
         <fold text='val' expand='false'>boolean</fold> wrongOperator = name == null && name.<fold text='empty' expand='false'>isEmpty()</fold>;
-        <fold text='val' expand='false'>boolean</fold> missingNegation = <fold text='items?.empty == true' expand='false'>items != null && items.<fold text='empty' expand='false'>isEmpty()</fold></fold>;
+        <fold text='val' expand='false'>boolean</fold> missingNegation = items<fold text='?' expand='false'> != null && items</fold><fold text='.empty == true' expand='false'>.<fold text='empty' expand='false'>isEmpty()</fold></fold>;
         <fold text='val' expand='false'>boolean</fold> callReceiver = data.<fold text='title' expand='false'>getTitle()</fold> == null || data.<fold text='title' expand='false'>getTitle()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>;
         <fold text='val' expand='false'>boolean</fold> otherObjectField = data.title == null || data.title.<fold text='empty' expand='false'>isEmpty()</fold>;
         <fold text='val' expand='false'>boolean</fold> notZero = items == null || items.size() == 1;

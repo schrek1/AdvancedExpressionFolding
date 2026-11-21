@@ -13,6 +13,7 @@ import com.intellij.advancedExpressionFolding.processor.toTextRange
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
 import com.intellij.openapi.editor.Document
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.*
 import com.intellij.psi.util.elementType
 
@@ -125,7 +126,7 @@ object IfNullSafeExt : IKotlinLanguageState by State()() {
                     it
                 }
             }
-        var replacementText = elementList
+        val names = elementList
             .map {
                 BuildExpressionExt.getAnyExpression(it, document)
             }
@@ -135,59 +136,36 @@ object IfNullSafeExt : IKotlinLanguageState by State()() {
                 } else {
                     (it.element as? PsiMethodCallExpression)?.methodExpression?.referenceName ?: return null
                 }
-            }.joinToString(separator = "?.") {
-               it
             }
 
-        val iGetter = BuildExpressionExt.getAnyExpression(elementList.first(), document).asInstance<IGetter>()
-        val parentGetter = iGetter?.receiver
-        if (parentGetter != null) {
-
-            var parent = parentGetter
-            while (true) {
-                val expression = parent.asInstance<IGetter>()?.receiver
-                if (expression != null) {
-                    parent = expression
-                } else {
-                    break
-                }
+        // The last operand already spells the whole chain, so only the joints fold: everything between one link
+        // and the same receiver in the next operand becomes `?`, the dots, getters and ` != null` stay real.
+        val folds = mutableListOf<Pair<TextRange, String>>()
+        elementList.zipWithNext { previous, next ->
+            val receiver = (next as? PsiMethodCallExpression)?.methodExpression?.qualifierExpression ?: return null
+            // a line break before the next `.` would split the shown chain, so the joint takes it too
+            var jointEnd = receiver.end()
+            while (document.charsSequence[jointEnd].isWhitespace()) {
+                jointEnd++
             }
-
-
-            val toMutableList =
-                iGetter.buildFoldRegions(parentGetter.element, document, null).reversed().toMutableList()
-            toMutableList.removeAt(toMutableList.lastIndex)
-
-            var prefix = ""
-            if (parent !is IGetter && parent is INameable) {
-                prefix = parent.name
-                if (toMutableList.isNotEmpty()) {
-                    prefix += "."
-                }
-            }
-
-            prefix += toMutableList.map {
-                it.placeholderText
-            }.joinToString(".")
-
-            replacementText = "$prefix.$replacementText"
+            folds += (previous.end() to jointEnd).toTextRange() to "?"
         }
-
-        val lastGetter = currentList.last() is PsiMethodCallExpression
-        val lastGetterNegation = currentList.last() is PsiPrefixExpression
-
-        replacementText += if (lastGetter) {
-            " == true"
-        } else if (lastGetterNegation) {
-            " == false"
-        } else {
-            " != null"
+        val comparison = when (currentList.last()) {
+            is PsiMethodCallExpression -> " == true"
+            is PsiPrefixExpression -> " == false"
+            else -> null
+        }
+        if (comparison != null) {
+            // nothing follows the getter, so the comparison is shown in place of the `.isActive()` link
+            val lastCall = elementList.last() as? PsiMethodCallExpression ?: return null
+            val receiver = lastCall.methodExpression.qualifierExpression ?: return null
+            folds += (receiver.end() to lastCall.end()).toTextRange() to ".${names.last()}$comparison"
         }
 
         val startOffset = currentList.first().start()
         val endOffset = currentList.last().end()
 
-        return IfNullSafeExpression(element, (startOffset to endOffset).toTextRange(), replacementText)
+        return IfNullSafeExpression(element, (startOffset to endOffset).toTextRange(), folds)
     }
 
 
