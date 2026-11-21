@@ -7,6 +7,7 @@ import com.intellij.advancedExpressionFolding.expression.controlflow.ControlFlow
 import com.intellij.advancedExpressionFolding.expression.controlflow.ControlFlowSingleStatementCodeBlockExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.GuardIfOneLinerExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.IfExpression
+import com.intellij.advancedExpressionFolding.expression.controlflow.InstanceofSwitchExpression
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IControlFlowState
 import com.intellij.psi.JavaTokenType
@@ -99,6 +100,6 @@ object PsiCodeBlockExt : IControlFlowState by State()() {
         }
         val grandParent = parent?.parent
         return grandParent !is PsiIfStatement ||
-            !IfExpression.isAssertExpression(grandParent)
+            !IfExpression.isAssertExpression(grandParent) && !InstanceofSwitchExpression.foldsAsSwitch(grandParent)
     }
 }

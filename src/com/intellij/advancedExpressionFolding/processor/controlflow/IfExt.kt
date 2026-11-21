@@ -4,6 +4,7 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.controlflow.CompactControlFlowExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ElvisExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.IfExpression
+import com.intellij.advancedExpressionFolding.expression.controlflow.InstanceofSwitchExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ShortElvisExpression
 import com.intellij.advancedExpressionFolding.expression.literal.InterpolatedString
 import com.intellij.advancedExpressionFolding.expression.literal.StringLiteral
@@ -58,6 +59,7 @@ object IfExt :
 
     fun getIfExpression(element: PsiIfStatement, document: Document): Expression? {
         PreconditionExt.getIfExpression(element, document)?.let { return it }
+        InstanceofSwitchExpression.create(element)?.let { return it }
 
         LetReturnExt.getIfExpression(element)?.let { return it }
 
