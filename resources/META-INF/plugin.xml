@@ -42,6 +42,18 @@
         <!-- Submits plugin errors to JetBrains Marketplace for diagnostics -->
         <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
 
+        <!-- mapAndEmptyCollectionLiterals: pair index 1#, 2# in a folded Map.of instead of Java's k1: / v1: hints -->
+        <codeInsight.declarativeInlayProvider language="JAVA"
+                                              implementationClass="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapLiteralPairIndexInlayProvider"
+                                              isEnabledByDefault="true"
+                                              group="OTHER_GROUP"
+                                              providerId="advancedExpressionFolding.mapLiteralPairIndex"
+                                              bundle="Bundle"
+                                              nameKey="inlay.map.literal.pair.index.name"
+                                              descriptionKey="inlay.map.literal.pair.index.description"/>
+        <codeInsight.parameterNameHintsSuppressor
+                implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapLiteralParameterHintsSuppressor"/>
+
         <!-- Shows plugin options under Settings | Editor | Code Folding -->
         <editorOptionsProvider
                 instance="com.intellij.advancedExpressionFolding.settings.view.SettingsConfigurable"
