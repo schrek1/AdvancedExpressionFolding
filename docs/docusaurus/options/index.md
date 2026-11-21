@@ -188,6 +188,13 @@ Simplifies System.out.println calls to just println.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/PrintlnTestData-folded.java)
 - [Documentation](../features/println-simplification.md)
 
+## todo
+### Simplify throw new UnsupportedOperationException to TODO
+Folds `throw new UnsupportedOperationException("reason")` into Kotlin-style `TODO("reason")`, keeping the reason.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/TodoTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/TodoTestData-folded.java)
+- [Documentation](../features/todo.md)
+
 ## controlFlowSingleStatementCodeBlockCollapse
 ### Control flow single-statement code block braces (read-only files)
 Simplifies single-statement code blocks in control flow statements for read-only files.

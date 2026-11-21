@@ -6,6 +6,7 @@ interface IKotlinLanguageState {
     var kotlinQuickReturn: Boolean
     var nullable: Boolean
     var println: Boolean
+    var todo: Boolean
     var destructuring: Boolean
     var mapEntryDestructuring: Boolean
     var expressionFunc: Boolean
@@ -24,6 +25,7 @@ data class KotlinLanguageState(
     override var kotlinQuickReturn: Boolean = true,
     override var nullable: Boolean = false,
     override var println: Boolean = true,
+    override var todo: Boolean = true,
     override var destructuring: Boolean = false,
     override var mapEntryDestructuring: Boolean = true,
     override var expressionFunc: Boolean = true,
