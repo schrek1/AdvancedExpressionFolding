@@ -85,6 +85,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#localdateliteralpostfixcollapse")
         }
 
+        registerCheckbox(state::durationLiteralCollapse, "Duration literals (e.g. 30.seconds, sleep(500.milliseconds))") {
+            example(DurationLiteralTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#durationliteralcollapse")
+        }
+
         registerCheckbox(state::castExpressionsCollapse, "Type cast expressions") {
             example(TypeCastTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#castexpressionscollapse")
@@ -95,6 +100,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#rangeexpressionscollapse")
         }
 
+        registerCheckbox(state::repeatLoop, "Counting for loops with an unused index as repeat(n)") {
+            example(RepeatLoopTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#repeatloop")
+        }
+
         registerCheckbox(state::checkExpressionsCollapse, "Null-safe calls") {
             example(ElvisTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#checkexpressionscollapse")
@@ -103,6 +113,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::ifNullSafe, "Extended null-safe ifs") {
             example(IfNullSafeData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#ifnullsafe")
+        }
+
+        registerCheckbox(state::nullOrEmpty, "Null-or-empty checks as isNullOrEmpty() / isNotEmpty()") {
+            example(NullOrEmptyTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#nullorempty")
         }
 
         registerCheckbox(state::kotlinQuickReturn, "Kotlin quick return") {
@@ -164,9 +179,19 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#mapentrydestructuring")
         }
 
+        registerCheckbox(state::objectDestructuring, "Destructuring locals read from record accessors & getters") {
+            example(ObjectDestructuringTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#objectdestructuring")
+        }
+
         registerCheckbox(state::println, "Simplify System.out.println to println") {
             example(PrintlnTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#println")
+        }
+
+        registerCheckbox(state::todo, "Simplify throw new UnsupportedOperationException to TODO") {
+            example(TodoTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#todo")
         }
 
         registerCheckbox(
@@ -224,6 +249,16 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::lombokDirtyOff, "Don't fold Lombok dirty getters/setters") {
             example(LombokDirtyOffTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdirtyoff")
+        }
+
+        registerCheckbox(state::lombokUtilityClass, "Display a class of static members as Lombok @UtilityClass") {
+            example(LombokUtilityClassTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokutilityclass")
+        }
+
+        registerCheckbox(state::lombokStandardException, "Lombok: exception with standard constructors as @StandardException") {
+            example(LombokStandardExceptionTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokstandardexception")
         }
 
         row {
@@ -308,6 +343,14 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::pseudoAnnotations, "Pseudo-annotations: @Main, @Loggable") {
             example(PseudoAnnotationsMainTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#pseudoAnnotations")
+        }
+        registerCheckbox(state::joinToString, "String.join(sep, items) as items.joinToString(sep)") {
+            example(StringJoinTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#joinToString")
+        }
+        registerCheckbox(state::catchRethrow, "Catch block that only wraps and rethrows as rethrow") {
+            example(CatchRethrowTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#catchRethrow")
         }
         // NEW OPTION
         registerCheckbox(state::memoryImprovement, "Memory improvements")
