@@ -111,6 +111,13 @@ Provides extended null-safe if operations.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IfNullSafeData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/ifNullSafe)
 
+## nullOrEmpty
+### Null-or-empty checks as isNullOrEmpty() / isNotEmpty()
+Shows `x == null || x.isEmpty()` as `x.isNullOrEmpty()` and `x != null && !x.isEmpty()` as `x.isNotEmpty()`; `length()` / `size()` compared with `0` count too, and so do the null-safe `isEmpty(x)` / `isNotEmpty(x)` of Apache Commons and Spring utility classes.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/NullOrEmptyTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/NullOrEmptyTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/nullOrEmpty)
+
 ## kotlinQuickReturn
 ### Kotlin quick return
 Implements a quick return syntax similar to Kotlin.
@@ -273,6 +280,13 @@ Prevents all Lombok folding for classes matching the pattern
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokPatternOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokPatternOffTestData-folded.java)
 
+## lombokUtilityClass
+### Display a class of static members as Lombok @UtilityClass
+Shows a class with only static members and a private constructor as `@UtilityClass`, hiding the constructor and the `static` and `final` modifiers. A singleton with an `INSTANCE` of its own type stays unfolded.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokUtilityClassTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokUtilityClassTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokUtilityClass)
+
 ## lombokStandardException
 ### Lombok: exception with standard constructors as @StandardException
 Folds an exception whose four standard constructors only pass their arguments to `super(...)` into `@StandardException`.
@@ -355,6 +369,13 @@ Hides @Override annotations to reduce visual clutter and focus on method impleme
 Hides @SuppressWarnings annotations on methods to reduce visual clutter. Currently implemented only for methods.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SuppressWarningsHideTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SuppressWarningsHideTestData-folded.java)
+
+## joinToString
+### String.join(sep, items) as items.joinToString(sep)
+Shows `String.join(", ", names)` as Kotlin-style `names.joinToString(", ")`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/StringJoinTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/StringJoinTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/joinToString)
 
 ## catchRethrow
 ### Catch block that only wraps and rethrows as rethrow

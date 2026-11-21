@@ -20,6 +20,12 @@ interface LombokFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun lombokUtilityClassTestData() = testCase.runFoldingTest(
+        foldingState()::lombok,
+        foldingState()::lombokUtilityClass,
+    )
+
+    @Test
     fun lombokStandardExceptionTestData() = testCase.runFoldingTest(
         foldingState()::lombok,
         foldingState()::lombokStandardException,

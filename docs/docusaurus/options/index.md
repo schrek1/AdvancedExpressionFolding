@@ -117,6 +117,12 @@ Provides extended null-safe if operations.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IfNullSafeData-folded.java)
 - [Documentation](../features/null-safe-if.md)
 
+## nullOrEmpty
+### Null-or-empty checks as isNullOrEmpty() / isNotEmpty()
+Shows `x == null || x.isEmpty()` as `x.isNullOrEmpty()` and `x != null && !x.isEmpty()` as `x.isNotEmpty()`; `length()` / `size()` compared with `0` count too, and so do the null-safe `isEmpty(x)` / `isNotEmpty(x)` of Apache Commons and Spring utility classes.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/NullOrEmptyTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/NullOrEmptyTestData-folded.java)
+
 ## kotlinQuickReturn
 ### Kotlin quick return
 Implements a quick return syntax similar to Kotlin.
@@ -269,6 +275,12 @@ Prevents folding of Lombok-generated getters and setters that have been modified
 Prevents all Lombok folding for classes matching the pattern
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokPatternOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokPatternOffTestData-folded.java)
+
+## lombokUtilityClass
+### Display a class of static members as Lombok @UtilityClass
+Shows a class with only static members and a private constructor as `@UtilityClass`, hiding the constructor and the `static` and `final` modifiers.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokUtilityClassTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokUtilityClassTestData-folded.java)
 
 ## expressionFunc
 ### Single-Expression Function

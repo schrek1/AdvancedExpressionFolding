@@ -7,6 +7,8 @@ dependencies {
     testCompileOnly(libs.lombok)
     testAnnotationProcessor(libs.lombok)
     testCompileOnly(libs.commons.lang3)
+    testCompileOnly(libs.commons.collections4)
+    testCompileOnly(libs.spring.core)
     testCompileOnly(libs.annotations)
     testCompileOnly(libs.jsr305)
     testCompileOnly(libs.slf4j.api)

@@ -4,6 +4,7 @@ import com.intellij.advancedExpressionFolding.folding.BaseTest
 import com.intellij.advancedExpressionFolding.folding.util.TestDynamicDataProvider
 import com.intellij.advancedExpressionFolding.processor.methodcall.dynamic.IDynamicDataProvider
 import com.intellij.advancedExpressionFolding.settings.State
+import com.intellij.testFramework.runInEdtAndWait
 import kotlin.reflect.KMutableProperty0
 
 internal fun foldingState(): State = State()()
@@ -21,6 +22,11 @@ abstract class FoldingFeatureTestCase : BaseTest(), FoldingTestSection {
         dynamic: IDynamicDataProvider = TestDynamicDataProvider(),
     ) {
         doFoldingTest(*turnOnProperties, dynamic = dynamic)
+    }
+
+    /** Adds library classes the test file resolves against; the light test project has only the JDK. */
+    fun addLibraryStubs(vararg classSources: String) = runInEdtAndWait {
+        classSources.forEach { fixture.addClass(it) }
     }
 
     fun runReadOnlyFoldingTest(
