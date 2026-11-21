@@ -8,18 +8,18 @@ import java.nio.file.Path;</fold>
 @SuppressWarnings("ALL")
 public class CatchRethrowTestData {
 
-    String readOrder(Path file) <fold text='{...}' expand='true'>{
-        <fold text='@SneakyThrows' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
-        <fold text='' expand='true'>    </fold>return Files.readString(file);<fold text='' expand='true'>
-        </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+    <fold text='@SneakyThrows S' expand='true'>S</fold>tring readOrder(Path file) <fold text='{...}' expand='true'>{
+        <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+            </fold>return Files.readString(file);<fold text='' expand='true'>
+        </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             throw new RuntimeException(e);
         }</fold></fold>
     }</fold>
 
-    void saveOrder(Path file, String order) <fold text='{...}' expand='true'>{
-        <fold text='@SneakyThrows(UncheckedIOException)' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
-        <fold text='' expand='true'>    </fold>Files.writeString(file, order);<fold text='' expand='true'>
-        </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+    <fold text='@SneakyThrows(UncheckedIOException) v' expand='true'>v</fold>oid saveOrder(Path file, String order) <fold text='{...}' expand='true'>{
+        <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+            </fold>Files.writeString(file, order);<fold text='' expand='true'>
+        </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             throw new UncheckedIOException(e);
         }</fold></fold>
     }</fold>
@@ -67,10 +67,10 @@ public class CatchRethrowTestData {
         }</fold>
     }</fold>
 
-    void withComment(Path file) <fold text='{...}' expand='true'>{
-        <fold text='@SneakyThrows' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
-        <fold text='' expand='true'>    </fold>Files.delete(file);<fold text='' expand='true'>
-        </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+    <fold text='@SneakyThrows v' expand='true'>v</fold>oid withComment(Path file) <fold text='{...}' expand='true'>{
+        <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
+            </fold>Files.delete(file);<fold text='' expand='true'>
+        </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             // the file may be locked by the scanner
             throw new RuntimeException(e);
         }</fold></fold>
