@@ -43,6 +43,7 @@ const FEATURES = [
     { id: 'method-defaults', name: 'Method Default Parameters', category: 'Functions', description: 'Displays default parameter values inline for overloaded methods.', exampleFile: 'MethodDefaultParametersTestData.java', foldedFile: 'MethodDefaultParametersTestData-folded.java' },
     { id: 'override-hide', name: 'Hide @Override Annotations', category: 'Annotations', description: 'Hides @Override annotations to reduce visual clutter and focus on implementation.', exampleFile: 'OverrideHideTestData.java', foldedFile: 'OverrideHideTestData-folded.java' },
     { id: 'suppress-warnings', name: 'Hide @SuppressWarnings', category: 'Annotations', description: 'Hides @SuppressWarnings annotations on methods to reduce visual clutter.', exampleFile: 'SuppressWarningsHideTestData.java', foldedFile: 'SuppressWarningsHideTestData-folded.java' },
+    { id: 'catch-rethrow', name: 'Catch Rethrow', category: 'Control Flow', description: 'Shows a catch block that only wraps and rethrows the caught exception as rethrow.', exampleFile: 'CatchRethrowTestData.java', foldedFile: 'CatchRethrowTestData-folded.java' },
     { id: 'experimental', name: 'Experimental Features', category: 'Advanced', description: 'Various experimental features for advanced code folding and code analysis.', exampleFile: 'ExperimentalTestData.java', foldedFile: 'ExperimentalTestData-folded.java' }
 ];
 
