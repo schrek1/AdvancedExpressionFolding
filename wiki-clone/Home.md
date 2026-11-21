@@ -357,6 +357,13 @@ Hides @SuppressWarnings annotations on methods to reduce visual clutter. Current
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SuppressWarningsHideTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SuppressWarningsHideTestData-folded.java)
 
+## joinToString
+### String.join(sep, items) as items.joinToString(sep)
+Shows `String.join(", ", names)` as Kotlin-style `names.joinToString(", ")`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/StringJoinTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/StringJoinTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/joinToString)
+
 ## catchRethrow
 ### Catch block that only wraps and rethrows as rethrow
 Shows a catch block whose only statement wraps the caught exception, `throw new RuntimeException(e);`, as `rethrow` (`rethrow as X` for another wrapper type). A block with a message, more statements, a comment or a different cause stays as it is.

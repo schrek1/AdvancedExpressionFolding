@@ -329,6 +329,10 @@ abstract class CheckboxesProvider {
             example(PseudoAnnotationsMainTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#pseudoAnnotations")
         }
+        registerCheckbox(state::joinToString, "String.join(sep, items) as items.joinToString(sep)") {
+            example(StringJoinTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#joinToString")
+        }
         registerCheckbox(state::catchRethrow, "Catch block that only wraps and rethrows as rethrow") {
             example(CatchRethrowTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#catchRethrow")
