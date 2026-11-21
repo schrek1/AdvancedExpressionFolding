@@ -115,6 +115,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#ifnullsafe")
         }
 
+        registerCheckbox(state::nullOrEmpty, "Null-or-empty checks as isNullOrEmpty() / isNotEmpty()") {
+            example(NullOrEmptyTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#nullorempty")
+        }
+
         registerCheckbox(state::kotlinQuickReturn, "Kotlin quick return") {
             example(LetReturnIt::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinquickreturn")
@@ -246,6 +251,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdelegate")
         }
 
+        registerCheckbox(state::lombokUtilityClass, "Display a class of static members as Lombok @UtilityClass") {
+            example(LombokUtilityClassTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokutilityclass")
+        }
+
         registerCheckbox(state::lombokStandardException, "Lombok: exception with standard constructors as @StandardException") {
             example(LombokStandardExceptionTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokstandardexception")
@@ -328,6 +338,10 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::pseudoAnnotations, "Pseudo-annotations: @Main, @Loggable") {
             example(PseudoAnnotationsMainTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#pseudoAnnotations")
+        }
+        registerCheckbox(state::joinToString, "String.join(sep, items) as items.joinToString(sep)") {
+            example(StringJoinTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#joinToString")
         }
         registerCheckbox(state::catchRethrow, "Catch block that only wraps and rethrows as rethrow") {
             example(CatchRethrowTestData::class)

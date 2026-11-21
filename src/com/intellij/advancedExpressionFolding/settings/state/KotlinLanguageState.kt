@@ -3,6 +3,7 @@ package com.intellij.advancedExpressionFolding.settings.state
 interface IKotlinLanguageState {
     var const: Boolean
     var ifNullSafe: Boolean
+    var nullOrEmpty: Boolean
     var kotlinQuickReturn: Boolean
     var nullable: Boolean
     var println: Boolean
@@ -16,12 +17,14 @@ interface IKotlinLanguageState {
     var constructorReferenceNotation: Boolean
     var arithmeticExpressions: Boolean
     var kotlinPreconditions: Boolean
+    var joinToString: Boolean
     var repeatLoop: Boolean
 }
 
 data class KotlinLanguageState(
     override var const: Boolean = true,
     override var ifNullSafe: Boolean = true,
+    override var nullOrEmpty: Boolean = true,
     override var kotlinQuickReturn: Boolean = true,
     override var nullable: Boolean = false,
     override var println: Boolean = true,
@@ -35,5 +38,6 @@ data class KotlinLanguageState(
     override var constructorReferenceNotation: Boolean = true,
     override var arithmeticExpressions: Boolean = false,
     override var kotlinPreconditions: Boolean = false,
+    override var joinToString: Boolean = true,
     override var repeatLoop: Boolean = true,
 ) : IKotlinLanguageState
