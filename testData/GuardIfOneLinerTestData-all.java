@@ -47,14 +47,14 @@ public class GuardIfOneLinerTestData {
 
     List<String> emptyListGuard(List<String> items) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>items == null<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return List.of();<fold text='' expand='false'>
+            </fold>return <fold text='[]' expand='false'>List.of()</fold>;<fold text='' expand='false'>
         }</fold></fold>
         return items;
     }</fold>
 
     Map<String, Integer> emptyMapGuard(Map<String, Integer> counts) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>counts == null<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return Collections.emptyMap();<fold text='' expand='false'>
+            </fold>return <fold text='[:]' expand='false'>Collections.emptyMap()</fold>;<fold text='' expand='false'>
         }</fold></fold>
         return counts;
     }</fold>
@@ -88,7 +88,7 @@ public class GuardIfOneLinerTestData {
     List<String> moreThanOneStatement(List<String> items) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("empty");
-            return List.of();
+            return <fold text='[]' expand='false'>List.of()</fold>;
         }</fold>
         return items;
     }</fold>
@@ -125,10 +125,10 @@ public class GuardIfOneLinerTestData {
         return name;
     }</fold>
 
-    void throwGuard(String name) <fold text='{...}' expand='true'>{
-        <fold text='require' expand='false'>if </fold>(name <fold text='!=' expand='false'>==</fold> null) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
-            throw new IllegalArgumentException(</fold>"name"<fold text=' ' expand='false'>);
-        </fold>}</fold>
+    void throwGuard<fold text='(@NonNull ' expand='true'>(</fold>String name) <fold text='{...}' expand='true'>{<fold text='' expand='true'>
+        </fold><fold text='' expand='true'>if (name == null) <fold text='{...}' expand='true'>{
+            throw new IllegalArgumentException("name");
+        }</fold></fold>
         <fold text='' expand='false'>System.out.</fold>println(name);
     }</fold>
 

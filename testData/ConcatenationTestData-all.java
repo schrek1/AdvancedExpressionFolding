@@ -10,15 +10,15 @@ public class ConcatenationTestData {
         list<fold text=' -= ' expand='false'>.remove(</fold>"one"<fold text='' expand='false'>)</fold>;
         <fold text='' expand='false'>System.out.</fold>println(list.add("two"));
         <fold text='' expand='false'>System.out.</fold>println(list.remove("two"));
-        <fold text='val' expand='false'>List<String></fold> singleton = Collections.emptyList();
+        <fold text='val' expand='false'>List<String></fold> singleton = <fold text='[]' expand='false'>Collections.emptyList()</fold>;
         list<fold text=' += ' expand='false'>.addAll(</fold>singleton<fold text='' expand='false'>)</fold>;
         list<fold text=' -= ' expand='false'>.removeAll(</fold>singleton<fold text='' expand='false'>)</fold>;
         <fold text='' expand='false'>Collections.addAll(</fold>list<fold text=' += ' expand='false'>, </fold>args<fold text='' expand='false'>)</fold>;
-        <fold text='val' expand='false'>Set<String></fold> set = new HashSet<>();
+        <fold text='val' expand='false'>Set<String></fold> set = <fold text='[]' expand='false'>new HashSet<>()</fold>;
         set<fold text=' += ' expand='false'>.add(</fold>"three"<fold text='' expand='false'>)</fold>;
         set<fold text=' -= ' expand='false'>.remove(</fold>"three"<fold text='' expand='false'>)</fold>;
         <fold text='' expand='false'>System.out.</fold>println(set);
-        <fold text='val' expand='false'>Set<String></fold> copyOfSet = new HashSet<>();
+        <fold text='val' expand='false'>Set<String></fold> copyOfSet = <fold text='[]' expand='false'>new HashSet<>()</fold>;
         set<fold text=' += ' expand='false'>.addAll(</fold>copyOfSet<fold text='' expand='false'>)</fold>;
         <fold text='' expand='false'>System.out.</fold>println(copyOfSet);
         <fold text='var' expand='false'>List<String></fold> streamToList = <fold text='' expand='false'>Arrays.stream(</fold>args<fold text='' expand='false'>)</fold><fold text='*.' expand='false'>.map(</fold><fold text='toUpperCase()' expand='false'>String::toUpperCase</fold><fold text='' expand='false'>)</fold><fold text='.' expand='false'>.collect(Collectors.</fold>toList()<fold text='' expand='false'>)</fold>;

@@ -14,12 +14,12 @@ public class ConstructorReferenceNotationWithConstTestData {
 
         private <fold text='const' expand='false'>static final</fold> HashMap<String, String> MAP =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>HashMap<></fold><fold text='' expand='true'>()</fold>;
         private <fold text='const' expand='false'>static final</fold> HashMap<String, String> MAP2 =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>HashMap<fold text='<~>' expand='false'><String, String></fold></fold><fold text='' expand='true'>()</fold>;
-        private <fold text='const' expand='false'>static final</fold> Map<String, String> MAP3 = new HashMap<>();
+        private <fold text='const' expand='false'>static final</fold> Map<String, String> MAP3 = <fold text='[:]' expand='false'>new HashMap<>()</fold>;
         private <fold text='const' expand='false'>static final</fold> Map<String, String> MAP_TREE = new TreeMap<>();
-        private <fold text='const' expand='false'>static final</fold> Map<String, String> MAP4 = Map.of();
+        private <fold text='const' expand='false'>static final</fold> Map<String, String> MAP4 = <fold text='[:]' expand='false'>Map.of()</fold>;
 
         private <fold text='const' expand='false'>static final</fold> List<String> LIST = <fold text='[]' expand='false'>new ArrayList<>()</fold>;
-        private <fold text='const' expand='false'>static final</fold> List<String> LIST2 = List.of();
+        private <fold text='const' expand='false'>static final</fold> List<String> LIST2 = <fold text='[]' expand='false'>List.of()</fold>;
         private <fold text='const' expand='false'>static final</fold> List<String> LIST_SINGLE = List.of("1");
         private <fold text='const' expand='false'>static final</fold> List<String> LIST_LINKED = new LinkedList<>();
 
@@ -48,7 +48,7 @@ public class ConstructorReferenceNotationWithConstTestData {
 
         private final HashMap<String, String> MAP =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>HashMap<></fold><fold text='' expand='true'>()</fold>;
         private final HashMap<String, String> MAP2 =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>HashMap<fold text='<~>' expand='false'><String, String></fold></fold><fold text='' expand='true'>()</fold>;
-        private final Map<String, String> MAP3 = new HashMap<>();
+        private final Map<String, String> MAP3 = <fold text='[:]' expand='false'>new HashMap<>()</fold>;
 
         private final List<String> LIST = <fold text='[]' expand='false'>new ArrayList<>()</fold>;
         private final List<String> LIST2 = List.of("1");

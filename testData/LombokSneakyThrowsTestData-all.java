@@ -85,7 +85,7 @@ public class LombokSneakyThrowsTestData {
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
             throw new RuntimeException(e);
         }</fold></fold> finally <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"done"' expand='false'>"done"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("done");
         }</fold>
     }</fold>
 
