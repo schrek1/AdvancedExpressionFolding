@@ -85,6 +85,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#localdateliteralpostfixcollapse")
         }
 
+        registerCheckbox(state::durationLiteralCollapse, "Duration literals (e.g. 30.seconds, sleep(500.milliseconds))") {
+            example(DurationLiteralTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#durationliteralcollapse")
+        }
+
         registerCheckbox(state::castExpressionsCollapse, "Type cast expressions") {
             example(TypeCastTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#castexpressionscollapse")
