@@ -8,6 +8,7 @@ import com.intellij.advancedExpressionFolding.processor.exprHide
 import com.intellij.advancedExpressionFolding.processor.exprList
 import com.intellij.advancedExpressionFolding.processor.exprWrap
 import com.intellij.advancedExpressionFolding.processor.group
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokSneakyThrowsExt.isWholeMethodRethrow
 import com.intellij.advancedExpressionFolding.processor.lombok.MethodBodyInspector.rethrownException
 import com.intellij.advancedExpressionFolding.processor.prevWhiteSpace
 import com.intellij.openapi.util.TextRange
@@ -29,6 +30,8 @@ object CatchRethrowExt : BaseExtension() {
         val catchSection = block.parent as? PsiCatchSection ?: return null
         // the experimental @SneakyThrows fold already hides this catch block
         if (experimental && (catchSection.parent as? PsiTryStatement)?.isSimpleTryCatch() == true) return null
+        // the whole-method @SneakyThrows fold hides this catch block too
+        if ((catchSection.parent as? PsiTryStatement)?.isWholeMethodRethrow() == true) return null
         if (PsiTreeUtil.findChildOfType(block, PsiComment::class.java) != null) return null
         val wrapper = catchSection.rethrownException ?: return null
 

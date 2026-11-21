@@ -82,9 +82,9 @@ public class LombokSneakyThrowsTestData {
     public void withFinally(Path file) <fold text='{...}' expand='true'>{
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
-        }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
             throw new RuntimeException(e);
-        }</fold> finally <fold text='{...}' expand='true'>{
+        }</fold></fold> finally <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(<fold text='"done"' expand='false'>"done"</fold>);
         }</fold>
     }</fold>
@@ -92,19 +92,19 @@ public class LombokSneakyThrowsTestData {
     public void withResources(Path file) <fold text='{...}' expand='true'>{
         try (var lines = Files.lines(file)) <fold text='{...}' expand='true'>{
             lines.forEach(System.out::println);
-        }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
             throw new RuntimeException(e);
-        }</fold>
+        }</fold></fold>
     }</fold>
 
     public void twoCatches(Path file) <fold text='{...}' expand='true'>{
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
             Thread.sleep(10);
-        }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
             throw new RuntimeException(e);
-        }</fold> catch <fold text='' expand='false'>(</fold>InterruptedException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold></fold> catch <fold text='' expand='false'>(</fold>InterruptedException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
             throw new RuntimeException(e);
-        }</fold>
+        }</fold></fold>
     }</fold>
 }
