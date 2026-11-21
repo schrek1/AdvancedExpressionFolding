@@ -154,6 +154,8 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
 
     @Test
     fun inOperatorTestData() = testCase.runFoldingTest(foldingState()::inOperator)
+
+    @Test
     fun singletonObjectTestData() = testCase.runFoldingTest(foldingState()::singletonObject)
 
     @Test
