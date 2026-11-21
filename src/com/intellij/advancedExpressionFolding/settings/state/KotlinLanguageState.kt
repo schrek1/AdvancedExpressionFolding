@@ -10,6 +10,7 @@ interface IKotlinLanguageState {
     var todo: Boolean
     var destructuring: Boolean
     var mapEntryDestructuring: Boolean
+    var objectDestructuring: Boolean
     var expressionFunc: Boolean
     var expressionFuncEquals: Boolean
     var methodDefaultParameters: Boolean
@@ -31,6 +32,7 @@ data class KotlinLanguageState(
     override var todo: Boolean = true,
     override var destructuring: Boolean = false,
     override var mapEntryDestructuring: Boolean = true,
+    override var objectDestructuring: Boolean = true,
     override var expressionFunc: Boolean = true,
     override var expressionFuncEquals: Boolean = false,
     override var methodDefaultParameters: Boolean = true,

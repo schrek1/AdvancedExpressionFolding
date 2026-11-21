@@ -179,6 +179,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#mapentrydestructuring")
         }
 
+        registerCheckbox(state::objectDestructuring, "Destructuring locals read from record accessors & getters") {
+            example(ObjectDestructuringTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#objectdestructuring")
+        }
+
         registerCheckbox(state::println, "Simplify System.out.println to println") {
             example(PrintlnTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#println")
