@@ -105,6 +105,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#ifnullsafe")
         }
 
+        registerCheckbox(state::nullOrEmpty, "Null-or-empty checks as isNullOrEmpty() / isNotEmpty()") {
+            example(NullOrEmptyTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#nullorempty")
+        }
+
         registerCheckbox(state::kotlinQuickReturn, "Kotlin quick return") {
             example(LetReturnIt::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinquickreturn")

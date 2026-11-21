@@ -193,6 +193,7 @@
 
         <!-- Nullable Method Calls -->
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.nullable.CheckNotNullMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.nullable.NullOrEmptyUtilMethodCall"/>
 
         <!-- Optional Method Calls -->
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.optional.OptionalGetMethodCall"/>
