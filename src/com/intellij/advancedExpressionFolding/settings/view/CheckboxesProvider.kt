@@ -337,6 +337,11 @@ abstract class CheckboxesProvider {
             example(MethodDefaultParametersTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#methodDefaultParameters")
         }
+
+        registerCheckbox(state::lazyProperty, "Null-checked lazy getter as by lazy property") {
+            example(LazyPropertyTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lazyproperty")
+        }
         registerCheckbox(state::overrideHide, "Hide @Override annotation") {
             example(OverrideHideTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#overrideHide")
