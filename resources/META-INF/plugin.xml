@@ -188,6 +188,7 @@
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionRemoveMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionsUnmodifiableListMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionsUnmodifiableSetMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionLiteralMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionStreamMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapGetOrDefaultMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapPutMethodCall"/>

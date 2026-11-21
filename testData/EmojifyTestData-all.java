@@ -385,7 +385,7 @@ public class EmojifyTestData {
 
     public class TypeInferenceUsage <fold text='{...}' expand='true'>{
         public void useTypeInference()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='val' expand='false'>java.util.Map<String, Integer></fold> map = new java.util.HashMap<>();<fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='val' expand='false'>java.util.Map<String, Integer></fold> map = <fold text='[:]' expand='false'>new java.util.HashMap<>()</fold>;<fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
@@ -475,7 +475,7 @@ public class EmojifyTestData {
             }</fold>
 
             public void methodWithNullInMap() <fold text='{...}' expand='true'>{
-                <fold text='val' expand='false'>java.util.Map<String, String></fold> map = new java.util.HashMap<>();
+                <fold text='val' expand='false'>java.util.Map<String, String></fold> map = <fold text='[:]' expand='false'>new java.util.HashMap<>()</fold>;
                 map<fold text='[' expand='false'>.put(</fold>"key"<fold text='] = ' expand='false'>, </fold>null<fold text='' expand='false'>)</fold>;
             }</fold>
 
