@@ -1,5 +1,6 @@
 package com.intellij.advancedExpressionFolding.folding.base.folding
 
+import com.intellij.advancedExpressionFolding.folding.util.NULL_OR_EMPTY_UTILITY_STUBS
 import com.intellij.codeInsight.folding.JavaCodeFoldingSettings
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -20,6 +21,12 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
         foldingState()::getSetExpressionsCollapse,
         foldingState()::ifNullSafe,
     )
+
+    @Test
+    fun nullOrEmptyTestData() {
+        testCase.addLibraryStubs(*NULL_OR_EMPTY_UTILITY_STUBS)
+        testCase.runFoldingTest(foldingState()::nullOrEmpty)
+    }
 
     @Test
     fun destructuringAssignmentArrayTestData() = testCase.runFoldingTest(
@@ -55,10 +62,32 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun objectDestructuringTestData() = testCase.runFoldingTest(
+        foldingState()::objectDestructuring,
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::varExpressionsCollapse,
+    )
+
+    @Test
+    fun repeatLoopTestData() = testCase.runFoldingTest(
+        foldingState()::repeatLoop,
+        foldingState()::rangeExpressionsCollapse,
+    )
+
+    @Test
     fun printlnTestData() = testCase.runFoldingTest(foldingState()::println)
 
     @Test
-    fun nullableAnnotationTestData() = testCase.runFoldingTest(
+    fun todoTestData() = testCase.runFoldingTest(foldingState()::todo)
+
+    @Test
+    fun todoExpressionFuncTestData() = testCase.runFoldingTest(
+        foldingState()::todo,
+        foldingState()::expressionFunc,
+    )
+
+    @Test
+    fun nullableAnnotationTestData()= testCase.runFoldingTest(
         foldingState()::nullable,
         foldingState()::lombok,
     )
@@ -109,6 +138,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
         testCase.runFoldingTest(foldingState()::patternMatchingInstanceof)
 
     @Test
+    fun instanceofSwitchTestData() = testCase.runFoldingTest(foldingState()::instanceofSwitch)
+
+    @Test
     fun constructorReferenceNotationTestData() = testCase.runFoldingTest(foldingState()::constructorReferenceNotation)
 
     @Test
@@ -119,6 +151,15 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
 
     @Test
     fun methodDefaultParametersTestData() = testCase.runFoldingTest(foldingState()::methodDefaultParameters)
+
+    @Test
+    fun singletonObjectTestData() = testCase.runFoldingTest(foldingState()::singletonObject)
+
+    @Test
+    fun stringJoinTestData() = testCase.runFoldingTest(foldingState()::joinToString)
+
+    @Test
+    fun lazyPropertyTestData() = testCase.runFoldingTest(foldingState()::lazyProperty, foldingState()::lombok)
 }
 
 @Disabled("Split from FoldingTest")
