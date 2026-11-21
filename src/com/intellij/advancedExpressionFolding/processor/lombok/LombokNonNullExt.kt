@@ -23,13 +23,18 @@ object LombokNonNullExt : ILombokState by State()() {
 
     /** Hides a leading parameter check, with the whitespace before it, as one non-nested fold. */
     fun hiddenCheck(statement: PsiStatement): Expression? {
-        val method = statement.parent?.parent as? PsiMethod ?: return null
-        if (checkedParameter(statement) == null || statement !in checkedParameters(method).values) {
+        if (!hides(statement)) {
             return null
         }
         val group = LombokNonNullExt::class.group()
         val hidden = listOfNotNull(statement.prevWhiteSpace(), statement).map { HideExpression(it, group = group) }
         return WrapperExpression(statement, chain = hidden, nested = false)
+    }
+
+    /** True when [statement] is a leading parameter check that this fold hides; other folds must leave it alone. */
+    fun hides(statement: PsiStatement): Boolean {
+        val method = statement.parent?.parent as? PsiMethod ?: return false
+        return lombokNonNull && checkedParameter(statement) != null && statement in checkedParameters(method).values
     }
 
     fun parameterAnnotation(parameter: PsiParameter): Expression? {
