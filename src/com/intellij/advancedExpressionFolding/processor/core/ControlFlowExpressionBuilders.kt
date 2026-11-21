@@ -6,8 +6,8 @@ import com.intellij.advancedExpressionFolding.processor.controlflow.ForStatement
 import com.intellij.advancedExpressionFolding.processor.controlflow.IfExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.LoopExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.PsiTryStatementExt
+import com.intellij.advancedExpressionFolding.processor.declaration.LeadingParameterChecksExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.PreconditionExt
-import com.intellij.advancedExpressionFolding.processor.lombok.LombokNonNullExt
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiCatchSection
@@ -32,12 +32,12 @@ class ForEachStatementBuilder : BuildExpression<PsiForeachStatement>(PsiForeachS
         LoopExt.getForEachStatementExpression(element)
 }
 
-class LombokNonNullCheckBuilder : BuildExpression<PsiStatement>(PsiStatement::class.java) {
+class LeadingParameterCheckBuilder : BuildExpression<PsiStatement>(PsiStatement::class.java) {
     override fun checkConditions(element: PsiStatement) =
-        lombokNonNull && (element is PsiIfStatement || element is PsiExpressionStatement)
+        (lombokNonNull || jakartaConstraints) && (element is PsiIfStatement || element is PsiExpressionStatement)
 
     override fun buildExpression(element: PsiStatement, document: Document, synthetic: Boolean) =
-        LombokNonNullExt.hiddenCheck(element)
+        LeadingParameterChecksExt.hiddenCheck(element)
 }
 
 class IfStatementBuilder : BuildExpression<PsiIfStatement>(PsiIfStatement::class.java) {
