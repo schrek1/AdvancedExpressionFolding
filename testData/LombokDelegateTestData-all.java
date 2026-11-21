@@ -28,7 +28,7 @@ public class LombokDelegateTestData {
     }</fold>
 
     public static class Shop <fold text='{...}' expand='true'>{
-        <fold text='@Delegate p' expand='false'>p</fold>rivate final Map<String, Integer> stock = new HashMap<>();
+        <fold text='@Delegate p' expand='false'>p</fold>rivate final Map<String, Integer> stock = <fold text='[:]' expand='false'>new HashMap<>()</fold>;
         <fold text='@Getter @Delegate p' expand='false'>p</fold>rivate final List<String> orders = <fold text='[]' expand='false'>new ArrayList<>()</fold>;<fold text='' expand='false'>
 
         </fold><fold text='' expand='false'>public Integer put(String product, Integer quantity)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

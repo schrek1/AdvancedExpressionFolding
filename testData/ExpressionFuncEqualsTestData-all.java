@@ -11,11 +11,11 @@ public class ExpressionFuncEqualsTestData {
     </fold>}</fold>
 
     private void printStatus() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='[:]' expand='false'>new HashMap<String, String>()</fold><fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     private String printStatusReturn() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='[:]' expand='false'>new HashMap<String, String>()</fold><fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     <fold text='' expand='true'>public</fold><fold text='' expand='true'> </fold><fold text='' expand='true'>String</fold><fold text='' expand='true'> </fold>columnName(String column) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>

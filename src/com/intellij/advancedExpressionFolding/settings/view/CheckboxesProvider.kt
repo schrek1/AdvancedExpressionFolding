@@ -55,6 +55,14 @@ abstract class CheckboxesProvider {
         }
 
         registerCheckbox(
+            state::mapAndEmptyCollectionLiterals,
+            "Map literals and empty collections: [\"key\": value], [], [:]"
+        ) {
+            example(MapAndEmptyCollectionLiteralsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#mapandemptycollectionliterals")
+        }
+
+        registerCheckbox(
             state::concatenationExpressionsCollapse,
             "StringBuilder.append and Collection.add/remove expressions, interpolated Strings and Stream expressions"
         ) {

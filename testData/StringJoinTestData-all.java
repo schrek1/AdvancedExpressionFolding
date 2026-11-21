@@ -28,7 +28,7 @@ import java.util.Set;</fold>
         <fold text='val' expand='false'>String</fold> single = String.join(", ", name);
         <fold text='val' expand='false'>String</fold> varargs = String.join(", ", name, other);
         <fold text='val' expand='false'>String</fold> noArgs = String.join(", ");
-        <fold text='val' expand='false'>String</fold> ternary = String.join(", ", flag ? names : List.of());
+        <fold text='val' expand='false'>String</fold> ternary = String.join(", ", flag ? names : <fold text='[]' expand='false'>List.of()</fold>);
         <fold text='val' expand='false'>String</fold> multiLine = String.join(
                 flag
                         ? ", "
