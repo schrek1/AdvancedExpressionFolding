@@ -38,7 +38,7 @@ public class JakartaConstraintsTestData {
     }</fold>
 
     public void notFoldedAfterStatement(int quantity) <fold text='{...}' expand='true'>{
-        <fold text='' expand='false'>System.out.</fold>println(<fold text='"start"' expand='false'>"start"</fold>);
+        <fold text='' expand='false'>System.out.</fold>println("start");
         <fold text='require' expand='false'>if </fold>(quantity <fold text='>=' expand='false'><</fold> 1)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"quantity"<fold text=' }' expand='false'>);</fold>
     }</fold>
 
@@ -73,7 +73,7 @@ public class JakartaConstraintsTestData {
 
     public void notFoldedBranches(int quantity) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>quantity < 1<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"too few"' expand='false'>"too few"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("too few");
             throw new IllegalArgumentException("quantity");
         }</fold>
         if <fold text='' expand='false'>(</fold>quantity > 99<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{

@@ -31,7 +31,7 @@ public class LombokUtilityClassTestData {
         }</fold></fold>
 
         public <fold text='' expand='false'>static</fold><fold text='' expand='false'> </fold>boolean isAllowed(int items)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>items >= MIN_ITEMS && items <= MAX_ITEMS<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>items <fold text='in' expand='false'>>=</fold> MIN_ITEMS<fold text='..' expand='false'> && items <= </fold>MAX_ITEMS<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         public <fold text='' expand='false'>static</fold><fold text='' expand='false'> </fold>class Defaults <fold text='{...}' expand='true'>{
