@@ -11,6 +11,12 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     fun forRangeTestData() = testCase.runFoldingTest(foldingState()::rangeExpressionsCollapse)
 
     @Test
+    fun kotlinRangeLoopsTestData() = testCase.runFoldingTest(
+        foldingState()::rangeExpressionsCollapse,
+        foldingState()::kotlinRangeLoops,
+    )
+
+    @Test
     fun stringBuilderTestData() = testCase.runFoldingTest(foldingState()::concatenationExpressionsCollapse)
 
     @Test

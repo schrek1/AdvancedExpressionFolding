@@ -78,6 +78,12 @@ Collapses for loops and range expressions into more concise forms.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ForRangeTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ForRangeTestData-folded.java)
 
+## kotlinRangeLoops
+### For loops in Kotlin range syntax
+Shows the folded counting loop as a Kotlin range, `for (i in 0..<n)` instead of `for (int i : [0, n))`. Needs `rangeExpressionsCollapse`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinRangeLoopsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinRangeLoopsTestData-folded.java)
+
 ## checkExpressionsCollapse
 ### Null-safe calls
 Simplifies null-safe call operations.
