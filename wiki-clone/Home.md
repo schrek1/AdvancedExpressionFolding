@@ -307,6 +307,13 @@ Prevents folding of Lombok-generated getters and setters that have been modified
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokDirtyOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokDirtyOffTestData-folded.java)
 
+## lombokNonNull
+### Leading parameter null checks as Lombok @NonNull
+Hides the null checks at the start of a method body and shows `@NonNull` on each checked parameter instead: `Objects.requireNonNull(p[, "message"])` and `if (p == null) throw new NullPointerException(...)` (or `IllegalArgumentException`).
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokNonNullTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokNonNullTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokNonNull)
+
 ## lombokBuilder
 ### Display hand-written Lombok-shaped builder as @Builder
 Hides a hand-written builder that has exactly the shape Lombok `@Builder` generates and shows `@Builder` on the class. A builder with anything extra (validation or defaults, an extra method, a different argument order) keeps the `@HasBuilder` label.
