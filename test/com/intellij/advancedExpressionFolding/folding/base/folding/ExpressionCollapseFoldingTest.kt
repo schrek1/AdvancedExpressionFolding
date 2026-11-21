@@ -38,6 +38,10 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     fun getOrDefaultElvisTestData() = testCase.runFoldingTest(foldingState()::getOrDefaultElvis)
 
     @Test
+    fun mapAndEmptyCollectionLiteralsTestData() =
+        testCase.runFoldingTest(foldingState()::mapAndEmptyCollectionLiterals)
+
+    @Test
     fun sliceTestData() = testCase.runFoldingTest(foldingState()::slicingExpressionsCollapse)
 
     @Test

@@ -47,14 +47,14 @@ public class GuardIfOneLinerTestData {
 
     List<String> emptyListGuard(List<String> items) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>items == null<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return List.of();<fold text='' expand='false'>
+            </fold>return <fold text='[]' expand='false'>List.of()</fold>;<fold text='' expand='false'>
         }</fold></fold>
         return items;
     }</fold>
 
     Map<String, Integer> emptyMapGuard(Map<String, Integer> counts) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>counts == null<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return Collections.emptyMap();<fold text='' expand='false'>
+            </fold>return <fold text='[:]' expand='false'>Collections.emptyMap()</fold>;<fold text='' expand='false'>
         }</fold></fold>
         return counts;
     }</fold>
@@ -88,7 +88,7 @@ public class GuardIfOneLinerTestData {
     List<String> moreThanOneStatement(List<String> items) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("empty");
-            return List.of();
+            return <fold text='[]' expand='false'>List.of()</fold>;
         }</fold>
         return items;
     }</fold>
