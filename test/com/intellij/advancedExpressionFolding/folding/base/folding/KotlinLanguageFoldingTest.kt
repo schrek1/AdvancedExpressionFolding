@@ -55,10 +55,25 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun repeatLoopTestData() = testCase.runFoldingTest(
+        foldingState()::repeatLoop,
+        foldingState()::rangeExpressionsCollapse,
+    )
+
+    @Test
     fun printlnTestData() = testCase.runFoldingTest(foldingState()::println)
 
     @Test
-    fun nullableAnnotationTestData() = testCase.runFoldingTest(
+    fun todoTestData() = testCase.runFoldingTest(foldingState()::todo)
+
+    @Test
+    fun todoExpressionFuncTestData() = testCase.runFoldingTest(
+        foldingState()::todo,
+        foldingState()::expressionFunc,
+    )
+
+    @Test
+    fun nullableAnnotationTestData()= testCase.runFoldingTest(
         foldingState()::nullable,
         foldingState()::lombok,
     )

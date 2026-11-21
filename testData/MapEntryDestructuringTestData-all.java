@@ -7,27 +7,27 @@ import java.util.Map;</fold>
 public class MapEntryDestructuringTestData {
 
     public void destructured(Map<String, Integer> stock, Warehouse warehouse, Map<String, Integer> report) <fold text='{...}' expand='true'>{
-        for <fold text='' expand='false'>(</fold><fold text='(key, value) in ' expand='false'><fold text='val' expand='false'>Map.Entry<String, Integer></fold> e : </fold>stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        for <fold text='' expand='false'>(</fold><fold text='(key, value) in' expand='false'><fold text='val' expand='false'>Map.Entry<String, Integer></fold> e :</fold> stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println<fold text='("$' expand='false'>(</fold><fold text='key' expand='false'>e.getKey()</fold><fold text='' expand='false'> + "</fold>: <fold text='$' expand='false'>" + </fold><fold text='value' expand='false'>e.getValue()</fold><fold text='")' expand='false'>)</fold>;
         }</fold>
 
         <fold text='var' expand='false'>int</fold> total = 0;
-        for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='(key, value) in ' expand='false'><fold text='val' expand='false'>final</fold> Map.Entry<String, Integer></fold> item : </fold>stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='(key, value) in' expand='false'><fold text='val' expand='false'>final</fold> Map.Entry<String, Integer></fold> item :</fold> stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             total += <fold text='value' expand='false'>item.getValue()</fold>;
             report<fold text='[' expand='false'>.put(</fold><fold text='key' expand='false'>item.getKey()</fold><fold text='] = ' expand='false'>, </fold><fold text='value' expand='false'>item.getValue()</fold> * 2<fold text='' expand='false'>)</fold>;
         }</fold>
 
-        for <fold text='' expand='false'>(</fold><fold text='(key, value) in ' expand='false'><fold text='val' expand='false'>var</fold> e : </fold>warehouse.<fold text='stock' expand='false'>getStock()</fold><fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        for <fold text='' expand='false'>(</fold><fold text='(key, value) in' expand='false'><fold text='val' expand='false'>var</fold> e :</fold> warehouse.<fold text='stock' expand='false'>getStock()</fold><fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>String</fold> line =<fold text=' "$' expand='false'> </fold><fold text='key' expand='false'>e.getKey()</fold><fold text='' expand='false'> + "</fold>=<fold text='$' expand='false'>" + </fold><fold text='value' expand='false'>e.getValue()</fold><fold text='";' expand='false'>;</fold>
             report<fold text=' -= ' expand='false'>.remove(</fold>line<fold text='' expand='false'>)</fold>;
         }</fold>
 
-        for <fold text='' expand='false'>(</fold><fold text='(key, _) in ' expand='false'><fold text='val' expand='false'>Map.Entry<String, Integer></fold> e : </fold>stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        for <fold text='' expand='false'>(</fold><fold text='(key, _) in' expand='false'><fold text='val' expand='false'>Map.Entry<String, Integer></fold> e :</fold> stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             report<fold text=' -= ' expand='false'>.remove(</fold><fold text='key' expand='false'>e.getKey()</fold><fold text='' expand='false'>)</fold>;
         }</fold>
 
         <fold text='var' expand='false'>int</fold> sum = 0;
-        for <fold text='' expand='false'>(</fold><fold text='(_, value) in ' expand='false'><fold text='val' expand='false'>Map.Entry<String, Integer></fold> e : </fold>stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        for <fold text='' expand='false'>(</fold><fold text='(_, value) in' expand='false'><fold text='val' expand='false'>Map.Entry<String, Integer></fold> e :</fold> stock<fold text='' expand='false'>.entrySet()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             sum += <fold text='value' expand='false'>e.getValue()</fold>;
         }</fold>
     }</fold>
