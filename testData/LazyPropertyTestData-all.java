@@ -50,7 +50,7 @@ public class LazyPropertyTestData {
     String currency() <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>currency == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             currency = "EUR";
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"currency set"' expand='false'>"currency set"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("currency set");
         }</fold>
         return currency;
     }</fold>

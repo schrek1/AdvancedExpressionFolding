@@ -65,7 +65,7 @@ public class LombokDelegateTestData {
         </fold>}</fold>
 
         public void clear() <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"clearing"' expand='false'>"clearing"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("clearing");
             items.clear();
         }</fold>
 

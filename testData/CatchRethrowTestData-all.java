@@ -30,7 +30,7 @@ public class CatchRethrowTestData {
         }</fold> catch <fold text='' expand='false'>(</fold>InterruptedException | IllegalMonitorStateException e<fold text='' expand='false'>)</fold><fold text='' expand='true'> </fold><fold text=' rethrow as ' expand='true'><fold text='{...}' expand='true'>{
             throw new </fold>IllegalStateException<fold text='' expand='true'>(e);
         }</fold></fold> finally <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"done"' expand='false'>"done"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("done");
         }</fold>
     }</fold>
 
@@ -46,7 +46,7 @@ public class CatchRethrowTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"delete failed"' expand='false'>"delete failed"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("delete failed");
             throw new RuntimeException(e);
         }</fold>
     }</fold>

@@ -480,7 +480,7 @@ public class EmojifyTestData {
             }</fold>
 
             public void methodWithNullInStream() <fold text='{...}' expand='true'>{
-                <fold text='val' expand='false'>java.util.List<String></fold> list = <fold text='[' expand='false'>java.util.Arrays.asList(</fold>null, <fold text='"value"' expand='false'>"value"</fold><fold text=']' expand='false'>)</fold>;
+                <fold text='val' expand='false'>java.util.List<String></fold> list = <fold text='[' expand='false'>java.util.Arrays.asList(</fold>null, "value"<fold text=']' expand='false'>)</fold>;
                 <fold text='val' expand='false'>long</fold> count = list<fold text='.' expand='false'>.stream().</fold>filter(java.util.Objects::isNull).count();
             }</fold>
 
