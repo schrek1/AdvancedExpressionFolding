@@ -31,7 +31,7 @@ public class TodoTestData {
     </fold>}</fold>
 
     public void otherException()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='error(' expand='false'>throw new IllegalStateException(</fold>"Not implemented"<fold text=')' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='error' expand='false'>throw new IllegalStateException</fold>("Not implemented")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void subclass()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

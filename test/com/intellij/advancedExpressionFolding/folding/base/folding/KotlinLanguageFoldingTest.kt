@@ -1,5 +1,6 @@
 package com.intellij.advancedExpressionFolding.folding.base.folding
 
+import com.intellij.advancedExpressionFolding.folding.util.NULL_OR_EMPTY_UTILITY_STUBS
 import com.intellij.codeInsight.folding.JavaCodeFoldingSettings
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
@@ -20,6 +21,12 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
         foldingState()::getSetExpressionsCollapse,
         foldingState()::ifNullSafe,
     )
+
+    @Test
+    fun nullOrEmptyTestData() {
+        testCase.addLibraryStubs(*NULL_OR_EMPTY_UTILITY_STUBS)
+        testCase.runFoldingTest(foldingState()::nullOrEmpty)
+    }
 
     @Test
     fun destructuringAssignmentArrayTestData() = testCase.runFoldingTest(
