@@ -29,7 +29,7 @@ public class SuppressWarningsHideTestData {
     }</fold>
 
     public void methodWithAnnotatedParam(@SuppressWarnings("unused") int unusedParam) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='' expand='false'>System.out.</fold>println(<fold text='"Method called"' expand='false'>"Method called"</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='' expand='false'>System.out.</fold>println("Method called")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     <fold text='' expand='true'>@SuppressWarnings("deprecation")</fold><fold text='' expand='true'>

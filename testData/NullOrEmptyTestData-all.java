@@ -14,7 +14,7 @@ public class NullOrEmptyTestData {
 
     public void folded(String name, List<String> items, Map<String, Integer> stock, StringBuilder buffer) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold><fold text='' expand='false'>name == null || </fold>name.<fold text='isNullOrEmpty' expand='false'>isEmpty</fold>()<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"no name"' expand='false'>"no name"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("no name");
         }</fold>
         if <fold text='' expand='false'>(</fold><fold text='' expand='false'>items != null && !</fold>items.<fold text='isNotEmpty' expand='false'>isEmpty</fold>()<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(items<fold text='.getFirst' expand='false'>.get</fold>(<fold text='' expand='false'>0</fold>));
@@ -57,7 +57,7 @@ public class NullOrEmptyTestData {
 
     public void utilityChecks(String name, List<String> items, Map<String, Integer> stock, Object[] codes) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold><fold text='' expand='false'>CollectionUtils.isEmpty(</fold>items<fold text='.isNullOrEmpty()' expand='false'>)</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(<fold text='"no items"' expand='false'>"no items"</fold>);
+            <fold text='' expand='false'>System.out.</fold>println("no items");
         }</fold>
         if <fold text='' expand='false'>(</fold><fold text='' expand='false'>StringUtils.isNotEmpty(</fold>name<fold text='.isNotEmpty()' expand='false'>)</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(name);
