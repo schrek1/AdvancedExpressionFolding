@@ -26,7 +26,7 @@ public class GetOrDefaultElvisTestData {
     }</fold>
 
     public int nested(String shop, String item) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>int</fold> inShop = stockByShop.getOrDefault(shop, Map.of())<fold text='[' expand='false'>.getOrDefault(</fold>item<fold text='] ?:' expand='false'>,</fold> 0<fold text='' expand='false'>)</fold>;
+        <fold text='val' expand='false'>int</fold> inShop = stockByShop.getOrDefault(shop, <fold text='[:]' expand='false'>Map.of()</fold>)<fold text='[' expand='false'>.getOrDefault(</fold>item<fold text='] ?:' expand='false'>,</fold> 0<fold text='' expand='false'>)</fold>;
         return inShop;
     }</fold>
 
@@ -41,7 +41,7 @@ public class GetOrDefaultElvisTestData {
     }</fold>
 
     private Map<String, String> labelsOf()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>Map.of()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='[:]' expand='false'>Map.of()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     private void print(Object value)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

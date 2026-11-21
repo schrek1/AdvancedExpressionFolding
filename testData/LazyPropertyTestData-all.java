@@ -28,8 +28,8 @@ public class LazyPropertyTestData {
 
     static Map<String, Integer> stock() </fold><fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
         if <fold text='' expand='false'>(</fold>stock == null<fold text='' expand='false'>)</fold> </fold><fold text='' expand='false'><fold text='{...}' expand='true'>{</fold><fold text='' expand='false'>
-            stock = </fold>Map.of("apple", 3,
-                    "pear", 5)<fold text='' expand='false'>;
+            stock = </fold><fold text='[' expand='false'>Map.of(</fold>"apple"<fold text=':' expand='false'>,</fold> 3,
+                    "pear"<fold text=':' expand='false'>,</fold> 5<fold text=']' expand='false'>)</fold><fold text='' expand='false'>;
         </fold><fold text='' expand='false'>}</fold></fold><fold text=' ' expand='false'>
         return stock;
     </fold>}</fold>
