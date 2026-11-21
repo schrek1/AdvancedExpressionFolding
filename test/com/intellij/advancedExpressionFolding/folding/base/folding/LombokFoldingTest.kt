@@ -51,6 +51,9 @@ interface LombokFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun lombokSneakyThrowsTestData() = testCase.runFoldingTest(foldingState()::lombokSneakyThrows)
+
+    @Test
     fun lombokPatternOffTestData() {
         val state = foldingState()
         state.lombokPatternOff = "LombokPa[t]{2}ernOffTestData"

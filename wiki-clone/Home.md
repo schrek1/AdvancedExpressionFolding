@@ -308,6 +308,13 @@ Prevents all Lombok folding for classes matching the pattern
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokPatternOffTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokPatternOffTestData-folded.java)
 
+## lombokSneakyThrows
+### Whole-method try/catch that only rethrows as @SneakyThrows
+Folds a method whose whole body is a try/catch that only wraps the caught exception (`throw new RuntimeException(e)`) into `@SneakyThrows` on the method.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LombokSneakyThrowsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokSneakyThrowsTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokSneakyThrows)
+
 ## lombokDelegate
 ### Forwarding methods as Lombok @Delegate
 Hides public methods that only pass their parameters on to the same-named method of a field, and marks that field with @Delegate.
