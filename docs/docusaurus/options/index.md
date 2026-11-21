@@ -74,6 +74,12 @@ Allows for a postfix notation for LocalDate literals.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LocalDateLiteralPostfixTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LocalDateLiteralPostfixTestData-folded.java)
 
+## durationLiteralCollapse
+### Duration literals (e.g. 30.seconds, sleep(500.milliseconds))
+Shows `Duration.ofSeconds(30)` as `30.seconds` and `TimeUnit.MILLISECONDS.sleep(500)` as `sleep(500.milliseconds)`. Only a plain number literal folds; a variable, a computed or negative value and two-argument factories stay as they are.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/DurationLiteralTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/DurationLiteralTestData-folded.java)
+
 ## castExpressionsCollapse
 ### Type cast expressions
 Simplifies type casting operations.
@@ -91,6 +97,12 @@ Collapses for loops and range expressions into more concise forms.
 Shows the folded counting loop as a Kotlin range, `for (i in 0..<n)` instead of `for (int i : [0, n))`. Needs `rangeExpressionsCollapse`.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinRangeLoopsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinRangeLoopsTestData-folded.java)
+
+## repeatLoop
+### Counting for loops with an unused index as repeat(n)
+Shows `for (int i = 0; i < n; i++)` as `repeat(n)` when the body never reads or writes `i`. A loop that uses its index keeps the range form.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/RepeatLoopTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/RepeatLoopTestData-folded.java)
 
 ## checkExpressionsCollapse
 ### Null-safe calls
@@ -187,6 +199,13 @@ Simplifies System.out.println calls to just println.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/PrintlnTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/PrintlnTestData-folded.java)
 - [Documentation](../features/println-simplification.md)
+
+## todo
+### Simplify throw new UnsupportedOperationException to TODO
+Folds `throw new UnsupportedOperationException("reason")` into Kotlin-style `TODO("reason")`, keeping the reason.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/TodoTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/TodoTestData-folded.java)
+- [Documentation](../features/todo.md)
 
 ## controlFlowSingleStatementCodeBlockCollapse
 ### Control flow single-statement code block braces (read-only files)
@@ -335,6 +354,12 @@ Hides @Override annotations to reduce visual clutter and focus on method impleme
 Hides @SuppressWarnings annotations on methods to reduce visual clutter. Currently implemented only for methods.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SuppressWarningsHideTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SuppressWarningsHideTestData-folded.java)
+
+## catchRethrow
+### Catch block that only wraps and rethrows as rethrow
+Shows a catch block whose only statement wraps the caught exception, `throw new RuntimeException(e);`, as `rethrow` (`rethrow as X` for another wrapper type). A block with a message, more statements, a comment or a different cause stays as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/CatchRethrowTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/CatchRethrowTestData-folded.java)
 
 ## experimental
 ### Experimental features

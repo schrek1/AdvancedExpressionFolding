@@ -6,6 +6,7 @@ interface ILombokState {
     var lombokPatternOff: String?
     var interfaceExtensionProperties: Boolean
     var pseudoAnnotations: Boolean
+    var lombokStandardException: Boolean
 }
 
 data class LombokState(
@@ -14,4 +15,5 @@ data class LombokState(
     override var lombokPatternOff: String? = null,
     override var interfaceExtensionProperties: Boolean = true,
     override var pseudoAnnotations: Boolean = true,
-) : ILombokState
+    override var lombokStandardException: Boolean = true,
+): ILombokState

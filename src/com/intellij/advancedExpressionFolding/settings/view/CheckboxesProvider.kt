@@ -85,6 +85,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#localdateliteralpostfixcollapse")
         }
 
+        registerCheckbox(state::durationLiteralCollapse, "Duration literals (e.g. 30.seconds, sleep(500.milliseconds))") {
+            example(DurationLiteralTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#durationliteralcollapse")
+        }
+
         registerCheckbox(state::castExpressionsCollapse, "Type cast expressions") {
             example(TypeCastTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#castexpressionscollapse")
@@ -98,6 +103,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::kotlinRangeLoops, "For loops in Kotlin range syntax: for (i in 0..<n)") {
             example(KotlinRangeLoopsTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinrangeloops")
+        }
+
+        registerCheckbox(state::repeatLoop, "Counting for loops with an unused index as repeat(n)") {
+            example(RepeatLoopTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#repeatloop")
         }
 
         registerCheckbox(state::checkExpressionsCollapse, "Null-safe calls") {
@@ -174,6 +184,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#println")
         }
 
+        registerCheckbox(state::todo, "Simplify throw new UnsupportedOperationException to TODO") {
+            example(TodoTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#todo")
+        }
+
         registerCheckbox(
             state::controlFlowSingleStatementCodeBlockCollapse,
             "Control flow single-statement code block braces (read-only files)"
@@ -229,6 +244,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::lombokDirtyOff, "Don't fold Lombok dirty getters/setters") {
             example(LombokDirtyOffTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokdirtyoff")
+        }
+
+        registerCheckbox(state::lombokStandardException, "Lombok: exception with standard constructors as @StandardException") {
+            example(LombokStandardExceptionTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokstandardexception")
         }
 
         row {
@@ -308,6 +328,10 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::pseudoAnnotations, "Pseudo-annotations: @Main, @Loggable") {
             example(PseudoAnnotationsMainTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#pseudoAnnotations")
+        }
+        registerCheckbox(state::catchRethrow, "Catch block that only wraps and rethrows as rethrow") {
+            example(CatchRethrowTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#catchRethrow")
         }
         // NEW OPTION
         registerCheckbox(state::memoryImprovement, "Memory improvements")
