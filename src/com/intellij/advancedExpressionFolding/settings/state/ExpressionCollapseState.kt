@@ -9,6 +9,7 @@ interface IExpressionCollapseState {
     var getSetExpressionsCollapse: Boolean
     var rangeExpressionsCollapse: Boolean
     var kotlinRangeLoops: Boolean
+    var reverseSteppedLoopsCollapse: Boolean
     var slicingExpressionsCollapse: Boolean
     var varExpressionsCollapse: Boolean
     var fieldShift: Boolean
@@ -23,6 +24,7 @@ data class ExpressionCollapseState(
     override var getSetExpressionsCollapse: Boolean = true,
     override var rangeExpressionsCollapse: Boolean = true,
     override var kotlinRangeLoops: Boolean = true,
+    override var reverseSteppedLoopsCollapse: Boolean = true,
     override var slicingExpressionsCollapse: Boolean = true,
     override var varExpressionsCollapse: Boolean = true,
     override var fieldShift: Boolean = true,

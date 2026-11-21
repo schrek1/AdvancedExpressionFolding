@@ -92,6 +92,12 @@ Shows the folded counting loop as a Kotlin range, `for (i in 0..<n)` instead of 
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinRangeLoopsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinRangeLoopsTestData-folded.java)
 
+## reverseSteppedLoopsCollapse
+### For loops, reverse and stepped ranges
+Collapses counting loops that go down or step by more than one: `for (i in n - 1 downTo 0)`, `for (i in 0..<n step 2)`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ReverseSteppedLoopsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ReverseSteppedLoopsTestData-folded.java)
+
 ## checkExpressionsCollapse
 ### Null-safe calls
 Simplifies null-safe call operations.

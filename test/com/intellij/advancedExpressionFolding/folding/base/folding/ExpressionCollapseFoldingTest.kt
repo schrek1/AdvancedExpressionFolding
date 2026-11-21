@@ -17,6 +17,15 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun reverseSteppedLoopsTestData() = testCase.runFoldingTest(
+        foldingState()::reverseSteppedLoopsCollapse,
+        foldingState()::kotlinRangeLoops,
+    )
+
+    @Test
+    fun reverseSteppedLoopsIntervalTestData() = testCase.runFoldingTest(foldingState()::reverseSteppedLoopsCollapse)
+
+    @Test
     fun stringBuilderTestData() = testCase.runFoldingTest(foldingState()::concatenationExpressionsCollapse)
 
     @Test
