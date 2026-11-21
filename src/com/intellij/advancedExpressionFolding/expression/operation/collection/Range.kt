@@ -64,13 +64,8 @@ open class Range(
         parent: Expression?
     ): Array<FoldingDescriptor> {
         val group = FoldingGroup.newGroup(javaClass.name)
-        val prefix = buildString {
-            append(' ')
-            append(separator)
-            append(' ')
-            append(if (isStartInclusive()) '[' else '(')
-        }
-        val suffix = if (isEndInclusive()) "]" else ")"
+        val prefix = openingPrefix()
+        val suffix = closingSuffix()
         val descriptors = mutableListOf<FoldingDescriptor>()
         descriptors += FoldingDescriptor(
             element.node,
@@ -82,7 +77,7 @@ open class Range(
             element.node,
             TextRange.create(start.textRange.endOffset, end.textRange.startOffset),
             group,
-            RANGE_COMMA_DELIMITER
+            delimiter()
         )
         val closingRange = if (textRange.endOffset > end.textRange.endOffset) {
             TextRange.create(end.textRange.endOffset, textRange.endOffset)
@@ -103,6 +98,12 @@ open class Range(
         }
         return descriptors.toTypedArray()
     }
+
+    protected open fun openingPrefix(): String = " $separator " + if (isStartInclusive()) '[' else '('
+
+    protected open fun delimiter(): String = RANGE_COMMA_DELIMITER
+
+    protected open fun closingSuffix(): String = if (isEndInclusive()) "]" else ")"
 
     companion object {
         const val RANGE_COMMA_DELIMITER: String = ", "
