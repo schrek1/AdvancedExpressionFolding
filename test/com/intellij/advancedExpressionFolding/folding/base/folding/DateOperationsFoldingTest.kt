@@ -15,6 +15,9 @@ interface DateOperationsFoldingTest : FoldingTestSection {
         foldingState()::localDateLiteralCollapse,
         foldingState()::localDateLiteralPostfixCollapse,
     )
+
+    @Test
+    fun durationLiteralTestData() = testCase.runFoldingTest(foldingState()::durationLiteralCollapse)
 }
 
 @Disabled("Split from FoldingTest")

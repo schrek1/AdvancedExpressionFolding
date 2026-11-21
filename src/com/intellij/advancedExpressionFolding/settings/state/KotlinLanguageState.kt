@@ -6,6 +6,7 @@ interface IKotlinLanguageState {
     var kotlinQuickReturn: Boolean
     var nullable: Boolean
     var println: Boolean
+    var todo: Boolean
     var destructuring: Boolean
     var mapEntryDestructuring: Boolean
     var expressionFunc: Boolean
@@ -16,6 +17,7 @@ interface IKotlinLanguageState {
     var arithmeticExpressions: Boolean
     var kotlinPreconditions: Boolean
     var joinToString: Boolean
+    var repeatLoop: Boolean
 }
 
 data class KotlinLanguageState(
@@ -24,6 +26,7 @@ data class KotlinLanguageState(
     override var kotlinQuickReturn: Boolean = true,
     override var nullable: Boolean = false,
     override var println: Boolean = true,
+    override var todo: Boolean = true,
     override var destructuring: Boolean = false,
     override var mapEntryDestructuring: Boolean = true,
     override var expressionFunc: Boolean = true,
@@ -34,4 +37,5 @@ data class KotlinLanguageState(
     override var arithmeticExpressions: Boolean = false,
     override var kotlinPreconditions: Boolean = false,
     override var joinToString: Boolean = true,
+    override var repeatLoop: Boolean = true,
 ) : IKotlinLanguageState
