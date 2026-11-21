@@ -110,6 +110,12 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#repeatloop")
         }
 
+        registerCheckbox(state::reverseSteppedLoopsCollapse, "For loops, reverse and stepped ranges") {
+            example(ReverseSteppedLoopsTestData::class)
+            example(ReverseSteppedLoopsIntervalTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#reversesteppedloopscollapse")
+        }
+
         registerCheckbox(state::checkExpressionsCollapse, "Null-safe calls") {
             example(ElvisTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#checkexpressionscollapse")

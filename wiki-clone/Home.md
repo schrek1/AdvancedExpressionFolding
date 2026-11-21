@@ -98,6 +98,12 @@ Shows `for (int i = 0; i < n; i++)` as `repeat(n)` when the body never reads or 
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/RepeatLoopTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/repeatLoop)
 
+## reverseSteppedLoopsCollapse
+### For loops, reverse and stepped ranges
+Collapses counting loops that go down or step by more than one: `for (i in n - 1 downTo 0)`, `for (i in 0..<n step 2)`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ReverseSteppedLoopsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ReverseSteppedLoopsTestData-folded.java)
+
 ## checkExpressionsCollapse
 ### Null-safe calls
 Simplifies null-safe call operations.
