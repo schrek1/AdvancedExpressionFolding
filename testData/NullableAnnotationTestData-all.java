@@ -51,7 +51,7 @@ public class NullableAnnotationTestData {
                        <fold text='' expand='false'>@NotNull</fold><fold text='' expand='false'> </fold>Object<fold text='!! ' expand='false'> </fold>o,
                        <fold text='' expand='false'>@Nonnull</fold><fold text='' expand='false'> </fold>LocalDate<fold text='!! ' expand='false'> </fold>date
                        ) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='[:]' expand='false'>new HashMap<String, String>()</fold><fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
 
     </fold>}</fold>
 
@@ -147,7 +147,7 @@ public class NullableAnnotationTestData {
             private String bla;
 
             public <fold text='' expand='false'>@Nullable</fold> String<fold text='? ' expand='false'> </fold>getField() <fold text='{...}' expand='true'>{
-                new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
+                <fold text='[:]' expand='false'>new HashMap<String, String>()</fold><fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
                 return field;
             }</fold><fold text='' expand='false'>
 

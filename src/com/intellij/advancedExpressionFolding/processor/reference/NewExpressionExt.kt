@@ -3,18 +3,21 @@ package com.intellij.advancedExpressionFolding.processor.reference
 import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.literal.ArrayLiteral
 import com.intellij.advancedExpressionFolding.expression.literal.ListLiteral
+import com.intellij.advancedExpressionFolding.expression.literal.MapLiteral
 import com.intellij.advancedExpressionFolding.expression.literal.NumberLiteral
 import com.intellij.advancedExpressionFolding.expression.literal.SetLiteral
 import com.intellij.advancedExpressionFolding.expression.literal.StringLiteral
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
 import com.intellij.advancedExpressionFolding.processor.argumentCount
+import com.intellij.advancedExpressionFolding.processor.typeResolved
 import com.intellij.advancedExpressionFolding.processor.expression.LiteralExpressionExt
 import com.intellij.advancedExpressionFolding.processor.methodcall.MethodCallExpressionExt
 import com.intellij.advancedExpressionFolding.processor.util.Consts
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IExpressionCollapseState
+import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiAnonymousClass
@@ -23,6 +26,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiExpressionList
 import com.intellij.psi.PsiExpressionStatement
+import com.intellij.psi.PsiField
 import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiMethodCallExpression
@@ -33,7 +37,9 @@ import java.util.ArrayList
 import java.math.BigDecimal
 import java.math.BigInteger
 
-object NewExpressionExt : IExpressionCollapseState by State()() {
+object NewExpressionExt :
+    IExpressionCollapseState by State()(),
+    IKotlinLanguageState by State()() {
 
     fun getNewExpression(element: PsiNewExpression, document: Document): Expression? {
         val type = element.type
@@ -98,13 +104,33 @@ object NewExpressionExt : IExpressionCollapseState by State()() {
     ): Expression? {
         return when (erasedType) {
             "java.lang.String", "java.lang.StringBuilder" -> StringLiteral(element, element.textRange, "")
-            "java.util.ArrayList" -> if (getExpressionsCollapse) {
+            "java.util.ArrayList" -> if (getExpressionsCollapse || emptyCollectionLiteralApplies(element)) {
                 ListLiteral(element, element.textRange, emptyList())
+            } else {
+                null
+            }
+            "java.util.HashSet" -> if (emptyCollectionLiteralApplies(element)) {
+                ListLiteral(element, element.textRange, emptyList())
+            } else {
+                null
+            }
+            "java.util.HashMap" -> if (emptyCollectionLiteralApplies(element)) {
+                MapLiteral(element, element.textRange, emptyList())
             } else {
                 null
             }
             else -> null
         }
+    }
+
+    // a double-brace subclass carries content, so it is not an empty collection
+    private fun emptyCollectionLiteralApplies(element: PsiNewExpression) =
+        mapAndEmptyCollectionLiterals && element.anonymousClass == null && !isConstructorReferenceField(element)
+
+    // constructorReferenceNotation already shows `HashMap<K, V> field = new HashMap<>()` as `::new`
+    private fun isConstructorReferenceField(element: PsiNewExpression): Boolean {
+        val field = element.parent as? PsiField ?: return false
+        return constructorReferenceNotation && element.classReference?.resolve() == field.typeResolved
     }
 
     private fun createArrayLiteral(

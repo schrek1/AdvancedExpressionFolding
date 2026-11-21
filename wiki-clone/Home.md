@@ -24,6 +24,13 @@ Simplifies list and map access and modification expressions, as well as array an
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/GetSetPutTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/GetSetPutTestData-folded.java)
 
+## mapAndEmptyCollectionLiterals
+### Map literals and empty collections: ["key": value], [], [:]
+Shows `Map.of(...)` as a `["key": value]` literal, empty lists and sets (`List.of()`, `Set.of()`, `Collections.emptyList()`, `new ArrayList<>()`, ...) as `[]` and empty maps (`Map.of()`, `Collections.emptyMap()`, `new HashMap<>()`) as `[:]`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/MapAndEmptyCollectionLiteralsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/MapAndEmptyCollectionLiteralsTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/mapAndEmptyCollectionLiterals)
+
 ## concatenationExpressionsCollapse
 ### StringBuilder.append and Collection.add/remove expressions, interpolated Strings and Stream expressions
 Collapses various string and collection operations into more readable forms.
