@@ -27,10 +27,10 @@ public class ControlFlowSingleStatementTestData {
         for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>String</fold> arg : args<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
                 <fold text='' expand='false'>System.out.</fold>println(arg)<fold text='' expand='false'>;</fold>
         }</fold>
-        for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>0<fold text='' expand='false'><fold text=', ' expand='false'>;</fold> i < </fold>args.length<fold text='' expand='false'><fold text=')' expand='false'>;</fold> i++</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
+        for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='' expand='false'><fold text='..<' expand='false'>;</fold> i < </fold>args.length<fold text='' expand='false'><fold text='' expand='false'>;</fold> i++</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
                 <fold text='' expand='false'>System.out.</fold>println(args[i])<fold text='' expand='false'>;</fold>
         }</fold>
-        for <fold text='' expand='false'>(</fold><fold text='val' expand='false'>int</fold> i<fold text=' : [' expand='false'> = </fold>0<fold text='' expand='false'><fold text=', ' expand='false'>;</fold> i < </fold>args.length<fold text='' expand='false'><fold text=')' expand='false'>;</fold> i++</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
+        for <fold text='' expand='false'>(</fold><fold text='' expand='false'><fold text='val' expand='false'>int</fold> </fold>i<fold text=' in ' expand='false'> = </fold>0<fold text='' expand='false'><fold text='..<' expand='false'>;</fold> i < </fold>args.length<fold text='' expand='false'><fold text='' expand='false'>;</fold> i++</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
                 <fold text='' expand='false'>System.out.</fold>println(i)<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>System.out.</fold>println(args[i])<fold text='' expand='false'>;</fold>
         }</fold>

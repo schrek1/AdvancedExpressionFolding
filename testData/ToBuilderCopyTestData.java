@@ -3,21 +3,21 @@ package data;
 public class ToBuilderCopyTestData {
 
     public void copies(Person person, Person source) <fold text='{...}' expand='true'>{
-        var renamed = person<fold text='.copy(' expand='false'>.toBuilder()</fold>
-<fold text='            name = ' expand='false'>                .name(</fold>"Alice"<fold text=',' expand='false'>)</fold>
-<fold text='            age = ' expand='false'>                .age(</fold>31<fold text='' expand='false'>)</fold>
-<fold text='        )' expand='false'>                .build()</fold>;
-        Person older = person<fold text='.copy(age = ' expand='false'>.toBuilder().age(</fold>person.getAge() + 1<fold text=')' expand='false'>).build()</fold>;
-        Person mixed = person<fold text='.copy(' expand='false'>.toBuilder()</fold><fold text='name = ' expand='false'>.name(</fold>"Bob"<fold text=',' expand='false'>)</fold>
-<fold text='            age = ' expand='false'>                .age(</fold>40<fold text=')' expand='false'>).build()</fold>;
-        Person mapped = person<fold text='.copy(name = ' expand='false'>.toBuilder()
-                .name(</fold>source.getName()<fold text=')' expand='false'>)
+        var renamed = person.<fold text='copy(' expand='false'>toBuilder()</fold>
+            <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Alice"<fold text=',' expand='false'>)</fold>
+            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>31<fold text='' expand='false'>)</fold>
+        <fold text='' expand='false'>        .build(</fold>);
+        Person older = person.<fold text='copy(' expand='false'>toBuilder().</fold>age<fold text=' = ' expand='false'>(</fold>person.getAge() + 1)<fold text='' expand='false'>.build()</fold>;
+        Person mixed = person.<fold text='copy(' expand='false'>toBuilder()</fold><fold text='' expand='false'>.</fold>name<fold text=' = ' expand='false'>(</fold>"Bob"<fold text=',' expand='false'>)</fold>
+            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>40)<fold text='' expand='false'>.build()</fold>;
+        Person mapped = person.<fold text='copy(' expand='false'>toBuilder()
+                .</fold>name<fold text=' = ' expand='false'>(</fold>source.getName())<fold text='' expand='false'>
                 .build()</fold>;
-        Person titled = person<fold text='.copy(name = ' expand='false'>.toBuilder().name(</fold>"Dr. " + person.getName()<fold text=')' expand='false'>).build()</fold>;
-        Person commented = person<fold text='.copy(' expand='false'>.toBuilder()</fold>
+        Person titled = person.<fold text='copy(' expand='false'>toBuilder().</fold>name<fold text=' = ' expand='false'>(</fold>"Dr. " + person.getName())<fold text='' expand='false'>.build()</fold>;
+        Person commented = person.<fold text='copy(' expand='false'>toBuilder()</fold>
                 // a comment keeps the chain on its lines
-<fold text='            name = ' expand='false'>                .name(</fold>"Carol"<fold text='' expand='false'>)</fold>
-<fold text='        )' expand='false'>                .build()</fold>;
+            <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Carol"<fold text='' expand='false'>)</fold>
+        <fold text='' expand='false'>        .build(</fold>);
     }</fold>
 
     public void notFolded(Person person) <fold text='{...}' expand='true'>{

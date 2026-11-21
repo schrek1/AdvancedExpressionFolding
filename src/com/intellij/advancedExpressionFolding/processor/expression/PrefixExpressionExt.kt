@@ -7,6 +7,7 @@ import com.intellij.advancedExpressionFolding.expression.operation.basic.Append
 import com.intellij.advancedExpressionFolding.expression.operation.basic.Equal
 import com.intellij.advancedExpressionFolding.expression.operation.basic.GreaterEqual
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
+import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.InOperatorExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.settings.State
@@ -42,6 +43,10 @@ object PrefixExpressionExt :
         operand: PsiExpression,
         document: Document
     ): Expression? {
+        // an operand fold that already covers the `!` (`!StringUtils.isEmpty(x)` read as `x.isNotEmpty()`) owns it
+        BuildExpressionExt.getNonSyntheticExpression(operand, document)
+            ?.takeIf { it.textRange == element.textRange }
+            ?.let { return it }
         if (operand is PsiMethodCallExpression) {
             InOperatorExt.createNegatedMembership(element, operand)?.let { return it }
         }

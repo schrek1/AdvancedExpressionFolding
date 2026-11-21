@@ -4,6 +4,7 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.controlflow.CompactControlFlowExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ElvisExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.IfExpression
+import com.intellij.advancedExpressionFolding.expression.controlflow.InstanceofSwitchExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ShortElvisExpression
 import com.intellij.advancedExpressionFolding.expression.literal.InterpolatedString
 import com.intellij.advancedExpressionFolding.expression.literal.StringLiteral
@@ -16,6 +17,7 @@ import com.intellij.advancedExpressionFolding.processor.isNull
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.IfNullSafeExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.IfNullSafePrintlnExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.LetReturnExt
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.NullOrEmptyExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.PreconditionExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.settings.State
@@ -58,6 +60,7 @@ object IfExt :
 
     fun getIfExpression(element: PsiIfStatement, document: Document): Expression? {
         PreconditionExt.getIfExpression(element, document)?.let { return it }
+        InstanceofSwitchExpression.create(element)?.let { return it }
 
         LetReturnExt.getIfExpression(element)?.let { return it }
 
@@ -297,6 +300,7 @@ object IfExt :
     }
 
     fun getPolyadicExpression(element: PsiPolyadicExpression, document: Document): Expression? {
+        NullOrEmptyExt.createExpression(element, document)?.let { return it }
         getAndTwoBinaryExpressions(element, document)?.let { return it }
         getAddExpression(element, document)?.let { return it }
         getBinaryExpression(element, document)?.let { return it }

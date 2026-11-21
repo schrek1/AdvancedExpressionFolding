@@ -10,9 +10,12 @@ import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.fi
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.fieldOptimizationsPerField
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.foldData
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFieldExt.foldProperties
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokDelegateExt.foldDelegate
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokFoldingAnnotation.*
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.interfaceSupport
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokMethodExt.isFinder
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokStandardExceptionExt.foldStandardException
+import com.intellij.advancedExpressionFolding.processor.lombok.LombokUtilityClassExt.foldUtilityClass
 import com.intellij.advancedExpressionFolding.processor.lombok.MethodType.*
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.ILombokState
@@ -27,22 +30,39 @@ object LombokExt : ILombokState by State()() {
         if (isInterface) {
             return interfaceSupport() ?: emptyList()
         }
+        // the outer class hides this builder whole, its own annotations would only leak into that fold
+        if (lombokBuilder && LombokBuilderExt.isExactBuilder(this)) {
+            return emptyList()
+        }
 
         val classLevelAnnotations = mutableListOf<ClassLevelAnnotation>()
         val fieldLevelAnnotations = mutableListOf<FieldLevelAnnotation>()
 
         classLevelAnnotations += foldLog(this.fields)
         classLevelAnnotations += foldBuilder()
-        classLevelAnnotations += foldNoArgsConstructor(this.constructors)
+        val standardException = if (lombokStandardException) foldStandardException() else emptyList()
+        classLevelAnnotations += standardException
+        val constructors = this.constructors.filterNot { constructor ->
+            constructor.isIgnored() || standardException.any { constructor in it.elementsToHide }
+        }.toTypedArray()
+        val utilityClass = if (lombokUtilityClass) foldUtilityClass() else null
+        if (utilityClass != null) {
+            classLevelAnnotations += utilityClass
+        } else {
+            classLevelAnnotations += foldNoArgsConstructor(constructors)
+        }
 
         createFieldMap(this)?.let { fieldsMap ->
-            classLevelAnnotations += foldArgsConstructor(this.constructors, fieldsMap.values, fieldLevelAnnotations)
+            classLevelAnnotations += foldArgsConstructor(constructors, fieldsMap.values, fieldLevelAnnotations)
 
             val methodTypeToMethodsMap = methodsNotStatic.groupBy {
                 it.findMethodType()
             }
             classLevelAnnotations += foldProperties(methodTypeToMethodsMap, fieldsMap, fieldLevelAnnotations)
             classLevelAnnotations += foldData(methodTypeToMethodsMap, fieldsMap, fieldLevelAnnotations)
+            if (lombokDelegate) {
+                foldDelegate(methodTypeToMethodsMap, fieldsMap, fieldLevelAnnotations)
+            }
         }
         classOptimizations(classLevelAnnotations)
         fieldOptimizations(fieldLevelAnnotations)
@@ -63,7 +83,11 @@ object LombokExt : ILombokState by State()() {
             it.name?.endsWith("Builder") == true
         }.mapNotNull {
             val namelessBuilder = it.name == "${name}Builder"
-            if (namelessBuilder) {
+            val exactBuilderFactory = if (lombokBuilder) LombokBuilderExt.exactBuilderFactory(this, it) else null
+            if (exactBuilderFactory != null) {
+                val arguments = if (namelessBuilder || it.name == "Builder") emptyList() else listOfNotNull(it.name)
+                ClassLevelAnnotation(LOMBOK_EXACT_BUILDER, listOf(exactBuilderFactory, it), arguments = arguments)
+            } else if (namelessBuilder) {
                 ClassLevelAnnotation(LOMBOK_BUILDER, emptyList())
             } else if (it.name != null){
                 ClassLevelAnnotation(LOMBOK_BUILDER, emptyList(), arguments = listOf(it.name!!))
