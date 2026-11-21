@@ -211,6 +211,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#lombokNonNull")
         }
 
+        registerCheckbox(state::jakartaConstraints, "Leading parameter checks as Jakarta Validation constraints") {
+            example(JakartaConstraintsTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#jakartaConstraints")
+        }
+
         row {
             cell(JBLabel("Regex to disable Lombok folding (matched classes won’t be folded)"))
         }

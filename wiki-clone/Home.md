@@ -220,6 +220,13 @@ Hides the null checks at the start of a method body and shows `@NonNull` on each
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LombokNonNullTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/lombokNonNull)
 
+## jakartaConstraints
+### Leading parameter checks as Jakarta Validation constraints
+Hides the argument checks at the start of a method body that only throw `IllegalArgumentException` and shows the matching constraint on the parameter instead: `if (quantity < 1) throw ...` → `@Min(1) int quantity`, `sku.isBlank()` → `@NotBlank`, `items.isEmpty()` → `@NotEmpty`, `coupon.length() > 12` → `@Size(max = 12)`, `amount <= 0` → `@Positive`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/JakartaConstraintsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/JakartaConstraintsTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/jakartaConstraints)
+
 ## lombokPatternOff
 ### Pattern to turn off Lombok folding
 Prevents all Lombok folding for classes matching the pattern

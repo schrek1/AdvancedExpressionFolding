@@ -7,6 +7,7 @@ interface ILombokState {
     var interfaceExtensionProperties: Boolean
     var pseudoAnnotations: Boolean
     var lombokNonNull: Boolean
+    var jakartaConstraints: Boolean
 }
 
 data class LombokState(
@@ -16,4 +17,5 @@ data class LombokState(
     override var interfaceExtensionProperties: Boolean = true,
     override var pseudoAnnotations: Boolean = true,
     override var lombokNonNull: Boolean = true,
+    override var jakartaConstraints: Boolean = true,
 ) : ILombokState
