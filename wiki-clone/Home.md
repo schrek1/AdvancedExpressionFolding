@@ -174,6 +174,13 @@ Represents Java stream operations using Groovy-style spread operator syntax.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SpreadTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SpreadTestData-folded.java)
 
+## streamSpreadChain
+### Stream map-to-list chain as spread: items*.id
+Shows `orders.stream().map(Order::id).toList()` as `orders*.id`; `collect(Collectors.toSet())` shows as `orders*.id.toSet()`. On any other chain `.collect(Collectors.toList())` / `.collect(toSet())` shows as `.toList()` / `.toSet()`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/StreamSpreadChainTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/StreamSpreadChainTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/streamSpreadChain)
+
 ## streamPredicates
 ### Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none
 Shows `anyMatch` / `allMatch` / `noneMatch` on a collection's or an array's stream as Kotlin's `any` / `all` / `none`; the predicate keeps its own text.
