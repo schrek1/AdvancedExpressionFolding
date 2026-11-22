@@ -45,13 +45,20 @@ public class RequireNonNullElseElvisTestData {
         print(shown + current);
     }
 
+    public void receivers(String name) {
+        int length = (name ?: "").length();
+        String fromBlock = name ?: "block";
+        print(length + fromBlock);
+    }
+
     public void notFolded(String name, Supplier<String> supplier) {
         String fromVariable = Objects.requireNonNullElseGet(name, supplier);
-        String fromBlock = Objects.requireNonNullElseGet(name, () -> {
-            return "block";
+        String fromLongBlock = Objects.requireNonNullElseGet(name, () -> {
+            String generated = "block";
+            return generated;
         });
-        int length = Objects.requireNonNullElse(name, "").length();
-        print(fromVariable + fromBlock + length);
+        int length = Objects.requireNonNullElse(name, "").trim().length();
+        print(fromVariable + fromLongBlock + length);
     }
 
     private String defaultName() {

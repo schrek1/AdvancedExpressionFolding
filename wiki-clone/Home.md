@@ -32,7 +32,7 @@ Shows `map.getOrDefault(key, default)` as `map[key] ?: default`, where the resul
 
 ## requireNonNullElseElvis
 ### Objects.requireNonNullElse(Get) as value ?: fallback
-Shows `Objects.requireNonNullElse(value, fallback)` as `value ?: fallback`, and `requireNonNullElseGet` the same way when the supplier is `X::new`, a no-argument method reference or an expression lambda.
+Shows `Objects.requireNonNullElse(value, fallback)` as `value ?: fallback`, and `requireNonNullElseGet` the same way when the supplier is `X::new`, a no-argument method reference or a lambda with an expression body (or a block that is a single `return`). A single short call on the result gets real parentheses: `(name ?: "").length()`.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/RequireNonNullElseElvisTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/RequireNonNullElseElvisTestData-folded.java)
 

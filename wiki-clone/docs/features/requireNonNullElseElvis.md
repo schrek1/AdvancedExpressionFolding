@@ -9,11 +9,14 @@ produces:
 - a method reference to a no-argument method → the call (`this::defaultName` → `defaultName()`,
   `Theme::standard` → `Theme.standard()`)
 - a lambda without parameters and with an expression body → that expression (`() -> "guest-" + id` → `"guest-" + id`)
+- a lambda whose block body is a single `return expr;` → the same expression
 
-Any other supplier (a variable, a block lambda) stays Java. The static-import form folds too.
+Any other supplier (a variable, a longer block lambda) stays Java. The static-import form folds too.
 
 Like `getOrDefaultElvis`, the fold applies only where the result stands on its own (initializer, assignment, `return`,
-argument, lambda body), because `?:` binds looser than any operator or call around it.
+argument, lambda body), because `?:` binds looser than any operator or call around it. The one exception is a single
+short call made on the result, which gets real parentheses: `requireNonNullElse(name, "").length()` →
+`(name ?: "").length()`. A longer chain stays Java.
 
 #### Example: RequireNonNullElseElvisTestData
 

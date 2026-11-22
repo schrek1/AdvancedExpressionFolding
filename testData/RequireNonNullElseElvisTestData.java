@@ -45,13 +45,22 @@ public class RequireNonNullElseElvisTestData {
         print(shown + current);
     }</fold>
 
+    public void receivers(String name) <fold text='{...}' expand='true'>{
+        int length = <fold text='' expand='false'>Objects.requireNonNullElse</fold>(name<fold text=' ?:' expand='false'>,</fold> "").length();
+        String fromBlock = <fold text='' expand='false'>Objects.requireNonNullElseGet(</fold>name<fold text=' ?:' expand='false'>,</fold> <fold text='' expand='false'>() -> </fold><fold text='' expand='false'><fold text='{...}' expand='true'>{
+            return </fold>"block"<fold text='' expand='false'>;
+        }</fold></fold><fold text='' expand='false'>)</fold>;
+        print(length + fromBlock);
+    }</fold>
+
     public void notFolded(String name, Supplier<String> supplier) <fold text='{...}' expand='true'>{
         String fromVariable = Objects.requireNonNullElseGet(name, supplier);
-        String fromBlock = Objects.requireNonNullElseGet(name, () -> <fold text='{...}' expand='true'>{
-            return "block";
+        String fromLongBlock = Objects.requireNonNullElseGet(name, () -> <fold text='{...}' expand='true'>{
+            String generated = "block";
+            return generated;
         }</fold>);
-        int length = Objects.requireNonNullElse(name, "").length();
-        print(fromVariable + fromBlock + length);
+        int length = Objects.requireNonNullElse(name, "").trim().length();
+        print(fromVariable + fromLongBlock + length);
     }</fold>
 
     private String defaultName()<fold text=' { ' expand='false'> {

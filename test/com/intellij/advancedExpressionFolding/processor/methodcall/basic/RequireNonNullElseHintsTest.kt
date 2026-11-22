@@ -44,11 +44,22 @@ class RequireNonNullElseHintsTest : BaseTest() {
     }
 
     @Test
-    fun parameterHints_onRequireNonNullElseInsideCallChain_stayVisible() {
-        // GIVEN - the call stays Java because a call is made on its result
+    fun parameterHints_onRequireNonNullElseAsReceiverOfOneCall_areHidden() {
+        // GIVEN - the call is shown as `(name ?: "").length()`
 
         // WHEN - the IDE asks for the parameter hints of the call
         val hints = visibleHints("int length = java.util.Objects.requireNonNullElse(name, \"\").length();")
+
+        // THEN - no hint lands inside the folded text
+        assertEquals(emptyList<String>(), hints)
+    }
+
+    @Test
+    fun parameterHints_onRequireNonNullElseInsideLongerCallChain_stayVisible() {
+        // GIVEN - the call stays Java because two calls are made on its result
+
+        // WHEN - the IDE asks for the parameter hints of the call
+        val hints = visibleHints("int length = java.util.Objects.requireNonNullElse(name, \"\").trim().length();")
 
         // THEN - the Java hint for the fallback is still shown
         assertEquals(listOf("defaultObj"), hints)

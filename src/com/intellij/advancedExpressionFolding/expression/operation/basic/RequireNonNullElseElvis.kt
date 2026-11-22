@@ -66,7 +66,7 @@ class RequireNonNullElseElvis(
             return null
         }
         val index = indexOfFirst { (range, _) ->
-            if (fromEnd) range.endOffset == offset + 1 else range.startOffset == offset
+            !range.isEmpty && if (fromEnd) range.endOffset == offset + 1 else range.startOffset == offset
         }
         if (index < 0) {
             return null
