@@ -76,11 +76,11 @@ public class KotlinLambdaTestData {
     </fold>}</fold>
 
     <T> T withDefault(T fallback, Supplier<T> supplier)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>supplier.get() != null ? </fold>supplier.<fold text='!!' expand='false'>get()</fold><fold text=' ?: ' expand='false'> : </fold>fallback<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>supplier.get() != null ? </fold>supplier<fold text='' expand='false'>.get()</fold><fold text=' ?: ' expand='false'> : </fold>fallback<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     <T> T withSupplierFirst(Supplier<T> supplier, T fallback) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>supplier.get() != null ? </fold>supplier.<fold text='!!' expand='false'>get()</fold><fold text=' ?: ' expand='false'> : </fold>fallback<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>supplier.get() != null ? </fold>supplier<fold text='' expand='false'>.get()</fold><fold text=' ?: ' expand='false'> : </fold>fallback<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     void arguments(Item item) <fold text='{...}' expand='true'>{

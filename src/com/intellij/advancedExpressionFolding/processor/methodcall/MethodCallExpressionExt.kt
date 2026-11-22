@@ -172,6 +172,7 @@ object MethodCallExpressionExt :
                 element,
                 element.textRange,
                 TextRange.create(dotBefore(identifier), element.textRange.endOffset),
+                identifier.text,
                 BuildExpressionExt.getAnyExpression(qualifier, document),
                 ""
             )

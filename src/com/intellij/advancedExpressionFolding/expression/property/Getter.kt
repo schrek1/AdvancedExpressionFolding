@@ -26,21 +26,26 @@ class Getter(
     ): Array<FoldingDescriptor> {
         val group = FoldingGroup.newGroup(Getter::class.java.name)
         val descriptors = mutableListOf<FoldingDescriptor>()
-        val nameStart = getterTextRange.startOffset
-        val nameRange = TextRange.create(nameStart, nameStart + getterName.length)
-        val prefix = if (getterName.startsWith("is") && !getterName.startsWith("get")) "is" else "get"
-        val (hiddenEnd, shownName) = propertyNameFold(getterName, name, nameRange, prefix)
-        if (hiddenEnd == nameRange.endOffset) {
-            descriptors += FoldingDescriptor(element.node, getterTextRange, group, name)
+        if (name.isEmpty()) {
+            // a nameless get() reads as the value it carries: the whole `.get()` disappears
+            descriptors += FoldingDescriptor(element.node, getterTextRange, group, "")
         } else {
-            // only the characters that change are folded: the prefix (and the first letter's case) and `()`
-            descriptors += FoldingDescriptor(element.node, TextRange.create(nameStart, hiddenEnd), group, shownName)
-            descriptors += FoldingDescriptor(
-                element.node,
-                TextRange.create(nameRange.endOffset, getterTextRange.endOffset),
-                group,
-                ""
-            )
+            val nameStart = getterTextRange.startOffset
+            val nameRange = TextRange.create(nameStart, nameStart + getterName.length)
+            val prefix = if (getterName.startsWith("is") && !getterName.startsWith("get")) "is" else "get"
+            val (hiddenEnd, shownName) = propertyNameFold(getterName, name, nameRange, prefix)
+            if (hiddenEnd == nameRange.endOffset) {
+                descriptors += FoldingDescriptor(element.node, getterTextRange, group, name)
+            } else {
+                // only the characters that change are folded: the prefix (and the first letter's case) and `()`
+                descriptors += FoldingDescriptor(element.node, TextRange.create(nameStart, hiddenEnd), group, shownName)
+                descriptors += FoldingDescriptor(
+                    element.node,
+                    TextRange.create(nameRange.endOffset, getterTextRange.endOffset),
+                    group,
+                    ""
+                )
+            }
         }
         receiver?.takeIf { it.supportsFoldRegions(document, this) }?.let { obj ->
             descriptors += obj.buildFoldRegions(obj.element, document, this).toList()
