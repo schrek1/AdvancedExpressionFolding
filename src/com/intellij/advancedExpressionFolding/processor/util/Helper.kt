@@ -247,7 +247,7 @@ object Helper {
         return returnType != PsiTypes.voidType()
     }
 
-    fun guessNamelessPropertyName(): String = "!!"
+    fun guessNamelessPropertyName(): String = "value"
 
     fun findAncestorsUntilClass(element: PsiElement, ancestorClass: Class<out PsiElement>): Sequence<PsiElement> {
         return findAncestorsUntil(element) { parent -> !ancestorClass.isInstance(parent) }

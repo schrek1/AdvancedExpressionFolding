@@ -117,11 +117,34 @@ public class ExperimentalTestData {
 
         void demo() <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>NamelessAccessorExample</fold> example = new NamelessAccessorExample();
-            example.<fold text='!! = ' expand='false'>set(</fold>"ok"<fold text='' expand='false'>)</fold>;
-            <fold text='val' expand='false'>String</fold> current = example.<fold text='!!' expand='false'>get()</fold>;
-            <fold text='' expand='false'>System.out.</fold>println(example.<fold text='!!' expand='false'>get()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>);
-            example.<fold text='!! = ' expand='false'>set(</fold>example.<fold text='!!' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
-            <fold text='val' expand='false'>String</fold> duplicate = example.<fold text='!!' expand='false'>get()</fold> + example.<fold text='!!' expand='false'>get()</fold>;
+            example.<fold text='value = ' expand='false'>set(</fold>"ok"<fold text='' expand='false'>)</fold>;
+            <fold text='val' expand='false'>String</fold> current = example.<fold text='value' expand='false'>get()</fold>;
+            <fold text='' expand='false'>System.out.</fold>println(example.<fold text='value' expand='false'>get()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>);
+            example.<fold text='value = ' expand='false'>set(</fold>example.<fold text='value' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
+            <fold text='val' expand='false'>String</fold> duplicate = example.<fold text='value' expand='false'>get()</fold> + example.<fold text='value' expand='false'>get()</fold>;
+        }</fold>
+    }</fold>
+
+    static class JsonNullableLikeWrapper<T> <fold text='{...}' expand='true'>{
+
+        private T held;
+
+        void set(T newValue)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+            </fold></fold>this.held = newValue<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold>}</fold>
+
+        T get()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>held<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold>}</fold>
+    }</fold>
+
+    static class WrapperUsage <fold text='{...}' expand='true'>{
+
+        void demo() <fold text='{...}' expand='true'>{
+            <fold text='val' expand='false'>JsonNullableLikeWrapper<String></fold> holder = new JsonNullableLikeWrapper<>();
+            holder.<fold text='value = ' expand='false'>set(</fold>"ok"<fold text='' expand='false'>)</fold>;
+            <fold text='val' expand='false'>String</fold> current = holder.<fold text='value' expand='false'>get()</fold>;
+            holder.<fold text='value = ' expand='false'>set(</fold>holder.<fold text='value' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
         }</fold>
     }</fold>
 

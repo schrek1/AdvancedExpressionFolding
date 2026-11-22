@@ -125,4 +125,27 @@ public class ExperimentalTestData {
         }
     }
 
+    static class JsonNullableLikeWrapper<T> {
+
+        private T held;
+
+        void set(T newValue) {
+            this.held = newValue;
+        }
+
+        T get() {
+            return held;
+        }
+    }
+
+    static class WrapperUsage {
+
+        void demo() {
+            JsonNullableLikeWrapper<String> holder = new JsonNullableLikeWrapper<>();
+            holder.set("ok");
+            String current = holder.get();
+            holder.set(holder.get());
+        }
+    }
+
 }

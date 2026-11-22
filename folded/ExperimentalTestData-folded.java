@@ -102,11 +102,34 @@ public class ExperimentalTestData {
 
         void demo() {
             NamelessAccessorExample example = new NamelessAccessorExample();
-            example.!! = "ok";
-            String current = example.!!;
-            System.out.println(example.!!.empty);
-            example.!! = example.!!;
-            String duplicate = example.!! + example.!!;
+            example.value = "ok";
+            String current = example.value;
+            System.out.println(example.value.empty);
+            example.value = example.value;
+            String duplicate = example.value + example.value;
+        }
+    }
+
+    static class JsonNullableLikeWrapper<T> {
+
+        private T held;
+
+        void set(T newValue) {
+            this.held = newValue;
+        }
+
+        T get() {
+            return held;
+        }
+    }
+
+    static class WrapperUsage {
+
+        void demo() {
+            JsonNullableLikeWrapper<String> holder = new JsonNullableLikeWrapper<>();
+            holder.value = "ok";
+            String current = holder.value;
+            holder.value = holder.value;
         }
     }
 
