@@ -93,8 +93,8 @@ public class LocalDateTestData {
             timestamp1 = timestamp2<fold text='' expand='false'>;</fold>
         }</fold>
 
-        var cal1 = Calendar.<fold text='instance' expand='false'>getInstance()</fold><fold text='' expand='false'>;</fold>
-        <fold text='val' expand='false'>var</fold> cal2 = Calendar.<fold text='instance' expand='false'>getInstance()</fold><fold text='' expand='false'>;</fold>
+        var cal1 = Calendar.<fold text='i' expand='false'>getI</fold>nstance<fold text='' expand='false'>()</fold><fold text='' expand='false'>;</fold>
+        <fold text='val' expand='false'>var</fold> cal2 = Calendar.<fold text='i' expand='false'>getI</fold>nstance<fold text='' expand='false'>()</fold><fold text='' expand='false'>;</fold>
         if <fold text='' expand='false'>(</fold>cal1<fold text=' < ' expand='false'>.before(</fold>cal2<fold text='' expand='false'>)</fold> | cal1<fold text=' > ' expand='false'>.after(</fold>cal2<fold text='' expand='false'>)</fold> | <fold text='' expand='false'>!</fold>cal1<fold text=' ≥ ' expand='false'>.before(</fold>cal2<fold text='' expand='false'>)</fold> | <fold text='' expand='false'>!</fold>cal1<fold text=' ≤ ' expand='false'>.after(</fold>cal2<fold text='' expand='false'>)</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
             cal1 = cal2<fold text='' expand='false'>;</fold>
         }</fold>

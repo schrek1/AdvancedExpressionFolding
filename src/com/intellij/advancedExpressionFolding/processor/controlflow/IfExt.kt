@@ -19,6 +19,7 @@ import com.intellij.advancedExpressionFolding.processor.language.kotlin.IfNullSa
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.LetReturnExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.NullOrEmptyExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.PreconditionExt
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.ScopeLetExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IControlFlowState
@@ -66,6 +67,7 @@ object IfExt :
         LetReturnExt.getIfExpression(element)?.let { return it }
 
         IfNullSafePrintlnExt.createExpression(element)?.let { return it }
+        ScopeLetExt.createExpression(element)?.let { return it }
 
         val condition = element.condition
         if (checkExpressionsCollapse) {
@@ -235,6 +237,7 @@ object IfExt :
     }
 
     fun getConditionalExpression(element: PsiConditionalExpression, document: Document): Expression? {
+        ScopeLetExt.createExpression(element)?.let { return it }
         val condition = element.condition
         if (checkExpressionsCollapse && condition is PsiBinaryExpression) {
             val operationSign = condition.operationSign.text

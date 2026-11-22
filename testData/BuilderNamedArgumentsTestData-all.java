@@ -13,7 +13,7 @@ public class BuilderNamedArgumentsTestData {
         <fold text='val' expand='false'>Person</fold> mapped = Person<fold text='(' expand='false'>.builder()
                 .</fold>name<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getName()</fold>)<fold text='' expand='false'>
                 .build()</fold>;
-        <fold text='val' expand='false'>Person</fold> titled = Person.builder().name("Dr. <fold text='${' expand='false'>" + </fold>source.<fold text='name}"' expand='false'>getName()</fold>).build();
+        <fold text='val' expand='false'>Person</fold> titled = Person.builder().name("Dr. <fold text='${' expand='false'>" + </fold>source.<fold text='n' expand='false'>getN</fold>ame<fold text='}"' expand='false'>()</fold>).build();
         <fold text='val' expand='false'>Person</fold> commented = Person<fold text='(' expand='false'>.builder()</fold>
                 // a comment keeps the chain on its lines
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Dave"<fold text='' expand='false'>)</fold>
@@ -44,7 +44,7 @@ public class BuilderNamedArgumentsTestData {
     public void nestedClassBuilder(Wallet wallet, Asset asset, Chain chain) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>Payment.PaymentDetails</fold> details = Payment.PaymentDetails<fold text='(' expand='false'>.builder()</fold>
             <fold text='t' expand='false'>    .setT</fold>ype<fold text=' = ' expand='false'>(</fold>PaymentType.CARD<fold text=',' expand='false'>)</fold>
-            <fold text='a' expand='false'>    .setA</fold>ccountId<fold text=' = ' expand='false'>(</fold>wallet.<fold text='value' expand='false'>getValue()</fold><fold text=',' expand='false'>)</fold>
+            <fold text='a' expand='false'>    .setA</fold>ccountId<fold text=' = ' expand='false'>(</fold>wallet.<fold text='v' expand='false'>getV</fold>alue<fold text='' expand='false'>()</fold><fold text=',' expand='false'>)</fold>
             <fold text='c' expand='false'>    .setC</fold>urrencyCode<fold text=' = ' expand='false'>(</fold>asset<fold text='<<' expand='false'>.getCurrencyCode()</fold><fold text=',' expand='false'>)</fold>
             <fold text='c' expand='false'>    .setC</fold>hain<fold text=' = ' expand='false'>(</fold><fold text='' expand='false'>chain != null ? </fold>chain<fold text='?.' expand='false'>.</fold>value()<fold text='' expand='false'> : null</fold><fold text='' expand='false'>)</fold>
         <fold text='' expand='false'>        .build(</fold>);

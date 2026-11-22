@@ -15,7 +15,7 @@ public class ExperimentalTestData {
 
         public String utf8ToStringMultiline(byte[] bytes) <fold text='{...}' expand='true'>{
             <fold text='@SneakyThrows' expand='true'>try</fold> <fold text='{...}' expand='true'>{
-                byte[] bytez = System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>;
+                byte[] bytez = System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='b' expand='false'>getB</fold>ytes<fold text='' expand='false'>()</fold>;
                 return new String(bytez, "UTF-8");
             }</fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch (UnsupportedEncodingException e) <fold text='{...}' expand='true'>{
                 throw new RuntimeException(e);
@@ -53,7 +53,7 @@ public class ExperimentalTestData {
 
         public String utf8ToString(byte[] bytes) <fold text='{...}' expand='true'>{
             <fold text='@SneakyThrows' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
-            <fold text='' expand='true'>    </fold>return new String(System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>, "UTF-8");<fold text='' expand='true'>
+            <fold text='' expand='true'>    </fold>return new String(System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='b' expand='false'>getB</fold>ytes<fold text='' expand='false'>()</fold>, "UTF-8");<fold text='' expand='true'>
             </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch (UnsupportedEncodingException e) <fold text='{...}' expand='true'>{
                 throw new RuntimeException(e);
             }</fold></fold>
@@ -117,35 +117,35 @@ public class ExperimentalTestData {
 
         void demo() <fold text='{...}' expand='true'>{
             NamelessAccessorExample example = new NamelessAccessorExample();
-            example.set("ok");
-            String current = example<fold text='' expand='false'>.get()</fold>;
-            System.out.println(example<fold text='' expand='false'>.get()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>);
-            example.set(example<fold text='' expand='false'>.get()</fold>);
-            String duplicate = example<fold text='' expand='false'>.get()</fold> + example<fold text='' expand='false'>.get()</fold>;
+            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>"ok"<fold text='' expand='false'>)</fold>;
+            String current = example.<fold text='!!' expand='false'>get()</fold>;
+            System.out.println(example.<fold text='!!' expand='false'>get()</fold>.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>);
+            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>example.<fold text='!!' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
+            String duplicate = example.<fold text='!!' expand='false'>get()</fold> + example.<fold text='!!' expand='false'>get()</fold>;
         }</fold>
     }</fold>
 
-    static class JsonNullableLikeWrapper<T> <fold text='{...}' expand='true'>{
+    static class JsonNullableLikeWrapper<T> {
 
         private T held;
 
-        void set(T newValue)<fold text=' { ' expand='false'> {
-            </fold>this.held = newValue;<fold text=' }' expand='false'>
-        }</fold>
+        void set(T newValue) {
+            this.held = newValue;
+        }
 
-        T get()<fold text=' { ' expand='false'> {
-            </fold>return held;<fold text=' }' expand='false'>
-        }</fold>
-    }</fold>
+        T get() {
+            return held;
+        }
+    }
 
-    static class WrapperUsage <fold text='{...}' expand='true'>{
+    static class WrapperUsage {
 
-        void demo() <fold text='{...}' expand='true'>{
+        void demo() {
             JsonNullableLikeWrapper<String> holder = new JsonNullableLikeWrapper<>();
             holder.set("ok");
-            String current = holder<fold text='' expand='false'>.get()</fold>;
-            holder.set(holder<fold text='' expand='false'>.get()</fold>);
-        }</fold>
-    }</fold>
+            String current = holder.get();
+            holder.set(holder.get());
+        }
+    }
 
 }
