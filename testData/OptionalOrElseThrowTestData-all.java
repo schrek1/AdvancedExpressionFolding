@@ -80,7 +80,7 @@ public class OptionalOrElseThrowTestData {
         </fold>}</fold>
     }</fold>
 
-    <fold text='@NoArgsConstructor(default) s' expand='false'>s</fold>tatic class NotFoundException extends RuntimeExceptio<fold text='n(nothing overridden)' expand='true'>n</fold> <fold text='{...}' expand='true'>{<fold text='' expand='false'>
+    <fold text='@NoArgsConstructor(default) s' expand='false'>s</fold>tatic class NotFoundException extends RuntimeException <fold text='{...}' expand='true'>{<fold text='' expand='false'>
         </fold><fold text='' expand='false'>NotFoundException() <fold text='{}' expand='true'>{
         }</fold></fold>
 
