@@ -103,10 +103,42 @@ public class InstanceofSwitchTestData {
         return "";
     }
 
-    String commentInChain(Object value) {
-        if (value instanceof String text) {
-            // keeps the chain unfolded
+    double commentedDefault(Object value) {
+        switch (value) {
+            case String text -> return Double.parseDouble(text);
+            case Long number -> return number.doubleValue();
+            default ->
+            // should not happen; log and fail
+            // callers validate the value first
+            throw new IllegalArgumentException("unexpected " + value);
+        }
+    }
+
+    String commentedCases(Object value) {
+        switch (value) {
+            case String text -> // already trimmed by the caller
             return text;
+            case Integer number -> 
+            // counts start at zero
+            return "number " + number;
+            case Shape _ -> return "shape";
+        }
+        return "";
+    }
+
+    String commentInCondition(Object value) {
+        if (value /* raw input */ instanceof String text) {
+            return text;
+        } else if (value instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String commentAfterStatement(Object value) {
+        if (value instanceof String text) {
+            return text;
+            // trailing note
         } else if (value instanceof Integer number) {
             return "number " + number;
         }

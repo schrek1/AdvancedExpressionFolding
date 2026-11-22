@@ -53,27 +53,27 @@ class InstanceofSwitchExpression private constructor(
                 ""
             ),
         )
-        val firstStatementStart = head.statement.textRange.startOffset
+        val firstLineStart = head.body.lines.first().textRange.startOffset
         // The head's type moves from the `switch (x)` line to the branch line, so it can only be shown as a placeholder.
-        val lastIndentChar = document.charsSequence[firstStatementStart - 1]
+        val lastIndentChar = document.charsSequence[firstLineStart - 1]
         descriptors += FoldingDescriptor(
             element.node,
-            TextRange(firstStatementStart - 1, firstStatementStart),
+            TextRange(firstLineStart - 1, firstLineStart),
             group,
             "${lastIndentChar}case ${head.type.text}${head.unnamedBinding} -> "
         )
         var previousBlock = head.block
         for (branch in chain.branches.drop(1)) {
             descriptors += branchStart(
-                element, document, group, previousBlock, branch.statement,
+                element, document, group, previousBlock, branch.body,
                 kept = branch.type, keyword = "case ", replacement = null, arrow = branch.unnamedBinding + " ->",
             )
             previousBlock = branch.block
         }
-        chain.elseStatement?.let { elseStatement ->
-            val elseKeyword = PsiTreeUtil.getParentOfType(elseStatement, PsiIfStatement::class.java)!!.elseElement!!
+        chain.elseBody?.let { elseBody ->
+            val elseKeyword = PsiTreeUtil.getParentOfType(elseBody.statement, PsiIfStatement::class.java)!!.elseElement!!
             descriptors += branchStart(
-                element, document, group, previousBlock, elseStatement,
+                element, document, group, previousBlock, elseBody,
                 kept = elseKeyword, keyword = "", replacement = "default", arrow = " ->",
             )
         }
@@ -92,12 +92,13 @@ class InstanceofSwitchExpression private constructor(
         document: Document,
         group: FoldingGroup,
         previousBlock: PsiCodeBlock,
-        statement: PsiStatement,
+        body: Body,
         kept: PsiElement,
         keyword: String,
         replacement: String?,
         arrow: String,
     ): List<FoldingDescriptor> {
+        val statement = body.statement
         val rBrace = previousBlock.rBrace!!
         val lBrace = (statement.parent as PsiCodeBlock).lBrace!!
         val braceIndent = rBrace.prevSibling.text.substringAfterLast('\n')
@@ -132,14 +133,24 @@ class InstanceofSwitchExpression private constructor(
             spaceKept -> "-> "
             else -> " -> "
         }
-        fold(lBraceStart, statement.textRange.startOffset, lBracePlaceholder)
+        if (body.comments.isEmpty()) {
+            fold(lBraceStart, statement.textRange.startOffset, lBracePlaceholder)
+        } else {
+            // A placeholder cannot break a line, so a commented branch drops its braces: `case T t ->`, then its lines.
+            fold(lBraceStart, lBraceStart + 1, lBracePlaceholder.trimEnd())
+        }
         return descriptors
+    }
+
+    /** A branch block's single statement and the full-line comments above it. */
+    private class Body(val comments: List<PsiComment>, val statement: PsiStatement) {
+        val lines: List<PsiElement> = comments + statement
     }
 
     private class Branch(
         val instanceOf: PsiInstanceOfExpression,
         val block: PsiCodeBlock,
-        val statement: PsiStatement,
+        val body: Body,
     ) {
         val type: PsiElement = (instanceOf.pattern ?: instanceOf.checkType)!!
 
@@ -147,7 +158,7 @@ class InstanceofSwitchExpression private constructor(
         val unnamedBinding: String = if (instanceOf.pattern == null) " _" else ""
     }
 
-    private class Chain(val branches: List<Branch>, val elseStatement: PsiStatement?)
+    private class Chain(val branches: List<Branch>, val elseBody: Body?)
 
     companion object : IKotlinLanguageState by State()() {
 
@@ -176,13 +187,13 @@ class InstanceofSwitchExpression private constructor(
         }
 
         private fun chainOf(head: PsiIfStatement): Chain? {
-            if (PsiTreeUtil.findChildOfAnyType(head, PsiComment::class.java, PsiErrorElement::class.java) != null) {
+            if (PsiTreeUtil.findChildOfType(head, PsiErrorElement::class.java) != null) {
                 return null
             }
             val branches = mutableListOf<Branch>()
             var subject: String? = null
             var current = head
-            var elseStatement: PsiStatement? = null
+            var elseBody: Body? = null
             while (true) {
                 val instanceOf = current.condition as? PsiInstanceOfExpression ?: return null
                 // A method call would read as evaluated once in `when (...)`, but each Java branch calls it again.
@@ -195,29 +206,47 @@ class InstanceofSwitchExpression private constructor(
                 }
                 subject = operand.text
                 val block = (current.thenBranch as? PsiBlockStatement)?.codeBlock ?: return null
-                branches += Branch(instanceOf, block, singleStatementOnItsOwnLine(block) ?: return null)
+                branches += Branch(instanceOf, block, bodyOnItsOwnLines(block) ?: return null)
                 when (val next = current.elseBranch) {
                     null -> break
                     is PsiIfStatement -> current = next
                     is PsiBlockStatement -> {
-                        elseStatement = singleStatementOnItsOwnLine(next.codeBlock) ?: return null
+                        elseBody = bodyOnItsOwnLines(next.codeBlock) ?: return null
                         break
                     }
                     else -> return null
                 }
             }
-            return if (branches.size >= 2) Chain(branches, elseStatement) else null
-        }
-
-        private fun singleStatementOnItsOwnLine(block: PsiCodeBlock): PsiStatement? {
-            val statement = block.statements.singleOrNull() ?: return null
-            if (block.lBrace == null || block.rBrace == null) {
+            if (branches.size < 2) {
                 return null
             }
-            val before = statement.prevSibling as? PsiWhiteSpace ?: return null
-            val after = block.rBrace?.prevSibling as? PsiWhiteSpace ?: return null
-            val indentedOnNewLine = before.text.contains('\n') && !before.text.endsWith('\n')
-            return statement.takeIf { indentedOnNewLine && after.text.contains('\n') }
+            // A comment outside the branch bodies (in a condition, before `else`) would have no place in the switch.
+            val bodyComments = (branches.map { it.body } + listOfNotNull(elseBody)).flatMap { it.comments }.toSet()
+            if (PsiTreeUtil.findChildrenOfType(head, PsiComment::class.java).any { it !in bodyComments }) {
+                return null
+            }
+            return Chain(branches, elseBody)
+        }
+
+        /** The block's single statement with the full-line comments above it, each on a line of its own. */
+        private fun bodyOnItsOwnLines(block: PsiCodeBlock): Body? {
+            val statement = block.statements.singleOrNull() ?: return null
+            val lBrace = block.lBrace ?: return null
+            val rBrace = block.rBrace ?: return null
+            val lines = generateSequence(lBrace.nextSibling) { it.nextSibling }
+                .takeWhile { it != rBrace }
+                .filter { it is PsiComment || it is PsiStatement }
+                .toList()
+            if (lines.last() != statement || !lines.all(::startsItsOwnLine)) {
+                return null
+            }
+            val after = rBrace.prevSibling as? PsiWhiteSpace ?: return null
+            return Body(lines.dropLast(1).filterIsInstance<PsiComment>(), statement).takeIf { after.text.contains('\n') }
+        }
+
+        private fun startsItsOwnLine(line: PsiElement): Boolean {
+            val before = line.prevSibling as? PsiWhiteSpace ?: return false
+            return before.text.contains('\n') && !before.text.endsWith('\n')
         }
     }
 }

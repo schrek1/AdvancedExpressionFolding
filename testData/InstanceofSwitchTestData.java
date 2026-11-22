@@ -109,10 +109,44 @@ public class InstanceofSwitchTestData {
         return "";
     }</fold>
 
-    String commentInChain(Object value) <fold text='{...}' expand='true'>{
-        if (value instanceof String text) <fold text='{...}' expand='true'>{
-            // keeps the chain unfolded
+    double commentedDefault(Object value) <fold text='{...}' expand='true'>{
+        <fold text='switch' expand='false'>if</fold> (value<fold text='' expand='false'> instanceof String text</fold>) <fold text='{...}' expand='true'>{
+           <fold text=' case String text -> ' expand='false'> </fold>return Double.parseDouble(text);
+        <fold text='' expand='false'>}</fold></fold><fold text='    case ' expand='false'> else if (value instanceof </fold>Long number<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return number.doubleValue();
+        <fold text='' expand='false'>}</fold></fold><fold text='    ' expand='false'> </fold><fold text='default' expand='false'>else</fold> <fold text='->' expand='false'><fold text='{...}' expand='true'>{</fold>
+            <fold text='//...' expand='true'>// should not happen; log and fail
+            // callers validate the value first</fold>
+            throw new IllegalArgumentException("unexpected " + value);
+        }</fold>
+    }</fold>
+
+    String commentedCases(Object value) <fold text='{...}' expand='true'>{
+        <fold text='switch' expand='false'>if</fold> (value<fold text='' expand='false'> instanceof String text</fold>) <fold text='{...}' expand='true'>{
+           <fold text=' case String text -> ' expand='false'> </fold>// already trimmed by the caller
             return text;
+        <fold text='' expand='false'>}</fold></fold><fold text='    case ' expand='false'> else if (value instanceof </fold>Integer number<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
+            // counts start at zero
+            return "number " + number;
+        <fold text='' expand='false'>}</fold></fold><fold text='    case ' expand='false'> else if (value instanceof </fold>Shape<fold text=' _ ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return "shape";
+        }</fold>
+        return "";
+    }</fold>
+
+    String commentInCondition(Object value) <fold text='{...}' expand='true'>{
+        if (value <fold text='/*...*/' expand='true'>/* raw input */</fold> instanceof String text) <fold text='{...}' expand='true'>{
+            return text;
+        }</fold> else if (value instanceof Integer number) <fold text='{...}' expand='true'>{
+            return "number " + number;
+        }</fold>
+        return "";
+    }</fold>
+
+    String commentAfterStatement(Object value) <fold text='{...}' expand='true'>{
+        if (value instanceof String text) <fold text='{...}' expand='true'>{
+            return text;
+            // trailing note
         }</fold> else if (value instanceof Integer number) <fold text='{...}' expand='true'>{
             return "number " + number;
         }</fold>
