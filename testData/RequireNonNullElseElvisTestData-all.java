@@ -17,7 +17,7 @@ public class RequireNonNullElseElvisTestData {
     }</fold>
 
     public Theme themeOf(Order order)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>Objects.requireNonNullElseGet(</fold>order.<fold text='theme' expand='false'>getTheme()</fold><fold text=' ?:' expand='false'>,</fold> Theme<fold text='(' expand='false'>::new</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>Objects.requireNonNullElseGet(</fold>order.<fold text='t' expand='false'>getT</fold>heme<fold text='' expand='false'>()</fold><fold text=' ?:' expand='false'>,</fold> Theme<fold text='(' expand='false'>::new</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public String guestName(String name, int id)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -29,7 +29,7 @@ public class RequireNonNullElseElvisTestData {
     </fold>}</fold>
 
     public List<String> tagsOf(Patch patch)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>Objects.requireNonNullElse(</fold>patch.<fold text='tags' expand='false'>getTags()</fold>.<fold text='!!' expand='false'>get()</fold><fold text=' ?:' expand='false'>,</fold> List.of()<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>Objects.requireNonNullElse(</fold>patch.<fold text='t' expand='false'>getT</fold>ags<fold text='' expand='false'>()</fold><fold text='' expand='false'>.get()</fold><fold text=' ?:' expand='false'>,</fold> List.of()<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void methodReferences(String name) <fold text='{...}' expand='true'>{
@@ -55,10 +55,10 @@ public class RequireNonNullElseElvisTestData {
 
     public void notFolded(String name, Supplier<String> supplier) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>String</fold> fromVariable = Objects.requireNonNullElseGet(name, supplier);
-        <fold text='val' expand='false'>String</fold> fromLongBlock = Objects.requireNonNullElseGet(name, () -> <fold text='{...}' expand='true'>{
+        <fold text='val' expand='false'>String</fold> fromLongBlock = Objects.requireNonNullElseGet(name<fold text=')' expand='false'>,</fold> <fold text='' expand='false'>() -> </fold><fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>String</fold> generated = "block";
             return generated;
-        }</fold>);
+        }</fold><fold text='' expand='false'>)</fold>;
         <fold text='val' expand='false'>int</fold> length = Objects.requireNonNullElse(name, "").trim().length();
         print(fromVariable + fromLongBlock + length);
     }</fold>
@@ -73,7 +73,7 @@ public class RequireNonNullElseElvisTestData {
 
     static class Theme <fold text='{...}' expand='true'>{
         static Theme standard()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new Theme()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Theme()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
