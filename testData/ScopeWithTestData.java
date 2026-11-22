@@ -7,17 +7,17 @@ public class ScopeWithTestData {
     private Order current;
 
     public void folded(Order order, List<String> lines) <fold text='{...}' expand='true'>{
-        <fold text='' expand='false'>order.</fold>validate();
-        <fold text='' expand='false'>order.</fold>reserveStock();
+        <fold text='' expand='false'>order.</fold>validate()<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>order.</fold>reserveStock()<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>order.</fold>notifyCustomer("Thanks for your order")<fold text='' expand='false'>;</fold>
 
-        <fold text='' expand='false'>lines.</fold>add("first");
-        <fold text='' expand='false'>lines.</fold>add("second");
-        <fold text='' expand='false'>lines.</fold>add("third");
+        <fold text='' expand='false'>lines.</fold>add("first")<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>lines.</fold>add("second")<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>lines.</fold>add("third")<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>lines.</fold>add("fourth")<fold text='' expand='false'>;</fold>
 
-        <fold text='' expand='false'>current.</fold>validate();
-        <fold text='' expand='false'>current.</fold>reserveStock();
+        <fold text='' expand='false'>current.</fold>validate()<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>current.</fold>reserveStock()<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>current.</fold>notifyCustomer("Updated")<fold text='' expand='false'>;</fold>
     }</fold>
 

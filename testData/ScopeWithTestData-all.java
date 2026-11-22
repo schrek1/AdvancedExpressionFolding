@@ -7,8 +7,8 @@ public class ScopeWithTestData {
     private Order current;
 
     public void folded(Order order, List<String> lines) <fold text='{...}' expand='true'>{
-        <fold text='' expand='false'>order.</fold>validate();
-        <fold text='' expand='false'>order.</fold>reserveStock();
+        <fold text='' expand='false'>order.</fold>validate()<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>order.</fold>reserveStock()<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>order.</fold>notifyCustomer("Thanks for your order")<fold text='' expand='false'>;</fold>
 
         lines<fold text=' += ' expand='false'>.add(</fold>"first"<fold text='' expand='false'>)</fold>;
@@ -16,8 +16,8 @@ public class ScopeWithTestData {
         lines<fold text=' += ' expand='false'>.add(</fold>"third"<fold text='' expand='false'>)</fold>;
         lines<fold text=' += ' expand='false'>.add(</fold>"fourth"<fold text='' expand='false'>)</fold>;
 
-        <fold text='' expand='false'>current.</fold>validate();
-        <fold text='' expand='false'>current.</fold>reserveStock();
+        <fold text='' expand='false'>current.</fold>validate()<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>current.</fold>reserveStock()<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>current.</fold>notifyCustomer("Updated")<fold text='' expand='false'>;</fold>
     }</fold>
 

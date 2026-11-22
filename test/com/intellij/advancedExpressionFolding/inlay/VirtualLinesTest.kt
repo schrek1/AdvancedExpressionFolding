@@ -4,6 +4,9 @@ import com.intellij.advancedExpressionFolding.folding.BaseTest
 import com.intellij.advancedExpressionFolding.folding.util.TestDynamicDataProvider
 import com.intellij.advancedExpressionFolding.processor.methodcall.MethodCallFactory
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.HighlighterColors
+import com.intellij.openapi.editor.ex.FoldingModelEx
+import com.intellij.openapi.editor.ex.util.EditorUtil
 import com.intellij.testFramework.EditorTestUtil
 import com.intellij.testFramework.runInEdtAndWait
 import org.intellij.lang.annotations.Language
@@ -44,13 +47,63 @@ class VirtualLinesTest : BaseTest() {
                 class Shop {
                     void checkout(Order order) {
                 [with(order) {]
-                        >>order.validate();
-                        >>order.reserveStock();
-                        >>order.notifyCustomer("Thanks");
+                       >> order.validate();
+                       >> order.reserveStock();
+                       >> order.notifyCustomer("Thanks");
                 [}]
                     }
                 """.trimIndent(),
                 dump(editor).lines().take(8).joinToString("\n"),
+            )
+        }
+    }
+
+    @Test
+    fun sync_collapsedWithFold_callsDrawnOneIndentRightOfTheBlockLines() {
+        runInEdtAndWait {
+            // GIVEN - three calls on the same receiver, folded as with(order)
+            val editor = foldedEditor()
+            val receiverStart = source.indexOf("order.validate")
+            val receiverColumn = receiverStart - source.lastIndexOf('\n', receiverStart) - 1
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - `validate` (receiver hidden) starts one indent level right of the block lines' column
+            val space = EditorUtil.getPlainSpaceWidth(editor)
+            val validateX = editor.offsetToXY(source.indexOf("validate();")).x
+            assertEquals((receiverColumn + 4) * space, validateX)
+        }
+    }
+
+    @Test
+    fun sync_groupWithLastLinePrefix_prefixOnlyBeforeTheLastLinesCode() {
+        runInEdtAndWait {
+            // GIVEN - the receivers of three calls hidden by a group whose last line gets an `else -> ` prefix
+            assignState()
+            fixture.configureByText("Shop.java", source)
+            val editor = fixture.editor
+            val prefix = VirtualLine(listOf("else -> " to HighlighterColors.TEXT))
+            val group = VirtualLines.group("test", above = null, below = null, lastLinePrefix = prefix)
+            val foldingModel = editor.foldingModel as FoldingModelEx
+            foldingModel.runBatchFoldingOperation {
+                listOf("order.validate", "order.reserveStock", "order.notifyCustomer").forEach { call ->
+                    val start = source.indexOf(call)
+                    foldingModel.createFoldRegion(start, start + "order.".length, "", group, false)!!.isExpanded = false
+                }
+            }
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - the middle call is only indented, the last one also starts after the prefix
+            val receiverStart = source.indexOf("order.validate")
+            val receiverColumn = receiverStart - source.lastIndexOf('\n', receiverStart) - 1
+            val space = EditorUtil.getPlainSpaceWidth(editor)
+            assertEquals((receiverColumn + 4) * space, editor.offsetToXY(source.indexOf("reserveStock();")).x)
+            assertEquals(
+                (receiverColumn + 4 + "else -> ".length) * space,
+                editor.offsetToXY(source.indexOf("notifyCustomer(\"Thanks\");")).x,
             )
         }
     }

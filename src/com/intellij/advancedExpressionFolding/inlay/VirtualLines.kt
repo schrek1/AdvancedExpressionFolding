@@ -32,13 +32,22 @@ data class VirtualLine(val segments: List<Pair<String, TextAttributesKey>>)
  */
 object VirtualLines {
 
-    private class Spec(val above: VirtualLine?, val below: VirtualLine?)
+    private class Spec(val above: VirtualLine?, val below: VirtualLine?, val lastLinePrefix: VirtualLine?)
 
     // written by the folding builder in a background read action, read on the EDT
     private val specs: MutableMap<FoldingGroup, Spec> = Collections.synchronizedMap(WeakHashMap())
 
-    fun group(name: String, above: VirtualLine?, below: VirtualLine?): FoldingGroup =
-        FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below) }
+    /**
+     * @param above line drawn above the line of the group's first region
+     * @param below line drawn below the line of the group's last region
+     * @param lastLinePrefix text drawn after the extra indent of the last line, before its code (e.g. `else -> `)
+     */
+    fun group(
+        name: String,
+        above: VirtualLine?,
+        below: VirtualLine?,
+        lastLinePrefix: VirtualLine? = null,
+    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix) }
 
     fun install(editor: Editor) {
         val foldingModel = editor.foldingModel as? FoldingModelEx ?: return
@@ -61,33 +70,29 @@ object VirtualLines {
         val existing = inlayModel.getBlockElementsInRange(0, length, LineRenderer::class.java) +
             inlayModel.getInlineElementsInRange(0, length, IndentRenderer::class.java)
         existing.forEach { inlay ->
-            if (!wanted.remove(inlay.placement())) {
+            // the renderer keeps its creation offset; the inlay's own offset follows edits
+            val current = when (val renderer = inlay.renderer) {
+                is IndentRenderer -> renderer.copy(offset = inlay.offset)
+                is LineRenderer -> renderer.copy(offset = inlay.offset)
+                else -> renderer
+            }
+            if (!wanted.remove(current)) {
                 Disposer.dispose(inlay)
             }
         }
-        wanted.forEach { placement ->
-            when (placement.line) {
-                null -> inlayModel.addInlineElement(placement.offset, true, IndentRenderer)
-                else -> {
-                    val renderer = LineRenderer(placement.line, placement.above, placement.column)
-                    inlayModel.addBlockElement(placement.offset, !placement.above, placement.above, 0, renderer)
-                }
+        wanted.forEach { renderer ->
+            when (renderer) {
+                is IndentRenderer -> inlayModel.addInlineElement(renderer.offset, true, renderer)
+                is LineRenderer -> inlayModel.addBlockElement(renderer.offset, !renderer.above, renderer.above, 0, renderer)
             }
         }
     }
 
-    /** An indent when [line] is null, otherwise a virtual line [above] or below the offset's line, drawn at [column]. */
-    private data class Placement(val offset: Int, val line: VirtualLine?, val above: Boolean = false, val column: Int = 0)
-
-    private fun Inlay<*>.placement(): Placement = when (val renderer = renderer) {
-        is LineRenderer -> Placement(offset, renderer.line, renderer.above, renderer.column)
-        else -> Placement(offset, null)
-    }
-
-    private fun wanted(editor: Editor): Set<Placement> {
+    /** The renderers the collapsed groups need; renderers are data classes, so equal ones mean an inlay can stay. */
+    private fun wanted(editor: Editor): Set<Any> {
         val document = editor.document
         val chars = document.charsSequence
-        val placements = mutableSetOf<Placement>()
+        val wanted = mutableSetOf<Any>()
         editor.foldingModel.allFoldRegions
             .filter { it.isValid && !it.isExpanded && it.group != null }
             .groupBy { it.group!! }
@@ -99,11 +104,19 @@ object VirtualLines {
                     codeStart(document.getLineStartOffset(line), document.getLineEndOffset(line), chars)
                 }
                 fun column(line: Int) = codeStarts[line]?.let { editor.offsetToLogicalPosition(it).column } ?: 0
-                spec.above?.let { placements += Placement(document.getLineStartOffset(firstLine), it, true, column(firstLine)) }
-                spec.below?.let { placements += Placement(document.getLineEndOffset(lastLine), it, false, column(lastLine)) }
-                codeStarts.values.filterNotNull().forEach { placements += Placement(it, null) }
+                spec.above?.let { wanted += LineRenderer(document.getLineStartOffset(firstLine), it, true, column(firstLine)) }
+                spec.below?.let { wanted += LineRenderer(document.getLineEndOffset(lastLine), it, false, column(lastLine)) }
+                codeStarts.forEach { (line, codeStart) ->
+                    if (codeStart == null) {
+                        return@forEach
+                    }
+                    // an inline inlay on the edge of a collapsed fold is hidden with it, so anchor inside the indentation
+                    val inIndent = codeStart > 0 && chars[codeStart - 1].let { it == ' ' || it == '\t' }
+                    val prefix = spec.lastLinePrefix.takeIf { line == lastLine }
+                    wanted += IndentRenderer(if (inIndent) codeStart - 1 else codeStart, prefix, inIndent)
+                }
             }
-        return placements
+        return wanted
     }
 
     private fun codeStart(lineStart: Int, lineEnd: Int, chars: CharSequence): Int? =
@@ -112,43 +125,63 @@ object VirtualLines {
     private fun indentWidth(editor: Editor): Int =
         EditorUtil.getPlainSpaceWidth(editor) * CodeStyle.getSettings(editor).getIndentSize(editor.virtualFile?.fileType)
 
-    /** The extra indent of a real line inside a virtual block: only width, nothing painted. */
-    internal object IndentRenderer : EditorCustomElementRenderer {
-        override fun calcWidthInPixels(inlay: Inlay<*>): Int = indentWidth(inlay.editor)
+    private fun font(editor: Editor, key: TextAttributesKey): Font {
+        val style = editor.colorsScheme.getAttributes(key)?.fontType ?: Font.PLAIN
+        return editor.colorsScheme.getFont(EditorFontType.forJavaStyle(style))
+    }
 
-        override fun paint(inlay: Inlay<*>, g: Graphics, targetRegion: Rectangle, textAttributes: TextAttributes) {
+    private fun VirtualLine.width(editor: Editor): Int = segments.sumOf { (text, key) ->
+        editor.contentComponent.getFontMetrics(font(editor, key)).stringWidth(text)
+    }
+
+    /** Draws the segments from [x] on, in the editor font and each key's colour, without background. */
+    private fun VirtualLine.paint(editor: Editor, g: Graphics, x: Int, lineTop: Int) {
+        EditorUIUtil.setupAntialiasing(g)
+        var segmentX = x
+        segments.forEach { (text, key) ->
+            val font = font(editor, key)
+            g.font = font
+            g.color = editor.colorsScheme.getAttributes(key)?.foregroundColor ?: editor.colorsScheme.defaultForeground
+            g.drawString(text, segmentX, lineTop + editor.ascent)
+            segmentX += g.getFontMetrics(font).stringWidth(text)
         }
     }
 
-    /** Draws [line] from logical [column] on (the real line's indentation), in the editor font, without background. */
-    internal class LineRenderer(val line: VirtualLine, val above: Boolean, val column: Int) : EditorCustomElementRenderer {
+    /**
+     * The extra indent of a real line inside a virtual block, then the optional [prefix]. When anchored before the
+     * line's last indentation character ([inIndent]), the prefix is painted over that blank character.
+     */
+    internal data class IndentRenderer(
+        val offset: Int,
+        val prefix: VirtualLine?,
+        val inIndent: Boolean,
+    ) : EditorCustomElementRenderer {
 
-        override fun calcWidthInPixels(inlay: Inlay<*>): Int {
-            val editor = inlay.editor
-            return indentX(editor) + line.segments.sumOf { (text, key) ->
-                editor.contentComponent.getFontMetrics(font(editor, key)).stringWidth(text)
-            }
-        }
+        override fun calcWidthInPixels(inlay: Inlay<*>): Int =
+            indentWidth(inlay.editor) + (prefix?.width(inlay.editor) ?: 0)
 
         override fun paint(inlay: Inlay<*>, g: Graphics, targetRegion: Rectangle, textAttributes: TextAttributes) {
             val editor = inlay.editor
-            EditorUIUtil.setupAntialiasing(g)
-            var x = targetRegion.x + indentX(editor)
-            val y = targetRegion.y + editor.ascent
-            line.segments.forEach { (text, key) ->
-                val font = font(editor, key)
-                g.font = font
-                g.color = editor.colorsScheme.getAttributes(key)?.foregroundColor ?: editor.colorsScheme.defaultForeground
-                g.drawString(text, x, y)
-                x += g.getFontMetrics(font).stringWidth(text)
-            }
+            // shifted past the blank indentation character that follows the inlay, so the prefix touches the code
+            val shift = if (inIndent) EditorUtil.getPlainSpaceWidth(editor) else 0
+            prefix?.paint(editor, g, targetRegion.x + indentWidth(editor) + shift, targetRegion.y)
+        }
+    }
+
+    /** Draws [line] [above] or below the line of [offset], from logical [column] on (the real line's indentation). */
+    internal data class LineRenderer(
+        val offset: Int,
+        val line: VirtualLine,
+        val above: Boolean,
+        val column: Int,
+    ) : EditorCustomElementRenderer {
+
+        override fun calcWidthInPixels(inlay: Inlay<*>): Int = indentX(inlay.editor) + line.width(inlay.editor)
+
+        override fun paint(inlay: Inlay<*>, g: Graphics, targetRegion: Rectangle, textAttributes: TextAttributes) {
+            line.paint(inlay.editor, g, targetRegion.x + indentX(inlay.editor), targetRegion.y)
         }
 
         private fun indentX(editor: Editor): Int = column * EditorUtil.getPlainSpaceWidth(editor)
-
-        private fun font(editor: Editor, key: TextAttributesKey): Font {
-            val style = editor.colorsScheme.getAttributes(key)?.fontType ?: Font.PLAIN
-            return editor.colorsScheme.getFont(EditorFontType.forJavaStyle(style))
-        }
     }
 }

@@ -7,17 +7,17 @@ public class ScopeWithTestData {
     private Order current;
 
     public void folded(Order order, List<String> lines) {
-        validate();
-        reserveStock();
+        validate()
+        reserveStock()
         notifyCustomer("Thanks for your order")
 
-        add("first");
-        add("second");
-        add("third");
+        add("first")
+        add("second")
+        add("third")
         add("fourth")
 
-        validate();
-        reserveStock();
+        validate()
+        reserveStock()
         notifyCustomer("Updated")
     }
 

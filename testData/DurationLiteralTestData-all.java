@@ -22,10 +22,10 @@ public class DurationLiteralTestData {
     }</fold>
 
     public void staysUnfolded(OrderClient client, long seconds, TimeUnit unit) throws InterruptedException <fold text='{...}' expand='true'>{
-        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(seconds));
-        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(seconds * 2));
-        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(-1));
-        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(30, 500));
+        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(seconds))<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(seconds * 2))<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(-1))<fold text='' expand='false'>;</fold>
+        <fold text='' expand='false'>client.</fold>timeout(Duration.ofSeconds(30, 500))<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>client.</fold>timeout(Duration.of(30, java.time.temporal.ChronoUnit.SECONDS))<fold text='' expand='false'>;</fold>
         unit.sleep(500);
         TimeUnit.SECONDS.sleep(seconds);

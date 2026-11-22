@@ -25,7 +25,7 @@ import com.intellij.psi.util.PsiUtil
 
 /**
  * Shows three or more consecutive calls on the same receiver, `order.validate(); order.save(); order.notify();`,
- * as a `with(order) { ... }` block: the receivers and the last `;` fold away, `with(order) {` and `}` are
+ * as a `with(order) { ... }` block: the receivers and the `;`s fold away, `with(order) {` and `}` are
  * [VirtualLine]s of their own and the calls are indented one level, keeping the source order.
  *
  * The run is single-line `r.call(...);` statements on one unqualified variable, each on the next line: a blank line,
@@ -44,17 +44,16 @@ object ScopeWithExt : IKotlinLanguageState by State()() {
         if (run.first() != statement) {
             return null
         }
-        val last = run.last()
-        val semicolon = last.lastChild as? PsiJavaToken ?: return null
-        if (semicolon.tokenType != JavaTokenType.SEMICOLON) {
+        val semicolons = run.map { (it.lastChild as? PsiJavaToken)?.takeIf { token -> token.tokenType == JavaTokenType.SEMICOLON } }
+        if (semicolons.any { it == null }) {
             return null
         }
         val folds = run.map { TextRange(it.qualifier.textRange.startOffset, it.methodNameStart) to "" } +
-            (semicolon.textRange to "")
+            semicolons.map { it!!.textRange to "" }
         val receiver = run.first().qualifier.text
         return ScopeFunctionExpression(
             statement,
-            TextRange(statement.textRange.startOffset, last.textRange.endOffset),
+            TextRange(statement.textRange.startOffset, run.last().textRange.endOffset),
             folds,
             above = VirtualLine(listOf("with" to DefaultLanguageHighlighterColors.KEYWORD, "($receiver) {" to HighlighterColors.TEXT)),
             below = VirtualLine(listOf("}" to HighlighterColors.TEXT)),
