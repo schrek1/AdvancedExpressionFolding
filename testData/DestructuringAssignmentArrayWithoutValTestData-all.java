@@ -13,19 +13,19 @@ public class DestructuringAssignmentArrayWithoutValTestData {
         Data </fold>third<fold text=', ' expand='true'> = array[2];</fold><fold text='' expand='true'>
         Data </fold>fourth<fold text=') ' expand='true'> </fold>= array<fold text='' expand='true'>[3]</fold>;
 
-        Data ignored21 = data.<fold text='array' expand='false'>getArray()</fold>[4];
-        Data ignored22 = data.<fold text='array' expand='false'>getArray()</fold>[5];
+        Data ignored21 = data.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold>[4];
+        Data ignored22 = data.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold>[5];
 
-        Data<fold text=' (' expand='true'> </fold>getter1<fold text=', ' expand='true'> = data.<fold text='array' expand='false'>getArray()</fold>[0];</fold><fold text='' expand='true'>
-        Data </fold>getter2<fold text=') ' expand='true'> </fold>= data.<fold text='array' expand='false'>getArray()</fold><fold text='' expand='true'>[1]</fold>;
+        Data<fold text=' (' expand='true'> </fold>getter1<fold text=', ' expand='true'> = data.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold>[0];</fold><fold text='' expand='true'>
+        Data </fold>getter2<fold text=') ' expand='true'> </fold>= data.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold><fold text='' expand='true'>[1]</fold>;
         getter1 = data;
 
-        Data<fold text=' (' expand='true'> </fold>deepGetter1<fold text=', ' expand='true'> = data.<fold text='data' expand='false'>getData()</fold>.<fold text='array' expand='false'>getArray()</fold>[0];</fold><fold text='' expand='true'>
-        Data </fold>deepGetter2<fold text=') ' expand='true'> </fold>= data.<fold text='data' expand='false'>getData()</fold>.<fold text='array' expand='false'>getArray()</fold><fold text='' expand='true'>[1]</fold>;
+        Data<fold text=' (' expand='true'> </fold>deepGetter1<fold text=', ' expand='true'> = data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold>[0];</fold><fold text='' expand='true'>
+        Data </fold>deepGetter2<fold text=') ' expand='true'> </fold>= data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold><fold text='' expand='true'>[1]</fold>;
         deepGetter2 = data;
         
-        Data wrongParent1 = data.<fold text='array' expand='false'>getArray()</fold>[0];
-        Data wrongParent2 = data.<fold text='data' expand='false'>getData()</fold>.<fold text='array' expand='false'>getArray()</fold>[1];
+        Data wrongParent1 = data.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold>[0];
+        Data wrongParent2 = data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>.<fold text='a' expand='false'>getA</fold>rray<fold text='' expand='false'>()</fold>[1];
 
         blackhole(first, second, third, fourth, ignored21, ignored22, getter1, getter2, deepGetter1, deepGetter2, wrongParent1, wrongParent2);
     }</fold>

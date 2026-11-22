@@ -71,7 +71,7 @@ public class InstanceofSwitchTestData {
     }</fold>
 
     String guardedCondition(Object value) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>value instanceof String text && !text.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>value instanceof String text && !text.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return text;
         }</fold> else if <fold text='' expand='false'>(</fold>value instanceof Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
