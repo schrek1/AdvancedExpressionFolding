@@ -82,7 +82,10 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
         testCase.runFoldingTest(foldingState()::patternMatchingInstanceof)
 
     @Test
-    fun constructorReferenceNotationTestData() = testCase.runFoldingTest(foldingState()::constructorReferenceNotation)
+    fun isOperatorTestData() = testCase.runFoldingTest(foldingState()::isOperator)
+
+    @Test
+    fun constructorReferenceNotationTestData() =testCase.runFoldingTest(foldingState()::constructorReferenceNotation)
 
     @Test
     fun constructorReferenceNotationWithConstTestData() = testCase.runFoldingTest(

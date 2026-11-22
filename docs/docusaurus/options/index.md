@@ -267,6 +267,12 @@ Applies pattern matching to `instanceof` checks for more concise and readable co
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/PatternMatchingRecordPatternTestData-folded.java)
 - [Documentation](../features/pattern-matching-instanceof.md)
 
+## isOperator
+### instanceof as Kotlin is / !is
+Shows `x instanceof Foo` as `x is Foo`, `!(x instanceof Foo)` as `x !is Foo` and `x instanceof Foo f` as `x is Foo f`. Only the keyword (and the `!(` / `)` of a negation) folds; operand, type and binding keep their syntax colours.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/IsOperatorTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IsOperatorTestData-folded.java)
+
 ## summaryParentOverride
 ### Displays a folded summary of overridden methods from parent classes and interfaces
 Provides a concise view of inherited method overrides, reducing redundant code duplication.
