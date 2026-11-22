@@ -135,9 +135,7 @@ object IfNullSafeExt : IKotlinLanguageState by State()() {
                 } else {
                     (it.element as? PsiMethodCallExpression)?.methodExpression?.referenceName ?: return null
                 }
-            }.joinToString(separator = "?.") {
-               it
-            }
+            }.filter { it.isNotEmpty() }.joinToString(separator = "?.")
 
         val iGetter = BuildExpressionExt.getAnyExpression(elementList.first(), document).asInstance<IGetter>()
         val parentGetter = iGetter?.receiver

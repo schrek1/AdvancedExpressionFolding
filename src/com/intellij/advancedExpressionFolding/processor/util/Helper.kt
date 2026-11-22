@@ -227,27 +227,10 @@ object Helper {
         return hasNonVoidReturn(expression, method)
     }
 
-    fun isNamelessSetter(name: String, expression: PsiMethodCallExpression, method: PsiMethod?): Boolean {
-        if (name != "set") {
-            return false
-        }
-        if (expression.argumentExpressions.size != 1) {
-            return false
-        }
-        return hasVoidReturn(expression, method)
-    }
-
-    fun hasVoidReturn(expression: PsiMethodCallExpression, method: PsiMethod?): Boolean {
-        val returnType = method?.returnType ?: expression.type ?: return false
-        return returnType == PsiTypes.voidType()
-    }
-
     fun hasNonVoidReturn(expression: PsiMethodCallExpression, method: PsiMethod?): Boolean {
         val returnType = method?.returnType ?: expression.type ?: return false
         return returnType != PsiTypes.voidType()
     }
-
-    fun guessNamelessPropertyName(): String = "value"
 
     fun findAncestorsUntilClass(element: PsiElement, ancestorClass: Class<out PsiElement>): Sequence<PsiElement> {
         return findAncestorsUntil(element) { parent -> !ancestorClass.isInstance(parent) }

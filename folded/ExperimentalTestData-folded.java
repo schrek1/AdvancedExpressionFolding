@@ -102,11 +102,11 @@ public class ExperimentalTestData {
 
         void demo() {
             NamelessAccessorExample example = new NamelessAccessorExample();
-            example.value = "ok";
-            String current = example.value;
-            System.out.println(example.value.empty);
-            example.value = example.value;
-            String duplicate = example.value + example.value;
+            example.set("ok");
+            String current = example;
+            System.out.println(example.empty);
+            example.set(example);
+            String duplicate = example + example;
         }
     }
 
@@ -127,9 +127,9 @@ public class ExperimentalTestData {
 
         void demo() {
             JsonNullableLikeWrapper<String> holder = new JsonNullableLikeWrapper<>();
-            holder.value = "ok";
-            String current = holder.value;
-            holder.value = holder.value;
+            holder.set("ok");
+            String current = holder;
+            holder.set(holder);
         }
     }
 
