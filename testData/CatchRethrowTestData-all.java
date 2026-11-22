@@ -12,7 +12,7 @@ public class CatchRethrowTestData {
         <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
             </fold>return Files.readString(file);<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold>
     }</fold>
 
@@ -20,7 +20,7 @@ public class CatchRethrowTestData {
         <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
             </fold>Files.writeString(file, order);<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new UncheckedIOException(e);
+            throw <fold text='' expand='false'>new </fold>UncheckedIOException(e);
         }</fold></fold>
     }</fold>
 
@@ -28,7 +28,7 @@ public class CatchRethrowTestData {
         try <fold text='{...}' expand='true'>{
             lock.wait();
         }</fold> catch <fold text='' expand='false'>(</fold>InterruptedException | IllegalMonitorStateException e<fold text='' expand='false'>)</fold><fold text='' expand='true'> </fold><fold text=' rethrow as ' expand='true'><fold text='{...}' expand='true'>{
-            throw new </fold>IllegalStateException<fold text='' expand='true'>(e);
+            throw <fold text='' expand='false'>new </fold></fold>IllegalStateException<fold text='' expand='true'>(e);
         }</fold></fold> finally <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("done");
         }</fold>
@@ -38,7 +38,7 @@ public class CatchRethrowTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new RuntimeException("Cannot delete <fold text='$' expand='false'>" + </fold>file<fold text='",' expand='false'>,</fold> e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException("Cannot delete <fold text='$' expand='false'>" + </fold>file<fold text='",' expand='false'>,</fold> e);
         }</fold>
     }</fold>
 
@@ -47,7 +47,7 @@ public class CatchRethrowTestData {
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("delete failed");
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold>
     }</fold>
 
@@ -63,7 +63,7 @@ public class CatchRethrowTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(previous);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(previous);
         }</fold>
     }</fold>
 
@@ -72,7 +72,7 @@ public class CatchRethrowTestData {
             </fold>Files.delete(file);<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             // the file may be locked by the scanner
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold>
     }</fold>
 

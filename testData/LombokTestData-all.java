@@ -309,17 +309,17 @@ import java.util.logging.Logger;</fold>
             if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
             if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
             <fold text='val' expand='false'>DataFull</fold> dataFull = <fold text='' expand='false'>(DataFull) </fold>o;
-            return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
+            return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
         }</fold></fold><fold text='' expand='false'>
 
         </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold></fold><fold text='' expand='false'>
 
         </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public String toString() <fold text='{...}' expand='true'>{
-            return new ToStringBuilder(this)
+            return <fold text='' expand='false'>new </fold>ToStringBuilder(this)
                     .append("data", data)
                     .append("ok", ok)
                     .toString();
@@ -350,12 +350,12 @@ import java.util.logging.Logger;</fold>
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
                 if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> LombokTestData.DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokTestData.DataFull) </fold>o;
-                return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
+                return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
             }</fold></fold><fold text='' expand='false'>
 
             </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold></fold>
 
         }</fold>
@@ -381,17 +381,17 @@ import java.util.logging.Logger;</fold>
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
                 if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> LombokTestData.DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokTestData.DataFull) </fold>o;
-                return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
+                return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
             }</fold></fold><fold text='' expand='false'>
 
             </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold></fold><fold text='' expand='false'>
 
             </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public String toString() <fold text='{...}' expand='true'>{
-                return new ToStringBuilder(this)
+                return <fold text='' expand='false'>new </fold>ToStringBuilder(this)
                         .append("data", data)
                         .append("ok", ok)
                         .toString();
@@ -419,17 +419,17 @@ import java.util.logging.Logger;</fold>
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
                 if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> LombokTestData.DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokTestData.DataFull) </fold>o;
-                return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
+                return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
             }</fold></fold><fold text='' expand='false'>
 
             </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold></fold><fold text='' expand='false'>
 
             </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public String toString() <fold text='{...}' expand='true'>{
-                return new ToStringBuilder(this)
+                return <fold text='' expand='false'>new </fold>ToStringBuilder(this)
                         .append("data", data)
                         .append("ok", ok)
                         .toString();
@@ -543,7 +543,7 @@ import java.util.logging.Logger;</fold>
                 <fold text='@SneakyThrows' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
                 <fold text='' expand='true'>    </fold>return wrapperDeeplyHiddenRef;<fold text='' expand='true'>
                 </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>Exception e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-                    throw new RuntimeException(e);
+                    throw <fold text='' expand='false'>new </fold>RuntimeException(e);
                 }</fold></fold>
             }</fold>
             return null;
@@ -569,7 +569,7 @@ import java.util.logging.Logger;</fold>
         }</fold>
 
         public List<String> getDefensiveCopyList()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new ArrayList<>(defensiveCopyList)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>ArrayList<>(defensiveCopyList)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         public List<String> getOneLineLazyLoadedList() <fold text='{...}' expand='true'>{
@@ -810,7 +810,7 @@ import java.util.logging.Logger;</fold>
                 this.field3 = <fold text='<<' expand='false'>field3</fold>;
             }</fold></fold>
             public static StaticNameArgs of(String field1, int field2, boolean field3) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
         }</fold>
 
@@ -893,7 +893,7 @@ import java.util.logging.Logger;</fold>
             }</fold></fold>
 
             public static StaticNameArgs of(String field1, int field2, boolean field3) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
         }</fold>
 
@@ -1154,7 +1154,7 @@ import java.util.logging.Logger;</fold>
                 return this;
             }</fold>
             public ClassWithBuilder build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new ClassWithBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>ClassWithBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
     }</fold>

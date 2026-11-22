@@ -36,7 +36,7 @@ public class LombokNonNullTestData {
         <fold text='requireNotNull' expand='false'>Objects.requireNonNull</fold>(order<fold text=') { ' expand='false'>, </fold>"order"<fold text=' }' expand='false'>)</fold>;
         if <fold text='' expand='false'>(</fold>address == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("missing address");
-            throw new NullPointerException("address");
+            throw <fold text='' expand='false'>new </fold>NullPointerException("address");
         }</fold>
         <fold text='check' expand='false'>if </fold>(note <fold text='!=' expand='false'>==</fold> null) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalStateException(</fold>"note"<fold text=' ' expand='false'>);
@@ -56,7 +56,7 @@ public class LombokNonNullTestData {
 
     public void notFoldedElse(String order) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>order == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new NullPointerException("order");
+            throw <fold text='' expand='false'>new </fold>NullPointerException("order");
         }</fold> else <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(order);
         }</fold>
