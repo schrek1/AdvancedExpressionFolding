@@ -26,7 +26,7 @@ public class LogFoldingKeepMessageTextTestData {
             log.error("Saving settings of shop $shopId failed: ${e.message}", e);
         }
 
-        // An argument that does not read well inside the message keeps the classic fold
+        // A call with arguments reads inside the message; a lambda keeps the classic fold
         log.info("Shop $shopId has ${countOrders(shopId, previous)} open orders");
         log.info("Shop $shopId has ${previous.rules().stream().filter(rule -> rule.active).count()} rules");
 

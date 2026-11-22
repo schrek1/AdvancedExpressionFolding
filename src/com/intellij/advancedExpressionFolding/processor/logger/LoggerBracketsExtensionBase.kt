@@ -17,7 +17,6 @@ import com.intellij.advancedExpressionFolding.settings.state.ILogFoldingState
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.util.text.StringUtil
-import com.intellij.psi.PsiCallExpression
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiLambdaExpression
@@ -168,23 +167,24 @@ open class LoggerBracketsExtensionBase(
     }
 
     private fun PsiExpression.hasPartUnreadableInMessage() =
-        PsiTreeUtil.findChildrenOfAnyType(
+        PsiTreeUtil.findChildOfAnyType(
             this,
             false,
             PsiLambdaExpression::class.java,
-            PsiSwitchExpression::class.java,
-            PsiCallExpression::class.java
-        ).any { part -> part !is PsiCallExpression || (part.argumentList?.expressionCount ?: 0) > 0 }
+            PsiSwitchExpression::class.java
+        ) != null
 
     /** The argument as the getter fold shows it (`previous.getMode()` -> `previous.mode`), otherwise its source text. */
     private fun PsiExpression.foldedText(): String? = when (this) {
         is PsiMethodCallExpression -> {
-            val name = methodExpression.referenceName
+            val name = methodExpression.referenceName ?: return null
             val qualifierText = methodExpression.qualifierExpression?.let { qualifier -> qualifier.foldedText() ?: return null }
-            val member = if (State()().getSetExpressionsCollapse && name != null && Helper.isGetter(name)) {
+            val callArguments = argumentList.expressions
+            val member = if (callArguments.isEmpty() && State()().getSetExpressionsCollapse && Helper.isGetter(name)) {
                 PropertyUtil.guessPropertyName(name)
             } else {
-                methodExpression.referenceNameElement?.text?.let { "$it()" } ?: return null
+                val argumentTexts = callArguments.map { callArgument -> callArgument.foldedText() ?: return null }
+                "$name(${argumentTexts.joinToString(", ")})"
             }
             listOfNotNull(qualifierText, member).joinToString(".")
         }

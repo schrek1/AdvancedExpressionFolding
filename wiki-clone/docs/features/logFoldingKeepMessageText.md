@@ -21,8 +21,8 @@ folded/LogFoldingKeepMessageTextTestData-folded.java:
 Rules:
 - a plain variable reads `$name`; anything else reads `${...}`, with getters shown as properties when the getter fold is on;
 - an argument beyond the placeholders (a trailing exception) stays visible;
-- a call whose argument would not read well inside the message (a lambda, a call with arguments, a multi-line or long
-  expression) keeps the classic log folding;
+- an argument may be a call with arguments (`${countOrders(shopId, previous)}`); only a call whose argument holds a
+  lambda, spans several lines or is longer than about 40 characters keeps the classic log folding;
 - marker loggers, `String.format`, `printf` and `String.formatted` follow the same rules.
 
 Default: Off

@@ -26,8 +26,8 @@ import org.slf4j.MarkerFactory;</fold>
             log.error("Saving settings of shop <fold text='$shopId' expand='false'>{}</fold> failed: <fold text='${e.message}' expand='false'>{}</fold>"<fold text='' expand='false'>, shopId, e.<fold text='message' expand='false'>getMessage()</fold></fold>, e);
         }</fold>
 
-        // An argument that does not read well inside the message keeps the classic fold
-        log.info("Shop <fold text='$' expand='false'>{} has {} open orders", </fold>shopId<fold text=' has ${' expand='false'>, </fold>countOrders(shopId, previous)<fold text='} open orders")' expand='false'>)</fold>;
+        // A call with arguments reads inside the message; a lambda keeps the classic fold
+        log.info("Shop <fold text='$shopId' expand='false'>{}</fold> has <fold text='${countOrders(shopId, previous)}' expand='false'>{}</fold> open orders"<fold text='' expand='false'>, shopId, countOrders(shopId, previous)</fold>);
         log.info("Shop <fold text='$' expand='false'>{} has {} rules", </fold>shopId<fold text=' has ${' expand='false'>, </fold>previous.rules()<fold text='.' expand='false'>.stream().</fold>filter(rule -> rule.<fold text='active' expand='false'>isActive()</fold>).count()<fold text='} rules")' expand='false'>)</fold>;
 
         // printf style and String.formatted
