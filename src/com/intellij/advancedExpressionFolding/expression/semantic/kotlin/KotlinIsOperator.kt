@@ -1,12 +1,15 @@
 package com.intellij.advancedExpressionFolding.expression.semantic.kotlin
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.expression.controlflow.InstanceofSwitchExpression
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.PreconditionExt
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.FoldingGroup
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.JavaTokenType
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiIfStatement
 import com.intellij.psi.PsiInstanceOfExpression
 import com.intellij.psi.PsiJavaToken
 import com.intellij.psi.PsiParenthesizedExpression
@@ -40,8 +43,19 @@ class KotlinIsOperator private constructor(
     companion object {
         fun create(keyword: PsiJavaToken): KotlinIsOperator? {
             val check = keyword.parent as? PsiInstanceOfExpression ?: return null
-            val negation = (check.parent as? PsiParenthesizedExpression)?.parent as? PsiPrefixExpression
-            return KotlinIsOperator(keyword, negation?.takeIf { it.operationTokenType == JavaTokenType.EXCL })
+            if ((check.parent as? PsiIfStatement)?.let(InstanceofSwitchExpression::foldsAsSwitch) == true) {
+                return null
+            }
+            val negation = ((check.parent as? PsiParenthesizedExpression)?.parent as? PsiPrefixExpression)
+                ?.takeIf { it.operationTokenType == JavaTokenType.EXCL && !isPreconditionCondition(it) }
+            return KotlinIsOperator(keyword, negation)
+        }
+
+        // `require` / `check` already hide the `!(` and `)` of a negated guard condition, so the check reads as `is`.
+        private fun isPreconditionCondition(negation: PsiPrefixExpression): Boolean {
+            val ifStatement = negation.parent as? PsiIfStatement ?: return false
+            return PreconditionExt.kotlinPreconditions && ifStatement.condition == negation &&
+                PreconditionExt.guardThrow(ifStatement) != null
         }
     }
 }
