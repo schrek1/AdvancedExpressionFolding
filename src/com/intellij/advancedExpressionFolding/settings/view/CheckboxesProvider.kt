@@ -391,6 +391,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#instanceofswitch")
         }
 
+        registerCheckbox(state::kotlinIsOperator, "instanceof as Kotlin is / !is") {
+            example(IsOperatorTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinisoperator")
+        }
+
         registerCheckbox(
             state::summaryParentOverride,
             "Displays a folded summary of overridden methods from parent classes and interfaces."
