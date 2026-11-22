@@ -26,21 +26,21 @@ public class SetterNamedArgumentsTestData {
     }</fold>
 
     public void notFolded(Person source) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>var</fold> withArguments = new Person("Dave");
+        <fold text='val' expand='false'>var</fold> withArguments = <fold text='' expand='false'>new </fold>Person("Dave");
         withArguments.<fold text='a' expand='false'>setA</fold>ge<fold text=' = ' expand='false'>(</fold>40<fold text='' expand='false'>)</fold>;
 
-        <fold text='val' expand='false'>var</fold> commented = new Person();
+        <fold text='val' expand='false'>var</fold> commented = <fold text='' expand='false'>new </fold>Person();
         // a comment keeps the setters as they are
         commented.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Eve"<fold text='' expand='false'>)</fold>;
 
-        <fold text='val' expand='false'>var</fold> other = new Person();
+        <fold text='val' expand='false'>var</fold> other = <fold text='' expand='false'>new </fold>Person();
         source.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Frank"<fold text='' expand='false'>)</fold>;
 
         <fold text='val' expand='false'>var</fold> anonymous = new Person() <fold text='{...}' expand='true'>{
         }</fold>;
         anonymous.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Grace"<fold text='' expand='false'>)</fold>;
 
-        <fold text='val' expand='false'>var</fold> empty = new Person();
+        <fold text='val' expand='false'>var</fold> empty = <fold text='' expand='false'>new </fold>Person();
         <fold text='' expand='false'>System.out.</fold>println(empty);
     }</fold>
 

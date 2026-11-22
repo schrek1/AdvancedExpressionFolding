@@ -17,26 +17,26 @@ public class InstanceofSwitchTestData {
     double area(Shape shape) {
         double area = 0;
         switch (shape) {
-            case Circle c -> area = Math.PI * c.r() * c.r();
-            case Square s -> area = s.side() * s.side();
+        case Circle c -> area = Math.PI * c.r() * c.r();
+        case Square s -> area = s.side() * s.side();
         }
         return area;
     }
 
     String describe(Object value) {
         switch (value) {
-            case Integer number -> return "number " + number;
-            case String text -> return "text " + text;
-            case Shape _ -> return "shape";
-            default -> return "unknown";
+        case Integer number -> return "number " + number;
+        case String text -> return "text " + text;
+        case Shape _ -> return "shape";
+        default -> return "unknown";
         }
     }
 
     double recordPatterns(Shape shape) {
         switch (shape) {
-            case Circle(double r) -> return r * r;
-            case Triangle(double base, double height) -> return base * height / 2;
-            default -> return 0;
+        case Circle(double r) -> return r * r;
+        case Triangle(double base, double height) -> return base * height / 2;
+        default -> return 0;
         }
     }
 
@@ -103,10 +103,42 @@ public class InstanceofSwitchTestData {
         return "";
     }
 
-    String commentInChain(Object value) {
-        if (value instanceof String text) {
-            // keeps the chain unfolded
+    double commentedDefault(Object value) {
+        switch (value) {
+        case String text -> return Double.parseDouble(text);
+        case Long number -> return number.doubleValue();
+        default ->
+            // should not happen; log and fail
+            // callers validate the value first
+            throw new IllegalArgumentException("unexpected " + value);
+        }
+    }
+
+    String commentedCases(Object value) {
+        switch (value) {
+        case String text -> // already trimmed by the caller
             return text;
+        case Integer number -> 
+            // counts start at zero
+            return "number " + number;
+        case Shape _ -> return "shape";
+        }
+        return "";
+    }
+
+    String commentInCondition(Object value) {
+        if (value /* raw input */ instanceof String text) {
+            return text;
+        } else if (value instanceof Integer number) {
+            return "number " + number;
+        }
+        return "";
+    }
+
+    String commentAfterStatement(Object value) {
+        if (value instanceof String text) {
+            return text;
+            // trailing note
         } else if (value instanceof Integer number) {
             return "number " + number;
         }

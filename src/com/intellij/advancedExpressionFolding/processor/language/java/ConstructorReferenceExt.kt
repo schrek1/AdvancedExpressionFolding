@@ -51,6 +51,13 @@ object ConstructorReferenceExt : BaseExtension() {
         return null
     }
 
+    /** True when `creation` is a plain field initializer that [foldFieldConstructor] shows as `::new`. */
+    fun isFieldConstructorReference(creation: PsiNewExpression): Boolean {
+        val field = creation.parent as? PsiField ?: return false
+        return field.initializer == creation && creation.classReference != null &&
+            field.sameTypeOfFieldAndInitializer(creation)
+    }
+
     //TODO: extract generic extension method
     private fun PsiField.sameTypeOfFieldAndInitializer(initializer: PsiNewExpression?) =
         initializer?.classOrAnonymousClassReference?.resolve() == typeResolved

@@ -81,7 +81,7 @@ folded/FieldShiftFields-folded.java:
         result.username = source.child.<<;
         result.userIdentifier = source.child.child.child.<<;
         result.active = source.child.<<;
-        result.list = List.copyOf(source.<<);
+        result.list = List.copyOf(source.list);
 ```
 
 Highlights FieldShiftFields with field shift.
@@ -175,7 +175,7 @@ Related features: (none)
 **After**
 ```java
                 .active(source<<);
-        return FieldShiftBuilder.builder().username(record.userIdentifier).username(changer(record<<))
+        return FieldShiftBuilder.builder().username(record.userIdentifier).username(changer(record.username))
                 .username(source<<).username(builder.username("a").build()<<)
                 .username(source.username + "1")
                 .active(source<<).userIdentifier(source<<)
@@ -464,7 +464,7 @@ Related features: (none)
         result.username = source<<;
         result.userIdentifier = source<<;
         result.active = source<<;
-        result.list = List.copyOf(source<<);
+        result.list = List.copyOf(source.list);
         result.withUsername(source<<);
         result.withActive(source<<);
         result.withUserIdentifier(source<<);
@@ -537,7 +537,7 @@ Related features: (none)
 **After**
 ```java
         result.username = record.userIdentifier;
-        result.username = changer(record<<);
+        result.username = changer(record.username);
         result.username = source<<;
         result.username = var1.child<<;
         result.username = source.username + "1";
@@ -668,7 +668,7 @@ Related features: (none)
         result.username = source.child.<<;
         result.userIdentifier = source.child.child.child.<<;
         result.active = source.child.<<;
-        result.list = List.copyOf(source.<<);
+        result.list = List.copyOf(source.list);
 ```
 
 
@@ -760,7 +760,7 @@ Related features: (none)
 
 **After**
 ```java
-        result.username = changer(record.<<);
+        result.username = changer(record.username);
         result.username = source.<<;
         result.username = var1.child.<<;
 ```
@@ -869,7 +869,7 @@ Related features: (none)
 
 **After**
 ```java
-        result.username = changer(record.<<);
+        result.username = changer(record.username);
         result.username = source.<<;
         result.username = var1.child.<<;
         result.username = source.username + "1";

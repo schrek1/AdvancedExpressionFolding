@@ -28,6 +28,7 @@ interface IKotlinLanguageState {
     var kotlinLambda: Boolean
     var scopeLet: Boolean
     var kotlinIsOperator: Boolean
+    var kotlinConstructorCall: Boolean
 }
 
 data class KotlinLanguageState(
@@ -58,4 +59,5 @@ data class KotlinLanguageState(
     override var kotlinLambda: Boolean = false,
     override var scopeLet: Boolean = true,
     override var kotlinIsOperator: Boolean = false,
+    override var kotlinConstructorCall: Boolean = false,
 ) : IKotlinLanguageState

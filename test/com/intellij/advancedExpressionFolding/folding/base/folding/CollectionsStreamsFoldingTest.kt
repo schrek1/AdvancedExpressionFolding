@@ -19,6 +19,12 @@ interface CollectionsStreamsFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun optionalOrElseThrowTestData() = testCase.runFoldingTest(
+        foldingState()::concatenationExpressionsCollapse,
+        foldingState()::optional,
+    )
+
+    @Test
     fun spreadTestData() = testCase.runFoldingTest(
         foldingState()::concatenationExpressionsCollapse,
         foldingState()::optional,
@@ -31,6 +37,12 @@ interface CollectionsStreamsFoldingTest : FoldingTestSection {
         foldingState()::getSetExpressionsCollapse,
         foldingState()::streamSpread,
         foldingState()::streamPredicates,
+    )
+
+    @Test
+    fun streamSpreadChainTestData() = testCase.runFoldingTest(
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::streamSpreadChain,
     )
 }
 

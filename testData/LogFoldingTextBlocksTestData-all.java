@@ -68,13 +68,13 @@ import java.util.Formatter;</fold>
         System.err.printf("Error scenario: User <fold text='$name' expand='false'>%s</fold> not found in <fold text='$city' expand='false'>%s</fold> and ignore new-line break%n"<fold text='' expand='false'>, name, city</fold>, "ignored");
 
         // 4. Formatter class
-        <fold text='val' expand='false'>Formatter</fold> formatter = new Formatter();
+        <fold text='val' expand='false'>Formatter</fold> formatter = <fold text='' expand='false'>new </fold>Formatter();
         formatter.format("User details - Name: <fold text='$name' expand='false'>%s</fold>, Age: <fold text='$age' expand='false'>%d</fold>, City: <fold text='$city' expand='false'>%s</fold>"<fold text='' expand='false'>, name, age, city</fold>);
         log.info("Formatter example: <fold text='${formatter.toString()}' expand='false'>{}</fold>"<fold text='' expand='false'>, formatter.toString()</fold>);
 
         // 5. PrintWriter with printf
         try <fold text='{...}' expand='true'>{
-            <fold text='val' expand='false'>PrintWriter</fold> writer = new PrintWriter(new File("log.txt"));
+            <fold text='val' expand='false'>PrintWriter</fold> writer = <fold text='' expand='false'>new </fold>PrintWriter(<fold text='' expand='false'>new </fold>File("log.txt"));
             writer.printf("Log entry: User <fold text='$name' expand='false'>%s</fold>, Age <fold text='$age' expand='false'>%d</fold>, accessed from <fold text='$city' expand='false'>%s</fold>"<fold text='' expand='false'>, name, age, city</fold>);
             writer.close();
         }</fold> catch <fold text='' expand='false'>(</fold>FileNotFoundException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{

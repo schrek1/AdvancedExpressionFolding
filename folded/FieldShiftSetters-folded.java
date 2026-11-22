@@ -63,7 +63,7 @@ public class FieldShiftSetters {
         result.username = source<<;
         result.userIdentifier = source<<;
         result.active = source<<;
-        result.list = List.copyOf(source<<);
+        result.list = List.copyOf(source.list);
         result.withUsername(source<<);
         result.withActive(source<<);
         result.withUserIdentifier(source<<);
@@ -88,7 +88,7 @@ public class FieldShiftSetters {
         var2.active = source<<;
         FieldShiftSetters result = new FieldShiftSetters();
         result.username = record.userIdentifier;
-        result.username = changer(record<<);
+        result.username = changer(record.username);
         result.username = source<<;
         result.username = var1.child<<;
         result.username = source.username + "1";

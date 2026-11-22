@@ -72,7 +72,7 @@ public class KotlinLambdaTestData {
     </fold>}</fold>
 
     Item firstOrCreate(Optional<Item> found, int price) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>found<fold text=' ?: ' expand='false'>.orElseGet(</fold>() -> new Item(Direction.IN, price, <fold text='[]' expand='false'>List.of()</fold>)<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>found<fold text=' ?: ' expand='false'>.orElseGet(</fold>() -> <fold text='' expand='false'>new </fold>Item(Direction.IN, price, <fold text='[]' expand='false'>List.of()</fold>)<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     <T> T withDefault(T fallback, Supplier<T> supplier)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

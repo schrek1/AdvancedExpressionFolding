@@ -2,7 +2,7 @@ package data;
 
 public class TypeCastTestData {
     public static void main(String[] args) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>TypeCastTestData</fold> t = new TypeCastTestData();
+        <fold text='val' expand='false'>TypeCastTestData</fold> t = <fold text='' expand='false'>new </fold>TypeCastTestData();
         if <fold text='' expand='false'>(</fold>t.<fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold> <fold text='is' expand='false'>instanceof</fold> TypeCastTestData &&
                 <fold text='' expand='false'>((TypeCastTestData) </fold>t.<fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold><fold text='.' expand='false'>).</fold><fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold> <fold text='is' expand='false'>instanceof</fold> TypeCastTestData<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 <fold text='' expand='false'>System.out.</fold>println(<fold text='' expand='false'>((TypeCastTestData) </fold><fold text='' expand='false'>((TypeCastTestData) </fold>t.<fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold><fold text='.' expand='false'>).</fold><fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold><fold text='.' expand='false'>).</fold><fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold>);

@@ -31,5 +31,5 @@ class TokenBuilder : BuildExpression<PsiJavaToken>(PsiJavaToken::class.java) {
 
 class KeywordBuilder : BuildExpression<PsiKeyword>(PsiKeyword::class.java) {
     override fun buildExpression(element: PsiKeyword, document: Document, synthetic: Boolean) =
-        PsiKeywordExt.createExpression(element)
+        PsiKeywordExt.createExpression(element, document)
 }
