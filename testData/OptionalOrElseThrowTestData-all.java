@@ -62,17 +62,17 @@ public class OptionalOrElseThrowTestData {
     }</fold>
 
     public Shape multiStatementBlock(String key) <fold text='{...}' expand='true'>{
-        return lookup(key).orElseThrow(() -> <fold text='{...}' expand='true'>{
+        return lookup(key).orElseThrow<fold text='' expand='false'>(() -></fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("missing <fold text='$' expand='false'>" + </fold>key<fold text='")' expand='false'>)</fold>;
             return new NotFoundException();
-        }</fold>);
+        }</fold><fold text='' expand='false'>)</fold>;
     }</fold>
 
     public Shape commentedBlock(String key) <fold text='{...}' expand='true'>{
-        return lookup(key).orElseThrow(() -> <fold text='{...}' expand='true'>{
+        return lookup(key).orElseThrow<fold text='' expand='false'>(() -></fold> <fold text='{...}' expand='true'>{
             // lookups by key are case-sensitive
             return new NotFoundException();
-        }</fold>);
+        }</fold><fold text='' expand='false'>)</fold>;
     }</fold>
 
     public Shape supplierVariable(String key, Supplier<NotFoundException> notFound) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
