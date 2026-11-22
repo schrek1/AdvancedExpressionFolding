@@ -48,8 +48,25 @@ public class OptionalOrElseThrowTestData {
         return lookup(key)!!;
     }
 
-    public Shape blockLambda(String key) {
+    public Shape singleReturnBlock(String key) {
+        return lookup(key) ?: throw NotFoundException();
+    }
+
+    public Shape singleReturnBlockState(String key) {
+        return lookup(key)
+                ?: error("No shape $key");
+    }
+
+    public Shape multiStatementBlock(String key) {
         return lookup(key).orElseThrow(() -> {
+            System.out.println("missing $key");
+            return new NotFoundException();
+        });
+    }
+
+    public Shape commentedBlock(String key) {
+        return lookup(key).orElseThrow(() -> {
+            // lookups by key are case-sensitive
             return new NotFoundException();
         });
     }
