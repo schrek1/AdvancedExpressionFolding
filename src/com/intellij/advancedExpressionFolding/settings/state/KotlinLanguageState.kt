@@ -25,6 +25,7 @@ interface IKotlinLanguageState {
     var repeatLoop: Boolean
     var lazyProperty: Boolean
     var kotlinWithLock: Boolean
+    var scopeLet: Boolean
     var kotlinIsOperator: Boolean
 }
 
@@ -53,5 +54,6 @@ data class KotlinLanguageState(
     override var repeatLoop: Boolean = true,
     override var lazyProperty: Boolean = true,
     override var kotlinWithLock: Boolean = true,
+    override var scopeLet: Boolean = true,
     override var kotlinIsOperator: Boolean = false,
 ) : IKotlinLanguageState
