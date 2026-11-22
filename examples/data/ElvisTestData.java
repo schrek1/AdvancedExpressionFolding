@@ -8,6 +8,8 @@ public class ElvisTestData {
         ElvisTestData e = create();
         System.out.println(e != null ? e : "");
         System.out.println(e != null ? e.sayHello() : "");
+        System.out.println(e != null ? e.sayHello() : null);
+        System.out.println(e == null ? null : e.sayHello());
         System.out.println(e == null ? "" : e); // Inverted Elvis should also fold to e ?: ""
         System.out.println(e != null && e.get() != null ? e.get() : ""); // Should be System.out.println(e?.get ?: "")
         System.out.println(e != null && e.get() != null ? e.get().sayHello() : ""); // Should be System.out.println(e?.get?.sayHello() ?: "")

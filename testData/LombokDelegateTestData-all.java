@@ -15,7 +15,7 @@ public class LombokDelegateTestData {
         </fold>}</fold></fold><fold text='' expand='false'>
 
         </fold><fold text='' expand='false'>public boolean isEmpty()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>items.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold></fold><fold text='' expand='false'>
 
         </fold><fold text='' expand='false'>public void add(String item)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -71,7 +71,7 @@ public class LombokDelegateTestData {
 
         public boolean isEmpty() <fold text='{...}' expand='true'>{
             // kept visible on purpose<fold text=' ' expand='true'>
-            </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+            </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>items.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
         </fold>}</fold>
 
         public boolean contains(Object item)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

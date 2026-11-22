@@ -3,10 +3,10 @@ package data;
 public class GetterSetterTestData {
     public static void main(String[] args) <fold text='{...}' expand='true'>{
         GetterSetterTestData d = new GetterSetterTestData();
-        d.<fold text='parent = ' expand='false'>setParent(</fold>d<fold text='' expand='false'>)</fold>;
-        d.<fold text='name = ' expand='false'>setName(</fold>"Hello"<fold text='' expand='false'>)</fold>;
-        d.<fold text='parent' expand='false'>getParent()</fold>.<fold text='name = ' expand='false'>setName(</fold>"Pum!"<fold text='' expand='false'>)</fold>;
-        System.out.println(d.<fold text='parent' expand='false'>getParent()</fold>.<fold text='name' expand='false'>getName()</fold>);
+        d.<fold text='p' expand='false'>setP</fold>arent<fold text=' = ' expand='false'>(</fold>d<fold text='' expand='false'>)</fold>;
+        d.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Hello"<fold text='' expand='false'>)</fold>;
+        d.<fold text='p' expand='false'>getP</fold>arent<fold text='' expand='false'>()</fold>.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Pum!"<fold text='' expand='false'>)</fold>;
+        System.out.println(d.<fold text='p' expand='false'>getP</fold>arent<fold text='' expand='false'>()</fold>.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold>);
     }</fold>
 
     private GetterSetterTestData parent;

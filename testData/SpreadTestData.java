@@ -34,7 +34,7 @@ public class SpreadTestData {
                 .map(it -> it.count()<fold text=' + ' expand='false'>+</fold>1)
                 .map(it -> <fold text='{...}' expand='true'>{
                     var z = 2;
-                    var max = Stream.of(data)<fold text='*.' expand='false'>.map(</fold><fold text='string()' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold>.max(Comparator.comparing(String::length))<fold text='?.' expand='false'>.map(</fold><fold text='length' expand='false'>String::length</fold><fold text='' expand='false'>)</fold>.stream()<fold text='*.' expand='false'>.map(</fold><fold text='class()' expand='false'>Object::getClass</fold><fold text='' expand='false'>)</fold>.findAny()<fold text='?.' expand='false'>.map(</fold><fold text='hashCode' expand='false'>Object::hashCode</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>1<fold text='' expand='false'>)</fold>;
+                    var max =<fold text=' listOfNotNull(' expand='false'> </fold>Stream.of(data)<fold text='*.' expand='false'>.map(</fold><fold text='string()' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold>.max(Comparator.comparing(String::length))<fold text='?.' expand='false'>.map(</fold><fold text='length' expand='false'>String::length</fold><fold text='' expand='false'>)</fold><fold text=')' expand='false'>.stream()</fold><fold text='*.' expand='false'>.map(</fold><fold text='class()' expand='false'>Object::getClass</fold><fold text='' expand='false'>)</fold>.findAny()<fold text='?.' expand='false'>.map(</fold><fold text='hashCode' expand='false'>Object::hashCode</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>1<fold text='' expand='false'>)</fold>;
                     return new BigDecimal(it + z + max);
                 }</fold>)
                 .map(it -> Stream.iterate(it, BigDecimal::plus))
@@ -43,7 +43,7 @@ public class SpreadTestData {
                 .map(</fold><fold text='ok()' expand='false'>Data::isOk</fold><fold text='' expand='false'>)</fold>
                 .toList();
 
-        var p = methodStream(data).toList()<fold text='.' expand='false'>.stream().</fold>min(Comparator.comparing(Data::isOk)).stream().min(Comparator.comparing(Data::getString))<fold text='?.' expand='false'>.map(</fold><fold text='string' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>"string1"<fold text='' expand='false'>)</fold>;
+        var p =<fold text=' listOfNotNull(' expand='false'> </fold>methodStream(data).toList()<fold text='.' expand='false'>.stream().</fold>min(Comparator.comparing(Data::isOk))<fold text=')' expand='false'>.stream()</fold>.min(Comparator.comparing(Data::getString))<fold text='?.' expand='false'>.map(</fold><fold text='string' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>"string1"<fold text='' expand='false'>)</fold>;
 
 
         var o1 = stream.map(Data::new).filter(Data.class::isInstance).map(Data.class::cast);
@@ -87,10 +87,10 @@ public class SpreadTestData {
                 </fold>return <fold text='' expand='false'>Optional.ofNullable(</fold>data<fold text='' expand='false'>)</fold>;<fold text=' }' expand='false'>
         }</fold>
         public Stream<Data> getDataStream()<fold text=' { ' expand='false'> {
-                </fold>return <fold text='' expand='false'>Optional.ofNullable(</fold>data<fold text='' expand='false'>)</fold>.stream();<fold text=' }' expand='false'>
+                </fold>return <fold text='listOfNotNull(' expand='false'>Optional.ofNullable(</fold>data<fold text='' expand='false'>)</fold><fold text=')' expand='false'>.stream()</fold>;<fold text=' }' expand='false'>
         }</fold>
         public List<Data> getDataList()<fold text=' { ' expand='false'> {
-                </fold>return <fold text='' expand='false'>Optional.ofNullable(</fold>data<fold text='' expand='false'>)</fold>.stream().toList();<fold text=' }' expand='false'>
+                </fold>return <fold text='listOfNotNull(' expand='false'>Optional.ofNullable(</fold>data<fold text='' expand='false'>)</fold><fold text=')' expand='false'>.stream()</fold>.toList();<fold text=' }' expand='false'>
         }</fold>
     }</fold>
 }

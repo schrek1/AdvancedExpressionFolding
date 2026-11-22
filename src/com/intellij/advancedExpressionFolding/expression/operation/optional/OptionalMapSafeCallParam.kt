@@ -22,7 +22,7 @@ class OptionalMapSafeCallParam(
     ): Array<FoldingDescriptor> {
         val group = FoldingGroup.newGroup(OptionalMapSafeCallParam::class.java.name)
         val descriptors = ArrayList<FoldingDescriptor>()
-        descriptors.add(FoldingDescriptor(element.node, element.textRange, group, string))
+        descriptors.add(FoldingDescriptor(element.node, textRange, group, string))
         return descriptors.toTypedArray()
     }
 

@@ -26,7 +26,8 @@ public class OptionalTestData {
 
         o = opt.map(Data::new).filter(Data.class::isInstance).map(Data.class::cast);
 
-        o = data!!.data?.data
+        o = data!!.map(Data::data)
+                .map(Data::data)
                 .filter(it -> it.ok)
                 .map(Function.identity())?.ok
                 .map(it -> !it).map(it -> {
@@ -38,14 +39,23 @@ public class OptionalTestData {
 
         data!!.flatMap(this::ofNullable).map(data::getDataMethod) ?: () -> getOutsideData(data);
 
-        o = Optional.<Data>empty()?.data.stream()*.data().filterNotNull().findAny()?.string!!;
+        o = listOfNotNull(Optional.<Data>empty()?.data)*.data().filterNotNull().findAny()?.string!!;
 
         o = opt?.data ?: null;
 
-        o = Optional.<Data>empty()?.data.stream()*.data().filterNotNull().findAny()?.string!!;
+        o = listOfNotNull(Optional.<Data>empty()?.data)*.data().filterNotNull().findAny()?.string!!;
 
         Stream.of(data)*.data().filterNotNull();
         Stream.of(data)*.data().filterNotNull()*.data().findFirst()!!;
+
+        o = listOfNotNull(opt?.data);
+        o = listOfNotNull(opt);
+        o = listOfNotNull(dataNull?.data);
+        o = Stream.of(opt).flatMap(it -> listOfNotNull(it?.data));
+        o = opt.map(Data::data).map(Data::string).isPresent();
+        o = opt.map(Data::data).isEmpty();
+        opt.map(Data::data).ifPresent(System.out::println);
+        o = opt.map(Data::data).filter(Data::isOk);
     }
 
     private Data orElseGetReturn() {

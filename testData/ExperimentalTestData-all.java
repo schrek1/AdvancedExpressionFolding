@@ -15,7 +15,7 @@ public class ExperimentalTestData {
 
         <fold text='@SneakyThrows p' expand='true'>p</fold>ublic String utf8ToStringMultiline(byte[] bytes) <fold text='{...}' expand='true'>{
             <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
-                </fold><fold text='val' expand='false'>byte[]</fold> bytez = System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>;
+                </fold><fold text='val' expand='false'>byte[]</fold> bytez = System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='b' expand='false'>getB</fold>ytes<fold text='' expand='false'>()</fold>;
             <fold text='' expand='true'>    </fold>return new String(bytez, "UTF-8");<fold text='' expand='true'>
             </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>UnsupportedEncodingException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 throw new RuntimeException(e);
@@ -53,7 +53,7 @@ public class ExperimentalTestData {
 
         <fold text='@SneakyThrows p' expand='true'>p</fold>ublic String utf8ToString(byte[] bytes) <fold text='{...}' expand='true'>{
             <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
-                </fold>return new String(System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='bytes' expand='false'>getBytes()</fold>, "UTF-8");<fold text='' expand='true'>
+                </fold>return new String(System<fold text='[' expand='false'>.getProperty(</fold>"sort-desc"<fold text=']' expand='false'>)</fold>.<fold text='b' expand='false'>getB</fold>ytes<fold text='' expand='false'>()</fold>, "UTF-8");<fold text='' expand='true'>
             </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>UnsupportedEncodingException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 throw new RuntimeException(e);
             }</fold></fold>
@@ -117,10 +117,10 @@ public class ExperimentalTestData {
 
         void demo() <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>NamelessAccessorExample</fold> example = new NamelessAccessorExample();
-            example.<fold text='!! = ' expand='false'>set(</fold>"ok"<fold text='' expand='false'>)</fold>;
+            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>"ok"<fold text='' expand='false'>)</fold>;
             <fold text='val' expand='false'>String</fold> current = example.<fold text='!!' expand='false'>get()</fold>;
-            <fold text='' expand='false'>System.out.</fold>println(example.<fold text='!!' expand='false'>get()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>);
-            example.<fold text='!! = ' expand='false'>set(</fold>example.<fold text='!!' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
+            <fold text='' expand='false'>System.out.</fold>println(example.<fold text='!!' expand='false'>get()</fold>.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>);
+            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>example.<fold text='!!' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
             <fold text='val' expand='false'>String</fold> duplicate = example.<fold text='!!' expand='false'>get()</fold> + example.<fold text='!!' expand='false'>get()</fold>;
         }</fold>
     }</fold>
