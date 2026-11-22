@@ -5,24 +5,24 @@ public class IfNullSafeData {
     public void enter(Data data) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>User</fold> user = null;
         <fold text='val' expand='false'>var</fold> threeChains = data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold> != null
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold> != null
                 && data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold> != null
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold> != null
                 && data != null
                 && data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>;
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>;
 
-        <fold text='val' expand='false'>var</fold> notChain = data != null && !data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='active' expand='false'>isActive()</fold>;
-        <fold text='val' expand='false'>var</fold> chain = data<fold text='?' expand='false'> != null && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null && data.<fold text='data1' expand='false'>getData1()</fold></fold>.<fold text='data4' expand='false'>getData4()</fold> != null;
+        <fold text='val' expand='false'>var</fold> notChain = data != null && !data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold>;
+        <fold text='val' expand='false'>var</fold> chain = data<fold text='?' expand='false'> != null && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata4<fold text='' expand='false'>()</fold> != null;
 
-        if <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null &&
-                data.<fold text='data1' expand='false'>getData1()</fold></fold>.<fold text='data2' expand='false'>getData2()</fold><fold text='?' expand='false'> != null && data.<fold text='data1' expand='false'>getData1()</fold>.
-                <fold text='data2' expand='false'>getData2()</fold>
-                </fold>.<fold text='data3' expand='false'>getData3()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null &&
+                data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.
+                <fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold>
+                </fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("data?.data1?.data2?.data3 != null");
         }</fold>
-        if <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold>.<fold text='data1' expand='false'>getData1()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("data?.data1 != null");
         }</fold>
         <fold text='println(user?.profile?.name);' expand='false'>if (user != null
@@ -31,46 +31,46 @@ public class IfNullSafeData {
             System.out.println(user.getProfile().getName());
         }</fold></fold>
         if <fold text='' expand='false'>(</fold>user<fold text='?' expand='false'> != null
-                && user</fold>.<fold text='profile' expand='false'>getProfile()</fold><fold text='?' expand='false'> != null
-                && user.<fold text='profile' expand='false'>getProfile()</fold></fold>.<fold text='name' expand='false'>getName()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println("Name: <fold text='${' expand='false'>" + </fold>user.<fold text='profile' expand='false'>getProfile()</fold>.<fold text='name}"' expand='false'>getName()</fold>);
+                && user</fold>.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && user.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold></fold>.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            <fold text='' expand='false'>System.out.</fold>println("Name: <fold text='${' expand='false'>" + </fold>user.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold>.<fold text='n' expand='false'>getN</fold>ame<fold text='}"' expand='false'>()</fold>);
         }</fold>
         if <fold text='' expand='false'>(</fold>user<fold text='?' expand='false'> != null
-                && user</fold>.<fold text='profile' expand='false'>getProfile()</fold><fold text='?' expand='false'> != null
-                && user.<fold text='profile' expand='false'>getProfile()</fold></fold>.<fold text='name' expand='false'>getName()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(user.<fold text='profile' expand='false'>getProfile()</fold>.<fold text='name' expand='false'>getName()</fold>.trim());
+                && user</fold>.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && user.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold></fold>.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            <fold text='' expand='false'>System.out.</fold>println(user.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold>.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold>.trim());
         }</fold>
-        if <fold text='' expand='false'>(</fold>user.<fold text='profile' expand='false'>getProfile()</fold> != null
+        if <fold text='' expand='false'>(</fold>user.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold> != null
                 && user != null
-                && user.<fold text='profile' expand='false'>getProfile()</fold>.<fold text='name' expand='false'>getName()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            <fold text='' expand='false'>System.out.</fold>println(user.<fold text='profile' expand='false'>getProfile()</fold>.<fold text='name' expand='false'>getName()</fold>);
+                && user.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold>.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold> != null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            <fold text='' expand='false'>System.out.</fold>println(user.<fold text='p' expand='false'>getP</fold>rofile<fold text='' expand='false'>()</fold>.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold>);
         }</fold>
-        if <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("data?.active == true");
         }</fold>
         if <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold></fold>.<fold text='data2' expand='false'>getData2()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold></fold>.<fold text='data3' expand='false'>getData3()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold>.<fold text='data3' expand='false'>getData3()</fold></fold>.<fold text='data4' expand='false'>getData4()</fold> != null
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata4<fold text='' expand='false'>()</fold> != null
                 && data != null
                 && data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null
-                && !data.<fold text='data1' expand='false'>getData1()</fold></fold><fold text='.active == false' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && !data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold><fold text='.active == false' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>
         <fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("2chainz");
         }</fold>
         <fold text='val' expand='false'>boolean</fold> has = data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold></fold>.<fold text='data2' expand='false'>getData2()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold></fold>.<fold text='data3' expand='false'>getData3()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold>.<fold text='data3' expand='false'>getData3()</fold></fold>.<fold text='data4' expand='false'>getData4()</fold> != null;
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold></fold>.<fold text='d' expand='false'>getD</fold>ata4<fold text='' expand='false'>()</fold> != null;
         var active = data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>;
-        <fold text='val' expand='false'>var</fold> inactive = data<fold text='?' expand='false'> != null && !data</fold><fold text='.active == false' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>;
-        while <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold>.<fold text='data2' expand='false'>getData2()</fold><fold text='?' expand='false'> != null && !data.<fold text='data2' expand='false'>getData2()</fold></fold><fold text='.active == false' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            active = !data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='active' expand='false'>isActive()</fold>;
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>;
+        <fold text='val' expand='false'>var</fold> inactive = data<fold text='?' expand='false'> != null && !data</fold><fold text='.active == false' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>;
+        while <fold text='' expand='false'>(</fold>data<fold text='?' expand='false'> != null && data</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null && !data.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold></fold><fold text='.active == false' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            active = !data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold>;
         }</fold>
     }</fold>
 
@@ -91,18 +91,18 @@ public class IfNullSafeData {
     public void checkConditions(Data data, boolean flag) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>(flag
                 || data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data1' expand='false'>getData1()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>)
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>)
 
                 && (data<fold text='?' expand='false'> != null
-                && data</fold>.<fold text='data2' expand='false'>getData2()</fold><fold text='?' expand='false'> != null
-                && data.<fold text='data2' expand='false'>getData2()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold> ||
+                && data</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                && data.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold> ||
 
                 data<fold text='?' expand='false'> != null
-                        && data</fold>.<fold text='data3' expand='false'>getData3()</fold><fold text='?' expand='false'> != null
-                        && data.<fold text='data3' expand='false'>getData3()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>
-                        && data.<fold text='data3' expand='false'>getData3()</fold>.<fold text='data4' expand='false'>getData4()</fold><fold text='?' expand='false'> != null
-                        && data.<fold text='data3' expand='false'>getData3()</fold>.<fold text='data4' expand='false'>getData4()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>) ||
+                        && data</fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                        && data.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>
+                        && data.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata4<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null
+                        && data.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata4<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>) ||
 
                 (data<fold text='?' expand='false'> != null
                         && data</fold>.getData5()<fold text='?' expand='false'> != null
@@ -110,27 +110,27 @@ public class IfNullSafeData {
                         (flag && flag || flag &&
 
                                 data<fold text='?' expand='false'> != null &&
-                                data</fold>.<fold text='data6' expand='false'>getData6()</fold><fold text='?' expand='false'> != null &&
-                                data.<fold text='data6' expand='false'>getData6()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold>)<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+                                data</fold>.<fold text='d' expand='false'>getD</fold>ata6<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null &&
+                                data.<fold text='d' expand='false'>getD</fold>ata6<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>)<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("Conditions met!");
         }</fold>
     }</fold>
 
     public void notFullRoll(Data data) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>Data</fold> data2 = data;
-        if <fold text='' expand='false'>(</fold>data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold>.<fold text='data3' expand='false'>getData3()</fold><fold text='?' expand='false'> != null &&
-                data.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold>.<fold text='data3' expand='false'>getData3()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold><fold text='' expand='false'>)</fold> {
+        if <fold text='' expand='false'>(</fold>data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null &&
+                data.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata3<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold><fold text='' expand='false'>)</fold> {
 
         }
 
-        if <fold text='' expand='false'>(</fold>data2.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold><fold text='?' expand='false'> != null &&
-                data2.<fold text='data1' expand='false'>getData1()</fold>.<fold text='data2' expand='false'>getData2()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold><fold text='' expand='false'>)</fold> {
+        if <fold text='' expand='false'>(</fold>data2.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null &&
+                data2.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold>.<fold text='d' expand='false'>getD</fold>ata2<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold><fold text='' expand='false'>)</fold> {
 
         }
 
 
-        if <fold text='' expand='false'>(</fold>data2.<fold text='data1' expand='false'>getData1()</fold><fold text='?' expand='false'> != null &&
-                data2.<fold text='data1' expand='false'>getData1()</fold></fold><fold text='.active == true' expand='false'>.<fold text='active' expand='false'>isActive()</fold></fold><fold text='' expand='false'>)</fold> {
+        if <fold text='' expand='false'>(</fold>data2.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold><fold text='?' expand='false'> != null &&
+                data2.<fold text='d' expand='false'>getD</fold>ata1<fold text='' expand='false'>()</fold></fold><fold text='.active == true' expand='false'>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold><fold text='' expand='false'>)</fold> {
 
         }
     }</fold>

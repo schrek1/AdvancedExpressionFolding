@@ -22,11 +22,11 @@ package data;
                 .active(source<fold text='<<' expand='false'>.isActive()</fold>);
         return FieldShiftBuilder.builder().username(record.<fold text='userIdentifier' expand='false'>userIdentifier()</fold>).username(changer(record.<fold text='username' expand='false'>username()</fold>))
                 .username(source<fold text='<<' expand='false'>.getUsername()</fold>).username(builder.username("a").build()<fold text='<<' expand='false'>.getUsername()</fold>)
-                .username<fold text='("${' expand='false'>(</fold>source.<fold text='username' expand='false'>getUsername()</fold><fold text='}' expand='false'> + "</fold>1")
+                .username<fold text='("${' expand='false'>(</fold>source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold><fold text='}' expand='false'> + "</fold>1")
                 .active(source<fold text='<<' expand='false'>.isActive()</fold>).userIdentifier(source<fold text='<<' expand='false'>.getUserIdentifier()</fold>)
                 .child(FieldShiftBuilder<fold text='(' expand='false'>.builder()</fold>
                     <fold text='' expand='false'>    .</fold>child<fold text=' = ' expand='false'>(</fold>builder1
-                                .userIdentifier(source.<fold text='username' expand='false'>getUsername()</fold>)
+                                .userIdentifier(source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold>)
                                 .username(source<fold text='<<' expand='false'>.getUsername()</fold>)
                                 .build()<fold text='<<' expand='false'>.getChild()</fold><fold text=',' expand='false'>)</fold>
                     <fold text='' expand='false'>    .</fold>active<fold text=' = ' expand='false'>(</fold>builder.build()<fold text='<<' expand='false'>.isActive()</fold><fold text=',' expand='false'>)</fold>

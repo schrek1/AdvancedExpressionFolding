@@ -46,13 +46,13 @@ public class NullOrEmptyTestData {
     }</fold>
 
     public void notFolded(String name, String other, List<String> items, NullOrEmptyTestData data) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>boolean</fold> mixedVariables = name == null || other.<fold text='empty' expand='false'>isEmpty()</fold>;
-        <fold text='val' expand='false'>boolean</fold> wrongOperator = name == null && name.<fold text='empty' expand='false'>isEmpty()</fold>;
-        <fold text='val' expand='false'>boolean</fold> missingNegation = items<fold text='?' expand='false'> != null && items</fold><fold text='.empty == true' expand='false'>.<fold text='empty' expand='false'>isEmpty()</fold></fold>;
-        <fold text='val' expand='false'>boolean</fold> callReceiver = data.<fold text='title' expand='false'>getTitle()</fold> == null || data.<fold text='title' expand='false'>getTitle()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>;
-        <fold text='val' expand='false'>boolean</fold> otherObjectField = data.title == null || data.title.<fold text='empty' expand='false'>isEmpty()</fold>;
+        <fold text='val' expand='false'>boolean</fold> mixedVariables = name == null || other.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>;
+        <fold text='val' expand='false'>boolean</fold> wrongOperator = name == null && name.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>;
+        <fold text='val' expand='false'>boolean</fold> missingNegation = items<fold text='?' expand='false'> != null && items</fold><fold text='.empty == true' expand='false'>.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold></fold>;
+        <fold text='val' expand='false'>boolean</fold> callReceiver = data.<fold text='t' expand='false'>getT</fold>itle<fold text='' expand='false'>()</fold> == null || data.<fold text='t' expand='false'>getT</fold>itle<fold text='' expand='false'>()</fold>.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>;
+        <fold text='val' expand='false'>boolean</fold> otherObjectField = data.title == null || data.title.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>;
         <fold text='val' expand='false'>boolean</fold> notZero = items == null || items.size() == 1;
-        <fold text='val' expand='false'>boolean</fold> reversedOrder = name.<fold text='empty' expand='false'>isEmpty()</fold> || name == null;
+        <fold text='val' expand='false'>boolean</fold> reversedOrder = name.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold> || name == null;
     }</fold>
 
     public void utilityChecks(String name, List<String> items, Map<String, Integer> stock, Object[] codes) <fold text='{...}' expand='true'>{
@@ -62,7 +62,7 @@ public class NullOrEmptyTestData {
         if <fold text='' expand='false'>(</fold><fold text='' expand='false'>StringUtils.isNotEmpty(</fold>name<fold text='.isNotEmpty()' expand='false'>)</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(name);
         }</fold>
-        <fold text='val' expand='false'>boolean</fold> noTitle = <fold text='' expand='false'>StringUtils.isEmpty(</fold><fold text='title' expand='false'>getTitle()</fold><fold text='.isNullOrEmpty()' expand='false'>)</fold>;
+        <fold text='val' expand='false'>boolean</fold> noTitle = <fold text='' expand='false'>StringUtils.isEmpty(</fold><fold text='t' expand='false'>getT</fold>itle<fold text='' expand='false'>()</fold><fold text='.isNullOrEmpty()' expand='false'>)</fold>;
         <fold text='val' expand='false'>boolean</fold> hasItems = <fold text='' expand='false'>CollectionUtils.isNotEmpty(</fold>items<fold text='.isNotEmpty()' expand='false'>)</fold>;
         <fold text='val' expand='false'>boolean</fold> anyItems = <fold text='' expand='false'>!CollectionUtils.isEmpty(</fold>items<fold text='.isNotEmpty()' expand='false'>)</fold>;
         <fold text='val' expand='false'>boolean</fold> noStock = <fold text='' expand='false'>org.apache.commons.collections4.MapUtils.isEmpty(</fold>stock<fold text='.isNullOrEmpty()' expand='false'>)</fold>;
@@ -83,7 +83,7 @@ public class NullOrEmptyTestData {
 
     static class MapUtils <fold text='{...}' expand='true'>{
         static boolean isEmpty(List<String> values)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>values.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>values.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 }
