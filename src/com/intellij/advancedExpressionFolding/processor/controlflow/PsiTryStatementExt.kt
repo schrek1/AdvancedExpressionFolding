@@ -36,7 +36,7 @@ object PsiTryStatementExt : BaseExtension() {
 
         // The lock and the call's own `)` stay real text; a fold cannot be zero-width, so `withLock(` borrows the last indent space.
         return exprList(
-            indent.exprOnLastChar("withLock("),
+            indent.expr(" withLock(", textRange = indent.trailingCharsRange(1)),
             lockStatement.exprHide(textRange = TextRange(lockReceiver.textRange.endOffset, lockCallEnd - 1)),
             lockStatement.exprHide(textRange = TextRange(lockCallEnd, lockStatement.textRange.endOffset)),
             whiteSpace.exprHide(),
