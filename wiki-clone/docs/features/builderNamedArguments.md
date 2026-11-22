@@ -30,6 +30,11 @@ builder field of the same name, then `build()`. A chain with any other call (`gr
 without `build()`, or without any field (`Person.builder().build()`) stays as it is. Argument values keep their own
 foldings, so a nested builder folds too: `manager = Person(name = "Frank")`.
 
+Builders whose methods carry a `set` prefix (Lombok `setterPrefix = "set"`, hand-written builders) fold the same
+way: `Order.builder().setNote("gift").build()` shows as `Order(note = "gift")`. Only `set` and the first letter are
+hidden; the rest of the name stays real text. Every call in the chain must have the prefix and the built class must
+have a field for each property; a chain mixing `setId(7)` with `note("gift")` stays as it is.
+
 Default: On
 Controlled by: `builderNamedArguments`
 Related features: `fieldShift`, `lombok`
