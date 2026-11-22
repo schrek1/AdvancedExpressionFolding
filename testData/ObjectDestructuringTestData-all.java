@@ -26,7 +26,7 @@ public class ObjectDestructuringTestData {
     }</fold>
 
     public void castBeforeAccessors(Object o) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>o instanceof Order<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>o <fold text='is' expand='false'>instanceof</fold> Order<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>Order</fold> order = <fold text='' expand='false'>(Order) </fold>o;
             <fold text='val' expand='false'>String</fold> customer = order.<fold text='customer' expand='false'>customer()</fold>;
             <fold text='val' expand='false'>BigDecimal</fold> total = order.<fold text='total' expand='false'>total()</fold>;
