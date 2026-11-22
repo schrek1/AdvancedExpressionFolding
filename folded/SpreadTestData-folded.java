@@ -28,7 +28,7 @@ public class SpreadTestData {
                 .map(it -> it.count() + 1)
                 .map(it -> {
                     var z = 2;
-                    var max = Stream.of(data)*.string().max(Comparator.comparing(String::length))?.length.stream()*.class().findAny()?.hashCode ?: 1;
+                    var max = listOfNotNull(Stream.of(data)*.string().max(Comparator.comparing(String::length))?.length)*.class().findAny()?.hashCode ?: 1;
                     return new BigDecimal(it + z + max);
                 })
                 .map(it -> Stream.iterate(it, BigDecimal::plus))
@@ -36,7 +36,7 @@ public class SpreadTestData {
                 .flatMap(Function.identity())*.ok()
                 .toList();
 
-        var p = methodStream(data).toList().min(Comparator.comparing(Data::isOk)).stream().min(Comparator.comparing(Data::getString))?.string ?: "string1";
+        var p = listOfNotNull(methodStream(data).toList().min(Comparator.comparing(Data::isOk))).min(Comparator.comparing(Data::getString))?.string ?: "string1";
 
 
         var o1 = stream.map(Data::new).filter(Data.class::isInstance).map(Data.class::cast);
@@ -80,10 +80,10 @@ public class SpreadTestData {
                 return data;
         }
         public Stream<Data> getDataStream() {
-                return data.stream();
+                return listOfNotNull(data);
         }
         public List<Data> getDataList() {
-                return data.stream().toList();
+                return listOfNotNull(data).toList();
         }
     }
 }

@@ -17,7 +17,7 @@ import java.util.Set;</fold>
         <fold text='val' expand='false'>String</fold> csv = <fold text='' expand='false'>String.join(", ", </fold>names<fold text='.joinToString(", ")' expand='false'>)</fold>;
         <fold text='val' expand='false'>String</fold> tagLine = <fold text='' expand='false'>String.join(SEPARATOR, </fold>tags<fold text='.joinToString(SEPARATOR)' expand='false'>)</fold>;
         <fold text='val' expand='false'>String</fold> path = <fold text='' expand='false'>String.join("/", </fold>parts<fold text='.joinToString("/")' expand='false'>)</fold>;
-        <fold text='val' expand='false'>String</fold> fromGetter = <fold text='' expand='false'>String.join(", ", </fold><fold text='names' expand='false'>getNames()</fold><fold text='.joinToString(", ")' expand='false'>)</fold>;
+        <fold text='val' expand='false'>String</fold> fromGetter = <fold text='' expand='false'>String.join(", ", </fold><fold text='n' expand='false'>getN</fold>ames<fold text='' expand='false'>()</fold><fold text='.joinToString(", ")' expand='false'>)</fold>;
         <fold text='val' expand='false'>String</fold> fromIndex = <fold text='' expand='false'>String.join(";", </fold>rows<fold text='.getFirst' expand='false'>.get</fold>(<fold text='' expand='false'>0</fold>)<fold text='.joinToString(";")' expand='false'>)</fold>;
         <fold text='val' expand='false'>String</fold> fromArrayElement = <fold text='' expand='false'>String.join("-", </fold>table[0]<fold text='.joinToString("-")' expand='false'>)</fold>;
         <fold text='val' expand='false'>String</fold> nested = "Names: <fold text='${' expand='false'>" + </fold><fold text='' expand='false'>String.join(", ", </fold>names<fold text='.joinToString(", ")}"' expand='false'>)</fold>;

@@ -21,18 +21,18 @@ public class GuardIfOneLinerTestData {
         if <fold text='' expand='false'>(</fold>size > 10<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return true;<fold text='' expand='false'>
         }</fold></fold>
-        return name.<fold text='empty' expand='false'>isEmpty()</fold>;
+        return name.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>;
     }</fold>
 
     int numberGuard(List<String> items) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>items.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return -1;<fold text='' expand='false'>
         }</fold></fold>
         return items.size();
     }</fold>
 
     String stringGuard(String name) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>name.<fold text='blank' expand='false'>isBlank()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>name.<fold text='b' expand='false'>isB</fold>lank<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "unknown";<fold text='' expand='false'>
         }</fold></fold>
         return name;
@@ -79,14 +79,14 @@ public class GuardIfOneLinerTestData {
     }</fold>
 
     List<String> callIsNotSimple(List<String> items) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>items.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return defaultItems("shop", 3);
         }</fold>
         return items;
     }</fold>
 
     List<String> moreThanOneStatement(List<String> items) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>items.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>items.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("empty");
             return <fold text='[]' expand='false'>List.of()</fold>;
         }</fold>
