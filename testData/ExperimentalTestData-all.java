@@ -117,10 +117,10 @@ public class ExperimentalTestData {
 
         void demo() <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>NamelessAccessorExample</fold> example = new NamelessAccessorExample();
-            example.<fold text='!! = ' expand='false'>set(</fold>"ok"<fold text='' expand='false'>)</fold>;
+            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>"ok"<fold text='' expand='false'>)</fold>;
             <fold text='val' expand='false'>String</fold> current = example.<fold text='!!' expand='false'>get()</fold>;
             <fold text='' expand='false'>System.out.</fold>println(example.<fold text='!!' expand='false'>get()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>);
-            example.<fold text='!! = ' expand='false'>set(</fold>example.<fold text='!!' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
+            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>example.<fold text='!!' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
             <fold text='val' expand='false'>String</fold> duplicate = example.<fold text='!!' expand='false'>get()</fold> + example.<fold text='!!' expand='false'>get()</fold>;
         }</fold>
     }</fold>

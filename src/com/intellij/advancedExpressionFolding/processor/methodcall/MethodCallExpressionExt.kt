@@ -182,6 +182,7 @@ object MethodCallExpressionExt :
                 element,
                 element.textRange,
                 TextRange.create(identifier.textRange.startOffset, element.textRange.endOffset),
+                text,
                 qualifierExpression,
                 propertyName,
                 paramExpression
