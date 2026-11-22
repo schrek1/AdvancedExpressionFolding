@@ -236,7 +236,7 @@ public class EmojifyTestData {
 
     public class LambdaExpressionUsage <fold text='{...}' expand='true'>{
         public java.util.function.IntBinaryOperator getAdder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>(a, b) -> a + b<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='{ ' expand='false'>(</fold>a, b<fold text='' expand='false'>)</fold> -> a + b<fold text=' }' expand='false'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
@@ -266,9 +266,9 @@ public class EmojifyTestData {
 
     public class ForEachMethodUsage <fold text='{...}' expand='true'>{
         public void printList(java.util.List<String> list) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-            </fold>list.forEach(item -> <fold text='{...}' expand='true'>{
-                <fold text='val' expand='false'>int</fold> length = item.length();
-            }</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+            </fold>list.forEach<fold text='' expand='false'>(item -></fold> <fold text='{...}' expand='true'>{
+                <fold text='val' expand='false'>int</fold> length = <fold text='it' expand='false'>item</fold>.length();
+            }</fold><fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
         </fold>}</fold>
     }</fold>
 
@@ -489,11 +489,11 @@ public class EmojifyTestData {
             </fold>}</fold>
 
             public void methodWithNullInSupplier()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='val' expand='false'>java.util.function.Supplier<String></fold> supplier = () -> null;<fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='val' expand='false'>java.util.function.Supplier<String></fold> supplier = <fold text='{' expand='false'>() -></fold> null<fold text=' };' expand='false'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
 
             public void methodWithNullInLambda() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-                </fold><fold text='val' expand='false'>java.util.function.Function<String, String></fold> function = input -> null;<fold text=' ' expand='true'>
+                </fold><fold text='val' expand='false'>java.util.function.Function<String, String></fold> function = <fold text='{' expand='false'>input -></fold> null<fold text=' };' expand='false'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
 
             public void methodWithNullInMethodReference() <fold text='{...}' expand='true'>{

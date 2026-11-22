@@ -98,6 +98,6 @@ public class KotlinPreconditionsTestData {
         }</fold> else <fold text='{...}' expand='true'>{
             connected = true;
         }</fold>
-        Objects.requireNonNull(order, () -> "order");
+        Objects.requireNonNull(order<fold text=')' expand='false'>,</fold> <fold text='{' expand='false'>() -></fold> "order"<fold text=' }' expand='false'>)</fold>;
     }</fold>
 }
