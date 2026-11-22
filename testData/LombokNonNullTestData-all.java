@@ -46,7 +46,7 @@ public class LombokNonNullTestData {
     public void notFoldedChecks(String order, String address) <fold text='{...}' expand='true'>{
         <fold text='requireNotNull' expand='false'>Objects.requireNonNull</fold>(customer<fold text=') { ' expand='false'>, </fold>"customer"<fold text=' }' expand='false'>)</fold>;
         Objects.requireNonNull(order<fold text=')' expand='false'>,</fold> <fold text='{' expand='false'>() -></fold> "order"<fold text=' }' expand='false'>)</fold>;
-        <fold text='requireNotNull' expand='false'>Objects.requireNonNull</fold>(address);
+        <fold text='' expand='false'>Objects.requireNonNull(</fold>address<fold text='!!' expand='false'>)</fold>;
     }</fold>
 
     public void onlyFirstCheckOfParameter<fold text='(@NonNull ' expand='true'>(</fold>String order) <fold text='{...}' expand='true'>{<fold text='' expand='true'>

@@ -158,7 +158,7 @@ Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact
 
 ## kotlinPreconditions
 ### Preconditions as Kotlin require, check, requireNotNull and error
-Shows argument and state checks the way Kotlin writes them: an `if` whose whole body throws `IllegalArgumentException` becomes `require(...)`, one that throws `IllegalStateException` becomes `check(...)`, any other `throw new IllegalStateException(message)` becomes `error(message)`, and `Objects.requireNonNull` becomes `requireNotNull`. Takes precedence over the Asserts folding for these two exceptions.
+Shows argument and state checks the way Kotlin writes them: an `if` whose whole body throws `IllegalArgumentException` becomes `require(...)`, one that throws `IllegalStateException` becomes `check(...)`, any other `throw new IllegalStateException(message)` becomes `error(message)`, and `Objects.requireNonNull(x)` becomes `x!!` (with a message: `requireNotNull(x) { message }`). Takes precedence over the Asserts folding for these two exceptions.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinPreconditionsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinPreconditionsTestData-folded.java)
 
