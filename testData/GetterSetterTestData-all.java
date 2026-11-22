@@ -2,7 +2,7 @@ package data;
 
 <fold text='@Getter @Setter p' expand='false'>p</fold>ublic class GetterSetterTestData {
     public static void main(String[] args) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>GetterSetterTestData</fold> d = new GetterSetterTestData();
+        <fold text='val' expand='false'>GetterSetterTestData</fold> d = <fold text='' expand='false'>new </fold>GetterSetterTestData();
         d.<fold text='parent = ' expand='false'>setParent(</fold>d<fold text='' expand='false'>)</fold>;
         d.<fold text='name = ' expand='false'>setName(</fold>"Hello"<fold text='' expand='false'>)</fold>;
         d.<fold text='parent' expand='false'>getParent()</fold>.<fold text='name = ' expand='false'>setName(</fold>"Pum!"<fold text='' expand='false'>)</fold>;

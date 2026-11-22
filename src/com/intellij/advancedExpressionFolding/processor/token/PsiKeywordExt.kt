@@ -5,24 +5,47 @@ import com.intellij.advancedExpressionFolding.processor.expr
 import com.intellij.advancedExpressionFolding.processor.exprHide
 import com.intellij.advancedExpressionFolding.processor.exprList
 import com.intellij.advancedExpressionFolding.processor.exprWrap
+import com.intellij.advancedExpressionFolding.processor.language.java.ConstructorReferenceExt
 import com.intellij.advancedExpressionFolding.processor.nextWhiteSpace
 import com.intellij.advancedExpressionFolding.processor.prevWhiteSpace
 import com.intellij.advancedExpressionFolding.processor.takeIfTrue
 import com.intellij.advancedExpressionFolding.processor.util.Consts.Emoji
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IEmojiVisibilityState
+import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.JavaTokenType
+import com.intellij.psi.PsiArrayType
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiKeyword
 import com.intellij.psi.PsiLocalVariable
 import com.intellij.psi.PsiMethod
+import com.intellij.psi.PsiNewExpression
 import com.intellij.psi.PsiParameter
 
-object PsiKeywordExt : IEmojiVisibilityState by State()() {
+object PsiKeywordExt : IEmojiVisibilityState by State()(), IKotlinLanguageState by State()() {
 
     fun createExpression(keyword: PsiKeyword): Expression? =
         finalRemoval.takeIfTrue(keyword)?.finalRemoval() ?: finalEmoji.takeIfTrue(keyword)?.finalEmoji()
+        ?: kotlinConstructorCall.takeIfTrue(keyword)?.hideNew()
+
+    private fun PsiKeyword.hideNew(): Expression? {
+        val creation = parent as? PsiNewExpression ?: return null
+        val classReference = creation.classReference
+        if (tokenType != JavaTokenType.NEW_KEYWORD || creation.qualifier != null || creation.anonymousClass != null ||
+            classReference == null || creation.typeArguments.isNotEmpty() || creation.type is PsiArrayType ||
+            constructorReferenceNotation && ConstructorReferenceExt.isFieldConstructorReference(creation)
+        ) {
+            return null
+        }
+        // between `new` and the class name sits an empty type-argument list, so the gap is checked as text
+        val gap = creation.text.substring(textLength, classReference.startOffsetInParent)
+        if (gap.isEmpty() || gap.isNotBlank()) {
+            return null
+        }
+        return exprHide(textRange = TextRange(textRange.startOffset, classReference.textRange.startOffset))
+    }
 
     private fun PsiKeyword.finalEmoji(): Expression? = foldFinalsExceptFields { expr(Emoji.FINAL_LOCK.toString()) }
 

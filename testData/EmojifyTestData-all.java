@@ -196,7 +196,7 @@ public class EmojifyTestData {
                 </fold>}</fold></fold>
             }</fold>
 
-            <fold text='val' expand='false'>LocalClass</fold> localInstance = new LocalClass(10);
+            <fold text='val' expand='false'>LocalClass</fold> localInstance = <fold text='' expand='false'>new </fold>LocalClass(10);
             <fold text='val' expand='false'>int</fold> value = localInstance.<fold text='localValue' expand='false'>getLocalValue()</fold>;
         }</fold>
     }</fold>
@@ -220,7 +220,7 @@ public class EmojifyTestData {
 
     public class TryWithResourcesUsage <fold text='{...}' expand='true'>{
         public void readFile(String filePath) throws java.io.IOException <fold text='{...}' expand='true'>{
-            try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(filePath))) <fold text='{...}' expand='true'>{
+            try (java.io.BufferedReader reader = <fold text='' expand='false'>new </fold>java.io.BufferedReader(<fold text='' expand='false'>new </fold>java.io.FileReader(filePath))) <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>String</fold> line = reader.readLine();
             }</fold>
         }</fold>
@@ -342,7 +342,7 @@ public class EmojifyTestData {
             }</fold>
 
             public BuilderPatternUsage build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new BuilderPatternUsage(this)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>BuilderPatternUsage(this)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
     }</fold>
@@ -385,7 +385,7 @@ public class EmojifyTestData {
 
     public class TypeInferenceUsage <fold text='{...}' expand='true'>{
         public void useTypeInference()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='val' expand='false'>java.util.Map<String, Integer></fold> map = new java.util.HashMap<>();<fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='val' expand='false'>java.util.Map<String, Integer></fold> map = <fold text='' expand='false'>new </fold>java.util.HashMap<>();<fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
@@ -475,7 +475,7 @@ public class EmojifyTestData {
             }</fold>
 
             public void methodWithNullInMap() <fold text='{...}' expand='true'>{
-                <fold text='val' expand='false'>java.util.Map<String, String></fold> map = new java.util.HashMap<>();
+                <fold text='val' expand='false'>java.util.Map<String, String></fold> map = <fold text='' expand='false'>new </fold>java.util.HashMap<>();
                 map<fold text='[' expand='false'>.put(</fold>"key"<fold text='] = ' expand='false'>, </fold>null<fold text='' expand='false'>)</fold>;
             }</fold>
 

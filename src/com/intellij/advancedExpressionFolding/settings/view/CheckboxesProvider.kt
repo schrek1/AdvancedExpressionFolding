@@ -263,6 +263,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#constructorReferenceNotation")
         }
 
+        registerCheckbox(state::kotlinConstructorCall, "Constructor calls without 'new' (Kotlin style)") {
+            example(KotlinConstructorCallTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinConstructorCall")
+        }
+
         registerCheckbox(state::methodDefaultParameters, "Default parameter values inline for overloaded method") {
             example(MethodDefaultParametersTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#methodDefaultParameters")

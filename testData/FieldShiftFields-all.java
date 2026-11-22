@@ -24,7 +24,7 @@ import java.util.List;
     }</fold>
 
     public static FieldShiftFields mapPojoChain(FieldShiftFields source) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> result = <fold text='' expand='false'>new </fold>FieldShiftFields();
         result.username = source.child.<fold text='<<' expand='true'>username</fold>;
         result.userIdentifier = source.child.child.child.<fold text='<<' expand='true'>userIdentifier</fold>;
         result.active = source.child.<fold text='<<' expand='true'>active</fold>;
@@ -33,7 +33,7 @@ import java.util.List;
     }</fold>
 
     public static FieldShiftFields mapPojo(FieldShiftFields source) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> result = <fold text='' expand='false'>new </fold>FieldShiftFields();
         result.username = source.<fold text='<<' expand='true'>username</fold>;
         result.userIdentifier = source.<fold text='<<' expand='true'>userIdentifier</fold>;
         result.active = source.<fold text='<<' expand='true'>active</fold>;
@@ -41,7 +41,7 @@ import java.util.List;
     }</fold>
 
     public static FieldShiftFields mapRecordByFields(UserDataRecord source) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> result = <fold text='' expand='false'>new </fold>FieldShiftFields();
         result.username = source.<fold text='<<' expand='true'>username</fold>;
         result.active = source.<fold text='<<' expand='true'>active</fold>;
         result.userIdentifier = source.<fold text='<<' expand='true'>userIdentifier</fold>;
@@ -49,7 +49,7 @@ import java.util.List;
     }</fold>
 
     public static FieldShiftFields mapRecordByGetters(UserDataRecord source) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> result = <fold text='' expand='false'>new </fold>FieldShiftFields();
         result.username = source.<fold text='<<' expand='false'>username()</fold>;
         result.active = source.<fold text='<<' expand='false'>active()</fold>;
         result.userIdentifier = source.<fold text='<<' expand='false'>userIdentifier()</fold>;
@@ -61,7 +61,7 @@ import java.util.List;
         var1.username = record.<fold text='<<' expand='true'>username</fold>;
         <fold text='val' expand='false'>FieldShiftFields</fold> var2 = var1;
         var2.active = source.<fold text='<<' expand='true'>active</fold>;
-        <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> result = <fold text='' expand='false'>new </fold>FieldShiftFields();
         result.username = record.userIdentifier;
         result.username = changer(record.<fold text='<<' expand='true'>username</fold>);
         result.username = source.<fold text='<<' expand='true'>username</fold>;
@@ -70,7 +70,7 @@ import java.util.List;
         result.username = source.username + source.userIdentifier;
         result.active = source.<fold text='<<' expand='true'>active</fold>;
         result.userIdentifier = source.<fold text='<<' expand='true'>userIdentifier</fold>;
-        <fold text='val' expand='false'>FieldShiftFields</fold> setters2 = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> setters2 = <fold text='' expand='false'>new </fold>FieldShiftFields();
         setters2.child = var1.<fold text='<<' expand='true'>child</fold>;
         var1.userIdentifier = source.username;
         var1.username = source.<fold text='<<' expand='true'>username</fold>;
@@ -78,7 +78,7 @@ import java.util.List;
         setters2.username = fields.<fold text='<<' expand='true'>username</fold>;
         setters2.userIdentifier = record.<fold text='<<' expand='false'>userIdentifier()</fold>;
         result.child = setters2;
-        <fold text='val' expand='false'>FieldShiftFields</fold> childBuilder2 = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> childBuilder2 = <fold text='' expand='false'>new </fold>FieldShiftFields();
         childBuilder2.username = source.<fold text='<<' expand='true'>username</fold>;
         result.child = childBuilder2.child.child.child.<fold text='<<' expand='true'>child</fold>;
         return result;
@@ -89,7 +89,7 @@ import java.util.List;
         var1.username = record.<fold text='<<' expand='false'>username()</fold>;
         <fold text='val' expand='false'>FieldShiftFields</fold> var2 = var1;
         var2.active = source.<fold text='<<' expand='false'>isActive()</fold>;
-        <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> result = <fold text='' expand='false'>new </fold>FieldShiftFields();
         result.username = record.userIdentifier;
         result.username = changer(record.<fold text='<<' expand='false'>username()</fold>);
         result.username = source.<fold text='<<' expand='false'>getUsername()</fold>;
@@ -98,7 +98,7 @@ import java.util.List;
         result.username = source.<fold text='username' expand='false'>getUsername()</fold> + source.<fold text='userIdentifier' expand='false'>getUserIdentifier()</fold>;
         result.active = source.<fold text='<<' expand='false'>isActive()</fold>;
         result.userIdentifier = source.<fold text='<<' expand='false'>getUserIdentifier()</fold>;
-        <fold text='val' expand='false'>FieldShiftFields</fold> setters2 = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> setters2 = <fold text='' expand='false'>new </fold>FieldShiftFields();
         setters2.child = var1.<fold text='<<' expand='false'>getChild()</fold>;
         var1.userIdentifier = (source.<fold text='username' expand='false'>getUsername()</fold>);
         var1.username = source.<fold text='<<' expand='false'>getUsername()</fold>;
@@ -107,7 +107,7 @@ import java.util.List;
         setters2.username = getters.<fold text='<<' expand='false'>getUsername()</fold>;
         setters2.userIdentifier = record.<fold text='<<' expand='false'>userIdentifier()</fold>;
         result.child = setters2.<fold text='<<' expand='false'>getChild()</fold>;
-        <fold text='val' expand='false'>FieldShiftFields</fold> childBuilder2 = new FieldShiftFields();
+        <fold text='val' expand='false'>FieldShiftFields</fold> childBuilder2 = <fold text='' expand='false'>new </fold>FieldShiftFields();
         childBuilder2.username = source.<fold text='<<' expand='false'>getUsername()</fold>;
         result.child = childBuilder2.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold>.<fold text='<<' expand='false'>getChild()</fold>;
         return result;

@@ -18,7 +18,7 @@ public class NullableAnnotationCheckNotNullFieldShiftTestData {
             this.l = <fold text='' expand='false'>Preconditions.checkNotNull(</fold><fold text='<<' expand='false'>l</fold><fold text='!!' expand='false'>)</fold>;
             this.data = <fold text='' expand='false'>Preconditions.checkNotNull(</fold>z.<fold text='<<' expand='false'>getData()</fold><fold text='!!' expand='false'>)</fold>;
             this.o = <fold text='' expand='false'>Preconditions.checkNotNull(</fold><fold text='<<' expand='false'>o</fold><fold text='!!' expand='false'>)</fold>;
-            new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
+            <fold text='' expand='false'>new </fold>HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
             printStatus();
         }</fold>
 
@@ -27,7 +27,7 @@ public class NullableAnnotationCheckNotNullFieldShiftTestData {
             this.l = <fold text='' expand='false'>Preconditions.checkNotNull(</fold><fold text='<<' expand='false'>l</fold><fold text='!!' expand='false'>, "l is null")</fold>;
             this.data = <fold text='' expand='false'>Preconditions.checkNotNull(</fold>z.<fold text='<<' expand='false'>getData()</fold><fold text='!!' expand='false'>, "saaa is null")</fold>;
             this.o = <fold text='' expand='false'>Preconditions.checkNotNull(</fold><fold text='<<' expand='false'>o</fold><fold text='!!' expand='false'>, "o is null")</fold>;
-            new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
+            <fold text='' expand='false'>new </fold>HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
             printStatus();
         }</fold>
 
@@ -36,12 +36,12 @@ public class NullableAnnotationCheckNotNullFieldShiftTestData {
             this.l = <fold text='' expand='false'>Preconditions.checkNotNull(</fold><fold text='<<' expand='false'>l</fold><fold text='!!' expand='false'>)</fold>;
             this.data = <fold text='' expand='false'>Preconditions.checkNotNull(</fold>z.<fold text='<<' expand='false'>getData()</fold><fold text='!!' expand='false'>)</fold>;
             this.o = <fold text='' expand='false'>Preconditions.checkNotNull(</fold><fold text='<<' expand='false'>o</fold><fold text='!!' expand='false'>)</fold>;
-            new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
+            <fold text='' expand='false'>new </fold>HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold>;
             printStatus();
         }</fold>
 
         private void printStatus()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold>new HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='false'>new </fold>HashMap<String, String>()<fold text='[' expand='false'>.put(</fold>"a"<fold text='] = ' expand='false'>, </fold>"b"<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
