@@ -12,20 +12,20 @@ public class DestructuringAssignmentListWithoutValTestData {
         Data </fold>third<fold text=', ' expand='true'> = list.get(2);</fold><fold text='' expand='true'>
         Data </fold>fourth<fold text=') ' expand='true'> </fold>= list<fold text='' expand='true'>.get(3)</fold>;
 
-        Data ignored21 = data.<fold text='list' expand='false'>getList()</fold>.get(4);
-        Data ignored22 = data.<fold text='list' expand='false'>getList()</fold>.get(5);
+        Data ignored21 = data.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>.get(4);
+        Data ignored22 = data.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>.get(5);
 
-        Data<fold text=' (' expand='true'> </fold>getter1<fold text=', ' expand='true'> = data.<fold text='list' expand='false'>getList()</fold>.get(0);</fold><fold text='' expand='true'>
-        Data </fold>getter2<fold text=', ' expand='true'> = data.<fold text='list' expand='false'>getList()</fold>.get(1);</fold><fold text='' expand='true'>
-        Data </fold>getter3<fold text=') ' expand='true'> </fold>= data.<fold text='list' expand='false'>getList()</fold><fold text='' expand='true'>.get(2)</fold>;
+        Data<fold text=' (' expand='true'> </fold>getter1<fold text=', ' expand='true'> = data.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>.get(0);</fold><fold text='' expand='true'>
+        Data </fold>getter2<fold text=', ' expand='true'> = data.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>.get(1);</fold><fold text='' expand='true'>
+        Data </fold>getter3<fold text=') ' expand='true'> </fold>= data.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold><fold text='' expand='true'>.get(2)</fold>;
         getter1 = data;
 
-        Data<fold text=' (' expand='true'> </fold>deepGetter1<fold text=', ' expand='true'> = data.<fold text='data' expand='false'>getData()</fold>.<fold text='list' expand='false'>getList()</fold>.get(0);</fold><fold text='' expand='true'>
-        Data </fold>deepGetter2<fold text=') ' expand='true'> </fold>= data.<fold text='data' expand='false'>getData()</fold>.<fold text='list' expand='false'>getList()</fold><fold text='' expand='true'>.get(1)</fold>;
+        Data<fold text=' (' expand='true'> </fold>deepGetter1<fold text=', ' expand='true'> = data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>.get(0);</fold><fold text='' expand='true'>
+        Data </fold>deepGetter2<fold text=') ' expand='true'> </fold>= data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold><fold text='' expand='true'>.get(1)</fold>;
         deepGetter2 = data;
 
-        Data wrongParent1 = data.<fold text='list' expand='false'>getList()</fold>.get(0);
-        Data wrongParent2 = data.<fold text='data' expand='false'>getData()</fold>.<fold text='list' expand='false'>getList()</fold>.get(1);
+        Data wrongParent1 = data.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>.get(0);
+        Data wrongParent2 = data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>.get(1);
 
         blackhole(first, second, third, fourth, ignored21, ignored22, getter1, getter2, deepGetter1, deepGetter2, wrongParent1, wrongParent2);
     }</fold>
