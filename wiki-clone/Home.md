@@ -97,6 +97,12 @@ Implements a quick return syntax similar to Kotlin.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LetReturnIt.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LetReturnIt-folded.java)
 
+## kotlinLambda
+### Lambdas in Kotlin syntax: { it.x }
+Shows Java lambdas the way Kotlin writes them: `d -> d.getPrice()` as `{ it.price }`, `(a, b) -> a + b` as `{ a, b -> a + b }`, `() -> load()` as `{ load() }`. A lambda that is the last argument of a call moves behind it as a trailing lambda: `items.forEach(item -> { ... })` reads `items.forEach { ... }`. Only the braces, separators and each `it` are folded; the body stays real code and its own folds keep working. A lambda nested in an `it` lambda keeps its parameter name, and a lambda inside a call that another fold already rewrites stays Java.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinLambdaTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinLambdaTestData-folded.java)
+
 ## assertsCollapse
 ### Asserts
 Simplifies assert statements.

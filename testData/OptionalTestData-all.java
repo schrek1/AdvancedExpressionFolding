@@ -28,13 +28,13 @@ public class OptionalTestData {
 
         o = <fold text='' expand='false'>Optional.of(</fold>data<fold text='!!' expand='false'>)</fold><fold text='.' expand='false'>.map(</fold><fold text='data' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold><fold text='?.' expand='false'>
                 .map(</fold><fold text='data' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold>
-                .filter(it -> it.ok)
+                .filter<fold text=' {' expand='false'>(it -></fold> it.ok<fold text=' }' expand='false'>)</fold>
                 .map(Function.identity())<fold text='?.' expand='false'>
                 .map(</fold><fold text='ok' expand='false'>Data::isOk</fold><fold text='' expand='false'>)</fold>
-                .map(it -> !it).map(it -> <fold text='{...}' expand='true'>{
+                .map<fold text=' {' expand='false'>(it -></fold> !it<fold text=' }' expand='false'>)</fold>.map<fold text='' expand='false'>(it -></fold> <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>var</fold> s = it.toString();
         return s<fold text=' ≡ ' expand='false'>.equals(</fold>"false"<fold text='' expand='false'>)</fold>;
-                }</fold>)<fold text=' ?: ' expand='false'>.orElse(</fold>null<fold text='' expand='false'>)</fold>;
+                }</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>null<fold text='' expand='false'>)</fold>;
 
         o = <fold text='' expand='false'>Optional.of(</fold>data.<fold text='data' expand='false'>getData()</fold><fold text='!!' expand='false'>)</fold>.map(OptionalTestData::getOutsideData)<fold text='?.' expand='false'>.map(</fold><fold text='string' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>data.<fold text='string' expand='false'>getString()</fold><fold text='' expand='false'>)</fold>;
 
