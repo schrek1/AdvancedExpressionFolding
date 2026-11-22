@@ -33,7 +33,7 @@ public class IsOperatorTestData {
     </fold>}</fold>
 
     public long countRound(List<Shape> shapes) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>shapes<fold text='.' expand='false'>.stream().</fold>filter(shape -> shape <fold text='is' expand='false'>instanceof</fold> Circle).count()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>shapes<fold text='.' expand='false'>.stream().</fold>filter<fold text=' {' expand='false'>(shape -></fold> <fold text='it' expand='false'>shape</fold> <fold text='is' expand='false'>instanceof</fold> Circle<fold text=' }' expand='false'>)</fold>.count()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     public String describe(Object value)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

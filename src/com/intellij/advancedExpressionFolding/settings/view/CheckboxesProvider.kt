@@ -169,6 +169,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinwithlock")
         }
 
+        registerCheckbox(state::kotlinLambda, "Lambdas in Kotlin syntax: { it.x }") {
+            example(KotlinLambdaTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinlambda")
+        }
+
         registerCheckbox(state::assertsCollapse, "Asserts") {
             example(AssertTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#asserts")
