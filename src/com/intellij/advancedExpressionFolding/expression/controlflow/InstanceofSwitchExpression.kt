@@ -54,14 +54,18 @@ class InstanceofSwitchExpression private constructor(
             ),
         )
         val firstLineStart = head.body.lines.first().textRange.startOffset
-        // The head's type moves from the `switch (x)` line to the branch line, so it can only be shown as a placeholder.
-        val lastIndentChar = document.charsSequence[firstLineStart - 1]
-        descriptors += FoldingDescriptor(
-            element.node,
-            TextRange(firstLineStart - 1, firstLineStart),
-            group,
-            "${lastIndentChar}case ${head.type.text}${head.unnamedBinding} -> "
+        // Case labels sit at the `switch` column: the source has no whitespace to indent them deeper without grey padding.
+        val caseStart = minOf(
+            document.getLineStartOffset(document.getLineNumber(firstLineStart)) + indentOf(head.block.rBrace!!).length,
+            firstLineStart - 1,
         )
+        // The head's type moves from the `switch (x)` line to the branch line, so it can only be shown as a placeholder.
+        val headCase = "case ${head.type.text}${head.unnamedBinding} ->"
+        descriptors += if (firstLineStart - caseStart >= 2) {
+            FoldingDescriptor(element.node, TextRange(caseStart, firstLineStart - 1), group, headCase)
+        } else {
+            FoldingDescriptor(element.node, TextRange(caseStart, firstLineStart), group, "$headCase ")
+        }
         var previousBlock = head.block
         for (branch in chain.branches.drop(1)) {
             descriptors += branchStart(
@@ -101,22 +105,24 @@ class InstanceofSwitchExpression private constructor(
         val statement = body.statement
         val rBrace = previousBlock.rBrace!!
         val lBrace = (statement.parent as PsiCodeBlock).lBrace!!
-        val braceIndent = rBrace.prevSibling.text.substringAfterLast('\n')
-        val statementIndent = statement.prevSibling.text.substringAfterLast('\n')
-        val extraIndent = statementIndent.removePrefix(braceIndent).takeIf { statementIndent.startsWith(braceIndent) }
-            ?: "    "
-        val prefix = extraIndent + keyword
         val descriptors = mutableListOf<FoldingDescriptor>()
         fun fold(start: Int, end: Int, placeholder: String) {
             descriptors += FoldingDescriptor(element.node, TextRange(start, end), group, placeholder)
         }
 
         val rBraceEnd = rBrace.textRange.endOffset
-        if (kept.textRange.startOffset > rBraceEnd) {
+        val keptStart = kept.textRange.startOffset
+        if (keptStart > rBraceEnd) {
             fold(rBrace.textRange.startOffset, rBraceEnd, "")
-            fold(rBraceEnd, kept.textRange.startOffset, prefix)
+            // The space before `T t` stays real text, not part of the grey `case`.
+            val keepSpace = keyword.endsWith(' ') && keptStart - rBraceEnd > 1 && document.charsSequence[keptStart - 1] == ' '
+            if (keepSpace) {
+                fold(rBraceEnd, keptStart - 1, keyword.trimEnd())
+            } else {
+                fold(rBraceEnd, keptStart, keyword)
+            }
         } else {
-            fold(rBrace.textRange.startOffset, rBraceEnd, prefix)
+            fold(rBrace.textRange.startOffset, rBraceEnd, keyword)
         }
         replacement?.let { fold(kept.textRange.startOffset, kept.textRange.endOffset, it) }
 
@@ -141,6 +147,8 @@ class InstanceofSwitchExpression private constructor(
         }
         return descriptors
     }
+
+    private fun indentOf(rBrace: PsiElement): String = rBrace.prevSibling.text.substringAfterLast('\n')
 
     /** A branch block's single statement and the full-line comments above it. */
     private class Body(val comments: List<PsiComment>, val statement: PsiStatement) {
