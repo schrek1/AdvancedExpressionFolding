@@ -6,30 +6,30 @@ public class ScopeLetTestData {
 
     public void folded(Contact contact, String email, String phone) <fold text='{...}' expand='true'>{
         <fold text='' expand='false'>if (</fold>email<fold text='?.let ' expand='false'> != null) </fold><fold text='{ ' expand='false'><fold text='{...}' expand='true'>{
-            </fold>contact.<fold text='email = ' expand='false'>setEmail(</fold><fold text='it' expand='false'>email</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
+            </fold>contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>email</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
         }</fold></fold>
-        <fold text='' expand='false'>if (</fold>phone<fold text='?.let { ' expand='false'> != null) </fold>contact.<fold text='phone = ' expand='false'>setPhone(</fold><fold text='it' expand='false'>phone</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;</fold>
+        <fold text='' expand='false'>if (</fold>phone<fold text='?.let { ' expand='false'> != null) </fold>contact.<fold text='p' expand='false'>setP</fold>hone<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>phone</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;</fold>
         String nickname = contact.<fold text='nickname' expand='false'>getNickname()</fold>;
         <fold text='' expand='false'>if (</fold>nickname<fold text='?.let ' expand='false'> != null) </fold><fold text='{ ' expand='false'><fold text='{...}' expand='true'>{
             </fold>System.out.println("Hi " + <fold text='it' expand='false'>nickname</fold> + ", welcome back")<fold text=' }' expand='false'>;
         }</fold></fold>
         <fold text='' expand='false'>if (</fold>email<fold text='?.let ' expand='false'> != null) </fold><fold text='{ ' expand='false'><fold text='{...}' expand='true'>{
-            </fold>contact.<fold text='backupEmail = ' expand='false'>setBackupEmail(</fold><fold text='it' expand='false'>email</fold>.trim()<fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
+            </fold>contact.<fold text='b' expand='false'>setB</fold>ackupEmail<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>email</fold>.trim()<fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
         }</fold></fold>
         <fold text='' expand='false'>if (</fold>defaultEmail<fold text='?.let ' expand='false'> != null) </fold><fold text='{ ' expand='false'><fold text='{...}' expand='true'>{
-            </fold>contact.<fold text='email = ' expand='false'>setEmail(</fold><fold text='it' expand='false'>defaultEmail</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
+            </fold>contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>defaultEmail</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
         }</fold></fold>
     }</fold>
 
     public void notFolded(Contact contact, String email, String phone) <fold text='{...}' expand='true'>{
         if (email != null) <fold text='{...}' expand='true'>{
-            contact.<fold text='email = ' expand='false'>setEmail(</fold>email<fold text='' expand='false'>)</fold>;
+            contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold>email<fold text='' expand='false'>)</fold>;
         }</fold> else <fold text='{...}' expand='true'>{
-            contact.<fold text='email = ' expand='false'>setEmail(</fold>"unknown"<fold text='' expand='false'>)</fold>;
+            contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold>"unknown"<fold text='' expand='false'>)</fold>;
         }</fold>
         if (email != null) <fold text='{...}' expand='true'>{
-            contact.<fold text='email = ' expand='false'>setEmail(</fold>email<fold text='' expand='false'>)</fold>;
-            contact.<fold text='phone = ' expand='false'>setPhone(</fold>phone<fold text='' expand='false'>)</fold>;
+            contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold>email<fold text='' expand='false'>)</fold>;
+            contact.<fold text='p' expand='false'>setP</fold>hone<fold text=' = ' expand='false'>(</fold>phone<fold text='' expand='false'>)</fold>;
         }</fold>
         if (email != null) <fold text='{...}' expand='true'>{
             email = email.trim();
@@ -38,14 +38,14 @@ public class ScopeLetTestData {
             contact.clear();
         }</fold>
         if (contact != null) <fold text='{...}' expand='true'>{
-            contact.<fold text='email = ' expand='false'>setEmail(</fold>email<fold text='' expand='false'>)</fold>;
+            contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold>email<fold text='' expand='false'>)</fold>;
         }</fold>
         if (email == null) <fold text='{...}' expand='true'>{
-            contact.<fold text='email = ' expand='false'>setEmail(</fold>phone<fold text='' expand='false'>)</fold>;
+            contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold>phone<fold text='' expand='false'>)</fold>;
         }</fold>
         if (email != null) <fold text='{...}' expand='true'>{
             // keep the old phone
-            contact.<fold text='email = ' expand='false'>setEmail(</fold>email<fold text='' expand='false'>)</fold>;
+            contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold>email<fold text='' expand='false'>)</fold>;
         }</fold>
     }</fold>
 

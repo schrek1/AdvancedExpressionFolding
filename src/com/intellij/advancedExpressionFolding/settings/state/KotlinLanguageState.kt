@@ -26,7 +26,6 @@ interface IKotlinLanguageState {
     var lazyProperty: Boolean
     var kotlinWithLock: Boolean
     var scopeLet: Boolean
-    var scopeWith: Boolean
 }
 
 data class KotlinLanguageState(
@@ -55,5 +54,4 @@ data class KotlinLanguageState(
     override var lazyProperty: Boolean = true,
     override var kotlinWithLock: Boolean = true,
     override var scopeLet: Boolean = true,
-    override var scopeWith: Boolean = true,
 ) : IKotlinLanguageState

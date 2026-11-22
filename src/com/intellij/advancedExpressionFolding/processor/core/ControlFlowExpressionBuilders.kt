@@ -9,7 +9,6 @@ import com.intellij.advancedExpressionFolding.processor.controlflow.LoopExt
 import com.intellij.advancedExpressionFolding.processor.controlflow.PsiTryStatementExt
 import com.intellij.advancedExpressionFolding.processor.declaration.LeadingParameterChecksExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.PreconditionExt
-import com.intellij.advancedExpressionFolding.processor.language.kotlin.ScopeWithExt
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.TodoExt
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokNonNullExt
 import com.intellij.openapi.editor.Document
@@ -43,13 +42,6 @@ class LeadingParameterCheckBuilder : BuildExpression<PsiStatement>(PsiStatement:
 
     override fun buildExpression(element: PsiStatement, document: Document, synthetic: Boolean) =
         LeadingParameterChecksExt.hiddenCheck(element)
-}
-
-class ScopeWithBuilder : BuildExpression<PsiExpressionStatement>(PsiExpressionStatement::class.java) {
-    override fun checkConditions(element: PsiExpressionStatement) = scopeWith
-
-    override fun buildExpression(element: PsiExpressionStatement, document: Document, synthetic: Boolean) =
-        ScopeWithExt.createExpression(element, document)
 }
 
 class IfStatementBuilder : BuildExpression<PsiIfStatement>(PsiIfStatement::class.java) {

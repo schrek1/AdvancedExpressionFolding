@@ -251,7 +251,6 @@
 
         <!-- Control Flow Statements -->
         <expressionBuilder implementation="com.intellij.advancedExpressionFolding.processor.core.LeadingParameterCheckBuilder"/>
-        <expressionBuilder implementation="com.intellij.advancedExpressionFolding.processor.core.ScopeWithBuilder"/>
         <expressionBuilder implementation="com.intellij.advancedExpressionFolding.processor.core.IfStatementBuilder"/>
         <expressionBuilder implementation="com.intellij.advancedExpressionFolding.processor.core.SwitchStatementBuilder"/>
         <expressionBuilder implementation="com.intellij.advancedExpressionFolding.processor.core.TryStatementBuilder"/>
