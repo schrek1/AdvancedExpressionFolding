@@ -13,19 +13,19 @@ public class LombokSneakyThrowsTestData {
         <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
             </fold>Files.writeString(file, json);<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold>
     }</fold>
 
     <fold text='@SneakyThrows p' expand='true'>p</fold>ublic String load(Path file) <fold text='{...}' expand='true'>{
         <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
             </fold><fold text='val' expand='false'>String</fold> content = Files.readString(file);
-        <fold text='' expand='true'>    </fold>if <fold text='' expand='false'>(</fold>content.<fold text='blank' expand='false'>isBlank()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='true'>    </fold>if <fold text='' expand='false'>(</fold>content.<fold text='b' expand='false'>isB</fold>lank<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             <fold text='' expand='true'>    </fold></fold>return json;<fold text='' expand='false'>
         <fold text='' expand='true'>    </fold>}</fold></fold>
         <fold text='' expand='true'>    </fold>return content;<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new IllegalStateException(e);
+            throw <fold text='' expand='false'>new </fold>IllegalStateException(e);
         }</fold></fold>
     }</fold>
 
@@ -33,7 +33,7 @@ public class LombokSneakyThrowsTestData {
         <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
             </fold>Files.copy(from, to);<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException | SecurityException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold>
     }</fold>
 
@@ -41,7 +41,7 @@ public class LombokSneakyThrowsTestData {
         </fold><fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
             </fold>Files.delete(file);<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new UncheckedIOException(e);
+            throw <fold text='' expand='false'>new </fold>UncheckedIOException(e);
         }</fold></fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
@@ -50,7 +50,7 @@ public class LombokSneakyThrowsTestData {
         <fold text='@SneakyThrows' expand='true'>try</fold><fold text='' expand='true'> </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold>
         <fold text='' expand='true'>    </fold>Files.delete(file);<fold text='' expand='true'>
         </fold><fold text='' expand='true'>}</fold></fold><fold text='' expand='true'> </fold><fold text='' expand='true'>catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold>
     }</fold>
 
@@ -58,7 +58,7 @@ public class LombokSneakyThrowsTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new UncheckedIOException(new IOException(e));
+            throw <fold text='' expand='false'>new </fold>UncheckedIOException(<fold text='' expand='false'>new </fold>IOException(e));
         }</fold>
     }</fold>
 
@@ -66,7 +66,7 @@ public class LombokSneakyThrowsTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new RuntimeException("Cannot delete <fold text='$' expand='false'>" + </fold>file<fold text='",' expand='false'>,</fold> e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException("Cannot delete <fold text='$' expand='false'>" + </fold>file<fold text='",' expand='false'>,</fold> e);
         }</fold>
     }</fold>
 
@@ -74,8 +74,8 @@ public class LombokSneakyThrowsTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            System.err.println(e.<fold text='message' expand='false'>getMessage()</fold>);
-            throw new RuntimeException(e);
+            System.err.println(e.<fold text='m' expand='false'>getM</fold>essage<fold text='' expand='false'>()</fold>);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold>
     }</fold>
 
@@ -83,7 +83,7 @@ public class LombokSneakyThrowsTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold> finally <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("done");
         }</fold>
@@ -93,7 +93,7 @@ public class LombokSneakyThrowsTestData {
         try (var lines = Files.lines(file)) <fold text='{...}' expand='true'>{
             lines.forEach(System.out::println);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold>
     }</fold>
 
@@ -102,9 +102,9 @@ public class LombokSneakyThrowsTestData {
             Files.delete(file);
             Thread.sleep(10);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold> catch <fold text='' expand='false'>(</fold>InterruptedException e<fold text='' expand='false'>)</fold><fold text=' rethrow' expand='false'> <fold text='{...}' expand='true'>{
-            throw new RuntimeException(e);
+            throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold></fold>
     }</fold>
 }

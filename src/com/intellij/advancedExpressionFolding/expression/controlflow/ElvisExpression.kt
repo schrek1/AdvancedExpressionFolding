@@ -6,6 +6,7 @@ import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.FoldingGroup
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiLiteralExpression
 import java.util.ArrayList
 
 class ElvisExpression(
@@ -26,6 +27,7 @@ class ElvisExpression(
         val group = FoldingGroup.newGroup(ElvisExpression::class.java.name)
         val thenRange = thenExpression.textRange
         val elseRange = elseExpression.textRange
+        val elseIsNullLiteral = elseExpression.element.let { it is PsiLiteralExpression && it.text == "null" }
         if (!inverted) {
             descriptors += FoldingDescriptor(
                 element.node,
@@ -33,18 +35,29 @@ class ElvisExpression(
                 group,
                 ""
             )
-            descriptors += FoldingDescriptor(
-                element.node,
-                TextRange.create(thenRange.endOffset, elseRange.startOffset),
-                group,
-                " ?: "
-            )
+            // `x?.y ?: null` is just `x?.y`: hide the whole ` : null` tail
+            descriptors += if (elseIsNullLiteral) {
+                FoldingDescriptor(
+                    element.node,
+                    TextRange.create(thenRange.endOffset, elseRange.endOffset),
+                    group,
+                    ""
+                )
+            } else {
+                FoldingDescriptor(
+                    element.node,
+                    TextRange.create(thenRange.endOffset, elseRange.startOffset),
+                    group,
+                    " ?: "
+                )
+            }
         } else {
             descriptors += FoldingDescriptor(
                 element.node,
                 TextRange.create(textRange.startOffset, thenRange.endOffset),
                 group,
-                "${buildInvertedNonNullText(document, thenRange)} ?: ${document.getText(elseRange)}"
+                buildInvertedNonNullText(document, thenRange) +
+                    if (elseIsNullLiteral) "" else " ?: ${document.getText(elseRange)}"
             )
         }
         if (!inverted) {
@@ -60,7 +73,7 @@ class ElvisExpression(
         if (thenExpression.supportsFoldRegions(document, this)) {
             descriptors += thenExpression.buildFoldRegions(thenExpression.element, document, this).toList()
         }
-        if (elseExpression.supportsFoldRegions(document, this)) {
+        if (!elseIsNullLiteral && elseExpression.supportsFoldRegions(document, this)) {
             descriptors += elseExpression.buildFoldRegions(elseExpression.element, document, this).toList()
         }
         return descriptors.toTypedArray()

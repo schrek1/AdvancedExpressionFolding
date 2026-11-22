@@ -6,6 +6,7 @@ import com.intellij.advancedExpressionFolding.expression.operation.stream.Stream
 import com.intellij.advancedExpressionFolding.processor.filter
 import com.intellij.advancedExpressionFolding.processor.findParents
 import com.intellij.advancedExpressionFolding.processor.guessPropertyName
+import com.intellij.advancedExpressionFolding.processor.methodcall.optional.endsInOptionalOnlyCall
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.ICollectionsStreamsState
 import com.intellij.psi.PsiExpressionList
@@ -27,18 +28,20 @@ object MethodReferenceExt : ICollectionsStreamsState by State()() {
             return null
         }
 
-        val parentMethodCall = element.findParents(
+        val mapCall = element.findParents(
             PsiMethodCallExpression::class.java,
             PsiExpressionList::class.java,
             PsiMethodCallExpression::class.java
-        )?.methodExpression?.reference?.resolve() as? PsiMethod
+        )
+        val parentMethodCall = mapCall?.methodExpression?.reference?.resolve() as? PsiMethod
 
         if (parentMethodCall?.name?.filter { it == "map" || it == "flatMap" } != null) {
             val className = parentMethodCall.containingClass?.qualifiedName
             return when (className) {
                 "java.util.Optional" -> OptionalMapSafeCallParam(
                     element,
-                    element.textRange,
+                    // without the `?.` fold only the method name turns into the property: `Data::data`
+                    if (mapCall.endsInOptionalOnlyCall()) element.referenceNameElement!!.textRange else element.textRange,
                     psiMethod.guessPropertyName()
                 )
                 "java.util.stream.Stream" -> StreamMapCallParam(element, element.textRange, psiMethod.guessPropertyName())

@@ -7,13 +7,13 @@ public class ToBuilderCopyTestData {
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Alice"<fold text=',' expand='false'>)</fold>
             <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>31<fold text='' expand='false'>)</fold>
         <fold text='' expand='false'>        .build(</fold>);
-        <fold text='val' expand='false'>Person</fold> older = person.<fold text='copy(' expand='false'>toBuilder().</fold>age<fold text=' = ' expand='false'>(</fold>person.<fold text='age' expand='false'>getAge()</fold> + 1)<fold text='' expand='false'>.build()</fold>;
+        <fold text='val' expand='false'>Person</fold> older = person.<fold text='copy(' expand='false'>toBuilder().</fold>age<fold text=' = ' expand='false'>(</fold>person.<fold text='a' expand='false'>getA</fold>ge<fold text='' expand='false'>()</fold> + 1)<fold text='' expand='false'>.build()</fold>;
         <fold text='val' expand='false'>Person</fold> mixed = person.<fold text='copy(' expand='false'>toBuilder()</fold><fold text='' expand='false'>.</fold>name<fold text=' = ' expand='false'>(</fold>"Bob"<fold text=',' expand='false'>)</fold>
             <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>40)<fold text='' expand='false'>.build()</fold>;
         <fold text='val' expand='false'>Person</fold> mapped = person.<fold text='copy(' expand='false'>toBuilder()
                 .</fold>name<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getName()</fold>)<fold text='' expand='false'>
                 .build()</fold>;
-        <fold text='val' expand='false'>Person</fold> titled = person.toBuilder().name("Dr. <fold text='${' expand='false'>" + </fold>person.<fold text='name}"' expand='false'>getName()</fold>).build();
+        <fold text='val' expand='false'>Person</fold> titled = person.toBuilder().name("Dr. <fold text='${' expand='false'>" + </fold>person.<fold text='n' expand='false'>getN</fold>ame<fold text='}"' expand='false'>()</fold>).build();
         <fold text='val' expand='false'>Person</fold> commented = person.<fold text='copy(' expand='false'>toBuilder()</fold>
                 // a comment keeps the chain on its lines
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Carol"<fold text='' expand='false'>)</fold>
@@ -39,11 +39,11 @@ public class ToBuilderCopyTestData {
         }</fold></fold>
 
         public static PersonBuilder builder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new PersonBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>PersonBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         public PersonBuilder toBuilder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new PersonBuilder().name(name).age(age)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>PersonBuilder().name(name).age(age)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold><fold text='' expand='false'>
 
         </fold><fold text='' expand='false'>public String getName()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -78,7 +78,7 @@ public class ToBuilderCopyTestData {
             </fold>}</fold>
 
             public Person build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new Person(name, age)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Person(name, age)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
     }</fold>

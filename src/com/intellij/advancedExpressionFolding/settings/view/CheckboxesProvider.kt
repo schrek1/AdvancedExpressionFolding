@@ -159,9 +159,24 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinquickreturn")
         }
 
+        registerCheckbox(state::scopeLet, "Null-guarded single statement as x?.let { ... }") {
+            example(ScopeLetTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#scopelet")
+        }
+
         registerCheckbox(state::kotlinPreconditions, "Preconditions as Kotlin require, check, requireNotNull and error") {
             example(KotlinPreconditionsTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinpreconditions")
+        }
+
+        registerCheckbox(state::kotlinWithLock, "Lock, try, finally unlock as Kotlin withLock") {
+            example(WithLockTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinwithlock")
+        }
+
+        registerCheckbox(state::kotlinLambda, "Lambdas in Kotlin syntax: { it.x }") {
+            example(KotlinLambdaTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinlambda")
         }
 
         registerCheckbox(state::assertsCollapse, "Asserts") {
@@ -178,6 +193,10 @@ abstract class CheckboxesProvider {
             example(SpreadTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streamspread")
         }
+        registerCheckbox(state::streamSpreadChain, "Stream map-to-list chain as spread: items*.id") {
+            example(StreamSpreadChainTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streamSpreadChain")
+        }
 
         registerCheckbox(state::streamPredicates, "Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none") {
             example(StreamPredicateTestData::class)
@@ -190,6 +209,10 @@ abstract class CheckboxesProvider {
         }
         registerCheckbox(state::logFoldingTextBlocks, "Log folding: collapse Text Blocks") {
             example(LogFoldingTextBlocksTestData::class)
+        }
+        registerCheckbox(state::logFoldingKeepMessageText, "Log folding: keep the message text, fold only the arguments") {
+            example(LogFoldingKeepMessageTextTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#logfoldingkeepmessagetext")
         }
 
         registerCheckbox(
@@ -386,6 +409,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#instanceofswitch")
         }
 
+        registerCheckbox(state::kotlinIsOperator, "instanceof as Kotlin is / !is") {
+            example(IsOperatorTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinisoperator")
+        }
+
         registerCheckbox(
             state::summaryParentOverride,
             "Displays a folded summary of overridden methods from parent classes and interfaces."
@@ -400,6 +428,11 @@ abstract class CheckboxesProvider {
         ) {
             example(ConstructorReferenceNotationTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#constructorReferenceNotation")
+        }
+
+        registerCheckbox(state::kotlinConstructorCall, "Constructor calls without 'new' (Kotlin style)") {
+            example(KotlinConstructorCallTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinConstructorCall")
         }
 
         registerCheckbox(state::methodDefaultParameters, "Default parameter values inline for overloaded method") {

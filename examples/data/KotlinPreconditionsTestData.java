@@ -100,4 +100,11 @@ public class KotlinPreconditionsTestData {
         }
         Objects.requireNonNull(order, () -> "order");
     }
+
+    public String label(String order, String customer) {
+        String checkedOrder = Objects.requireNonNull(order);
+        Objects.requireNonNull(customer);
+        Objects.requireNonNull(order.isEmpty() ? customer : order);
+        return Objects.requireNonNull(checkedOrder.trim());
+    }
 }

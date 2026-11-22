@@ -12,7 +12,7 @@ public class TodoTestData {
     </fold>}</fold>
 
     public String render(String format) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>format.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>format.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "";<fold text='' expand='false'>
         }</fold></fold>
         <fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>("Format not supported: <fold text='$' expand='false'>" + </fold>format<fold text='")' expand='false'>)</fold>;
@@ -23,11 +23,11 @@ public class TodoTestData {
     </fold>}</fold>
 
     public void withCause(Exception cause)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold>throw new UnsupportedOperationException(cause)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold>throw <fold text='' expand='false'>new </fold>UnsupportedOperationException(cause)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void withReasonAndCause(Exception cause) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>throw new UnsupportedOperationException("Not implemented", cause)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold>throw <fold text='' expand='false'>new </fold>UnsupportedOperationException("Not implemented", cause)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     public void otherException()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -35,7 +35,7 @@ public class TodoTestData {
     </fold>}</fold>
 
     public void subclass()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold>throw new ReadOnlyException("Read only")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold>throw <fold text='' expand='false'>new </fold>ReadOnlyException("Read only")<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void anonymousSubclass() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
@@ -49,7 +49,7 @@ public class TodoTestData {
 
     public void guard(int size) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
         </fold><fold text='assert' expand='false'>if</fold> <fold text='' expand='false'>(</fold>size <fold text='<=' expand='false'>></fold> 10) <fold text='{...}' expand='true'>{
-          <fold text=':' expand='false'> </fold> <fold text='' expand='false'>throw new UnsupportedOperationException(</fold>"Too large"<fold text='' expand='false'>);
+          <fold text=':' expand='false'> </fold> <fold text='' expand='false'>throw <fold text='' expand='false'>new </fold>UnsupportedOperationException(</fold>"Too large"<fold text='' expand='false'>);
         }</fold></fold><fold text=' ' expand='true'>
     </fold>}</fold>
 

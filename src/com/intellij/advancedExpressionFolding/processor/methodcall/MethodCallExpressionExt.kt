@@ -15,11 +15,10 @@ import com.intellij.advancedExpressionFolding.processor.language.kotlin.InOperat
 import com.intellij.advancedExpressionFolding.processor.logger.LoggerBracketsExt
 import com.intellij.advancedExpressionFolding.processor.lombok.BuilderNamedArgumentsExt
 import com.intellij.advancedExpressionFolding.processor.lombok.ToBuilderCopyExt
+import com.intellij.advancedExpressionFolding.processor.methodcall.stream.StreamSpreadChainExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper.eraseGenerics
-import com.intellij.advancedExpressionFolding.processor.util.Helper.guessNamelessPropertyName
 import com.intellij.advancedExpressionFolding.processor.util.Helper.isGetter
 import com.intellij.advancedExpressionFolding.processor.util.Helper.isNamelessGetter
-import com.intellij.advancedExpressionFolding.processor.util.Helper.isNamelessSetter
 import com.intellij.advancedExpressionFolding.processor.util.Helper.isSetter
 import com.intellij.advancedExpressionFolding.processor.util.Helper.startsWith
 import com.intellij.advancedExpressionFolding.processor.util.PropertyUtil.guessPropertyName
@@ -48,12 +47,15 @@ object MethodCallExpressionExt :
 
         ToBuilderCopyExt.createExpression(element, document)?.let { return it }
         BuilderNamedArgumentsExt.createExpression(element, document)?.let { return it }
-        if (SetterNamedArgumentsExt.isInSetterRun(element, document)) {
+        if (SetterNamedArgumentsExt.isInSetterRun(element, document) ||
+            BuilderNamedArgumentsExt.isInFoldedChain(element, document)
+        ) {
             return null
         }
         FieldShiftExt.createExpression(element, document, qualifier)?.let { return it }
 
         InOperatorExt.createMembership(element)?.let { return it }
+        StreamSpreadChainExt.createExpression(element, document)?.let { return it }
 
         useMethodCallFactory(identifier, referenceExpression, document, qualifier, element)?.let { return it }
 
@@ -155,50 +157,57 @@ object MethodCallExpressionExt :
         experimental: Boolean
     ): Expression? {
         val resolvedMethod = element.resolveMethod()
-        if (
-            isGetter(identifier, element) ||
-            experimental && isNamelessGetter(identifier.text, element, resolvedMethod)
-        ) {
+        if (isGetter(identifier, element)) {
             val expression = qualifier?.let { BuildExpressionExt.getAnyExpression(it, document) }
-            val propertyName = guessPropertyName(identifier.text).ifBlank {
-                guessNamelessPropertyName()
-            }
             return Getter(
                 element,
                 element.textRange,
                 TextRange.create(identifier.textRange.startOffset, element.textRange.endOffset),
+                identifier.text,
                 expression,
-                propertyName
+                guessPropertyName(identifier.text)
+            )
+        }
+        if (experimental && qualifier != null && isNamelessGetter(identifier.text, element, resolvedMethod)) {
+            // The wrapper reads as the value it carries: the whole `.get()` folds to nothing.
+            return Getter(
+                element,
+                element.textRange,
+                TextRange.create(dotBefore(identifier), element.textRange.endOffset),
+                identifier.text,
+                BuildExpressionExt.getAnyExpression(qualifier, document),
+                ""
             )
         }
         val text = identifier.text
-        if (isSimpleSetter(text, element, qualifier, experimental, resolvedMethod)) {
+        if (isSimpleSetter(text, element, qualifier)) {
             val qualifierExpression = qualifier?.let { BuildExpressionExt.getAnyExpression(it, document) }
             val paramExpression = BuildExpressionExt.getAnyExpression(element.argumentExpressions[0], document)
-            val propertyName = guessPropertyName(text).ifBlank {
-                guessNamelessPropertyName()
-            }
             return Setter(
                 element,
                 element.textRange,
                 TextRange.create(identifier.textRange.startOffset, element.textRange.endOffset),
+                text,
                 qualifierExpression,
-                propertyName,
+                guessPropertyName(text),
                 paramExpression
             )
         }
         return null
     }
 
+    private fun dotBefore(identifier: PsiElement): Int =
+        generateSequence(identifier.prevSibling) { it.prevSibling }
+            .firstOrNull { it.text == "." }
+            ?.textRange?.startOffset
+            ?: identifier.textRange.startOffset
+
     private fun isSimpleSetter(
         text: String,
         element: PsiMethodCallExpression,
-        qualifier: PsiExpression?,
-        experimental: Boolean,
-        method: PsiMethod?
+        qualifier: PsiExpression?
     ): Boolean {
-        val isNamelessSetter = experimental && isNamelessSetter(text, element, method)
-        if (!isSetter(text) && !isNamelessSetter) {
+        if (!isSetter(text)) {
             return false
         }
         if (element.argumentCount != 1) {

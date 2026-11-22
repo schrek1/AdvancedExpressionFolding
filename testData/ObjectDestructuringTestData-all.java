@@ -13,8 +13,8 @@ public class ObjectDestructuringTestData {
     }</fold>
 
     public void getters(Shop shop) <fold text='{...}' expand='true'>{
-        <fold text='val (' expand='true'><fold text='val' expand='false'>String</fold> </fold>name<fold text=', ' expand='true'> = shop.<fold text='name' expand='false'>getName()</fold>;</fold><fold text='' expand='true'>
-        <fold text='val' expand='false'>boolean</fold> </fold>open<fold text=') ' expand='true'> </fold>= shop<fold text='' expand='true'>.<fold text='open' expand='false'>isOpen()</fold></fold>;
+        <fold text='val (' expand='true'><fold text='val' expand='false'>String</fold> </fold>name<fold text=', ' expand='true'> = shop.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold>;</fold><fold text='' expand='true'>
+        <fold text='val' expand='false'>boolean</fold> </fold>open<fold text=') ' expand='true'> </fold>= shop<fold text='' expand='true'>.<fold text='o' expand='false'>isO</fold>pen<fold text='' expand='false'>()</fold></fold>;
         blackhole(name, open);
     }</fold>
 
@@ -26,7 +26,7 @@ public class ObjectDestructuringTestData {
     }</fold>
 
     public void castBeforeAccessors(Object o) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>o instanceof Order<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>o <fold text='is' expand='false'>instanceof</fold> Order<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>Order</fold> order = <fold text='' expand='false'>(Order) </fold>o;
             <fold text='val' expand='false'>String</fold> customer = order.<fold text='customer' expand='false'>customer()</fold>;
             <fold text='val' expand='false'>BigDecimal</fold> total = order.<fold text='total' expand='false'>total()</fold>;
@@ -65,7 +65,7 @@ public class ObjectDestructuringTestData {
     }</fold>
 
     public void methodWithArgument(Shop shop) <fold text='{...}' expand='true'>{
-        <fold text='val' expand='false'>String</fold> name = shop.<fold text='name' expand='false'>getName()</fold>;
+        <fold text='val' expand='false'>String</fold> name = shop.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold>;
         <fold text='val' expand='false'>String</fold> label = shop.getLabel("en");
         blackhole(name, label);
     }</fold>

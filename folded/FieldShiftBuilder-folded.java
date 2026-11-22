@@ -20,7 +20,7 @@ public class FieldShiftBuilder {
                 .withUserIdentifier(record<<);
         var builder2 = builder
                 .active(source<<);
-        return FieldShiftBuilder.builder().username(record.userIdentifier).username(changer(record<<))
+        return FieldShiftBuilder.builder().username(record.userIdentifier).username(changer(record.username))
                 .username(source<<).username(builder.username("a").build()<<)
                 .username(source.username + "1")
                 .active(source<<).userIdentifier(source<<)

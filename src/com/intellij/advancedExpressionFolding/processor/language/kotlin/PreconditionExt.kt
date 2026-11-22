@@ -12,12 +12,14 @@ import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
+import com.intellij.psi.PsiArrayAccessExpression
 import com.intellij.psi.PsiBlockStatement
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiIfStatement
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiNewExpression
+import com.intellij.psi.PsiReferenceExpression
 import com.intellij.psi.PsiThrowStatement
 import com.intellij.psi.util.PsiTreeUtil
 
@@ -147,6 +149,13 @@ object PreconditionExt : IKotlinLanguageState by State()() {
         if (!kotlinPreconditions || (message != null && !message.isString())) {
             return null
         }
+        if (message == null && value.canTakeNotNullAssertion()) {
+            val gaps = mutableListOf(
+                (element.start() to value.start()).toTextRange() to "",
+                (value.end() to element.end()).toTextRange() to "!!",
+            )
+            return PreconditionExpression(element, gaps, listOf(gaps.attachMessage(value, document)))
+        }
         val gaps = mutableListOf((element.start() to element.argumentList.start()).toTextRange() to "requireNotNull")
         if (message != null) {
             gaps += (value.end() to message.start()).toTextRange() to ") { "
@@ -204,4 +213,8 @@ object PreconditionExt : IKotlinLanguageState by State()() {
             InterpolatedString.OVERFLOW_CHARACTERS.contains(document.getText(TextRange(offset, offset + 1)))
 
     private fun PsiExpression.isString() = type?.canonicalText == "java.lang.String"
+
+    // `!!` binds to the last operand only, so `a + b` or `c ? a : b` would read wrongly as `a + b!!`
+    private fun PsiExpression.canTakeNotNullAssertion() =
+        this is PsiReferenceExpression || this is PsiMethodCallExpression || this is PsiArrayAccessExpression
 }

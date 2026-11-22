@@ -7,6 +7,7 @@ import com.intellij.advancedExpressionFolding.processor.asInstance
 import com.intellij.advancedExpressionFolding.processor.cache.CacheExt.invalidateExpired
 import com.intellij.advancedExpressionFolding.processor.cache.Keys
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
+import com.intellij.advancedExpressionFolding.processor.language.kotlin.KotlinLambdaExt
 import com.intellij.advancedExpressionFolding.settings.IConfig
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.lang.ASTNode
@@ -92,6 +93,7 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
         //TODO: default list size based on file size
         val allDescriptors = Lists.newArrayListWithCapacity<FoldingDescriptor>(1_000)
         BuildExpressionExt.collectFoldRegionsRecursively(element, document, Sets.newIdentityHashSet(), allDescriptors)
+        KotlinLambdaExt.addLambdaFolds(element, document, allDescriptors)
         // a placeholder equal to the text it covers changes nothing but greys out real code
         return allDescriptors.filterNot { it.placeholderText == document.getText(it.range) }.toTypedArray()
     }

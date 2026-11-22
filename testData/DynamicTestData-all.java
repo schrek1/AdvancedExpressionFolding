@@ -12,18 +12,18 @@ public class DynamicTestData {
 
 
     public static void <fold text='changedStaticMethod' expand='true'>staticMethod</fold>(Data data) <fold text='{...}' expand='true'>{
-        new DynamicTestData()
+        <fold text='' expand='false'>new </fold>DynamicTestData()
                 .<fold text='changedNormalMethod' expand='true'>normalMethod</fold>(
                         <fold text='changedStaticMethod' expand='true'>staticMethod</fold>(
-                                new DynamicTestData()
+                                <fold text='' expand='false'>new </fold>DynamicTestData()
                                         .<fold text='changedNormalMethod' expand='true'>normalMethod</fold>(
-                                                new DynamicTestData().<fold text='changedStaticMethod' expand='true'>staticMethod</fold>(
-                                                        data.<fold text='data' expand='false'>getData()</fold>
+                                                <fold text='' expand='false'>new </fold>DynamicTestData().<fold text='changedStaticMethod' expand='true'>staticMethod</fold>(
+                                                        data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>
                                                 )
                                         )
                         )
                 );
-        <fold text='changedStaticMethod' expand='true'>staticMethod</fold>(data.<fold text='data' expand='false'>getData()</fold>);
+        <fold text='changedStaticMethod' expand='true'>staticMethod</fold>(data.<fold text='d' expand='false'>getD</fold>ata<fold text='' expand='false'>()</fold>);
     }</fold>
 
     <fold text='' expand='true'>private String <fold text='changedNormalMethod' expand='true'>normalMethod</fold>(String args<fold text=' = args.substring(1))' expand='true'>)</fold><fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

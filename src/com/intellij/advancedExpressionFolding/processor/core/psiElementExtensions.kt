@@ -1,6 +1,7 @@
 package com.intellij.advancedExpressionFolding.processor.core
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.processor.cache.CacheExt
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.PsiElement
 
@@ -19,8 +20,8 @@ fun <T : PsiElement?> getAnyExpressions(
     document: Document? = expressions?.firstOrNull()?.containingFile?.viewProvider?.document,
 ): List<Expression> = expressions
     ?.filterNotNull()
-    ?.map { psiElement ->
+    ?.mapNotNull { psiElement ->
         val resolvedDocument = document ?: psiElement.containingFile.viewProvider.document
-        getAnyExpression(psiElement, resolvedDocument)
+        CacheExt.getExpression(psiElement, resolvedDocument, true)
     }
     ?: emptyList()

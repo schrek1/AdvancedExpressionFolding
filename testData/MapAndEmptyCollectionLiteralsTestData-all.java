@@ -29,7 +29,7 @@ public class MapAndEmptyCollectionLiteralsTestData {
         <fold text='' expand='false'>System.out.</fold>println(noIds);
 
         // not folded: arguments, double-brace subclasses and other map factories
-        <fold text='val' expand='false'>Map<String, Long></fold> copy = new HashMap<>(counts);
+        <fold text='val' expand='false'>Map<String, Long></fold> copy = <fold text='' expand='false'>new </fold>HashMap<>(counts);
         <fold text='' expand='false'>System.out.</fold>println(copy);
         <fold text='val' expand='false'>Map<String, Integer></fold> filled = new HashMap<>() <fold text='{...}' expand='true'>{
             <fold text='{...}' expand='true'>{
@@ -39,7 +39,7 @@ public class MapAndEmptyCollectionLiteralsTestData {
         <fold text='' expand='false'>System.out.</fold>println(filled);
         <fold text='val' expand='false'>Map<String, Integer></fold> entries = Map.ofEntries(Map.entry("cpu", 4));
         <fold text='' expand='false'>System.out.</fold>println(entries);
-        <fold text='val' expand='false'>Map<String, Long></fold> sorted = new TreeMap<>();
+        <fold text='val' expand='false'>Map<String, Long></fold> sorted = <fold text='' expand='false'>new </fold>TreeMap<>();
         <fold text='' expand='false'>System.out.</fold>println(sorted);
     }</fold>
 }

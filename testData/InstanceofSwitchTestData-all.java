@@ -17,8 +17,8 @@ public class InstanceofSwitchTestData {
     double area(Shape shape) <fold text='{...}' expand='true'>{
         <fold text='var' expand='false'>double</fold> area = 0;
         <fold text='switch' expand='false'>if</fold> (shape<fold text='' expand='false'> instanceof Circle c</fold>) <fold text='{...}' expand='true'>{
-           <fold text=' case Circle c -> ' expand='false'> </fold>area = Math.PI * c.<fold text='r' expand='false'>r()</fold> * c.<fold text='r' expand='false'>r()</fold>;
-        <fold text='' expand='false'>}</fold></fold><fold text='    case ' expand='false'> else if (shape instanceof </fold>Square s<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='case Circle c ->' expand='false'>   </fold> area = Math.PI * c.<fold text='r' expand='false'>r()</fold> * c.<fold text='r' expand='false'>r()</fold>;
+        <fold text='' expand='false'>}</fold></fold><fold text='case' expand='false'> else if (shape instanceof</fold> Square s<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>area = s.<fold text='side' expand='false'>side()</fold> * s.<fold text='side' expand='false'>side()</fold>;
         }</fold>
         return area;
@@ -26,35 +26,35 @@ public class InstanceofSwitchTestData {
 
     String describe(Object value) <fold text='{...}' expand='true'>{
         <fold text='switch' expand='false'>if</fold> (value<fold text='' expand='false'> instanceof Integer number</fold>) <fold text='{...}' expand='true'>{
-           <fold text=' case Integer number -> ' expand='false'> </fold>return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
-        <fold text='' expand='false'>}</fold></fold><fold text='    case ' expand='false'> else if (value instanceof </fold>String text<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='case Integer number ->' expand='false'>   </fold> return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
+        <fold text='' expand='false'>}</fold></fold><fold text='case' expand='false'> else if (value instanceof</fold> String text<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "text <fold text='$' expand='false'>" + </fold>text<fold text='";' expand='false'>;</fold>
-        <fold text='' expand='false'>}</fold></fold><fold text='    case ' expand='false'> else if (value instanceof </fold>Shape<fold text=' _ ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>}</fold></fold><fold text='case' expand='false'> else if (value instanceof</fold> Shape<fold text=' _ ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "shape";
-        <fold text='' expand='false'>}</fold></fold><fold text='    ' expand='false'> </fold><fold text='default' expand='false'>else</fold> <fold text='-> ' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>}</fold></fold><fold text='' expand='false'> </fold><fold text='default' expand='false'>else</fold> <fold text='-> ' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "unknown";
         }</fold>
     }</fold>
 
     double recordPatterns(Shape shape) <fold text='{...}' expand='true'>{
         <fold text='switch' expand='false'>if</fold> (shape<fold text='' expand='false'> instanceof Circle(double r)</fold>) <fold text='{...}' expand='true'>{
-           <fold text=' case Circle(double r) -> ' expand='false'> </fold>return r * r;
-        <fold text='' expand='false'>}</fold></fold><fold text='    case ' expand='false'> else if (shape instanceof </fold>Triangle(double base, double height)<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='case Circle(double r) ->' expand='false'>   </fold> return r * r;
+        <fold text='' expand='false'>}</fold></fold><fold text='case' expand='false'> else if (shape instanceof</fold> Triangle(double base, double height)<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return base * height / 2;
-        <fold text='' expand='false'>}</fold></fold><fold text='    ' expand='false'> </fold><fold text='default' expand='false'>else</fold> <fold text='-> ' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>}</fold></fold><fold text='' expand='false'> </fold><fold text='default' expand='false'>else</fold> <fold text='-> ' expand='false'><fold text='{...}' expand='true'>{
             </fold>return 0;
         }</fold>
     }</fold>
 
     String singleCheck(Object value) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>value instanceof String text<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return text;<fold text='' expand='false'>
         }</fold></fold>
         return "";
     }</fold>
 
     String singleCheckWithElse(Object value) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold>if <fold text='' expand='false'>(</fold>value instanceof String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        </fold>if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return text;
         }</fold> else <fold text='{...}' expand='true'>{
             return "";
@@ -62,67 +62,101 @@ public class InstanceofSwitchTestData {
     </fold>}</fold>
 
     String differentVariables(Object first, Object second) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>first instanceof String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>first <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return text;
-        }</fold> else if <fold text='' expand='false'>(</fold>second instanceof Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> else if <fold text='' expand='false'>(</fold>second <fold text='is' expand='false'>instanceof</fold> Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
         }</fold>
         return "";
     }</fold>
 
     String guardedCondition(Object value) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>value instanceof String text && !text.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> String text && !text.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return text;
-        }</fold> else if <fold text='' expand='false'>(</fold>value instanceof Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> else if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
         }</fold>
         return "";
     }</fold>
 
     String otherConditionInChain(Object value) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>value instanceof String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return text;
         }</fold> else if <fold text='' expand='false'>(</fold>value == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "null";
-        }</fold> else if <fold text='' expand='false'>(</fold>value instanceof Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> else if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
         }</fold>
         return "";
     }</fold>
 
     String multiStatementBranch(Object value) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>value instanceof String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>String</fold> trimmed = text.trim();
             return trimmed;
-        }</fold> else if <fold text='' expand='false'>(</fold>value instanceof Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> else if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
         }</fold>
         return "";
     }</fold>
 
     String methodCallSubject() <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>load() instanceof String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>load() <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return text;
-        }</fold> else if <fold text='' expand='false'>(</fold>load() instanceof Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        }</fold> else if <fold text='' expand='false'>(</fold>load() <fold text='is' expand='false'>instanceof</fold> Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
         }</fold>
         return "";
     }</fold>
 
-    String commentInChain(Object value) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>value instanceof String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            // keeps the chain unfolded
+    double commentedDefault(Object value) <fold text='{...}' expand='true'>{
+        <fold text='switch' expand='false'>if</fold> (value<fold text='' expand='false'> instanceof String text</fold>) <fold text='{...}' expand='true'>{
+        <fold text='case String text ->' expand='false'>   </fold> return Double.parseDouble(text);
+        <fold text='' expand='false'>}</fold></fold><fold text='case' expand='false'> else if (value instanceof</fold> Long number<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return number.doubleValue();
+        <fold text='' expand='false'>}</fold></fold><fold text='' expand='false'> </fold><fold text='default' expand='false'>else</fold> <fold text='->' expand='false'><fold text='{...}' expand='true'>{</fold>
+            <fold text='//...' expand='true'>// should not happen; log and fail
+            // callers validate the value first</fold>
+            throw new IllegalArgumentException("unexpected <fold text='$' expand='false'>" + </fold>value<fold text='")' expand='false'>)</fold>;
+        }</fold>
+    }</fold>
+
+    String commentedCases(Object value) <fold text='{...}' expand='true'>{
+        <fold text='switch' expand='false'>if</fold> (value<fold text='' expand='false'> instanceof String text</fold>) <fold text='{...}' expand='true'>{
+        <fold text='case String text ->' expand='false'>   </fold> // already trimmed by the caller
             return text;
-        }</fold> else if <fold text='' expand='false'>(</fold>value instanceof Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>}</fold></fold><fold text='case' expand='false'> else if (value instanceof</fold> Integer number<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{</fold>
+            // counts start at zero
+            return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
+        <fold text='' expand='false'>}</fold></fold><fold text='case' expand='false'> else if (value instanceof</fold> Shape<fold text=' _ ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return "shape";
+        }</fold>
+        return "";
+    }</fold>
+
+    String commentInCondition(Object value) <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>value <fold text='/*...*/' expand='true'>/* raw input */</fold> <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            return text;
+        }</fold> else if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
+        }</fold>
+        return "";
+    }</fold>
+
+    String commentAfterStatement(Object value) <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> String text<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            return text;
+            // trailing note
+        }</fold> else if <fold text='' expand='false'>(</fold>value <fold text='is' expand='false'>instanceof</fold> Integer number<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
         }</fold>
         return "";
     }</fold>
 
     String withoutBraces(Object value) <fold text='{...}' expand='true'>{
-        if (value instanceof String text)
+        if (value <fold text='is' expand='false'>instanceof</fold> String text)
             return text;
-        else if (value instanceof Integer number)
+        else if (value <fold text='is' expand='false'>instanceof</fold> Integer number)
             return "number <fold text='$' expand='false'>" + </fold>number<fold text='";' expand='false'>;</fold>
         return "";
     }</fold>

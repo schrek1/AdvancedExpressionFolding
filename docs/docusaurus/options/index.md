@@ -147,6 +147,24 @@ Implements a quick return syntax similar to Kotlin.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LetReturnIt.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LetReturnIt-folded.java)
 
+## kotlinWithLock
+### Lock, try, finally unlock as Kotlin withLock
+Shows `lock.lock(); try { ... } finally { lock.unlock(); }` the way Kotlin writes it: `withLock(lock) { ... }`. Folds only when the `lock()` call stands right before the `try`, the `finally` block holds nothing but the `unlock()` of the same lock, and the `try` has no `catch` and no resources.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/WithLockTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/WithLockTestData-folded.java)
+
+## kotlinLambda
+### Lambdas in Kotlin syntax: { it.x }
+Shows Java lambdas the way Kotlin writes them: `d -> d.getPrice()` as `{ it.price }`, `(a, b) -> a + b` as `{ a, b -> a + b }`, `() -> load()` as `{ load() }`. A lambda that is the last argument of a call moves behind it as a trailing lambda: `items.forEach(item -> { ... })` reads `items.forEach { ... }`. Only the braces, separators and each `it` are folded; the body stays real code and its own folds keep working. A lambda nested in an `it` lambda keeps its parameter name, and a lambda inside a call that another fold already rewrites stays Java.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinLambdaTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinLambdaTestData-folded.java)
+
+## scopeLet
+### Null-guarded single statement as ?.let
+Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact.setEmail(it) }` and `body != null ? toBytes(body) : null` as `body?.let { toBytes(it) }`, in the source order.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeLetTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeLetTestData-folded.java)
+
 ## assertsCollapse
 ### Asserts
 Simplifies assert statements.
@@ -191,6 +209,12 @@ Extends log statement folding to Java text blocks so multi-line log messages col
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LogFoldingTextBlocksTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LogFoldingTextBlocksTestData-folded.java)
 
+## logFoldingKeepMessageText
+### Log folding: keep the message text, fold only the arguments
+Keeps the log message as real, string-coloured source and folds only each `{}` / `%s` into its argument (`$shopId`, `${previous.mode}`); the argument list after the message is hidden. A trailing exception stays visible. An argument may be a call with arguments (`${countOrders(shopId, previous)}`); only a call whose argument holds a lambda, spans several lines or is longer than about 40 characters keeps the classic log folding. Off by default.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LogFoldingKeepMessageTextTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LogFoldingKeepMessageTextTestData-folded.java)
+
 ## fieldShift
 ### Field initialization and builder patterns
 Transforms field initialization and builder patterns into more concise syntax.
@@ -210,7 +234,7 @@ Shows `person.toBuilder().name("Alice").age(31).build()` as `person.copy(name = 
 
 ## builderNamedArguments
 ### Builder chain as constructor call Person(name = ...)
-Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain.
+Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain. Builders with `set`-prefixed methods (`Order.builder().setNote("gift").build()`) fold too, as `Order(note = "gift")`.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/BuilderNamedArgumentsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/BuilderNamedArgumentsTestData-folded.java)
 
@@ -401,6 +425,12 @@ Shows an `if / else if` chain of `instanceof` checks on one variable as a Java p
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/InstanceofSwitchTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/InstanceofSwitchTestData-folded.java)
 
+## kotlinIsOperator
+### instanceof as Kotlin is / !is
+Shows `x instanceof Foo` as `x is Foo`, `!(x instanceof Foo)` as `x !is Foo` and `x instanceof Foo f` as `x is Foo f`. Only the keyword (and the `!(` / `)` of a negation) folds; operand, type and binding keep their syntax colours.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/IsOperatorTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IsOperatorTestData-folded.java)
+
 ## summaryParentOverride
 ### Displays a folded summary of overridden methods from parent classes and interfaces
 Provides a concise view of inherited method overrides, reducing redundant code duplication.
@@ -413,6 +443,12 @@ Simplifies constructor references and inline field initialization.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ConstructorReferenceNotationTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ConstructorReferenceNotationTestData-folded.java)
 - [Documentation](../features/constructor-reference-notation.md)
+
+## kotlinConstructorCall
+### Constructor calls without `new` (Kotlin style)
+Hides the `new` keyword of a plain instance creation, so `throw new IllegalArgumentException(...)` reads as `throw IllegalArgumentException(...)` and `var order = new Order(id, total)` as `var order = Order(id, total)`. Only `new` and the space after it are folded; anonymous classes, arrays and qualified `outer.new Inner()` stay as Java, and folds that already rewrite a creation (collection literals, `::new`) win.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinConstructorCallTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinConstructorCallTestData-folded.java)
 
 ## methodDefaultParameters
 ### Default parameter values inline for overloaded method
