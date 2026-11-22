@@ -205,6 +205,10 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::logFoldingTextBlocks, "Log folding: collapse Text Blocks") {
             example(LogFoldingTextBlocksTestData::class)
         }
+        registerCheckbox(state::logFoldingKeepMessageText, "Log folding: keep the message text, fold only the arguments") {
+            example(LogFoldingKeepMessageTextTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#logfoldingkeepmessagetext")
+        }
 
         registerCheckbox(
             state::fieldShift,
