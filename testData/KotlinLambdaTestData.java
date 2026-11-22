@@ -39,7 +39,7 @@ public class KotlinLambdaTestData {
     }</fold>
 
     boolean anyOutgoing(List<Item> items)<fold text=' { ' expand='false'> {
-        </fold>return items.stream().anyMatch<fold text=' {' expand='false'>(d -></fold> <fold text='it' expand='false'>d</fold>.<fold text='direction' expand='false'>getDirection()</fold> == Direction.OUT<fold text=' }' expand='false'>)</fold>;<fold text=' }' expand='false'>
+        </fold>return items.stream().anyMatch<fold text=' {' expand='false'>(d -></fold> <fold text='it' expand='false'>d</fold>.<fold text='d' expand='false'>getD</fold>irection<fold text='' expand='false'>()</fold> == Direction.OUT<fold text=' }' expand='false'>)</fold>;<fold text=' }' expand='false'>
     }</fold>
 
     int load()<fold text=' { ' expand='false'> {
@@ -55,12 +55,12 @@ public class KotlinLambdaTestData {
     }</fold>
 
     List<Integer> prices(List<Item> items)<fold text=' { ' expand='false'> {
-        </fold>return items.stream().map<fold text=' {' expand='false'>((Item d) -></fold> <fold text='it' expand='false'>d</fold>.<fold text='price' expand='false'>getPrice()</fold><fold text=' }' expand='false'>)</fold>.toList();<fold text=' }' expand='false'>
+        </fold>return items.stream().map<fold text=' {' expand='false'>((Item d) -></fold> <fold text='it' expand='false'>d</fold>.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold><fold text=' }' expand='false'>)</fold>.toList();<fold text=' }' expand='false'>
     }</fold>
 
     void printAll(List<Item> items) <fold text='{...}' expand='true'>{
         items.forEach<fold text='' expand='false'>(item -></fold> <fold text='{...}' expand='true'>{
-            int price = <fold text='it' expand='false'>item</fold>.<fold text='price' expand='false'>getPrice()</fold>;
+            int price = <fold text='it' expand='false'>item</fold>.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold>;
             System.out.println(price);
         }</fold><fold text='' expand='false'>)</fold>;
     }</fold>
@@ -84,10 +84,10 @@ public class KotlinLambdaTestData {
     }</fold>
 
     void arguments(Item item) <fold text='{...}' expand='true'>{
-        withDefault(0<fold text=')' expand='false'>,</fold> <fold text='{' expand='false'>() -></fold> item.<fold text='price' expand='false'>getPrice()</fold><fold text=' }' expand='false'>)</fold>;
-        withSupplierFirst(<fold text='{' expand='false'>() -></fold> item.<fold text='price' expand='false'>getPrice()</fold><fold text=' },' expand='false'>,</fold> 0);
+        withDefault(0<fold text=')' expand='false'>,</fold> <fold text='{' expand='false'>() -></fold> item.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold><fold text=' }' expand='false'>)</fold>;
+        withSupplierFirst(<fold text='{' expand='false'>() -></fold> item.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold><fold text=' },' expand='false'>,</fold> 0);
         withDefault(0, // keep the comment
-                <fold text='{' expand='false'>() -></fold> item.<fold text='price' expand='false'>getPrice()</fold><fold text=' })' expand='false'>)</fold>;
+                <fold text='{' expand='false'>() -></fold> item.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold><fold text=' })' expand='false'>)</fold>;
     }</fold>
 
     static class Funding <fold text='{...}' expand='true'>{
@@ -105,14 +105,14 @@ public class KotlinLambdaTestData {
     void multiLineArgument(AccountService accountService, Funding funding, Item other) <fold text='{...}' expand='true'>{
         withSupplierFirst(
                 <fold text='{' expand='false'>() -></fold> accountService.requireAccount(
-                        funding.<fold text='accountId' expand='false'>getAccountId()</fold>)<fold text=' },' expand='false'>,</fold>
+                        funding.<fold text='a' expand='false'>getA</fold>ccountId<fold text='' expand='false'>()</fold>)<fold text=' },' expand='false'>,</fold>
                 other);
     }</fold>
 
     void declarations() <fold text='{...}' expand='true'>{
-        Function<Item, Integer> price = <fold text='{' expand='false'>item -></fold> <fold text='it' expand='false'>item</fold>.<fold text='price' expand='false'>getPrice()</fold><fold text=' };' expand='false'>;</fold>
-        Predicate<Item> outgoing = <fold text='{' expand='false'>d -></fold> <fold text='it' expand='false'>d</fold>.<fold text='direction' expand='false'>getDirection()</fold> == Direction.OUT<fold text=' };' expand='false'>;</fold>
-        Comparator<Item> byPrice = <fold text='{' expand='false'>(Item</fold> a, <fold text='' expand='false'>Item </fold>b<fold text='' expand='false'>)</fold> -> Integer.compare(a.<fold text='price' expand='false'>getPrice()</fold>, b.<fold text='price' expand='false'>getPrice()</fold>)<fold text=' };' expand='false'>;</fold>
+        Function<Item, Integer> price = <fold text='{' expand='false'>item -></fold> <fold text='it' expand='false'>item</fold>.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold><fold text=' };' expand='false'>;</fold>
+        Predicate<Item> outgoing = <fold text='{' expand='false'>d -></fold> <fold text='it' expand='false'>d</fold>.<fold text='d' expand='false'>getD</fold>irection<fold text='' expand='false'>()</fold> == Direction.OUT<fold text=' };' expand='false'>;</fold>
+        Comparator<Item> byPrice = <fold text='{' expand='false'>(Item</fold> a, <fold text='' expand='false'>Item </fold>b<fold text='' expand='false'>)</fold> -> Integer.compare(a.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold>, b.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold>)<fold text=' };' expand='false'>;</fold>
         Callable<Integer> call = <fold text='' expand='false'>() -> </fold><fold text='{...}' expand='true'>{
             return load();
         }</fold>;
@@ -120,16 +120,16 @@ public class KotlinLambdaTestData {
 
     long nested(List<Item> items) <fold text='{...}' expand='true'>{
         return items.stream()
-                .filter<fold text=' {' expand='false'>(order -></fold> <fold text='it' expand='false'>order</fold>.<fold text='parts' expand='false'>getParts()</fold>.stream().anyMatch<fold text=' { ' expand='false'>(</fold>part -> part.<fold text='price' expand='false'>getPrice()</fold> > <fold text='it' expand='false'>order</fold>.<fold text='price' expand='false'>getPrice()</fold><fold text=' }' expand='false'>)</fold><fold text=' }' expand='false'>)</fold>
+                .filter<fold text=' {' expand='false'>(order -></fold> <fold text='it' expand='false'>order</fold>.<fold text='p' expand='false'>getP</fold>arts<fold text='' expand='false'>()</fold>.stream().anyMatch<fold text=' { ' expand='false'>(</fold>part -> part.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold> > <fold text='it' expand='false'>order</fold>.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold><fold text=' }' expand='false'>)</fold><fold text=' }' expand='false'>)</fold>
                 .count();
     }</fold>
 
     void alreadyNamedIt(List<Item> items)<fold text=' { ' expand='false'> {
-        </fold>items.forEach<fold text=' {' expand='false'>(it -></fold> System.out.println(it.<fold text='price' expand='false'>getPrice()</fold>)<fold text=' }' expand='false'>)</fold>;<fold text=' }' expand='false'>
+        </fold>items.forEach<fold text=' {' expand='false'>(it -></fold> System.out.println(it.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold>)<fold text=' }' expand='false'>)</fold>;<fold text=' }' expand='false'>
     }</fold>
 
     void outerIt(List<Item> items, Item it)<fold text=' { ' expand='false'> {
-        </fold>items.forEach<fold text=' { ' expand='false'>(</fold>d -> System.out.println(d.<fold text='price' expand='false'>getPrice()</fold> + it.<fold text='price' expand='false'>getPrice()</fold>)<fold text=' }' expand='false'>)</fold>;<fold text=' }' expand='false'>
+        </fold>items.forEach<fold text=' { ' expand='false'>(</fold>d -> System.out.println(d.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold> + it.<fold text='p' expand='false'>getP</fold>rice<fold text='' expand='false'>()</fold>)<fold text=' }' expand='false'>)</fold>;<fold text=' }' expand='false'>
     }</fold>
 
     Function<Item, Integer> methodReference()<fold text=' { ' expand='false'> {
