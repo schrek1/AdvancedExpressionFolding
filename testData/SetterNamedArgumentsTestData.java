@@ -18,27 +18,27 @@ public class SetterNamedArgumentsTestData {
 
         <fold text='val' expand='false'>var</fold> partial = <fold text='' expand='false'>new </fold>Person<fold text='(n' expand='false'>();
         partial.setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Carol");
-        partial.<fold text='age = ' expand='false'>setAge(</fold>partial.<fold text='age' expand='false'>getAge()</fold> + 1<fold text='' expand='false'>)</fold>;
+        partial.<fold text='a' expand='false'>setA</fold>ge<fold text=' = ' expand='false'>(</fold>partial.<fold text='age' expand='false'>getAge()</fold> + 1<fold text='' expand='false'>)</fold>;
 
         <fold text='val' expand='false'>var</fold> renamed = <fold text='' expand='false'>new </fold>Person<fold text='(n' expand='false'>();
         renamed.setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Heidi");
-        renamed.<fold text='name = ' expand='false'>setName(</fold>"Ivan"<fold text='' expand='false'>)</fold>;
+        renamed.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Ivan"<fold text='' expand='false'>)</fold>;
     }</fold>
 
     public void notFolded(Person source) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>var</fold> withArguments = new Person("Dave");
-        withArguments.<fold text='age = ' expand='false'>setAge(</fold>40<fold text='' expand='false'>)</fold>;
+        withArguments.<fold text='a' expand='false'>setA</fold>ge<fold text=' = ' expand='false'>(</fold>40<fold text='' expand='false'>)</fold>;
 
         <fold text='val' expand='false'>var</fold> commented = new Person();
         // a comment keeps the setters as they are
-        commented.<fold text='name = ' expand='false'>setName(</fold>"Eve"<fold text='' expand='false'>)</fold>;
+        commented.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Eve"<fold text='' expand='false'>)</fold>;
 
         <fold text='val' expand='false'>var</fold> other = new Person();
-        source.<fold text='name = ' expand='false'>setName(</fold>"Frank"<fold text='' expand='false'>)</fold>;
+        source.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Frank"<fold text='' expand='false'>)</fold>;
 
         <fold text='val' expand='false'>var</fold> anonymous = new Person() <fold text='{...}' expand='true'>{
         }</fold>;
-        anonymous.<fold text='name = ' expand='false'>setName(</fold>"Grace"<fold text='' expand='false'>)</fold>;
+        anonymous.<fold text='n' expand='false'>setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Grace"<fold text='' expand='false'>)</fold>;
 
         <fold text='val' expand='false'>var</fold> empty = new Person();
         System.out.println(empty);

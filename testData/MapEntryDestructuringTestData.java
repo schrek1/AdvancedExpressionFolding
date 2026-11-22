@@ -34,7 +34,7 @@ public class MapEntryDestructuringTestData {
 
     public void notDestructured(Map<String, Integer> stock, List<Map.Entry<String, Integer>> entries, String key) <fold text='{...}' expand='true'>{
         for (Map.Entry<String, Integer> e : stock.entrySet()) <fold text='{...}' expand='true'>{
-            e.<fold text='value = ' expand='false'>setValue(</fold>e.<fold text='value' expand='false'>getValue()</fold> + 1<fold text='' expand='false'>)</fold>;
+            e.<fold text='v' expand='false'>setV</fold>alue<fold text=' = ' expand='false'>(</fold>e.<fold text='value' expand='false'>getValue()</fold> + 1<fold text='' expand='false'>)</fold>;
         }</fold>
 
         for (Map.Entry<String, Integer> e : stock.entrySet()) <fold text='{...}' expand='true'>{
