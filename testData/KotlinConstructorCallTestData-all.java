@@ -43,7 +43,7 @@ public class KotlinConstructorCallTestData {
         <fold text='val' expand='false'>List<String></fold> names = <fold text='[]' expand='false'>new ArrayList<>()</fold>;
         <fold text='val' expand='false'>StringBuilder</fold> text = <fold text='""' expand='false'>new StringBuilder()</fold>;
         <fold text='val' expand='false'>BigDecimal</fold> price = <fold text='' expand='false'>new BigDecimal(</fold><fold text='1.50' expand='false'>"1.50"</fold><fold text='' expand='false'>)</fold>;
-        <fold text='val' expand='false'>Thread</fold> worker = <fold text='' expand='false'>new </fold>Thread(() -> <fold text='' expand='false'>System.out.</fold>println("done"));
+        <fold text='val' expand='false'>Thread</fold> worker = <fold text='' expand='false'>new </fold>Thread(<fold text='{' expand='false'>() -></fold> <fold text='' expand='false'>System.out.</fold>println("done")<fold text=' })' expand='false'>)</fold>;
     }</fold>
 
     void notFolded(KotlinConstructorCallTestData outer) <fold text='{...}' expand='true'>{

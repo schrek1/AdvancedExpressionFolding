@@ -12,7 +12,7 @@ public class TodoTestData {
     </fold>}</fold>
 
     public String render(String format) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>format.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>format.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "";<fold text='' expand='false'>
         }</fold></fold>
         <fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>("Format not supported: <fold text='$' expand='false'>" + </fold>format<fold text='")' expand='false'>)</fold>;

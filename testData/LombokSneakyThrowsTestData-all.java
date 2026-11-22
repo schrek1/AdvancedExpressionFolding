@@ -20,7 +20,7 @@ public class LombokSneakyThrowsTestData {
     <fold text='@SneakyThrows p' expand='true'>p</fold>ublic String load(Path file) <fold text='{...}' expand='true'>{
         <fold text='' expand='true'>try </fold><fold text='' expand='true'><fold text='{...}' expand='true'>{</fold><fold text='' expand='true'>
             </fold><fold text='val' expand='false'>String</fold> content = Files.readString(file);
-        <fold text='' expand='true'>    </fold>if <fold text='' expand='false'>(</fold>content.<fold text='blank' expand='false'>isBlank()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='true'>    </fold>if <fold text='' expand='false'>(</fold>content.<fold text='b' expand='false'>isB</fold>lank<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             <fold text='' expand='true'>    </fold></fold>return json;<fold text='' expand='false'>
         <fold text='' expand='true'>    </fold>}</fold></fold>
         <fold text='' expand='true'>    </fold>return content;<fold text='' expand='true'>
@@ -74,7 +74,7 @@ public class LombokSneakyThrowsTestData {
         try <fold text='{...}' expand='true'>{
             Files.delete(file);
         }</fold> catch <fold text='' expand='false'>(</fold>IOException e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            System.err.println(e.<fold text='message' expand='false'>getMessage()</fold>);
+            System.err.println(e.<fold text='m' expand='false'>getM</fold>essage<fold text='' expand='false'>()</fold>);
             throw <fold text='' expand='false'>new </fold>RuntimeException(e);
         }</fold>
     }</fold>

@@ -86,7 +86,7 @@ public class ConstructorReferenceNotationTestData {
 
         </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public String toString() <fold text='{...}' expand='true'>{
-            return <fold text='' expand='false'>new </fold>StringJoiner(", ",<fold text=' "${' expand='false'> </fold>ConstClass.class.<fold text='simpleName' expand='false'>getSimpleName()</fold><fold text='}' expand='false'> + "</fold>[", "]")
+            return <fold text='' expand='false'>new </fold>StringJoiner(", ",<fold text=' "${' expand='false'> </fold>ConstClass.class.<fold text='s' expand='false'>getS</fold>impleName<fold text='' expand='false'>()</fold><fold text='}' expand='false'> + "</fold>[", "]")
                     .add("string='<fold text='$' expand='false'>" + </fold>string<fold text='' expand='false'> + "</fold>'")
                     .toString();
         }</fold></fold>

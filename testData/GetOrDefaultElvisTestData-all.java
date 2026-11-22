@@ -21,7 +21,7 @@ public class GetOrDefaultElvisTestData {
         int current;
         current = stock<fold text='[' expand='false'>.getOrDefault(</fold>item<fold text='] ?:' expand='false'>,</fold> 0<fold text='' expand='false'>)</fold>;
         print(stock<fold text='[' expand='false'>.getOrDefault(</fold>item<fold text='] ?:' expand='false'>,</fold> 0<fold text='' expand='false'>)</fold>);
-        <fold text='val' expand='false'>Function<String, Integer></fold> lookup = name -> stock<fold text='[' expand='false'>.getOrDefault(</fold>name<fold text='] ?:' expand='false'>,</fold> -1<fold text='' expand='false'>)</fold>;
+        <fold text='val' expand='false'>Function<String, Integer></fold> lookup = <fold text='{' expand='false'>name -></fold> stock<fold text='[' expand='false'>.getOrDefault(</fold><fold text='it' expand='false'>name</fold><fold text='] ?:' expand='false'>,</fold> -1<fold text='' expand='false'>)</fold><fold text=' };' expand='false'>;</fold>
         stock<fold text='[' expand='false'>.put(</fold>item<fold text='] = ' expand='false'>, </fold>current + amount + lookup.apply(item)<fold text='' expand='false'>)</fold>;
     }</fold>
 

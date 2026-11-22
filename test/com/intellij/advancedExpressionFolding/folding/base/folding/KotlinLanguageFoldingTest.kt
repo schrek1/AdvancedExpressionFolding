@@ -19,6 +19,12 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     fun withLockTestData() = testCase.runFoldingTest(foldingState()::kotlinWithLock)
 
     @Test
+    fun kotlinLambdaTestData() = testCase.runFoldingTest(
+        foldingState()::kotlinLambda,
+        foldingState()::getSetExpressionsCollapse,
+    )
+
+    @Test
     fun ifNullSafeData() = testCase.runFoldingTest(
         foldingState()::checkExpressionsCollapse,
         foldingState()::getSetExpressionsCollapse,
@@ -144,6 +150,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     fun instanceofSwitchTestData() = testCase.runFoldingTest(foldingState()::instanceofSwitch)
 
     @Test
+    fun isOperatorTestData() = testCase.runFoldingTest(foldingState()::kotlinIsOperator)
+
+    @Test
     fun constructorReferenceNotationTestData() = testCase.runFoldingTest(foldingState()::constructorReferenceNotation)
 
     @Test
@@ -166,6 +175,12 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
 
     @Test
     fun lazyPropertyTestData() = testCase.runFoldingTest(foldingState()::lazyProperty, foldingState()::lombok)
+
+    @Test
+    fun scopeLetTestData() = testCase.runFoldingTest(
+        foldingState()::scopeLet,
+        foldingState()::getSetExpressionsCollapse,
+    )
 
     @Test
     fun kotlinConstructorCallTestData() = testCase.runFoldingTest(foldingState()::kotlinConstructorCall)
