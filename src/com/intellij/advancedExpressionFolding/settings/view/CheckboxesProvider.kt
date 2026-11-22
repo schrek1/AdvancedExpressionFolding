@@ -279,6 +279,11 @@ abstract class CheckboxesProvider {
             example(PseudoAnnotationsMainTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#pseudoAnnotations")
         }
+        registerCheckbox(state::guardReturnWhen, "Guard-if return chain as when") {
+            example(GuardReturnWhenTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#guardreturnwhen")
+        }
+
         // NEW OPTION
         registerCheckbox(state::memoryImprovement, "Memory improvements")
         registerCheckbox(state::experimental, "Experimental features") {

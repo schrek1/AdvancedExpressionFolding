@@ -5,6 +5,7 @@ package com.intellij.advancedExpressionFolding.processor.declaration
 import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ControlFlowMultiStatementCodeBlockExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ControlFlowSingleStatementCodeBlockExpression
+import com.intellij.advancedExpressionFolding.expression.controlflow.GuardReturnWhenExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.IfExpression
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IControlFlowState
@@ -22,6 +23,9 @@ object PsiCodeBlockExt : IControlFlowState by State()() {
     fun getCodeBlockExpression(element: PsiCodeBlock): Expression? {
         val parent = element.parent
         if (!isSupportedParent(parent, element)) {
+            return null
+        }
+        if ((parent?.parent as? PsiIfStatement)?.let(GuardReturnWhenExpression::foldsAsWhen) == true) {
             return null
         }
         return if (element.statements.size == 1 || parent is PsiSwitchStatement) {
