@@ -420,6 +420,12 @@ Simplifies constructor references and inline field initialization.
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ConstructorReferenceNotationTestData-folded.java)
 - [Documentation](../features/constructor-reference-notation.md)
 
+## kotlinConstructorCall
+### Constructor calls without `new` (Kotlin style)
+Hides the `new` keyword of a plain instance creation, so `throw new IllegalArgumentException(...)` reads as `throw IllegalArgumentException(...)` and `var order = new Order(id, total)` as `var order = Order(id, total)`. Only `new` and the space after it are folded; anonymous classes, arrays and qualified `outer.new Inner()` stay as Java, and folds that already rewrite a creation (collection literals, `::new`) win.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinConstructorCallTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinConstructorCallTestData-folded.java)
+
 ## methodDefaultParameters
 ### Default parameter values inline for overloaded method
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/MethodDefaultParametersTestData.java)

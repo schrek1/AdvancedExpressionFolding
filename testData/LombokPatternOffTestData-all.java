@@ -310,17 +310,17 @@ public class LombokPatternOffTestData {
             if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
             if <fold text='' expand='false'>(</fold>!(o instanceof DataFull)<fold text='' expand='false'>)</fold> return false;
             <fold text='val' expand='false'>DataFull</fold> dataFull = <fold text='' expand='false'>(DataFull) </fold>o;
-            return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
+            return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
         }</fold>
 
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public String toString() <fold text='{...}' expand='true'>{
-            return new ToStringBuilder(this)
+            return <fold text='' expand='false'>new </fold>ToStringBuilder(this)
                     .append("data", data)
                     .append("ok", ok)
                     .toString();
@@ -351,12 +351,12 @@ public class LombokPatternOffTestData {
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
                 if <fold text='' expand='false'>(</fold>!(o instanceof LombokPatternOffTestData.DataFull)<fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokPatternOffTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokPatternOffTestData.DataFull) </fold>o;
-                return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
+                return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
             }</fold>
 
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
 
         }</fold>
@@ -382,17 +382,17 @@ public class LombokPatternOffTestData {
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
                 if <fold text='' expand='false'>(</fold>!(o instanceof LombokPatternOffTestData.DataFull)<fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokPatternOffTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokPatternOffTestData.DataFull) </fold>o;
-                return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
+                return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
             }</fold>
 
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
 
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public String toString() <fold text='{...}' expand='true'>{
-                return new ToStringBuilder(this)
+                return <fold text='' expand='false'>new </fold>ToStringBuilder(this)
                         .append("data", data)
                         .append("ok", ok)
                         .toString();
@@ -420,17 +420,17 @@ public class LombokPatternOffTestData {
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
                 if <fold text='' expand='false'>(</fold>!(o instanceof LombokPatternOffTestData.DataFull)<fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokPatternOffTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokPatternOffTestData.DataFull) </fold>o;
-                return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
+                return <fold text='' expand='false'>new </fold>EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='equals' expand='false'>isEquals()</fold>;
             }</fold>
 
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public int hashCode()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>HashCodeBuilder(17, 37).append(data).append(ok).toHashCode()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
 
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public String toString() <fold text='{...}' expand='true'>{
-                return new ToStringBuilder(this)
+                return <fold text='' expand='false'>new </fold>ToStringBuilder(this)
                         .append("data", data)
                         .append("ok", ok)
                         .toString();
@@ -742,7 +742,7 @@ public class LombokPatternOffTestData {
                 this.field3 = <fold text='<<' expand='false'>field3</fold>;
             }</fold>
             public static StaticNameArgs of(String field1, int field2, boolean field3) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
         }</fold>
 
@@ -825,7 +825,7 @@ public class LombokPatternOffTestData {
             }</fold>
 
             public static StaticNameArgs of(String field1, int field2, boolean field3) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+                </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>StaticNameArgs(field1, field2, field3)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
         }</fold>
 
@@ -1086,7 +1086,7 @@ public class LombokPatternOffTestData {
                 return this;
             }</fold>
             public ClassWithBuilder build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new ClassWithBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>ClassWithBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
     }</fold>

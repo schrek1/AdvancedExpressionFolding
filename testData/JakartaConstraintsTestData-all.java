@@ -74,10 +74,10 @@ public class JakartaConstraintsTestData {
     public void notFoldedBranches(int quantity) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>quantity < 1<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("too few");
-            throw new IllegalArgumentException("quantity");
+            throw <fold text='' expand='false'>new </fold>IllegalArgumentException("quantity");
         }</fold>
         if <fold text='' expand='false'>(</fold>quantity > 99<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new IllegalArgumentException("quantity");
+            throw <fold text='' expand='false'>new </fold>IllegalArgumentException("quantity");
         }</fold> else <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(quantity);
         }</fold>

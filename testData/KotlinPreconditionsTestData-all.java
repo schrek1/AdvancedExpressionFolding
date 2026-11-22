@@ -85,13 +85,13 @@ public class KotlinPreconditionsTestData {
     public void notFolded(String order, Exception cause) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>order == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("missing order");
-            throw new IllegalArgumentException("order");
+            throw <fold text='' expand='false'>new </fold>IllegalArgumentException("order");
         }</fold>
         if <fold text='' expand='false'>(</fold>order.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>("order");
         }</fold>
         if <fold text='' expand='false'>(</fold>order.<fold text='blank' expand='false'>isBlank()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new IllegalArgumentException("order", cause);
+            throw <fold text='' expand='false'>new </fold>IllegalArgumentException("order", cause);
         }</fold>
         if <fold text='' expand='false'>(</fold>connected<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='error' expand='false'>throw new IllegalStateException</fold>("connected");

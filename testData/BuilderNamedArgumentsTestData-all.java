@@ -67,11 +67,11 @@ public class BuilderNamedArgumentsTestData {
         }</fold></fold>
 
         public static PersonBuilder builder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new PersonBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>PersonBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         public PersonBuilder toBuilder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new PersonBuilder().name(name).age(age).manager(manager)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>PersonBuilder().name(name).age(age).manager(manager)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold><fold text='' expand='false'>
 
         </fold><fold text='' expand='false'>public String getName()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -108,7 +108,7 @@ public class BuilderNamedArgumentsTestData {
             </fold>}</fold>
 
             public Person build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new Person(name, age, manager)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Person(name, age, manager)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
     }</fold>
@@ -125,7 +125,7 @@ public class BuilderNamedArgumentsTestData {
         }</fold></fold>
 
         public static OrderBuilder builder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new OrderBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>OrderBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         static class OrderBuilder <fold text='{...}' expand='true'>{
@@ -158,7 +158,7 @@ public class BuilderNamedArgumentsTestData {
             </fold>}</fold>
 
             public Order build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new Order(id, note, payment)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Order(id, note, payment)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
     }</fold>
@@ -171,7 +171,7 @@ public class BuilderNamedArgumentsTestData {
         </fold>}</fold></fold>
 
         public static PaymentBuilder builder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new PaymentBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>PaymentBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
 
         static class PaymentBuilder <fold text='{...}' expand='true'>{
@@ -183,7 +183,7 @@ public class BuilderNamedArgumentsTestData {
             }</fold>
 
             public Payment build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new Payment(fixedInfo)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Payment(fixedInfo)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
 
@@ -194,7 +194,7 @@ public class BuilderNamedArgumentsTestData {
             private String chain;
 
             public static PaymentDetailsBuilder builder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new PaymentDetailsBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>PaymentDetailsBuilder()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
 
             static class PaymentDetailsBuilder <fold text='{...}' expand='true'>{

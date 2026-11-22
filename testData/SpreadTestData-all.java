@@ -35,7 +35,7 @@ public class SpreadTestData {
                 .map(it -> <fold text='{...}' expand='true'>{
                     <fold text='val' expand='false'>var</fold> z = 2;
                     <fold text='val' expand='false'>var</fold> max =<fold text=' listOfNotNull(' expand='false'> </fold>Stream.of(data)<fold text='*.' expand='false'>.map(</fold><fold text='string()' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold>.max(Comparator.comparing(String::length))<fold text='?.' expand='false'>.map(</fold><fold text='length' expand='false'>String::length</fold><fold text='' expand='false'>)</fold><fold text=')' expand='false'>.stream()</fold><fold text='*.' expand='false'>.map(</fold><fold text='class()' expand='false'>Object::getClass</fold><fold text='' expand='false'>)</fold>.findAny()<fold text='?.' expand='false'>.map(</fold><fold text='hashCode' expand='false'>Object::hashCode</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>1<fold text='' expand='false'>)</fold>;
-                    return new BigDecimal(it + z + max);
+                    return <fold text='' expand='false'>new </fold>BigDecimal(it + z + max);
                 }</fold>)
                 .map(it -> Stream.iterate(it, BigDecimal::plus))
                 .map(it -> stream)
