@@ -1,6 +1,7 @@
 package com.intellij.advancedExpressionFolding.expression.property
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.processor.declaration.SetterNamedArgumentsExt.propertyNameFold
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.FoldingGroup
@@ -11,6 +12,7 @@ class Setter(
     element: PsiElement,
     textRange: TextRange,
     private val setterTextRange: TextRange,
+    private val setterName: String,
     private val receiver: Expression?,
     private val name: String,
     private val value: Expression
@@ -25,15 +27,31 @@ class Setter(
     ): Array<FoldingDescriptor> {
         val group = FoldingGroup.newGroup(Setter::class.java.name)
         val descriptors = mutableListOf<FoldingDescriptor>()
-        descriptors += FoldingDescriptor(
-            element.node,
-            TextRange.create(
-                setterTextRange.startOffset,
-                value.textRange.startOffset - if (value.isLeftOverflow()) 1 else 0
-            ),
-            group,
-            "$name = "
-        )
+        if (value.isLeftOverflow()) {
+            descriptors += FoldingDescriptor(
+                element.node,
+                TextRange.create(setterTextRange.startOffset, value.textRange.startOffset - 1),
+                group,
+                "$name = "
+            )
+        } else {
+            // only the characters that change are folded: `set` (and the first letter's case) and ` = `
+            val nameStart = setterTextRange.startOffset
+            val nameRange = TextRange.create(nameStart, nameStart + setterName.length)
+            val (hiddenEnd, shownName) = propertyNameFold(setterName, name, nameRange)
+            descriptors += FoldingDescriptor(
+                element.node,
+                TextRange.create(nameStart, hiddenEnd),
+                group,
+                shownName
+            )
+            descriptors += FoldingDescriptor(
+                element.node,
+                TextRange.create(nameRange.endOffset, value.textRange.startOffset),
+                group,
+                " = "
+            )
+        }
         if (!value.isRightOverflow()) {
             if (value.textRange.endOffset < textRange.endOffset) {
                 descriptors += FoldingDescriptor(
