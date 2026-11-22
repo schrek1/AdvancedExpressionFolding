@@ -156,6 +156,12 @@ Shows argument and state checks the way Kotlin writes them: an `if` whose whole 
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinPreconditionsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinPreconditionsTestData-folded.java)
 
+## kotlinWithLock
+### Lock, try, finally unlock as Kotlin withLock
+Shows `lock.lock(); try { ... } finally { lock.unlock(); }` the way Kotlin writes it: `withLock(lock) { ... }`. Folds only when the `lock()` call stands right before the `try`, the `finally` block holds nothing but the `unlock()` of the same lock, and the `try` has no `catch` and no resources.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/WithLockTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/WithLockTestData-folded.java)
+
 ## assertsCollapse
 ### Asserts
 Simplifies assert statements.
