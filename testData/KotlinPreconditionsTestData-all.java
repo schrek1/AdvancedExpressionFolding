@@ -48,10 +48,10 @@ public class KotlinPreconditionsTestData {
         <fold text='require' expand='false'>if </fold>(limit <fold text='==' expand='false'>!=</fold> null <fold text='||' expand='false'>&&</fold> limit <fold text='<' expand='false'>>=</fold> 10) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalArgumentException(</fold>"limit"<fold text=' ' expand='false'>);
         </fold>}</fold>
-        <fold text='require' expand='false'>if </fold>(sku <fold text='!=' expand='false'>==</fold> null <fold text='&& !' expand='false'>|| </fold>sku.<fold text='empty' expand='false'>isEmpty()</fold>) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
+        <fold text='require' expand='false'>if </fold>(sku <fold text='!=' expand='false'>==</fold> null <fold text='&& !' expand='false'>|| </fold>sku.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalArgumentException(</fold>"sku"<fold text=' ' expand='false'>);
         </fold>}</fold>
-        <fold text='check(!' expand='false'>if (</fold>sku.<fold text='blank' expand='false'>isBlank()</fold> <fold text='&&' expand='false'>||</fold> <fold text='' expand='false'>!</fold>(stock < 5 || reserved == 0)) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
+        <fold text='check(!' expand='false'>if (</fold>sku.<fold text='b' expand='false'>isB</fold>lank<fold text='' expand='false'>()</fold> <fold text='&&' expand='false'>||</fold> <fold text='' expand='false'>!</fold>(stock < 5 || reserved == 0)) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalStateException(</fold>"restock"<fold text=' ' expand='false'>);
         </fold>}</fold>
         <fold text='check' expand='false'>if </fold>(<fold text='' expand='false'>!</fold><fold text='' expand='false'>(</fold>!connected<fold text='' expand='false'>)</fold>) <fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
@@ -87,10 +87,10 @@ public class KotlinPreconditionsTestData {
             <fold text='' expand='false'>System.out.</fold>println("missing order");
             throw new IllegalArgumentException("order");
         }</fold>
-        if <fold text='' expand='false'>(</fold>order.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>order.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='TODO' expand='false'>throw new UnsupportedOperationException</fold>("order");
         }</fold>
-        if <fold text='' expand='false'>(</fold>order.<fold text='blank' expand='false'>isBlank()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+        if <fold text='' expand='false'>(</fold>order.<fold text='b' expand='false'>isB</fold>lank<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             throw new IllegalArgumentException("order", cause);
         }</fold>
         if <fold text='' expand='false'>(</fold>connected<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{

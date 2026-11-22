@@ -52,7 +52,7 @@ public class EmojifyTestData {
         </fold>}</fold></fold>
 
         public void printField()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='val' expand='false'>int</fold> value = <fold text='field' expand='false'>getField()</fold>;<fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='val' expand='false'>int</fold> value = <fold text='f' expand='false'>getF</fold>ield<fold text='' expand='false'>()</fold>;<fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
@@ -197,7 +197,7 @@ public class EmojifyTestData {
             }</fold>
 
             <fold text='val' expand='false'>LocalClass</fold> localInstance = new LocalClass(10);
-            <fold text='val' expand='false'>int</fold> value = localInstance.<fold text='localValue' expand='false'>getLocalValue()</fold>;
+            <fold text='val' expand='false'>int</fold> value = localInstance.<fold text='l' expand='false'>getL</fold>ocalValue<fold text='' expand='false'>()</fold>;
         }</fold>
     }</fold>
 
@@ -540,12 +540,12 @@ public class EmojifyTestData {
     class SingletonUsage <fold text='{...}' expand='true'>{
         void main() <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>var</fold> s = Singleton.INSTANCE;
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.<fold text='ok' expand='false'>isOk()</fold>);
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.main(Singleton.INSTANCE.main(Singleton.<fold text='instance' expand='false'>getInstance()</fold>)));
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.<fold text='o' expand='false'>isO</fold>k<fold text='' expand='false'>()</fold>);
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.main(Singleton.INSTANCE.main(Singleton.<fold text='i' expand='false'>getI</fold>nstance<fold text='' expand='false'>()</fold>)));
 
             <fold text='val' expand='false'>var</fold> s2 = Singleton.INSTANCE.OTHER_NAME;
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.<fold text='ok' expand='false'>isOk()</fold>);
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.main(Singleton.INSTANCE.OTHER_NAME.main(Singleton.<fold text='instance' expand='false'>getInstance()</fold>)));
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.<fold text='o' expand='false'>isO</fold>k<fold text='' expand='false'>()</fold>);
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.main(Singleton.INSTANCE.OTHER_NAME.main(Singleton.<fold text='i' expand='false'>getI</fold>nstance<fold text='' expand='false'>()</fold>)));
         }</fold>
 
         static class Singleton <fold text='{...}' expand='true'>{
