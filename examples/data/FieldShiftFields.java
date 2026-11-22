@@ -28,7 +28,7 @@ public class FieldShiftFields {
         result.username = source.child.username;
         result.userIdentifier = source.child.child.child.userIdentifier;
         result.active = source.child.active;
-        result.list = List.copyOf(source.list);
+        result.list = List.copyOf(source.list); // nested in another call: no field shift
         return result;
     }
 

@@ -63,7 +63,7 @@ public class FieldShiftSetters {
         result.<fold text='username = ' expand='false'>setUsername(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='userIdentifier = ' expand='false'>setUserIdentifier(</fold>source<fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='active = ' expand='false'>setActive(</fold>source<fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>)</fold>;
-        result.<fold text='list = ' expand='false'>setList(</fold>List.copyOf(source<fold text='<<' expand='false'>.getList()</fold>)<fold text='' expand='false'>)</fold>;
+        result.<fold text='list = ' expand='false'>setList(</fold>List.copyOf(source.<fold text='list' expand='false'>getList()</fold>)<fold text='' expand='false'>)</fold>;
         result.withUsername(source<fold text='<<' expand='false'>.getUsername()</fold>);
         result.withActive(source<fold text='<<' expand='false'>.isActive()</fold>);
         result.withUserIdentifier(source<fold text='<<' expand='false'>.getUserIdentifier()</fold>);
@@ -88,7 +88,7 @@ public class FieldShiftSetters {
         var2.<fold text='active = ' expand='false'>setActive(</fold>source<fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>)</fold>;
         FieldShiftSetters result = new FieldShiftSetters();
         result.<fold text='username = ' expand='false'>setUsername(</fold>record.<fold text='userIdentifier' expand='false'>userIdentifier()</fold><fold text='' expand='false'>)</fold>;
-        result.<fold text='username = ' expand='false'>setUsername(</fold>changer(record<fold text='<<' expand='false'>.username()</fold>)<fold text='' expand='false'>)</fold>;
+        result.<fold text='username = ' expand='false'>setUsername(</fold>changer(record.<fold text='username' expand='false'>username()</fold>)<fold text='' expand='false'>)</fold>;
         result.<fold text='username = ' expand='false'>setUsername(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='username = ' expand='false'>setUsername(</fold>var1.<fold text='child' expand='false'>getChild()</fold><fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='username = ' expand='false'>setUsername(</fold>source.<fold text='username' expand='false'>getUsername()</fold> + "1"<fold text='' expand='false'>)</fold>;

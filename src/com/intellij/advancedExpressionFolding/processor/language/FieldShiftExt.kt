@@ -24,18 +24,16 @@ object FieldShiftExt : IExpressionCollapseState by State()() {
             it
         } ?: return null
 
-        val right = element.rExpression?.let {
-            it.asMethodCall()?.argumentList?.expressions?.singleOrNull() ?: it
-        } ?: return null
+        val rExpression = element.rExpression ?: return null
 
         val leftText =
             element.lExpression.asRefExpr()?.referenceNameElement?.text ?: return null
 
-        val rightExp = BuildExpressionExt.getAnyExpression(right, document).run {
-            asInstance<CheckNotNullExpression>()?.run {
-                argumentExpression
-            } ?: this
-        }
+        val anyExpression = BuildExpressionExt.getAnyExpression(rExpression, document)
+        // checkNotNull(x) folds to x!!, so its argument still reads as the direct right side
+        val checkedArgument = anyExpression.asInstance<CheckNotNullExpression>()?.argumentExpression
+        val right = checkedArgument?.element ?: rExpression
+        val rightExp = checkedArgument ?: anyExpression
 
         val rightText = if (rightExp is INameable) {
             rightExp.name
@@ -69,15 +67,8 @@ object FieldShiftExt : IExpressionCollapseState by State()() {
 
         val expressionList = getterElement.parent.asExprList() ?: return null
 
-        val parentMethod = expressionList.parent.asMethodCall()?.let { methodCall ->
-            methodCall.resolveMethod()?.takeIf {
-                it.isSetterOrBuilder()
-            } ?: run {
-                methodCall.parent.asExprList()?.parent.asMethodCall()
-                    ?.resolveMethod()?.takeIf {
-                        it.isSetterOrBuilder()
-                    }
-            }
+        val parentMethod = expressionList.parent.asMethodCall()?.resolveMethod()?.takeIf {
+            it.isSetterOrBuilder()
         } ?: return null
 
         val parameters = parentMethod.parameterList.parameters
