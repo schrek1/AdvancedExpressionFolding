@@ -63,7 +63,7 @@ import java.util.List;
         <fold text='u' expand='false'>result.setU</fold>sername<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text=',' expand='false'>);</fold>
         <fold text='u' expand='false'>result.setU</fold>serIdentifier<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text=',' expand='false'>);</fold>
         <fold text='a' expand='false'>result.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.isActive()</fold><fold text=',' expand='false'>);</fold>
-        <fold text='l' expand='false'>result.setL</fold>ist<fold text=' = ' expand='false'>(</fold>List.copyOf(source<fold text='<<' expand='false'>.getList()</fold>));
+        <fold text='l' expand='false'>result.setL</fold>ist<fold text=' = ' expand='false'>(</fold>List.copyOf(source.<fold text='list' expand='false'>getList()</fold>));
         result.withUsername(source<fold text='<<' expand='false'>.getUsername()</fold>);
         result.withActive(source<fold text='<<' expand='false'>.isActive()</fold>);
         result.withUserIdentifier(source<fold text='<<' expand='false'>.getUserIdentifier()</fold>);
@@ -88,7 +88,7 @@ import java.util.List;
         var2.<fold text='a' expand='false'>setA</fold>ctive<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>)</fold>;
         <fold text='val' expand='false'>FieldShiftSetters</fold> result = <fold text='' expand='false'>new </fold>FieldShiftSetters<fold text='(u' expand='false'>();
         result.setU</fold>sername<fold text=' = ' expand='false'>(</fold>record.<fold text='userIdentifier' expand='false'>userIdentifier()</fold>);
-        result.<fold text='u' expand='false'>setU</fold>sername<fold text=' = ' expand='false'>(</fold>changer(record<fold text='<<' expand='false'>.username()</fold>)<fold text='' expand='false'>)</fold>;
+        result.<fold text='u' expand='false'>setU</fold>sername<fold text=' = ' expand='false'>(</fold>changer(record.<fold text='username' expand='false'>username()</fold>)<fold text='' expand='false'>)</fold>;
         result.<fold text='u' expand='false'>setU</fold>sername<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='u' expand='false'>setU</fold>sername<fold text=' = ' expand='false'>(</fold>var1.<fold text='child' expand='false'>getChild()</fold><fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='username = ' expand='false'>setUsername</fold><fold text='"${' expand='false'>(</fold>source.<fold text='username' expand='false'>getUsername()</fold><fold text='}' expand='false'> + "</fold>1"<fold text='' expand='false'>)</fold>;
