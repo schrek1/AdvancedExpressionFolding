@@ -188,6 +188,10 @@ abstract class CheckboxesProvider {
             example(SpreadTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streamspread")
         }
+        registerCheckbox(state::streamSpreadChain, "Stream map-to-list chain as spread: items*.id") {
+            example(StreamSpreadChainTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#streamSpreadChain")
+        }
 
         registerCheckbox(state::streamPredicates, "Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none") {
             example(StreamPredicateTestData::class)
