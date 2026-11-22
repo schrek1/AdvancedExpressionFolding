@@ -24,6 +24,10 @@ public class RequireNonNullElseElvisTestData {
         </fold>return <fold text='' expand='false'>Objects.requireNonNullElseGet(</fold>name<fold text=' ?:' expand='false'>,</fold> <fold text='' expand='false'>() -> </fold>"guest-" + id<fold text='' expand='false'>)</fold>;<fold text=' }' expand='false'>
     }</fold>
 
+    public String labelOf(String name, int id)<fold text=' { ' expand='false'> {
+        </fold>return <fold text='' expand='false'>Objects.requireNonNullElse(</fold>id + "-label"<fold text=' ?:' expand='false'>,</fold> name<fold text='' expand='false'>)</fold>;<fold text=' }' expand='false'>
+    }</fold>
+
     public List<String> tagsOf(Patch patch)<fold text=' { ' expand='false'> {
         </fold>return <fold text='' expand='false'>Objects.requireNonNullElse(</fold>patch.getTags().get()<fold text=' ?:' expand='false'>,</fold> List.of()<fold text='' expand='false'>)</fold>;<fold text=' }' expand='false'>
     }</fold>

@@ -24,6 +24,10 @@ public class RequireNonNullElseElvisTestData {
         return name ?: "guest-" + id;
     }
 
+    public String labelOf(String name, int id) {
+        return id + "-label" ?: name;
+    }
+
     public List<String> tagsOf(Patch patch) {
         return patch.getTags().get() ?: List.of();
     }

@@ -25,6 +25,10 @@ public class RequireNonNullElseElvisTestData {
         return Objects.requireNonNullElseGet(name, () -> "guest-" + id);
     }
 
+    public String labelOf(String name, int id) {
+        return Objects.requireNonNullElse(id + "-label", name);
+    }
+
     public List<String> tagsOf(Patch patch) {
         return Objects.requireNonNullElse(patch.getTags().get(), List.of());
     }

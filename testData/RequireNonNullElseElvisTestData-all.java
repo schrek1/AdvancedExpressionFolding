@@ -21,7 +21,11 @@ public class RequireNonNullElseElvisTestData {
     </fold>}</fold>
 
     public String guestName(String name, int id)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>Objects.requireNonNullElseGet(</fold>name<fold text=' ?:' expand='false'>,</fold> <fold text='' expand='false'>() -> </fold>"guest-<fold text='$' expand='false'>" + </fold>id<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>Objects.requireNonNullElseGet(</fold>name<fold text=' ?:' expand='false'>,</fold> <fold text='' expand='false'>() -> </fold>"guest-<fold text='$' expand='false'>" + </fold>id<fold text='"' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+    </fold>}</fold>
+
+    public String labelOf(String name, int id)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>Objects.requireNonNullElse</fold><fold text='"$' expand='false'>(</fold>id<fold text='' expand='false'> + "</fold>-label"<fold text=' ?:' expand='false'>,</fold> name<fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public List<String> tagsOf(Patch patch)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
