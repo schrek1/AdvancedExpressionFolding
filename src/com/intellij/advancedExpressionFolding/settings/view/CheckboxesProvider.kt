@@ -247,9 +247,9 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#patternmatchinginstanceof")
         }
 
-        registerCheckbox(state::isOperator, "instanceof as Kotlin is / !is") {
+        registerCheckbox(state::kotlinIsOperator, "instanceof as Kotlin is / !is") {
             example(IsOperatorTestData::class)
-            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#isoperator")
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinisoperator")
         }
 
         registerCheckbox(

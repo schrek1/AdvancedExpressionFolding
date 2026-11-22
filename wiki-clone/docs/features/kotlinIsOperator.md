@@ -1,4 +1,4 @@
-## isOperator
+## kotlinIsOperator
 
 ### instanceof as Kotlin is / !is
 Shows Java type checks the way Kotlin writes them.
@@ -29,5 +29,5 @@ folded/IsOperatorTestData-folded.java:
 ```
 
 Default: Off
-Controlled by: `isOperator`
+Controlled by: `kotlinIsOperator`
 Related features: `patternMatchingInstanceof`, `emojify`

@@ -13,7 +13,7 @@ import com.intellij.psi.PsiJavaToken
 object PsiJavaTokenExt : IEmojiVisibilityState by State()(), IKotlinLanguageState by State()() {
 
     fun createExpression(element: PsiJavaToken): Expression? {
-        if (isOperator && element.tokenType == INSTANCEOF_KEYWORD) {
+        if (kotlinIsOperator && element.tokenType == INSTANCEOF_KEYWORD) {
             KotlinIsOperator.create(element)?.let { return it }
         }
         emojify.takeIfTrue() ?: return null
