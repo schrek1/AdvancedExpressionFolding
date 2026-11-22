@@ -48,6 +48,15 @@ public class OptionalTestData {
 
         Stream.of(data).map(Data::getData).filter(Objects::nonNull);
         Stream.of(data).map(Data::getData) .filter(Objects::nonNull).map(Data::getData).findFirst().orElseThrow();
+
+        o = opt.map(Data::getData).stream();
+        o = opt.stream();
+        o = Optional.ofNullable(dataNull).map(Data::getData).stream();
+        o = Stream.of(opt).flatMap(it -> it.map(Data::getData).stream());
+        o = opt.map(Data::getData).map(Data::getString).isPresent();
+        o = opt.map(Data::getData).isEmpty();
+        opt.map(Data::getData).ifPresent(System.out::println);
+        o = opt.map(Data::getData).filter(Data::isOk);
     }
 
     private Data orElseGetReturn() {
@@ -56,6 +65,10 @@ public class OptionalTestData {
 
     private Optional<Data> ofNullable(Data data) {
         return Optional.empty();
+    }
+
+    private Stream<Data> streamOf(Optional<Data> opt) {
+        return opt.stream();
     }
 
     private static Data getOutsideData(Data data) {

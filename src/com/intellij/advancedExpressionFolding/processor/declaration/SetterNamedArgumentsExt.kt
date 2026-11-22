@@ -45,7 +45,11 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
         setters.forEachIndexed { index, setter ->
             val value = setter.argumentList.expressions.single().textRange
             val nameRange = setter.methodExpression.referenceNameElement!!.textRange
-            val (hiddenEnd, shownName) = propertyNameFold(setter.methodExpression.referenceName!!, nameRange)
+            val (hiddenEnd, shownName) = propertyNameFold(
+                setter.methodExpression.referenceName!!,
+                guessPropertyName(setter.methodExpression.referenceName!!),
+                nameRange
+            )
             val receiverAndSet = TextRange(setter.parent.textRange.startOffset, hiddenEnd)
             if (setters.size == 1) {
                 folds += open.union(receiverAndSet) to "($shownName"
@@ -63,15 +67,21 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
     }
 
     /**
-     * Where the hidden `p.set` part of a setter name ends and what replaces it, so the rest of the name stays real
-     * text: `setCustomer` hides `setC` behind `c`, `setURL` hides only `set`.
+     * Where the hidden accessor prefix of a method name ends and what replaces it, so the rest of the name stays real
+     * text: `setCustomer` hides `setC` behind `c`, `setURL` hides only `set`; the same for `get` and `is`.
      */
-    private fun propertyNameFold(setterName: String, nameRange: TextRange): Pair<Int, String> {
-        val propertyName = guessPropertyName(setterName)
-        val afterSet = setterName.removePrefix("set")
+    fun propertyNameFold(
+        methodName: String,
+        propertyName: String,
+        nameRange: TextRange,
+        prefix: String = "set"
+    ): Pair<Int, String> {
+        val afterPrefix = methodName.removePrefix(prefix)
         return when {
-            propertyName == afterSet -> nameRange.startOffset + 3 to ""
-            propertyName.drop(1) == afterSet.drop(1) -> nameRange.startOffset + 4 to propertyName.take(1)
+            afterPrefix.isEmpty() || afterPrefix == methodName -> nameRange.endOffset to propertyName
+            propertyName == afterPrefix -> nameRange.startOffset + prefix.length to ""
+            propertyName.drop(1) == afterPrefix.drop(1) ->
+                nameRange.startOffset + prefix.length + 1 to propertyName.take(1)
             else -> nameRange.endOffset to propertyName
         }
     }

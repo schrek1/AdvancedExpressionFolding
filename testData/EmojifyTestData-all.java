@@ -52,7 +52,7 @@ public class EmojifyTestData {
         </fold>}</fold></fold>
 
         public void printField()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='val' expand='false'>int</fold> value = <fold text='field' expand='false'>getField()</fold>;<fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='val' expand='false'>int</fold> value = <fold text='f' expand='false'>getF</fold>ield<fold text='' expand='false'>()</fold>;<fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
@@ -197,7 +197,7 @@ public class EmojifyTestData {
             }</fold>
 
             <fold text='val' expand='false'>LocalClass</fold> localInstance = new LocalClass(10);
-            <fold text='val' expand='false'>int</fold> value = localInstance.<fold text='localValue' expand='false'>getLocalValue()</fold>;
+            <fold text='val' expand='false'>int</fold> value = localInstance.<fold text='l' expand='false'>getL</fold>ocalValue<fold text='' expand='false'>()</fold>;
         }</fold>
     }</fold>
 
@@ -236,7 +236,7 @@ public class EmojifyTestData {
 
     public class LambdaExpressionUsage <fold text='{...}' expand='true'>{
         public java.util.function.IntBinaryOperator getAdder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>(a, b) -> a + b<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='{ ' expand='false'>(</fold>a, b<fold text='' expand='false'>)</fold> -> a + b<fold text=' }' expand='false'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 
@@ -266,9 +266,9 @@ public class EmojifyTestData {
 
     public class ForEachMethodUsage <fold text='{...}' expand='true'>{
         public void printList(java.util.List<String> list) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-            </fold>list.forEach(item -> <fold text='{...}' expand='true'>{
-                <fold text='val' expand='false'>int</fold> length = item.length();
-            }</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+            </fold>list.forEach<fold text='' expand='false'>(item -></fold> <fold text='{...}' expand='true'>{
+                <fold text='val' expand='false'>int</fold> length = <fold text='it' expand='false'>item</fold>.length();
+            }</fold><fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
         </fold>}</fold>
     }</fold>
 
@@ -398,7 +398,7 @@ public class EmojifyTestData {
 
     public class PatternMatchingInstanceof <fold text='{...}' expand='true'>{
         public void checkObject(Object obj) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-            </fold>if <fold text='' expand='false'>(</fold>obj instanceof String str<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            </fold>if <fold text='' expand='false'>(</fold>obj <fold text='is' expand='false'>instanceof</fold> String str<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>int</fold> length = str.length();
             }</fold><fold text=' ' expand='true'>
         </fold>}</fold>
@@ -489,11 +489,11 @@ public class EmojifyTestData {
             </fold>}</fold>
 
             public void methodWithNullInSupplier()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-                </fold></fold><fold text='val' expand='false'>java.util.function.Supplier<String></fold> supplier = () -> null;<fold text=' ' expand='true'><fold text=' }' expand='false'>
+                </fold></fold><fold text='val' expand='false'>java.util.function.Supplier<String></fold> supplier = <fold text='{' expand='false'>() -></fold> null<fold text=' };' expand='false'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
 
             public void methodWithNullInLambda() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-                </fold><fold text='val' expand='false'>java.util.function.Function<String, String></fold> function = input -> null;<fold text=' ' expand='true'>
+                </fold><fold text='val' expand='false'>java.util.function.Function<String, String></fold> function = <fold text='{' expand='false'>input -></fold> null<fold text=' };' expand='false'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
 
             public void methodWithNullInMethodReference() <fold text='{...}' expand='true'>{
@@ -512,7 +512,7 @@ public class EmojifyTestData {
 
             public void methodWithNullInstanceof() <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>Object</fold> obj = null;
-                <fold text='val' expand='false'>boolean</fold> isString = obj instanceof String;
+                <fold text='val' expand='false'>boolean</fold> isString = obj <fold text='is' expand='false'>instanceof</fold> String;
             }</fold>
 
             public void methodWithNullDefaultValue() <fold text='{...}' expand='true'>{
@@ -540,12 +540,12 @@ public class EmojifyTestData {
     class SingletonUsage <fold text='{...}' expand='true'>{
         void main() <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>var</fold> s = Singleton.INSTANCE;
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.<fold text='ok' expand='false'>isOk()</fold>);
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.main(Singleton.INSTANCE.main(Singleton.<fold text='instance' expand='false'>getInstance()</fold>)));
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.<fold text='o' expand='false'>isO</fold>k<fold text='' expand='false'>()</fold>);
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.main(Singleton.INSTANCE.main(Singleton.<fold text='i' expand='false'>getI</fold>nstance<fold text='' expand='false'>()</fold>)));
 
             <fold text='val' expand='false'>var</fold> s2 = Singleton.INSTANCE.OTHER_NAME;
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.<fold text='ok' expand='false'>isOk()</fold>);
-            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.main(Singleton.INSTANCE.OTHER_NAME.main(Singleton.<fold text='instance' expand='false'>getInstance()</fold>)));
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.<fold text='o' expand='false'>isO</fold>k<fold text='' expand='false'>()</fold>);
+            <fold text='' expand='false'>System.out.</fold>println(Singleton.INSTANCE.OTHER_NAME.main(Singleton.INSTANCE.OTHER_NAME.main(Singleton.<fold text='i' expand='false'>getI</fold>nstance<fold text='' expand='false'>()</fold>)));
         }</fold>
 
         static class Singleton <fold text='{...}' expand='true'>{
