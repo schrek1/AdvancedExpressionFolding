@@ -19,7 +19,7 @@ import com.intellij.psi.PsiVariable
 
 class DeclarationStatementBuilder : BuildExpression<PsiDeclarationStatement>(PsiDeclarationStatement::class.java) {
     override fun buildExpression(element: PsiDeclarationStatement, document: Document, synthetic: Boolean) =
-        PsiDeclarationStatementExt.createExpression(element)
+        PsiDeclarationStatementExt.createExpression(element, document)
 }
 
 class VariableBuilder : BuildExpression<PsiVariable>(PsiVariable::class.java) {

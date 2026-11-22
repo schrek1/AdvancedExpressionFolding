@@ -154,6 +154,12 @@ Transforms field initialization and builder patterns into more concise syntax.
 - [Setters Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/FieldShiftSetters-folded.java)
 - [Documentation](../features/field-shift.md)
 
+## setterNamedArguments
+### Setters on a new object as named arguments
+Shows `var p = new Person();` followed by `p.setName("Alice"); p.setAge(31);` as `val p = Person(name = "Alice", age = 31);`, one argument per line.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SetterNamedArgumentsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SetterNamedArgumentsTestData-folded.java)
+
 ## destructuring
 ### Destructuring assignment for array & list
 Implements destructuring assignments for arrays and lists.

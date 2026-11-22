@@ -8,6 +8,7 @@ import com.intellij.advancedExpressionFolding.expression.property.Setter
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
 import com.intellij.advancedExpressionFolding.processor.argumentCount
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
+import com.intellij.advancedExpressionFolding.processor.declaration.SetterNamedArgumentsExt
 import com.intellij.advancedExpressionFolding.processor.language.FieldShiftExt
 import com.intellij.advancedExpressionFolding.processor.logger.LoggerBracketsExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper.eraseGenerics
@@ -40,6 +41,9 @@ object MethodCallExpressionExt :
         val identifier = referenceExpression.children.firstOrNull { it is PsiIdentifier } ?: return null
         val qualifier = referenceExpression.qualifierExpression
 
+        if (SetterNamedArgumentsExt.isInSetterRun(element, document)) {
+            return null
+        }
         FieldShiftExt.createExpression(element, document, qualifier)?.let { return it }
 
         useMethodCallFactory(identifier, referenceExpression, document, qualifier, element)?.let { return it }

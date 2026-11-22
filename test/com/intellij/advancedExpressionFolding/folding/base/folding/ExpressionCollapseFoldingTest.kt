@@ -57,6 +57,13 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
         foldingState()::getSetExpressionsCollapse,
         foldingState()::fieldShift,
     )
+
+    @Test
+    fun setterNamedArgumentsTestData() = testCase.runFoldingTest(
+        foldingState()::setterNamedArguments,
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::varExpressionsCollapse,
+    )
 }
 
 @Disabled("Split from FoldingTest")

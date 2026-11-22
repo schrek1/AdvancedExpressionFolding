@@ -12,6 +12,7 @@ import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IExpressionCollapseState
 import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
+import com.intellij.openapi.editor.Document
 import com.intellij.psi.*
 
 object PsiDeclarationStatementExt :
@@ -19,12 +20,13 @@ object PsiDeclarationStatementExt :
     IExpressionCollapseState by State()() {
 
     fun createExpression(
-        element: PsiDeclarationStatement
+        element: PsiDeclarationStatement,
+        document: Document
     ): Expression? {
         if (destructuring) {
-            return createCollectionDestructuringExpression(element)
+            createCollectionDestructuringExpression(element)?.let { return it }
         }
-        return null
+        return SetterNamedArgumentsExt.createExpression(element, document)
     }
 
 
