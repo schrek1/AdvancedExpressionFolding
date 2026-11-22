@@ -16,8 +16,8 @@ public class SpreadTestData {
                 .map(</fold><fold text='string()' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold>
                 .collect(Collectors.joining(", "));
 
-        <fold text='val' expand='false'>var</fold> p1 = data.<fold text='dataList' expand='false'>getDataList()</fold>.stream()<fold text='*.' expand='false'>.map(</fold><fold text='data()' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold>.toList();
-        <fold text='val' expand='false'>var</fold> p2 = data.<fold text='dataList' expand='false'>getDataList()</fold>
+        <fold text='val' expand='false'>var</fold> p1 = data.<fold text='d' expand='false'>getD</fold>ataList<fold text='' expand='false'>()</fold>.stream()<fold text='*.' expand='false'>.map(</fold><fold text='data()' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold>.toList();
+        <fold text='val' expand='false'>var</fold> p2 = data.<fold text='d' expand='false'>getD</fold>ataList<fold text='' expand='false'>()</fold>
                 .stream()<fold text='*.' expand='false'>
                 .map(</fold><fold text='data()' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold>
                 .toList()

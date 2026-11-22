@@ -28,7 +28,7 @@ public class PatternMatchingInstanceofTestData {
 
         if <fold text='' expand='false'>(</fold>o <fold text='is' expand='false'>instanceof</fold> Data<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='val' expand='false'>Data</fold> d = <fold text='' expand='false'>(Data) </fold>o;
-            <fold text='' expand='false'>System.out.</fold>println(d.<fold text='value' expand='false'>getValue()</fold>);
+            <fold text='' expand='false'>System.out.</fold>println(d.<fold text='v' expand='false'>getV</fold>alue<fold text='' expand='false'>()</fold>);
         }</fold>
 
         if <fold text='' expand='false'>(</fold>o <fold text='is' expand='false'>instanceof</fold> int[]<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
@@ -80,7 +80,7 @@ public class PatternMatchingInstanceofTestData {
         }</fold>
 
         public void negativeTest(Object o) <fold text='{...}' expand='true'>{
-            if <fold text='' expand='false'>(</fold><fold text='object' expand='false'>getObject()</fold> <fold text='is' expand='false'>instanceof</fold> String<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{ // Method call instead of variable
+            if <fold text='' expand='false'>(</fold><fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold> <fold text='is' expand='false'>instanceof</fold> String<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{ // Method call instead of variable
                 <fold text='val' expand='false'>String</fold> s = <fold text='' expand='false'>(String) </fold>o;
                 <fold text='' expand='false'>System.out.</fold>println(s.length());
             }</fold>

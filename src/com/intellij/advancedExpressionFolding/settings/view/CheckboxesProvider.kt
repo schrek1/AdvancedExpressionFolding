@@ -154,6 +154,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinquickreturn")
         }
 
+        registerCheckbox(state::scopeLet, "Null-guarded single statement as x?.let { ... }") {
+            example(ScopeLetTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#scopelet")
+        }
+
         registerCheckbox(state::kotlinPreconditions, "Preconditions as Kotlin require, check, requireNotNull and error") {
             example(KotlinPreconditionsTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinpreconditions")

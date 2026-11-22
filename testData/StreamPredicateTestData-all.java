@@ -11,12 +11,12 @@ import java.util.stream.Stream;</fold>
 public class StreamPredicateTestData {
     public static void main(List<User> users, Set<Order> orders, String[] names, Stream<User> stream, Predicate<User> isActive) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>boolean</fold> anyAdmin = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(User::isAdmin);
-        <fold text='val' expand='false'>boolean</fold> allPaid = orders<fold text='' expand='false'>.stream()</fold>.<fold text='all' expand='false'>allMatch</fold><fold text=' {' expand='false'>(o -></fold> <fold text='it' expand='false'>o</fold>.<fold text='paid' expand='false'>isPaid()</fold><fold text=' }' expand='false'>)</fold>;
+        <fold text='val' expand='false'>boolean</fold> allPaid = orders<fold text='' expand='false'>.stream()</fold>.<fold text='all' expand='false'>allMatch</fold>(o -> o.<fold text='p' expand='false'>isP</fold>aid<fold text='' expand='false'>()</fold>);
         <fold text='val' expand='false'>boolean</fold> noneEmpty = <fold text='' expand='false'>Arrays.stream(</fold>names<fold text='' expand='false'>)</fold>.<fold text='none' expand='false'>noneMatch</fold>(String::isEmpty);
         <fold text='val' expand='false'>boolean</fold> anyShipped = orders<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(Order::wasShipped);
 
-        <fold text='val' expand='false'>boolean</fold> anyLongName = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold><fold text=' {' expand='false'>(user -></fold> <fold text='it' expand='false'>user</fold>.<fold text='name' expand='false'>getName()</fold>.length() > 10<fold text=' }' expand='false'>)</fold>;
-        <fold text='val' expand='false'>boolean</fold> allNamed = users<fold text='' expand='false'>.stream()</fold>.<fold text='all' expand='false'>allMatch</fold><fold text=' {' expand='false'>(it -></fold> it.<fold text='name' expand='false'>getName()</fold> != null<fold text=' }' expand='false'>)</fold>;
+        <fold text='val' expand='false'>boolean</fold> anyLongName = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(user -> user.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold>.length() > 10);
+        <fold text='val' expand='false'>boolean</fold> allNamed = users<fold text='' expand='false'>.stream()</fold>.<fold text='all' expand='false'>allMatch</fold>(it -> it.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold> != null);
         <fold text='val' expand='false'>boolean</fold> noneBlank = users<fold text='' expand='false'>.stream()</fold><fold text='*.' expand='false'>
                 .map(</fold><fold text='name()' expand='false'>User::getName</fold><fold text='' expand='false'>)</fold>
                 .<fold text='none' expand='false'>noneMatch</fold>(String::isBlank);
@@ -26,11 +26,11 @@ public class StreamPredicateTestData {
 
         <fold text='val' expand='false'>boolean</fold> anyActive = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(isActive);
         <fold text='val' expand='false'>boolean</fold> anySelf = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(StreamPredicateTestData::isSelf);
-        <fold text='val' expand='false'>boolean</fold> anyBlock = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold><fold text='' expand='false'>(user -></fold> <fold text='{...}' expand='true'>{
-            return <fold text='it' expand='false'>user</fold>.<fold text='admin' expand='false'>isAdmin()</fold>;
-        }</fold><fold text='' expand='false'>)</fold>;
-        <fold text='val' expand='false'>boolean</fold> anyNested = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold><fold text=' { ' expand='false'>(</fold>user -> orders<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold><fold text=' {' expand='false'>(it -></fold> it.<fold text='owner' expand='false'>getOwner()</fold> == user<fold text=' }' expand='false'>)</fold><fold text=' }' expand='false'>)</fold>;
-        <fold text='val' expand='false'>boolean</fold> anyOwner = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold><fold text=' {' expand='false'>(user -></fold> orders<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold><fold text=' { ' expand='false'>(</fold>order -> order.<fold text='owner' expand='false'>getOwner()</fold> == <fold text='it' expand='false'>user</fold><fold text=' }' expand='false'>)</fold><fold text=' }' expand='false'>)</fold>;
+        <fold text='val' expand='false'>boolean</fold> anyBlock = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(user -> <fold text='{...}' expand='true'>{
+            return user.<fold text='a' expand='false'>isA</fold>dmin<fold text='' expand='false'>()</fold>;
+        }</fold>);
+        <fold text='val' expand='false'>boolean</fold> anyNested = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(user -> orders<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(it -> it.<fold text='o' expand='false'>getO</fold>wner<fold text='' expand='false'>()</fold> == user));
+        <fold text='val' expand='false'>boolean</fold> anyOwner = users<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(user -> orders<fold text='' expand='false'>.stream()</fold>.<fold text='any' expand='false'>anyMatch</fold>(order -> order.<fold text='o' expand='false'>getO</fold>wner<fold text='' expand='false'>()</fold> == user));
 
         <fold text='val' expand='false'>boolean</fold> notACollection = stream.anyMatch(User::isAdmin);
         <fold text='val' expand='false'>boolean</fold> streamOf = Stream.of("a", "b").anyMatch(String::isEmpty);

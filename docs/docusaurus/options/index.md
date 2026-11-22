@@ -159,6 +159,12 @@ Shows Java lambdas the way Kotlin writes them: `d -> d.getPrice()` as `{ it.pric
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinLambdaTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinLambdaTestData-folded.java)
 
+## scopeLet
+### Null-guarded single statement as ?.let
+Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact.setEmail(it) }` and `body != null ? toBytes(body) : null` as `body?.let { toBytes(it) }`, in the source order.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeLetTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeLetTestData-folded.java)
+
 ## assertsCollapse
 ### Asserts
 Simplifies assert statements.

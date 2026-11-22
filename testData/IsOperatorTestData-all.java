@@ -37,7 +37,7 @@ public class IsOperatorTestData {
     </fold>}</fold>
 
     public String describe(Object value)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>value <fold text='is' expand='false'>instanceof</fold> String text && !text.<fold text='empty' expand='false'>isEmpty()</fold> ? text : "-"<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>value <fold text='is' expand='false'>instanceof</fold> String text && !text.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold> ? text : "-"<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public boolean doubleParentheses(Object value) <fold text='{...}' expand='true'>{
