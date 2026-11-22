@@ -10,17 +10,22 @@ import com.intellij.advancedExpressionFolding.processor.toTextRange
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.JavaTokenType
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiCodeBlock
+import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiJavaCodeReferenceElement
 import com.intellij.psi.PsiLambdaExpression
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiMethodReferenceExpression
 import com.intellij.psi.PsiNewExpression
+import com.intellij.psi.PsiReturnStatement
+import com.intellij.psi.util.PsiTreeUtil
 
 /**
  * `opt.orElseThrow(() -> new X(args))` / `opt.orElseThrow(X::new)` as `opt ?: throw X(args)` / `opt ?: throw X()`.
  * A one-`String`-argument `IllegalStateException` becomes `opt ?: error(msg)`, which throws the same type.
- * Any other supplier (a block lambda, a method call, an array constructor) stays unfolded.
+ * A block lambda folds the same when its only statement is `return new X(...)`. Any other supplier (a longer block,
+ * a method call, an array constructor) stays unfolded.
  */
 class OptionalOrElseThrowMethodCall : AbstractOptionalMethodCall() {
     override val methodNames by lazy { listOf("orElseThrow") }
@@ -40,17 +45,27 @@ class OptionalOrElseThrowMethodCall : AbstractOptionalMethodCall() {
         when (argument) {
             is PsiLambdaExpression -> {
                 if (argument.parameterList.parametersCount != 0) return null
-                val exception = argument.body as? PsiNewExpression ?: return null
+                val block = argument.body as? PsiCodeBlock
+                val exception = if (block != null) block.singleReturnedNew() else argument.body as? PsiNewExpression
+                if (exception == null || exception.anonymousClass != null) return null
                 val classReference = exception.classReference ?: return null
                 val arguments = exception.argumentList ?: return null
-                if (exception.anonymousClass != null) return null
                 val message = arguments.expressions.singleOrNull()
-                gaps += if (exception.type?.canonicalText == ILLEGAL_STATE && message?.isString() == true) {
-                    (dot.start() to arguments.start()).toTextRange() to "$space?: error"
+                val (shownFrom, text) = if (exception.type?.canonicalText == ILLEGAL_STATE && message?.isString() == true) {
+                    arguments.start() to "$space?: error"
                 } else {
-                    (dot.start() to classReference.start()).toTextRange() to "$space?: throw "
+                    classReference.start() to "$space?: throw "
                 }
-                gaps += (exception.end() to element.end()).toTextRange() to ""
+                if (block == null) {
+                    gaps += (dot.start() to shownFrom).toTextRange() to text
+                    gaps += (exception.end() to element.end()).toTextRange() to ""
+                } else {
+                    // Separate spans for the braces, so none of them cuts through the block's own `{...}` fold.
+                    gaps += (dot.start() to block.start()).toTextRange() to text
+                    gaps += (block.start() to shownFrom).toTextRange() to ""
+                    gaps += (exception.end() to block.end()).toTextRange() to ""
+                    gaps += (block.end() to element.end()).toTextRange() to ""
+                }
                 arguments.expressions.mapTo(children) { getAnyExpression(it, document) }
             }
 
@@ -64,6 +79,13 @@ class OptionalOrElseThrowMethodCall : AbstractOptionalMethodCall() {
             else -> return null
         }
         return OptionalOrElseThrowElvis(element, gaps, children)
+    }
+
+    /** `{ return new X(...); }`; a comment would end up inside a hidden span, so it keeps the block as Java. */
+    private fun PsiCodeBlock.singleReturnedNew(): PsiNewExpression? {
+        if (PsiTreeUtil.findChildOfType(this, PsiComment::class.java) != null) return null
+        val returnStatement = statements.singleOrNull() as? PsiReturnStatement ?: return null
+        return returnStatement.returnValue as? PsiNewExpression
     }
 
     private fun PsiExpression.isString() = type?.canonicalText == "java.lang.String"

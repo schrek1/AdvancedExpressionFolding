@@ -48,11 +48,32 @@ public class OptionalOrElseThrowTestData {
         </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>lookup(key)<fold text='!!' expand='false'>.orElseThrow()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
-    public Shape blockLambda(String key) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>lookup(key).orElseThrow(() -> <fold text='{...}' expand='true'>{
-            return new NotFoundException();
-        }</fold>)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+    public Shape singleReturnBlock(String key) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
+        </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>lookup(key)<fold text=' ?: throw ' expand='false'>.orElseThrow(() -> </fold><fold text='' expand='false'><fold text='{...}' expand='true'>{
+            return new </fold>NotFoundException()<fold text='' expand='false'>;
+        }</fold></fold><fold text='' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
+
+    public Shape singleReturnBlockState(String key) <fold text='{...}' expand='true'>{
+        return lookup(key)
+                <fold text='?: error' expand='false'>.orElseThrow(() -> </fold><fold text='' expand='false'><fold text='{...}' expand='true'>{
+                    return new IllegalStateException</fold>("No shape <fold text='$' expand='false'>" + </fold>key<fold text='")' expand='false'>)</fold><fold text='' expand='false'>;
+                }</fold></fold><fold text='' expand='false'>)</fold>;
+    }</fold>
+
+    public Shape multiStatementBlock(String key) <fold text='{...}' expand='true'>{
+        return lookup(key).orElseThrow(() -> <fold text='{...}' expand='true'>{
+            <fold text='' expand='false'>System.out.</fold>println("missing <fold text='$' expand='false'>" + </fold>key<fold text='")' expand='false'>)</fold>;
+            return new NotFoundException();
+        }</fold>);
+    }</fold>
+
+    public Shape commentedBlock(String key) <fold text='{...}' expand='true'>{
+        return lookup(key).orElseThrow(() -> <fold text='{...}' expand='true'>{
+            // lookups by key are case-sensitive
+            return new NotFoundException();
+        }</fold>);
+    }</fold>
 
     public Shape supplierVariable(String key, Supplier<NotFoundException> notFound) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
         </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>lookup(key).orElseThrow(notFound)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
