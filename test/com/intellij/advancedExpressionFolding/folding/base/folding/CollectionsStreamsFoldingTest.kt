@@ -38,6 +38,12 @@ interface CollectionsStreamsFoldingTest : FoldingTestSection {
         foldingState()::streamSpread,
         foldingState()::streamPredicates,
     )
+
+    @Test
+    fun streamSpreadChainTestData() = testCase.runFoldingTest(
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::streamSpreadChain,
+    )
 }
 
 @Disabled("Split from FoldingTest")

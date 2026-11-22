@@ -15,6 +15,7 @@ import com.intellij.advancedExpressionFolding.processor.language.kotlin.InOperat
 import com.intellij.advancedExpressionFolding.processor.logger.LoggerBracketsExt
 import com.intellij.advancedExpressionFolding.processor.lombok.BuilderNamedArgumentsExt
 import com.intellij.advancedExpressionFolding.processor.lombok.ToBuilderCopyExt
+import com.intellij.advancedExpressionFolding.processor.methodcall.stream.StreamSpreadChainExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper.eraseGenerics
 import com.intellij.advancedExpressionFolding.processor.util.Helper.guessNamelessPropertyName
 import com.intellij.advancedExpressionFolding.processor.util.Helper.isGetter
@@ -56,6 +57,7 @@ object MethodCallExpressionExt :
         FieldShiftExt.createExpression(element, document, qualifier)?.let { return it }
 
         InOperatorExt.createMembership(element)?.let { return it }
+        StreamSpreadChainExt.createExpression(element, document)?.let { return it }
 
         useMethodCallFactory(identifier, referenceExpression, document, qualifier, element)?.let { return it }
 
