@@ -6,7 +6,8 @@ Shows argument and state checks the way Kotlin writes them.
 - An `if` without `else` whose whole body is `throw new IllegalArgumentException(...)` becomes `require(...)`.
 - The same with `IllegalStateException` becomes `check(...)`.
 - Any other `throw new IllegalStateException(message)` becomes `error(message)`.
-- `Objects.requireNonNull(value[, message])` becomes `requireNotNull(value)[ { message }]`.
+- `Objects.requireNonNull(value)` becomes `value!!` (a variable, method call or array element; any other expression keeps `requireNotNull(value)`).
+- `Objects.requireNonNull(value, message)` becomes `requireNotNull(value) { message }`.
 
 The condition is shown negated, written out when that is exactly equivalent, otherwise as `!(...)`:
 

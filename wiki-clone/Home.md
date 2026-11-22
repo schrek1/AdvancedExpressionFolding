@@ -158,7 +158,7 @@ Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact
 
 ## kotlinPreconditions
 ### Preconditions as Kotlin require, check, requireNotNull and error
-Shows argument and state checks the way Kotlin writes them: an `if` whose whole body throws `IllegalArgumentException` becomes `require(...)`, one that throws `IllegalStateException` becomes `check(...)`, any other `throw new IllegalStateException(message)` becomes `error(message)`, and `Objects.requireNonNull` becomes `requireNotNull`. Takes precedence over the Asserts folding for these two exceptions.
+Shows argument and state checks the way Kotlin writes them: an `if` whose whole body throws `IllegalArgumentException` becomes `require(...)`, one that throws `IllegalStateException` becomes `check(...)`, any other `throw new IllegalStateException(message)` becomes `error(message)`, and `Objects.requireNonNull(x)` becomes `x!!` (with a message: `requireNotNull(x) { message }`). Takes precedence over the Asserts folding for these two exceptions.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinPreconditionsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinPreconditionsTestData-folded.java)
 
@@ -191,6 +191,13 @@ Represents Java Optional types using Kotlin-style null-safe syntax.
 Represents Java stream operations using Groovy-style spread operator syntax.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SpreadTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SpreadTestData-folded.java)
+
+## streamSpreadChain
+### Stream map-to-list chain as spread: items*.id
+Shows `orders.stream().map(Order::id).toList()` as `orders*.id`; `collect(Collectors.toSet())` shows as `orders*.id.toSet()`. On any other chain `.collect(Collectors.toList())` / `.collect(toSet())` shows as `.toList()` / `.toSet()`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/StreamSpreadChainTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/StreamSpreadChainTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/streamSpreadChain)
 
 ## streamPredicates
 ### Display anyMatch / allMatch / noneMatch as Kotlin's any / all / none
@@ -465,6 +472,13 @@ Simplifies constructor references and inline field initialization.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ConstructorReferenceNotationTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ConstructorReferenceNotationTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/constructorReferenceNotation)
+
+## kotlinConstructorCall
+### Constructor calls without `new` (Kotlin style)
+Hides the `new` keyword of a plain instance creation, so `throw new IllegalArgumentException(...)` reads as `throw IllegalArgumentException(...)` and `var order = new Order(id, total)` as `var order = Order(id, total)`. Only `new` and the space after it are folded; anonymous classes, arrays and qualified `outer.new Inner()` stay as Java, and folds that already rewrite a creation (collection literals, `::new`) win.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinConstructorCallTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinConstructorCallTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/kotlinConstructorCall)
 
 ## methodDefaultParameters
 ### Default parameter values inline for overloaded method

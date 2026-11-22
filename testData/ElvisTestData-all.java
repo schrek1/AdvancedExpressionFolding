@@ -33,7 +33,7 @@ public class ElvisTestData {
 
     private static ElvisTestData create() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
         </fold>if <fold text='' expand='false'>(</fold>Math.random() > 0.5<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-        return new ElvisTestData();
+        return <fold text='' expand='false'>new </fold>ElvisTestData();
         }</fold> else <fold text='{...}' expand='true'>{
         return null;
         }</fold><fold text=' ' expand='true'>

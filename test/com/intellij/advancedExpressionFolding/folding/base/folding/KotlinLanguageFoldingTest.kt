@@ -181,6 +181,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
         foldingState()::scopeLet,
         foldingState()::getSetExpressionsCollapse,
     )
+
+    @Test
+    fun kotlinConstructorCallTestData() = testCase.runFoldingTest(foldingState()::kotlinConstructorCall)
 }
 
 @Disabled("Split from FoldingTest")
