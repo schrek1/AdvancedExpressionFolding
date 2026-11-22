@@ -138,7 +138,7 @@ public class MethodDefaultParametersTestData {
             </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>text + flag<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
         public String complexBody(String text) <fold text='{...}' expand='true'>{
-            if <fold text='' expand='false'>(</fold>text.<fold text='empty' expand='false'>isEmpty()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            if <fold text='' expand='false'>(</fold>text.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 return "";
             }</fold>
             return complexBody(text.trim(), text.length() > 5);

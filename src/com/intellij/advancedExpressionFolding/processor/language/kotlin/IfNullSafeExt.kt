@@ -142,33 +142,19 @@ object IfNullSafeExt : IKotlinLanguageState by State()() {
         val iGetter = BuildExpressionExt.getAnyExpression(elementList.first(), document).asInstance<IGetter>()
         val parentGetter = iGetter?.receiver
         if (parentGetter != null) {
-
-            var parent = parentGetter
-            while (true) {
-                val expression = parent.asInstance<IGetter>()?.receiver
-                if (expression != null) {
-                    parent = expression
-                } else {
-                    break
-                }
-            }
-
-
-            val toMutableList =
-                iGetter.buildFoldRegions(parentGetter.element, document, null).reversed().toMutableList()
-            toMutableList.removeAt(toMutableList.lastIndex)
+            val receivers = generateSequence(parentGetter) { it.asInstance<IGetter>()?.receiver }.toList().reversed()
+            val parent = receivers.first()
+            val getterNames = receivers.mapNotNull { it.asInstance<IGetter>()?.name }
 
             var prefix = ""
             if (parent !is IGetter && parent is INameable) {
                 prefix = parent.name
-                if (toMutableList.isNotEmpty()) {
+                if (getterNames.isNotEmpty()) {
                     prefix += "."
                 }
             }
 
-            prefix += toMutableList.map {
-                it.placeholderText
-            }.joinToString(".")
+            prefix += getterNames.joinToString(".")
 
             replacementText = "$prefix.$replacementText"
         }

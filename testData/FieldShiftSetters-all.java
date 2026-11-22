@@ -52,9 +52,9 @@ import java.util.List;
 
     public static FieldShiftSetters mapPojoChain(FieldShiftSetters source) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>FieldShiftSetters</fold> result = new FieldShiftSetters();
-        result.<fold text='username = ' expand='false'>setUsername(</fold>source.<fold text='child' expand='false'>getChild()</fold><fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
-        result.<fold text='userIdentifier = ' expand='false'>setUserIdentifier(</fold>source.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold><fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text='' expand='false'>)</fold>;
-        result.<fold text='active = ' expand='false'>setActive(</fold>source.<fold text='child' expand='false'>getChild()</fold><fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>)</fold>;
+        result.<fold text='username = ' expand='false'>setUsername(</fold>source.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
+        result.<fold text='userIdentifier = ' expand='false'>setUserIdentifier(</fold>source.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text='' expand='false'>)</fold>;
+        result.<fold text='active = ' expand='false'>setActive(</fold>source.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>)</fold>;
         return result;
     }</fold>
 
@@ -90,23 +90,23 @@ import java.util.List;
         result.<fold text='username = ' expand='false'>setUsername(</fold>record.<fold text='userIdentifier' expand='false'>userIdentifier()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='username = ' expand='false'>setUsername(</fold>changer(record<fold text='<<' expand='false'>.username()</fold>)<fold text='' expand='false'>)</fold>;
         result.<fold text='username = ' expand='false'>setUsername(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
-        result.<fold text='username = ' expand='false'>setUsername(</fold>var1.<fold text='child' expand='false'>getChild()</fold><fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
-        result.<fold text='username = ' expand='false'>setUsername</fold><fold text='"${' expand='false'>(</fold>source.<fold text='username' expand='false'>getUsername()</fold><fold text='}' expand='false'> + "</fold>1"<fold text='' expand='false'>)</fold>;
-        result.<fold text='username = ' expand='false'>setUsername(</fold>source.<fold text='username' expand='false'>getUsername()</fold> + source.<fold text='userIdentifier' expand='false'>getUserIdentifier()</fold><fold text='' expand='false'>)</fold>;
+        result.<fold text='username = ' expand='false'>setUsername(</fold>var1.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
+        result.<fold text='username = ' expand='false'>setUsername</fold><fold text='"${' expand='false'>(</fold>source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold><fold text='}' expand='false'> + "</fold>1"<fold text='' expand='false'>)</fold>;
+        result.<fold text='username = ' expand='false'>setUsername(</fold>source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold> + source.<fold text='u' expand='false'>getU</fold>serIdentifier<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='active = ' expand='false'>setActive(</fold>source<fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='userIdentifier = ' expand='false'>setUserIdentifier(</fold>source<fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text='' expand='false'>)</fold>;
         <fold text='val' expand='false'>FieldShiftSetters</fold> setters2 = new FieldShiftSetters();
         setters2.<fold text='child = ' expand='false'>setChild(</fold>var1<fold text='<<' expand='false'>.getChild()</fold><fold text='' expand='false'>)</fold>;
-        var1.<fold text='userIdentifier = ' expand='false'>setUserIdentifier(</fold>source.<fold text='username' expand='false'>getUsername()</fold><fold text='' expand='false'>)</fold>;
+        var1.<fold text='userIdentifier = ' expand='false'>setUserIdentifier(</fold>source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold>;
         var1.<fold text='username = ' expand='false'>setUsername(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
-        setters2.<fold text='child' expand='false'>getChild()</fold>;
+        setters2.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>;
         setters2.<fold text='active = ' expand='false'>setActive(</fold>setters<fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>)</fold>;
         setters2.<fold text='username = ' expand='false'>setUsername(</fold>setters<fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
         setters2.<fold text='userIdentifier = ' expand='false'>setUserIdentifier(</fold>record<fold text='<<' expand='false'>.userIdentifier()</fold><fold text='' expand='false'>)</fold>;
         result.<fold text='child = ' expand='false'>setChild(</fold>setters2<fold text='' expand='false'>)</fold>;
         <fold text='val' expand='false'>FieldShiftSetters</fold> childBuilder2 = new FieldShiftSetters();
         childBuilder2.<fold text='username = ' expand='false'>setUsername(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text='' expand='false'>)</fold>;
-        result.<fold text='child = ' expand='false'>setChild(</fold>childBuilder2.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold><fold text='<<' expand='false'>.getChild()</fold><fold text='' expand='false'>)</fold>;
+        result.<fold text='child = ' expand='false'>setChild(</fold>childBuilder2.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.getChild()</fold><fold text='' expand='false'>)</fold>;
         return result;
     }</fold>
 
