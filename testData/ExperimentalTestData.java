@@ -117,11 +117,34 @@ public class ExperimentalTestData {
 
         void demo() <fold text='{...}' expand='true'>{
             NamelessAccessorExample example = new NamelessAccessorExample();
-            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>"ok"<fold text='' expand='false'>)</fold>;
-            String current = example.<fold text='!!' expand='false'>get()</fold>;
-            System.out.println(example.<fold text='!!' expand='false'>get()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>);
-            example.<fold text='!!' expand='false'>set</fold><fold text=' = ' expand='false'>(</fold>example.<fold text='!!' expand='false'>get()</fold><fold text='' expand='false'>)</fold>;
-            String duplicate = example.<fold text='!!' expand='false'>get()</fold> + example.<fold text='!!' expand='false'>get()</fold>;
+            example.set("ok");
+            String current = example<fold text='' expand='false'>.get()</fold>;
+            System.out.println(example<fold text='' expand='false'>.get()</fold>.<fold text='empty' expand='false'>isEmpty()</fold>);
+            example.set(example<fold text='' expand='false'>.get()</fold>);
+            String duplicate = example<fold text='' expand='false'>.get()</fold> + example<fold text='' expand='false'>.get()</fold>;
+        }</fold>
+    }</fold>
+
+    static class JsonNullableLikeWrapper<T> <fold text='{...}' expand='true'>{
+
+        private T held;
+
+        void set(T newValue)<fold text=' { ' expand='false'> {
+            </fold>this.held = newValue;<fold text=' }' expand='false'>
+        }</fold>
+
+        T get()<fold text=' { ' expand='false'> {
+            </fold>return held;<fold text=' }' expand='false'>
+        }</fold>
+    }</fold>
+
+    static class WrapperUsage <fold text='{...}' expand='true'>{
+
+        void demo() <fold text='{...}' expand='true'>{
+            JsonNullableLikeWrapper<String> holder = new JsonNullableLikeWrapper<>();
+            holder.set("ok");
+            String current = holder<fold text='' expand='false'>.get()</fold>;
+            holder.set(holder<fold text='' expand='false'>.get()</fold>);
         }</fold>
     }</fold>
 
