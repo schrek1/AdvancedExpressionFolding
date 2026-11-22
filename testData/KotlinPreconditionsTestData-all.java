@@ -104,7 +104,7 @@ public class KotlinPreconditionsTestData {
     public String label(String order, String customer) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>String</fold> checkedOrder = <fold text='' expand='false'>Objects.requireNonNull(</fold>order<fold text='!!' expand='false'>)</fold>;
         <fold text='' expand='false'>Objects.requireNonNull(</fold>customer<fold text='!!' expand='false'>)</fold>;
-        <fold text='requireNotNull' expand='false'>Objects.requireNonNull</fold>(order.<fold text='empty' expand='false'>isEmpty()</fold> ? customer : order);
+        <fold text='requireNotNull' expand='false'>Objects.requireNonNull</fold>(order.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold> ? customer : order);
         return <fold text='' expand='false'>Objects.requireNonNull(</fold>checkedOrder.trim()<fold text='!!' expand='false'>)</fold>;
     }</fold>
 }
