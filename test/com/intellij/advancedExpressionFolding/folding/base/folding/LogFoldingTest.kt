@@ -16,6 +16,13 @@ interface LogFoldingTest : FoldingTestSection {
         foldingState()::logFolding,
         foldingState()::logFoldingTextBlocks,
     )
+
+    @Test
+    fun logFoldingKeepMessageTextTestData() = testCase.runFoldingTest(
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::logFolding,
+        foldingState()::logFoldingKeepMessageText,
+    )
 }
 
 @Disabled("Split from FoldingTest")
