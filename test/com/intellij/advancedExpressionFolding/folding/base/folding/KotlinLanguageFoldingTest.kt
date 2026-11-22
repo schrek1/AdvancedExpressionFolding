@@ -166,6 +166,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
 
     @Test
     fun lazyPropertyTestData() = testCase.runFoldingTest(foldingState()::lazyProperty, foldingState()::lombok)
+
+    @Test
+    fun scopeWithTestData() = testCase.runFoldingTest(foldingState()::scopeWith)
 }
 
 @Disabled("Split from FoldingTest")
