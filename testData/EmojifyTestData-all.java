@@ -398,7 +398,7 @@ public class EmojifyTestData {
 
     public class PatternMatchingInstanceof <fold text='{...}' expand='true'>{
         public void checkObject(Object obj) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-            </fold>if <fold text='' expand='false'>(</fold>obj instanceof String str<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
+            </fold>if <fold text='' expand='false'>(</fold>obj <fold text='is' expand='false'>instanceof</fold> String str<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>int</fold> length = str.length();
             }</fold><fold text=' ' expand='true'>
         </fold>}</fold>
@@ -512,7 +512,7 @@ public class EmojifyTestData {
 
             public void methodWithNullInstanceof() <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>Object</fold> obj = null;
-                <fold text='val' expand='false'>boolean</fold> isString = obj instanceof String;
+                <fold text='val' expand='false'>boolean</fold> isString = obj <fold text='is' expand='false'>instanceof</fold> String;
             }</fold>
 
             public void methodWithNullDefaultValue() <fold text='{...}' expand='true'>{

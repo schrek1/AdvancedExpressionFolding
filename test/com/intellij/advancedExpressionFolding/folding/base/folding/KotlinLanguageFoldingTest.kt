@@ -150,6 +150,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     fun instanceofSwitchTestData() = testCase.runFoldingTest(foldingState()::instanceofSwitch)
 
     @Test
+    fun isOperatorTestData() = testCase.runFoldingTest(foldingState()::kotlinIsOperator)
+
+    @Test
     fun constructorReferenceNotationTestData() = testCase.runFoldingTest(foldingState()::constructorReferenceNotation)
 
     @Test
