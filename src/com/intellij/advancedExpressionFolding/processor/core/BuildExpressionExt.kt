@@ -7,6 +7,7 @@ import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.project.IndexNotReadyException
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 
 object BuildExpressionExt {
@@ -18,12 +19,14 @@ object BuildExpressionExt {
             return expression
         }
         if (synthetic) {
+            // light PSI, e.g. the implicit parameters of a record's compact constructor, has no source text to wrap
+            val textRange: TextRange = element.textRange ?: return null
             val children = arrayListOf<Expression>()
             Helper.findChildExpressions(element, children, document)
             return SyntheticExpressionImpl(
                 element,
-                element.textRange,
-                document.getText(element.textRange),
+                textRange,
+                document.getText(textRange),
                 children
             )
         }

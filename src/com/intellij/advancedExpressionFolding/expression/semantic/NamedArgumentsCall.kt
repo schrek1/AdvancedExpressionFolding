@@ -27,8 +27,14 @@ class NamedArgumentsCall(
      * @param separatorRange the text before the name (`.`)
      * @param assignRange the text between the name and the value, shown as ` = `
      * @param suffixRange the text after the value, ending with the call's `)`
+     * @param nameText shown at the end of the separator, for a name whose start `separatorRange` hides (`setF` → `f`)
      */
-    class NamedArgument(val separatorRange: TextRange, val assignRange: TextRange, val suffixRange: TextRange)
+    class NamedArgument(
+        val separatorRange: TextRange,
+        val assignRange: TextRange,
+        val suffixRange: TextRange,
+        val nameText: String = "",
+    )
 
     override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean = true
 
@@ -48,14 +54,14 @@ class NamedArgumentsCall(
         }
 
         // Re-indents a range that starts its line; the indentation both layouts share stays real text.
-        fun foldIndented(range: TextRange, indent: String) {
+        fun foldIndented(range: TextRange, indent: String, suffix: String = "") {
             val lineStart = document.getLineStartOffset(document.getLineNumber(range.startOffset))
             if (!document.isBlank(lineStart, range.startOffset)) {
-                fold(range, "")
+                fold(range, suffix)
                 return
             }
             val shared = document.getText(TextRange(lineStart, range.startOffset)).commonPrefixWith(indent).length
-            fold(TextRange(lineStart + shared, range.endOffset), indent.substring(shared))
+            fold(TextRange(lineStart + shared, range.endOffset), indent.substring(shared) + suffix)
         }
 
         val single = arguments.singleOrNull()
@@ -63,7 +69,7 @@ class NamedArgumentsCall(
             document.isBlank(openRange.endOffset, single.separatorRange.startOffset) &&
             document.isBlank(single.suffixRange.endOffset, closeRange.startOffset)
         ) {
-            fold(openRange.union(single.separatorRange), openText)
+            fold(openRange.union(single.separatorRange), openText + single.nameText)
             fold(single.assignRange, " = ")
             fold(single.suffixRange.withoutLastCharacter(), "")
             fold(TextRange(single.suffixRange.endOffset, closeRange.endOffset), "")
@@ -77,9 +83,9 @@ class NamedArgumentsCall(
         var previousEnd = openRange.endOffset
         arguments.forEachIndexed { index, argument ->
             if (document.sameLine(previousEnd, argument.separatorRange.startOffset)) {
-                fold(argument.separatorRange, if (index > 0) " " else "")
+                fold(argument.separatorRange, (if (index > 0) " " else "") + argument.nameText)
             } else {
-                foldIndented(argument.separatorRange, argumentIndent)
+                foldIndented(argument.separatorRange, argumentIndent, argument.nameText)
             }
             fold(argument.assignRange, " = ")
             if (index < arguments.lastIndex) {
