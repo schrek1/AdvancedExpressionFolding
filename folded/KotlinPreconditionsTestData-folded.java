@@ -16,7 +16,7 @@ public class KotlinPreconditionsTestData {
     public void ship(String order, String customer, int quantity) {
         require(order != null) { "order" }
         requireNotNull(customer) { "customer" };
-        requireNotNull(name);
+        name!!;
         require(quantity > 0) { "Quantity must be positive: " + quantity }
         require(quantity < 100)
     }
@@ -68,5 +68,12 @@ public class KotlinPreconditionsTestData {
             connected = true;
         }
         Objects.requireNonNull(order, () -> "order");
+    }
+
+    public String label(String order, String customer) {
+        String checkedOrder = order!!;
+        customer!!;
+        requireNotNull(order.isEmpty() ? customer : order);
+        return checkedOrder.trim()!!;
     }
 }
