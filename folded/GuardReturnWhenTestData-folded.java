@@ -20,21 +20,21 @@ public class GuardReturnWhenTestData {
     Result handle(Response response) {
         Status status = response.status();
         when { status.matches(Code.NOT_FOUND) -> return notFound(response)
-               status.matches(Code.CONFLICT) -> return conflict(response)
-               status.matches(Code.RATE_LIMITED) -> return retryLater(response)
-               else -> return Result.ok(response) }
+        status.matches(Code.CONFLICT) -> return conflict(response)
+        status.matches(Code.RATE_LIMITED) -> return retryLater(response)
+        else -> return Result.ok(response) }
     }
 
     String classify(int size) {
         when { size == 0 -> return "empty"
-               size < 10 -> return "small"
-               else -> return "large" }
+        size < 10 -> return "small"
+        else -> return "large" }
     }
 
     void dispatch(String command) {
         when { command.isEmpty() -> return
-               command.startsWith("#") -> return
-               else -> return }
+        command.startsWith("#") -> return
+        else -> return }
     }
 
     String onlyTheTail(String name, int size) {
@@ -43,8 +43,8 @@ public class GuardReturnWhenTestData {
             return name;
         }
         when { size == 0 -> return name
-               size == 1 -> return name + "!"
-               else -> return name + size }
+        size == 1 -> return name + "!"
+        else -> return name + size }
     }
 
     String singleGuard(String name) {

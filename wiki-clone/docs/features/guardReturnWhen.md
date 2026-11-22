@@ -22,9 +22,9 @@ examples/data/GuardReturnWhenTestData.java:
 folded/GuardReturnWhenTestData-folded.java:
 ```java
         when { status.matches(Code.NOT_FOUND) -> return notFound(response)
-               status.matches(Code.CONFLICT) -> return conflict(response)
-               status.matches(Code.RATE_LIMITED) -> return retryLater(response)
-               else -> return Result.ok(response) }
+        status.matches(Code.CONFLICT) -> return conflict(response)
+        status.matches(Code.RATE_LIMITED) -> return retryLater(response)
+        else -> return Result.ok(response) }
 ```
 
 The chain folds when two or more `if` statements follow each other with nothing but line breaks between them, each
@@ -32,7 +32,8 @@ has no `else` and its braces hold a single `return`, and the next statement is a
 statement in a branch, an `else` or any other statement before the final `return` keeps the code as it is. The
 conditions are kept whole, so any condition works, not only equality checks.
 
-A fold cannot add a line, so `when {` shares the line of the first branch and `}` closes the `else` line.
+A fold cannot add a line, so `when {` shares the line of the first branch and `}` closes the `else` line. The other
+branches keep their own indentation as real text.
 
 Default: Off
 Controlled by: `guardReturnWhen`

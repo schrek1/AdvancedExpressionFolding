@@ -22,8 +22,9 @@ import com.intellij.psi.util.PsiTreeUtil
  * Shows a run of guard `if (cond) { return x; }` statements followed by a final `return y;` as a subject-less
  * Kotlin `when`: `when { cond -> return x` ... `else -> return y }`.
  *
- * A fold cannot add a line, so `when {` shares the first branch's line and `}` closes the `else` line. Built for the
- * head `if`; the other links get an instance with no chain, so their own if-foldings step aside.
+ * A fold cannot add a line, so `when {` shares the first branch's line and `}` closes the `else` line. The other
+ * branches keep their own indentation as real text. Built for the head `if`; the other links get an instance with no
+ * chain, so their own if-foldings step aside.
  */
 class GuardReturnWhenExpression private constructor(
     ifStatement: PsiIfStatement,
@@ -50,16 +51,15 @@ class GuardReturnWhenExpression private constructor(
             val ifStatement = branch.ifStatement
             val rParenth = ifStatement.rParenth!!
             val lBrace = branch.block.lBrace!!
-            val keyword = if (index == 0) WHEN else BRANCH_INDENT
-            fold(ifStatement.textRange.startOffset, ifStatement.lParenth!!.textRange.endOffset, keyword)
+            fold(ifStatement.textRange.startOffset, ifStatement.lParenth!!.textRange.endOffset, if (index == 0) WHEN else "")
             val spaceBeforeBrace = lBrace.textRange.startOffset > rParenth.textRange.endOffset
             fold(rParenth.textRange.startOffset, rParenth.textRange.endOffset, if (spaceBeforeBrace) " ->" else " -> ")
             fold(lBrace.textRange.startOffset, branch.returnStatement.textRange.startOffset, "")
             fold(branch.returnStatement.textRange.endOffset - 1, branch.block.rBrace!!.textRange.endOffset, "")
         }
-        // No zero-width fold exists, so `else -> ` takes the place of the last indentation character.
+        // No zero-width fold exists, so `else -> ` is anchored on the last indentation character.
         val finalStart = chain.finalReturn.textRange.startOffset
-        fold(finalStart - 1, finalStart, "${document.charsSequence[finalStart - 1]}${BRANCH_INDENT}else -> ")
+        fold(finalStart - 1, finalStart, "${document.charsSequence[finalStart - 1]}else -> ")
         val finalEnd = chain.finalReturn.textRange.endOffset
         fold(finalEnd - 1, finalEnd, " }")
         return descriptors.toTypedArray()
@@ -75,7 +75,6 @@ class GuardReturnWhenExpression private constructor(
 
     companion object : IKotlinLanguageState by State()() {
         private const val WHEN = "when { "
-        private val BRANCH_INDENT = " ".repeat(WHEN.length)
 
         fun create(element: PsiIfStatement): Expression? {
             if (!guardReturnWhen || branchOf(element) == null) {

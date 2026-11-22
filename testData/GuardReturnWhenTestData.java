@@ -22,33 +22,33 @@ public class GuardReturnWhenTestData {
         <fold text='when { ' expand='false'>if (</fold>status.matches(Code.NOT_FOUND)<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return notFound(response)<fold text='' expand='false'>;
         }</fold></fold>
-        <fold text='       ' expand='false'>if (</fold>status.matches(Code.CONFLICT)<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>if (</fold>status.matches(Code.CONFLICT)<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return conflict(response)<fold text='' expand='false'>;
         }</fold></fold>
-        <fold text='       ' expand='false'>if (</fold>status.matches(Code.RATE_LIMITED)<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>if (</fold>status.matches(Code.RATE_LIMITED)<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return retryLater(response)<fold text='' expand='false'>;
         }</fold></fold>
-       <fold text='        else -> ' expand='false'> </fold>return Result.ok(response)<fold text=' }' expand='false'>;</fold>
+       <fold text=' else -> ' expand='false'> </fold>return Result.ok(response)<fold text=' }' expand='false'>;</fold>
     }</fold>
 
     String classify(int size) <fold text='{...}' expand='true'>{
         <fold text='when { ' expand='false'>if (</fold>size == 0<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "empty"<fold text='' expand='false'>;
         }</fold></fold>
-        <fold text='       ' expand='false'>if (</fold>size < 10<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>if (</fold>size < 10<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return "small"<fold text='' expand='false'>;
         }</fold></fold>
-       <fold text='        else -> ' expand='false'> </fold>return "large"<fold text=' }' expand='false'>;</fold>
+       <fold text=' else -> ' expand='false'> </fold>return "large"<fold text=' }' expand='false'>;</fold>
     }</fold>
 
     void dispatch(String command) <fold text='{...}' expand='true'>{
         <fold text='when { ' expand='false'>if (</fold>command.isEmpty()<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return<fold text='' expand='false'>;
         }</fold></fold>
-        <fold text='       ' expand='false'>if (</fold>command.startsWith("#")<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>if (</fold>command.startsWith("#")<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return<fold text='' expand='false'>;
         }</fold></fold>
-       <fold text='        else -> ' expand='false'> </fold>return<fold text=' }' expand='false'>;</fold>
+       <fold text=' else -> ' expand='false'> </fold>return<fold text=' }' expand='false'>;</fold>
     }</fold>
 
     String onlyTheTail(String name, int size) <fold text='{...}' expand='true'>{
@@ -59,10 +59,10 @@ public class GuardReturnWhenTestData {
         <fold text='when { ' expand='false'>if (</fold>size == 0<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return name<fold text='' expand='false'>;
         }</fold></fold>
-        <fold text='       ' expand='false'>if (</fold>size == 1<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+        <fold text='' expand='false'>if (</fold>size == 1<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
             </fold>return name + "!"<fold text='' expand='false'>;
         }</fold></fold>
-       <fold text='        else -> ' expand='false'> </fold>return name + size<fold text=' }' expand='false'>;</fold>
+       <fold text=' else -> ' expand='false'> </fold>return name + size<fold text=' }' expand='false'>;</fold>
     }</fold>
 
     String singleGuard(String name) <fold text='{...}' expand='true'>{
