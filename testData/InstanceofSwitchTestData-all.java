@@ -117,7 +117,7 @@ public class InstanceofSwitchTestData {
         <fold text='' expand='false'>}</fold></fold><fold text='' expand='false'> </fold><fold text='default' expand='false'>else</fold> <fold text='->' expand='false'><fold text='{...}' expand='true'>{</fold>
             <fold text='//...' expand='true'>// should not happen; log and fail
             // callers validate the value first</fold>
-            throw new IllegalArgumentException("unexpected <fold text='$' expand='false'>" + </fold>value<fold text='")' expand='false'>)</fold>;
+            throw <fold text='' expand='false'>new </fold>IllegalArgumentException("unexpected <fold text='$' expand='false'>" + </fold>value<fold text='")' expand='false'>)</fold>;
         }</fold>
     }</fold>
 

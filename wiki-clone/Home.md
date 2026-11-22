@@ -30,6 +30,12 @@ Shows `map.getOrDefault(key, default)` as `map[key] ?: default`, where the resul
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/GetOrDefaultElvisTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/GetOrDefaultElvisTestData-folded.java)
 
+## requireNonNullElseElvis
+### Objects.requireNonNullElse(Get) as value ?: fallback
+Shows `Objects.requireNonNullElse(value, fallback)` as `value ?: fallback`, and `requireNonNullElseGet` the same way when the supplier is `X::new`, a no-argument method reference or a lambda with an expression body (or a block that is a single `return`). A single short call on the result gets real parentheses: `(name ?: "").length()`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/RequireNonNullElseElvisTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/RequireNonNullElseElvisTestData-folded.java)
+
 ## mapAndEmptyCollectionLiterals
 ### Map literals and empty collections: ["key": value], [], [:]
 Shows `Map.of(...)` as a `["key": value]` literal, empty lists and sets (`List.of()`, `Set.of()`, `Collections.emptyList()`, `new ArrayList<>()`, ...) as `[]` and empty maps (`Map.of()`, `Collections.emptyMap()`, `new HashMap<>()`) as `[:]`.

@@ -64,14 +64,14 @@ public class OptionalOrElseThrowTestData {
     public Shape multiStatementBlock(String key) <fold text='{...}' expand='true'>{
         return lookup(key).orElseThrow<fold text='' expand='false'>(() -></fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("missing <fold text='$' expand='false'>" + </fold>key<fold text='")' expand='false'>)</fold>;
-            return new NotFoundException();
+            return <fold text='' expand='false'>new </fold>NotFoundException();
         }</fold><fold text='' expand='false'>)</fold>;
     }</fold>
 
     public Shape commentedBlock(String key) <fold text='{...}' expand='true'>{
         return lookup(key).orElseThrow<fold text='' expand='false'>(() -></fold> <fold text='{...}' expand='true'>{
             // lookups by key are case-sensitive
-            return new NotFoundException();
+            return <fold text='' expand='false'>new </fold>NotFoundException();
         }</fold><fold text='' expand='false'>)</fold>;
     }</fold>
 
@@ -110,7 +110,7 @@ public class OptionalOrElseThrowTestData {
         </fold>}</fold>
 
         static NotFoundException forKey()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new NotFoundException()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>NotFoundException()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 }

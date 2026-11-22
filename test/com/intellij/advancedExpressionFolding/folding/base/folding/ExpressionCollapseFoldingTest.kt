@@ -38,6 +38,9 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     fun getOrDefaultElvisTestData() = testCase.runFoldingTest(foldingState()::getOrDefaultElvis)
 
     @Test
+    fun requireNonNullElseElvisTestData() = testCase.runFoldingTest(foldingState()::requireNonNullElseElvis)
+
+    @Test
     fun mapAndEmptyCollectionLiteralsTestData() =
         testCase.runFoldingTest(foldingState()::mapAndEmptyCollectionLiterals)
 

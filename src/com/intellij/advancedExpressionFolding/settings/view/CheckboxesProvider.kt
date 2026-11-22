@@ -54,6 +54,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#getordefaultelvis")
         }
 
+        registerCheckbox(state::requireNonNullElseElvis, "Objects.requireNonNullElse(Get) as value ?: fallback") {
+            example(RequireNonNullElseElvisTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#requirenonnullelseelvis")
+        }
+
         registerCheckbox(
             state::mapAndEmptyCollectionLiterals,
             "Map literals and empty collections: [\"key\": value], [], [:]"
