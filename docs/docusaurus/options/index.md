@@ -153,6 +153,17 @@ Shows `lock.lock(); try { ... } finally { lock.unlock(); }` the way Kotlin write
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/WithLockTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/WithLockTestData-folded.java)
 
+## scopeLet
+### Null-guarded single statement as ?.let
+Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact.setEmail(it) }` and `body != null ? toBytes(body) : null` as `body?.let { toBytes(it) }`, in the source order.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeLetTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeLetTestData-folded.java)
+
+## scopeWith
+### Calls on the same receiver as with
+Shows three or more consecutive calls on the same variable, `order.validate(); order.reserveStock(); order.notifyCustomer("Thanks");`, as `with(order) { validate(); reserveStock(); notifyCustomer("Thanks") }`.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeWithTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeWithTestData-folded.java)
 ## assertsCollapse
 ### Asserts
 Simplifies assert statements.
