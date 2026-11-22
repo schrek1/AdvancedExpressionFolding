@@ -17,6 +17,7 @@ interface IExpressionCollapseState {
     var builderNamedArguments: Boolean
     var getOrDefaultElvis: Boolean
     var mapAndEmptyCollectionLiterals: Boolean
+    var setterNamedArguments: Boolean
 }
 
 data class ExpressionCollapseState(
@@ -36,4 +37,5 @@ data class ExpressionCollapseState(
     override var builderNamedArguments: Boolean = true,
     override var getOrDefaultElvis: Boolean = true,
     override var mapAndEmptyCollectionLiterals: Boolean = true,
+    override var setterNamedArguments: Boolean = true,
 ) : IExpressionCollapseState
