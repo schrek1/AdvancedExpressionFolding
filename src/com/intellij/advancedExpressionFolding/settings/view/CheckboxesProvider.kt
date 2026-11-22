@@ -110,6 +110,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinquickreturn")
         }
 
+        registerCheckbox(state::kotlinWithLock, "Lock, try, finally unlock as Kotlin withLock") {
+            example(WithLockTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinwithlock")
+        }
+
         registerCheckbox(state::assertsCollapse, "Asserts") {
             example(AssertTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#asserts")

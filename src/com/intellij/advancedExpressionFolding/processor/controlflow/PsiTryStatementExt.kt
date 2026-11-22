@@ -5,13 +5,63 @@ import com.intellij.advancedExpressionFolding.expression.semantic.HideExpression
 import com.intellij.advancedExpressionFolding.processor.*
 import com.intellij.advancedExpressionFolding.processor.core.BaseExtension
 import com.intellij.advancedExpressionFolding.processor.lombok.MethodBodyInspector.rethrownException
+import com.intellij.openapi.util.TextRange
+import com.intellij.psi.PsiExpression
+import com.intellij.psi.PsiExpressionStatement
+import com.intellij.psi.PsiMethodCallExpression
+import com.intellij.psi.PsiReferenceExpression
 import com.intellij.psi.PsiStatement
+import com.intellij.psi.PsiThisExpression
 import com.intellij.psi.PsiTryStatement
 
 
 object PsiTryStatementExt : BaseExtension() {
 
-    fun createExpression(element: PsiTryStatement) = element.createSneakyThrows()
+    fun createExpression(element: PsiTryStatement) = element.createWithLock() ?: element.createSneakyThrows()
+
+    /**
+     * Folds `lock.lock(); try { ... } finally { lock.unlock(); }` into `withLock(lock) { ... }`.
+     */
+    fun PsiTryStatement.createWithLock(): Expression? {
+        if (!kotlinWithLock || catchSections.isNotEmpty() || resourceList != null) return null
+        val tryBlock = tryBlock ?: return null
+        val unlockReceiver = finallyBlock?.statements?.singleOrNull()?.lockReceiver("unlock") ?: return null
+        val whiteSpace = prevWhiteSpace() ?: return null
+        val lockStatement = whiteSpace.prevSibling as? PsiStatement ?: return null
+        val lockReceiver = lockStatement.lockReceiver("lock") ?: return null
+        if (lockReceiver.text != unlockReceiver.text) return null
+        val indent = lockStatement.prevWhiteSpace() ?: return null
+        val lockCallEnd = (lockStatement as PsiExpressionStatement).expression.textRange.endOffset
+
+        // The lock and the call's own `)` stay real text; a fold cannot be zero-width, so `withLock(` borrows the last indent space.
+        return exprList(
+            indent.exprOnLastChar("withLock("),
+            lockStatement.exprHide(textRange = TextRange(lockReceiver.textRange.endOffset, lockCallEnd - 1)),
+            lockStatement.exprHide(textRange = TextRange(lockCallEnd, lockStatement.textRange.endOffset)),
+            whiteSpace.exprHide(),
+            firstChild.exprHide(),
+            exprHide(textRange = TextRange(tryBlock.textRange.endOffset, textRange.endOffset)),
+        ).exprWrap(this, group("withLock"))
+    }
+
+    private fun PsiStatement.lockReceiver(methodName: String): PsiExpression? {
+        val call = (this as? PsiExpressionStatement)?.expression as? PsiMethodCallExpression ?: return null
+        if (call.methodExpression.referenceName != methodName || !call.argumentList.isEmpty) return null
+        return call.methodExpression.qualifierExpression?.takeIf { it.isStableLockReceiver() }
+    }
+
+    // Only receivers that name the same lock each time they are evaluated: `lock`, `this.lock`, `rw.readLock()`;
+    // any other call (`newLock()`) may return a different lock for the unlock.
+    private fun PsiExpression.isStableLockReceiver(): Boolean = when (this) {
+        is PsiThisExpression -> true
+        is PsiReferenceExpression -> qualifierExpression?.isStableLockReceiver() ?: true
+        is PsiMethodCallExpression -> methodExpression.referenceName in READ_WRITE_LOCK_VIEWS &&
+                argumentList.isEmpty &&
+                methodExpression.qualifierExpression?.isStableLockReceiver() == true
+        else -> false
+    }
+
+    private val READ_WRITE_LOCK_VIEWS = setOf("readLock", "writeLock")
 
     fun PsiTryStatement.createSneakyThrows(): Expression? {
         if (!experimental || !isSimpleTryCatch()) return null

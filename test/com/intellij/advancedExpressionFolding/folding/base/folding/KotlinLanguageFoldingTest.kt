@@ -11,6 +11,9 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun withLockTestData() = testCase.runFoldingTest(foldingState()::kotlinWithLock)
+
+    @Test
     fun ifNullSafeData() = testCase.runFoldingTest(
         foldingState()::checkExpressionsCollapse,
         foldingState()::getSetExpressionsCollapse,
