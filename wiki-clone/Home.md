@@ -226,6 +226,13 @@ Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice"
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/BuilderNamedArgumentsTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/builderNamedArguments)
 
+## setterNamedArguments
+### Setters on a new object as named arguments
+Shows `var p = new Person();` followed by `p.setName("Alice"); p.setAge(31);` as `val p = Person(name = "Alice", age = 31);`, one argument per line.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/SetterNamedArgumentsTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/SetterNamedArgumentsTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/setterNamedArguments)
+
 ## destructuring
 ### Destructuring assignment for array & list
 Implements destructuring assignments for arrays and lists.
