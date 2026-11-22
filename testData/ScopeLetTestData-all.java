@@ -9,7 +9,7 @@ public class ScopeLetTestData {
             </fold>contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>email</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
         }</fold></fold>
         <fold text='' expand='false'>if (</fold>phone<fold text='?.let { ' expand='false'> != null) </fold>contact.<fold text='p' expand='false'>setP</fold>hone<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>phone</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;</fold>
-        <fold text='val' expand='false'>String</fold> nickname = contact.<fold text='nickname' expand='false'>getNickname()</fold>;
+        <fold text='val' expand='false'>String</fold> nickname = contact.<fold text='n' expand='false'>getN</fold>ickname<fold text='' expand='false'>()</fold>;
         <fold text='' expand='false'>if (</fold>nickname<fold text='?.let ' expand='false'> != null) </fold><fold text='{ ' expand='false'><fold text='{...}' expand='true'>{
             </fold><fold text='' expand='false'>System.out.</fold>println("Hi <fold text='$' expand='false'>" + </fold><fold text='it' expand='false'>nickname</fold><fold text='' expand='false'> + "</fold>, welcome back")<fold text=' }' expand='false'>;
         }</fold></fold>
@@ -57,7 +57,7 @@ public class ScopeLetTestData {
     }</fold>
 
     private static byte[] toBytes(String text)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>text.<fold text='bytes' expand='false'>getBytes()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>text.<fold text='b' expand='false'>getB</fold>ytes<fold text='' expand='false'>()</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     static class Contact <fold text='{...}' expand='true'>{
