@@ -137,7 +137,7 @@ Extends log statement folding to Java text blocks so multi-line log messages col
 
 ## logFoldingKeepMessageText
 ### Log folding: keep the message text, fold only the arguments
-Keeps the log message as real, string-coloured source and folds only each `{}` / `%s` into its argument (`$shopId`, `${previous.mode}`); the argument list after the message is hidden. A trailing exception stays visible. A call whose argument would not read well inside the message (a lambda, a call with arguments, a multi-line or long expression) keeps the classic log folding. Off by default.
+Keeps the log message as real, string-coloured source and folds only each `{}` / `%s` into its argument (`$shopId`, `${previous.mode}`); the argument list after the message is hidden. A trailing exception stays visible. An argument may be a call with arguments (`${countOrders(shopId, previous)}`); only a call whose argument holds a lambda, spans several lines or is longer than about 40 characters keeps the classic log folding. Off by default.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LogFoldingKeepMessageTextTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LogFoldingKeepMessageTextTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/logFoldingKeepMessageText)
