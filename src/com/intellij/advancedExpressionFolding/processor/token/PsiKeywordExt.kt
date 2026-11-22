@@ -4,6 +4,7 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.processor.expr
 import com.intellij.advancedExpressionFolding.processor.exprHide
 import com.intellij.advancedExpressionFolding.processor.exprList
+import com.intellij.advancedExpressionFolding.processor.declaration.SetterNamedArgumentsExt
 import com.intellij.advancedExpressionFolding.processor.exprWrap
 import com.intellij.advancedExpressionFolding.processor.language.java.ConstructorReferenceExt
 import com.intellij.advancedExpressionFolding.processor.nextWhiteSpace
@@ -13,6 +14,7 @@ import com.intellij.advancedExpressionFolding.processor.util.Consts.Emoji
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IEmojiVisibilityState
 import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
+import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.JavaTokenType
 import com.intellij.psi.PsiArrayType
@@ -26,16 +28,17 @@ import com.intellij.psi.PsiParameter
 
 object PsiKeywordExt : IEmojiVisibilityState by State()(), IKotlinLanguageState by State()() {
 
-    fun createExpression(keyword: PsiKeyword): Expression? =
+    fun createExpression(keyword: PsiKeyword, document: Document): Expression? =
         finalRemoval.takeIfTrue(keyword)?.finalRemoval() ?: finalEmoji.takeIfTrue(keyword)?.finalEmoji()
-        ?: kotlinConstructorCall.takeIfTrue(keyword)?.hideNew()
+        ?: kotlinConstructorCall.takeIfTrue(keyword)?.hideNew(document)
 
-    private fun PsiKeyword.hideNew(): Expression? {
+    private fun PsiKeyword.hideNew(document: Document): Expression? {
         val creation = parent as? PsiNewExpression ?: return null
         val classReference = creation.classReference
         if (tokenType != JavaTokenType.NEW_KEYWORD || creation.qualifier != null || creation.anonymousClass != null ||
             classReference == null || creation.typeArguments.isNotEmpty() || creation.type is PsiArrayType ||
-            constructorReferenceNotation && ConstructorReferenceExt.isFieldConstructorReference(creation)
+            constructorReferenceNotation && ConstructorReferenceExt.isFieldConstructorReference(creation) ||
+            SetterNamedArgumentsExt.opensSetterRun(creation, document)
         ) {
             return null
         }

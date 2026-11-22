@@ -113,6 +113,16 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
             setterRun(declaration, variable, document).contains(call)
     }
 
+    /** Whether `creation` opens a setter run, whose fold already hides its `new`. */
+    fun opensSetterRun(creation: PsiNewExpression, document: Document): Boolean {
+        if (!setterNamedArguments) {
+            return false
+        }
+        val variable = creation.parent as? PsiLocalVariable ?: return false
+        val declaration = variable.parent as? PsiDeclarationStatement ?: return false
+        return declaration.newObjectVariable() == variable && setterRun(declaration, variable, document).isNotEmpty()
+    }
+
     private fun setterRun(
         declaration: PsiDeclarationStatement,
         variable: PsiLocalVariable,
