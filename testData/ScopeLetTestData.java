@@ -9,7 +9,7 @@ public class ScopeLetTestData {
             </fold>contact.<fold text='e' expand='false'>setE</fold>mail<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>email</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;
         }</fold></fold>
         <fold text='' expand='false'>if (</fold>phone<fold text='?.let { ' expand='false'> != null) </fold>contact.<fold text='p' expand='false'>setP</fold>hone<fold text=' = ' expand='false'>(</fold><fold text='it' expand='false'>phone</fold><fold text='' expand='false'>)</fold><fold text=' }' expand='false'>;</fold>
-        String nickname = contact.<fold text='nickname' expand='false'>getNickname()</fold>;
+        String nickname = contact.<fold text='n' expand='false'>getN</fold>ickname<fold text='' expand='false'>()</fold>;
         <fold text='' expand='false'>if (</fold>nickname<fold text='?.let ' expand='false'> != null) </fold><fold text='{ ' expand='false'><fold text='{...}' expand='true'>{
             </fold>System.out.println("Hi " + <fold text='it' expand='false'>nickname</fold> + ", welcome back")<fold text=' }' expand='false'>;
         }</fold></fold>
@@ -57,7 +57,7 @@ public class ScopeLetTestData {
     }</fold>
 
     private static byte[] toBytes(String text)<fold text=' { ' expand='false'> {
-        </fold>return text.<fold text='bytes' expand='false'>getBytes()</fold>;<fold text=' }' expand='false'>
+        </fold>return text.<fold text='b' expand='false'>getB</fold>ytes<fold text='' expand='false'>()</fold>;<fold text=' }' expand='false'>
     }</fold>
 
     static class Contact <fold text='{...}' expand='true'>{
