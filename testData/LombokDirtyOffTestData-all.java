@@ -29,7 +29,7 @@ public class LombokDirtyOffTestData {
             </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof DirtyData)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> DirtyData<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
 
                 <fold text='val' expand='false'>DirtyData</fold> dirtyData = <fold text='' expand='false'>(DirtyData) </fold>o;
 
@@ -95,7 +95,7 @@ public class LombokDirtyOffTestData {
             </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof DirtyData)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> DirtyData<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
 
                 <fold text='val' expand='false'>DirtyData</fold> dirtyData = <fold text='' expand='false'>(DirtyData) </fold>o;
 

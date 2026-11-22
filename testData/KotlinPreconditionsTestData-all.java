@@ -66,7 +66,7 @@ public class KotlinPreconditionsTestData {
         <fold text='require(!' expand='false'>if </fold>(sku == null || stock < 0 && reserved > 0)<fold text=') ' expand='false'> </fold><fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalArgumentException(</fold>"mixed"<fold text=' ' expand='false'>);
         </fold>}</fold>
-        <fold text='require(!' expand='false'>if </fold>(item instanceof String)<fold text=') ' expand='false'> </fold><fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
+        <fold text='require(!' expand='false'>if </fold>(item <fold text='is' expand='false'>instanceof</fold> String)<fold text=') ' expand='false'> </fold><fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
             throw new IllegalArgumentException(</fold>"item"<fold text=' ' expand='false'>);
         </fold>}</fold>
     }</fold>

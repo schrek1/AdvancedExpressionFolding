@@ -48,7 +48,9 @@ object MethodCallExpressionExt :
 
         ToBuilderCopyExt.createExpression(element, document)?.let { return it }
         BuilderNamedArgumentsExt.createExpression(element, document)?.let { return it }
-        if (SetterNamedArgumentsExt.isInSetterRun(element, document)) {
+        if (SetterNamedArgumentsExt.isInSetterRun(element, document) ||
+            BuilderNamedArgumentsExt.isInFoldedChain(element, document)
+        ) {
             return null
         }
         FieldShiftExt.createExpression(element, document, qualifier)?.let { return it }

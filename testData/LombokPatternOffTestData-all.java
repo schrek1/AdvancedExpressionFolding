@@ -308,7 +308,7 @@ public class LombokPatternOffTestData {
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
             if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-            if <fold text='' expand='false'>(</fold>!(o instanceof DataFull)<fold text='' expand='false'>)</fold> return false;
+            if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
             <fold text='val' expand='false'>DataFull</fold> dataFull = <fold text='' expand='false'>(DataFull) </fold>o;
             return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
         }</fold>
@@ -349,7 +349,7 @@ public class LombokPatternOffTestData {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof LombokPatternOffTestData.DataFull)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> LombokPatternOffTestData.DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokPatternOffTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokPatternOffTestData.DataFull) </fold>o;
                 return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
             }</fold>
@@ -380,7 +380,7 @@ public class LombokPatternOffTestData {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof LombokPatternOffTestData.DataFull)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> LombokPatternOffTestData.DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokPatternOffTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokPatternOffTestData.DataFull) </fold>o;
                 return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
             }</fold>
@@ -418,7 +418,7 @@ public class LombokPatternOffTestData {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof LombokPatternOffTestData.DataFull)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> LombokPatternOffTestData.DataFull<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
                 <fold text='val' expand='false'>LombokPatternOffTestData.DataFull</fold> dataFull = <fold text='' expand='false'>(LombokPatternOffTestData.DataFull) </fold>o;
                 return new EqualsBuilder().append(ok, dataFull.ok).append(data, dataFull.data).<fold text='e' expand='false'>isE</fold>quals<fold text='' expand='false'>()</fold>;
             }</fold>
@@ -492,7 +492,7 @@ public class LombokPatternOffTestData {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof DirtyData)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> DirtyData<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
 
                 <fold text='val' expand='false'>DirtyData</fold> dirtyData = <fold text='' expand='false'>(DirtyData) </fold>o;
 
@@ -559,7 +559,7 @@ public class LombokPatternOffTestData {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof DirtyData)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> DirtyData<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
 
                 <fold text='val' expand='false'>DirtyData</fold> dirtyData = <fold text='' expand='false'>(DirtyData) </fold>o;
 
@@ -909,7 +909,7 @@ public class LombokPatternOffTestData {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public <fold text='' expand='false'>final</fold> boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof ValueArgsSuper)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> ValueArgsSuper<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
 
                 <fold text='val' expand='false'>ValueArgsSuper</fold> that = <fold text='' expand='false'>(ValueArgsSuper) </fold>o;
                 return field2 == that.field2 && field3 == that.field3 && Objects.equals(field1, that.field1);
@@ -967,7 +967,7 @@ public class LombokPatternOffTestData {
             <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
             </fold>public <fold text='' expand='false'>final</fold> boolean equals(Object o) <fold text='{...}' expand='true'>{
                 if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-                if <fold text='' expand='false'>(</fold>!(o instanceof Value)<fold text='' expand='false'>)</fold> return false;
+                if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> Value<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
 
                 <fold text='val' expand='false'>Value</fold> value = <fold text='' expand='false'>(Value) </fold>o;
                 return Objects.equals(field1, value.field1);
@@ -1023,7 +1023,7 @@ public class LombokPatternOffTestData {
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public <fold text='' expand='false'>final</fold> boolean equals(Object o) <fold text='{...}' expand='true'>{
             if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-            if <fold text='' expand='false'>(</fold>!(o instanceof FieldLevelData)<fold text='' expand='false'>)</fold> return false;
+            if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> FieldLevelData<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
             <fold text='val' expand='false'>FieldLevelData</fold> that = <fold text='' expand='false'>(FieldLevelData) </fold>o;
             return Objects.equals(name, that.name);
         }</fold>
@@ -1045,7 +1045,7 @@ public class LombokPatternOffTestData {
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public <fold text='' expand='false'>final</fold> boolean equals(Object o) <fold text='{...}' expand='true'>{
             if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-            if <fold text='' expand='false'>(</fold>!(o instanceof FieldLevelData)<fold text='' expand='false'>)</fold> return false;
+            if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> FieldLevelData<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
             <fold text='val' expand='false'>FieldLevelData</fold> that = <fold text='' expand='false'>(FieldLevelData) </fold>o;
             return Objects.equals(name, that.name);
         }</fold>
@@ -1066,7 +1066,7 @@ public class LombokPatternOffTestData {
         <fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public <fold text='' expand='false'>final</fold> boolean equals(Object o) <fold text='{...}' expand='true'>{
             if <fold text='' expand='false'>(</fold>this == o<fold text='' expand='false'>)</fold> return true;
-            if <fold text='' expand='false'>(</fold>!(o instanceof FieldLevelData)<fold text='' expand='false'>)</fold> return false;
+            if <fold text='' expand='false'>(</fold><fold text='' expand='true'>!(</fold>o <fold text='!is' expand='true'>instanceof</fold> FieldLevelData<fold text='' expand='true'>)</fold><fold text='' expand='false'>)</fold> return false;
             <fold text='val' expand='false'>FieldLevelData</fold> that = <fold text='' expand='false'>(FieldLevelData) </fold>o;
             return Objects.equals(name, that.name);
         }</fold>

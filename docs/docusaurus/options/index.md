@@ -216,7 +216,7 @@ Shows `person.toBuilder().name("Alice").age(31).build()` as `person.copy(name = 
 
 ## builderNamedArguments
 ### Builder chain as constructor call Person(name = ...)
-Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain.
+Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain. Builders with `set`-prefixed methods (`Order.builder().setNote("gift").build()`) fold too, as `Order(note = "gift")`.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/BuilderNamedArgumentsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/BuilderNamedArgumentsTestData-folded.java)
 
@@ -406,6 +406,12 @@ Applies pattern matching to `instanceof` checks for more concise and readable co
 Shows an `if / else if` chain of `instanceof` checks on one variable as a Java pattern switch: `case Circle c -> ...`, with a final `else` as `default -> ...`. Every branch must hold exactly one statement; a chain with a guarded condition, another condition, a comment or a different variable stays as it is.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/InstanceofSwitchTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/InstanceofSwitchTestData-folded.java)
+
+## kotlinIsOperator
+### instanceof as Kotlin is / !is
+Shows `x instanceof Foo` as `x is Foo`, `!(x instanceof Foo)` as `x !is Foo` and `x instanceof Foo f` as `x is Foo f`. Only the keyword (and the `!(` / `)` of a negation) folds; operand, type and binding keep their syntax colours.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/IsOperatorTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IsOperatorTestData-folded.java)
 
 ## summaryParentOverride
 ### Displays a folded summary of overridden methods from parent classes and interfaces

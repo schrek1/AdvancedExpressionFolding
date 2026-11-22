@@ -31,6 +31,19 @@ public class BuilderNamedArgumentsTestData {
         String text = Person.builder().name("Alice").toString();
     }
 
+    public void setPrefixed() {
+        var order = Order.builder()
+                .setId(7)
+                .setPayment(Payment.builder().setFixedInfo("card").build())
+                .build();
+        Order gift = Order.builder().setNote("gift").build();
+    }
+
+    public void setPrefixNotFolded() {
+        Order mixed = Order.builder().setId(7).note("gift").build();
+        Order tracked = Order.builder().setTracking("T-1").build();
+    }
+
     static class Person {
         private final String name;
         private final int age;
@@ -85,6 +98,81 @@ public class BuilderNamedArgumentsTestData {
 
             public Person build() {
                 return new Person(name, age, manager);
+            }
+        }
+    }
+
+    static class Order {
+        private final int id;
+        private final String note;
+        private final Payment payment;
+
+        Order(int id, String note, Payment payment) {
+            this.id = id;
+            this.note = note;
+            this.payment = payment;
+        }
+
+        public static OrderBuilder builder() {
+            return new OrderBuilder();
+        }
+
+        static class OrderBuilder {
+            private int id;
+            private String note;
+            private Payment payment;
+
+            public OrderBuilder setId(int id) {
+                this.id = id;
+                return this;
+            }
+
+            public OrderBuilder setNote(String note) {
+                this.note = note;
+                return this;
+            }
+
+            public OrderBuilder note(String note) {
+                this.note = note;
+                return this;
+            }
+
+            public OrderBuilder setPayment(Payment payment) {
+                this.payment = payment;
+                return this;
+            }
+
+            public OrderBuilder setTracking(String tracking) {
+                return this;
+            }
+
+            public Order build() {
+                return new Order(id, note, payment);
+            }
+        }
+    }
+
+    static class Payment {
+        private final String fixedInfo;
+
+        Payment(String fixedInfo) {
+            this.fixedInfo = fixedInfo;
+        }
+
+        public static PaymentBuilder builder() {
+            return new PaymentBuilder();
+        }
+
+        static class PaymentBuilder {
+            private String fixedInfo;
+
+            public PaymentBuilder setFixedInfo(String fixedInfo) {
+                this.fixedInfo = fixedInfo;
+                return this;
+            }
+
+            public Payment build() {
+                return new Payment(fixedInfo);
             }
         }
     }
