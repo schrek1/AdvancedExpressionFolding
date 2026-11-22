@@ -16,7 +16,7 @@ public class SuppressWarningsHideTestData {
     <fold text='' expand='true'>@SuppressWarnings("deprecation")</fold><fold text='' expand='true'>
     </fold>public SuppressWarningsHideTestData() <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>Date</fold> date = new Date();
-        date.<fold text='year' expand='false'>getYear()</fold>;
+        date.<fold text='y' expand='false'>getY</fold>ear<fold text='' expand='false'>()</fold>;
     }</fold>
 
     public SuppressWarningsHideTestData(@SuppressWarnings("unused") String ignoredParam) <fold text='{}' expand='true'>{
@@ -38,7 +38,7 @@ public class SuppressWarningsHideTestData {
         int</fold> unusedLocalVar = 42;
 
         <fold text='val' expand='false'>Date</fold> oldDate = new Date();
-        oldDate.<fold text='month' expand='false'>getMonth()</fold>;
+        oldDate.<fold text='m' expand='false'>getM</fold>onth<fold text='' expand='false'>()</fold>;
     }</fold>
 
 }

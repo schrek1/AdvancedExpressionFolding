@@ -150,6 +150,12 @@ Implements a quick return syntax similar to Kotlin.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LetReturnIt.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LetReturnIt-folded.java)
 
+## scopeLet
+### Null-guarded single statement as ?.let
+Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact.setEmail(it) }` and `body != null ? toBytes(body) : null` as `body?.let { toBytes(it) }`, in the source order.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeLetTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeLetTestData-folded.java)
+
 ## kotlinPreconditions
 ### Preconditions as Kotlin require, check, requireNotNull and error
 Shows argument and state checks the way Kotlin writes them: an `if` whose whole body throws `IllegalArgumentException` becomes `require(...)`, one that throws `IllegalStateException` becomes `check(...)`, any other `throw new IllegalStateException(message)` becomes `error(message)`, and `Objects.requireNonNull` becomes `requireNotNull`. Takes precedence over the Asserts folding for these two exceptions.
@@ -161,6 +167,12 @@ Shows argument and state checks the way Kotlin writes them: an `if` whose whole 
 Shows `lock.lock(); try { ... } finally { lock.unlock(); }` the way Kotlin writes it: `withLock(lock) { ... }`. Folds only when the `lock()` call stands right before the `try`, the `finally` block holds nothing but the `unlock()` of the same lock, and the `try` has no `catch` and no resources.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/WithLockTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/WithLockTestData-folded.java)
+
+## kotlinLambda
+### Lambdas in Kotlin syntax: { it.x }
+Shows Java lambdas the way Kotlin writes them: `d -> d.getPrice()` as `{ it.price }`, `(a, b) -> a + b` as `{ a, b -> a + b }`, `() -> load()` as `{ load() }`. A lambda that is the last argument of a call moves behind it as a trailing lambda: `items.forEach(item -> { ... })` reads `items.forEach { ... }`. Only the braces, separators and each `it` are folded; the body stays real code and its own folds keep working. A lambda nested in an `it` lambda keeps its parameter name, and a lambda inside a call that another fold already rewrites stays Java.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/KotlinLambdaTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/KotlinLambdaTestData-folded.java)
 
 ## assertsCollapse
 ### Asserts
@@ -234,7 +246,7 @@ Shows `person.toBuilder().name("Alice").age(31).build()` as `person.copy(name = 
 
 ## builderNamedArguments
 ### Builder chain as constructor call Person(name = ...)
-Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain.
+Shows `Person.builder().name("Alice").age(31).build()` as `Person(name = "Alice", age = 31)`, keeping one argument per line in a multi-line chain. Builders with `set`-prefixed methods (`Order.builder().setNote("gift").build()`) fold too, as `Order(note = "gift")`.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/BuilderNamedArgumentsTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/BuilderNamedArgumentsTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/builderNamedArguments)
@@ -440,6 +452,13 @@ Shows an `if / else if` chain of `instanceof` checks on one variable as a Java p
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/InstanceofSwitchTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/InstanceofSwitchTestData-folded.java)
 - [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/instanceofSwitch)
+
+## kotlinIsOperator
+### instanceof as Kotlin is / !is
+Shows `x instanceof Foo` as `x is Foo`, `!(x instanceof Foo)` as `x !is Foo` and `x instanceof Foo f` as `x is Foo f`. Only the keyword (and the `!(` / `)` of a negation) folds; operand, type and binding keep their syntax colours.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/IsOperatorTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/IsOperatorTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/kotlinIsOperator)
 
 ## summaryParentOverride
 ### Shows a summary of overridden methods after each parent class and interface, and the parent at each overriding method (inlay hints)

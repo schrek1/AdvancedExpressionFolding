@@ -13,7 +13,7 @@ import org.slf4j.MarkerFactory;</fold>
 
     public void updateSettings(String shopId, Settings previous, Settings updated, String user, long elapsed, int retries) <fold text='{...}' expand='true'>{
         log.info("No pending refund for shop[id='<fold text='$shopId' expand='false'>{}</fold>'], nothing will be done"<fold text='' expand='false'>, shopId</fold>);
-        log.info("Updated settings for shop[id='<fold text='$shopId' expand='false'>{}</fold>'] (mode <fold text='${previous.mode}' expand='false'>{}</fold> -> <fold text='${updated.mode}' expand='false'>{}</fold>)"<fold text='' expand='false'>, shopId, previous.<fold text='mode' expand='false'>getMode()</fold>, updated.<fold text='mode' expand='false'>getMode()</fold></fold>);
+        log.info("Updated settings for shop[id='<fold text='$shopId' expand='false'>{}</fold>'] (mode <fold text='${previous.mode}' expand='false'>{}</fold> -> <fold text='${updated.mode}' expand='false'>{}</fold>)"<fold text='' expand='false'>, shopId, previous.<fold text='m' expand='false'>getM</fold>ode<fold text='' expand='false'>()</fold>, updated.<fold text='m' expand='false'>getM</fold>ode<fold text='' expand='false'>()</fold></fold>);
         log.debug("Settings of shop <fold text='$shopId' expand='false'>{}</fold> saved in <fold text='${elapsed}' expand='false'>{}</fold>ms"<fold text='' expand='false'>, shopId, elapsed</fold>);
         log.warn("Retry <fold text='${retries + 1}' expand='false'>{}</fold> of <fold text='${3}' expand='false'>{}</fold> for shop <fold text='$shopId' expand='false'>{}</fold>"<fold text='' expand='false'>, retries + 1, 3, shopId</fold>);
         log.info(AUDIT, "Shop <fold text='$shopId' expand='false'>{}</fold> closed by <fold text='$user' expand='false'>{}</fold>"<fold text='' expand='false'>, shopId, user</fold>);
@@ -23,15 +23,15 @@ import org.slf4j.MarkerFactory;</fold>
             save(updated);
         }</fold> catch <fold text='' expand='false'>(</fold>Exception e<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             log.error("Saving settings of shop <fold text='$shopId' expand='false'>{}</fold> failed"<fold text='' expand='false'>, shopId</fold>, e);
-            log.error("Saving settings of shop <fold text='$shopId' expand='false'>{}</fold> failed: <fold text='${e.message}' expand='false'>{}</fold>"<fold text='' expand='false'>, shopId, e.<fold text='message' expand='false'>getMessage()</fold></fold>, e);
+            log.error("Saving settings of shop <fold text='$shopId' expand='false'>{}</fold> failed: <fold text='${e.message}' expand='false'>{}</fold>"<fold text='' expand='false'>, shopId, e.<fold text='m' expand='false'>getM</fold>essage<fold text='' expand='false'>()</fold></fold>, e);
         }</fold>
 
         // A call with arguments reads inside the message; a lambda keeps the classic fold
         log.info("Shop <fold text='$shopId' expand='false'>{}</fold> has <fold text='${countOrders(shopId, previous)}' expand='false'>{}</fold> open orders"<fold text='' expand='false'>, shopId, countOrders(shopId, previous)</fold>);
-        log.info("Shop <fold text='$' expand='false'>{} has {} rules", </fold>shopId<fold text=' has ${' expand='false'>, </fold>previous.rules()<fold text='.' expand='false'>.stream().</fold>filter(rule -> rule.<fold text='active' expand='false'>isActive()</fold>).count()<fold text='} rules")' expand='false'>)</fold>;
+        log.info("Shop <fold text='$' expand='false'>{} has {} rules", </fold>shopId<fold text=' has ${' expand='false'>, </fold>previous.rules()<fold text='.' expand='false'>.stream().</fold>filter<fold text=' {' expand='false'>(rule -></fold> <fold text='it' expand='false'>rule</fold>.<fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold><fold text=' }' expand='false'>)</fold>.count()<fold text='} rules")' expand='false'>)</fold>;
 
         // printf style and String.formatted
-        <fold text='val' expand='false'>String</fold> summary = String.format("Shop <fold text='$shopId' expand='false'>%s</fold> runs in <fold text='${updated.mode}' expand='false'>%s</fold> mode"<fold text='' expand='false'>, shopId, updated.<fold text='mode' expand='false'>getMode()</fold></fold>);
+        <fold text='val' expand='false'>String</fold> summary = String.format("Shop <fold text='$shopId' expand='false'>%s</fold> runs in <fold text='${updated.mode}' expand='false'>%s</fold> mode"<fold text='' expand='false'>, shopId, updated.<fold text='m' expand='false'>getM</fold>ode<fold text='' expand='false'>()</fold></fold>);
         <fold text='' expand='false'>System.out.</fold>println("Shop <fold text='$shopId' expand='false'>%s</fold> saved by <fold text='$user' expand='false'>%s</fold>"<fold text='' expand='false'>.formatted(shopId, user)</fold>);
         <fold text='' expand='false'>System.out.</fold>println("Shop <fold text='$shopId' expand='false'>%s</fold> saved".formatted(<fold text='' expand='false'>shopId, </fold>user));
     }</fold>

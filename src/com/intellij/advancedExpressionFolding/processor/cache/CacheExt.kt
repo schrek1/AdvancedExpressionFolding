@@ -4,7 +4,6 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt.buildExpression
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.PsiElement
-import org.jetbrains.annotations.Contract
 
 object CacheExt {
 
@@ -22,7 +21,6 @@ object CacheExt {
 
     // method is run from different threads
     @JvmStatic
-    @Contract("_, _, true -> !null")
     fun getExpression(element: PsiElement, document: Document, synthetic: Boolean): Expression? {
             val key = Keys.getKey(synthetic)
             val cachedExpression = if (element.invalidateExpired(document, synthetic)) {

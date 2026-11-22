@@ -16,8 +16,8 @@ public class SpreadTestData {
                 .map(</fold><fold text='string()' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold>
                 .collect(Collectors.joining(", "));
 
-        <fold text='val' expand='false'>var</fold> p1 = data.<fold text='dataList' expand='false'>getDataList()</fold>.stream()<fold text='*.' expand='false'>.map(</fold><fold text='data()' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold>.toList();
-        <fold text='val' expand='false'>var</fold> p2 = data.<fold text='dataList' expand='false'>getDataList()</fold>
+        <fold text='val' expand='false'>var</fold> p1 = data.<fold text='d' expand='false'>getD</fold>ataList<fold text='' expand='false'>()</fold>.stream()<fold text='*.' expand='false'>.map(</fold><fold text='data()' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold>.toList();
+        <fold text='val' expand='false'>var</fold> p2 = data.<fold text='d' expand='false'>getD</fold>ataList<fold text='' expand='false'>()</fold>
                 .stream()<fold text='*.' expand='false'>
                 .map(</fold><fold text='data()' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold>
                 .toList()
@@ -31,14 +31,14 @@ public class SpreadTestData {
                 .map(</fold><fold text='data()' expand='false'>Data::getData</fold><fold text='' expand='false'>)</fold><fold text='**.' expand='false'>.flatMap(</fold><fold text='dataStream()' expand='false'>Data::getDataStream</fold><fold text='' expand='false'>)</fold><fold text='*.' expand='false'>
                 .map(</fold><fold text='dataList()' expand='false'>Data::getDataList</fold><fold text='' expand='false'>)</fold><fold text='**.' expand='false'>.flatMap(</fold><fold text='stream()' expand='false'>List::stream</fold><fold text='' expand='false'>)</fold><fold text='*.' expand='false'>
                 .map(</fold><fold text='string()' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold><fold text='*.' expand='false'>.map(</fold><fold text='chars()' expand='false'>String::chars</fold><fold text='' expand='false'>)</fold>
-                .map(it -> it.count()<fold text=' + ' expand='false'>+</fold>1)
-                .map(it -> <fold text='{...}' expand='true'>{
+                .map<fold text=' {' expand='false'>(it -></fold> it.count()<fold text=' + ' expand='false'>+</fold>1<fold text=' }' expand='false'>)</fold>
+                .map<fold text='' expand='false'>(it -></fold> <fold text='{...}' expand='true'>{
                     <fold text='val' expand='false'>var</fold> z = 2;
                     <fold text='val' expand='false'>var</fold> max =<fold text=' listOfNotNull(' expand='false'> </fold>Stream.of(data)<fold text='*.' expand='false'>.map(</fold><fold text='string()' expand='false'>Data::getString</fold><fold text='' expand='false'>)</fold>.max(Comparator.comparing(String::length))<fold text='?.' expand='false'>.map(</fold><fold text='length' expand='false'>String::length</fold><fold text='' expand='false'>)</fold><fold text=')' expand='false'>.stream()</fold><fold text='*.' expand='false'>.map(</fold><fold text='class()' expand='false'>Object::getClass</fold><fold text='' expand='false'>)</fold>.findAny()<fold text='?.' expand='false'>.map(</fold><fold text='hashCode' expand='false'>Object::hashCode</fold><fold text='' expand='false'>)</fold><fold text=' ?: ' expand='false'>.orElse(</fold>1<fold text='' expand='false'>)</fold>;
                     return new BigDecimal(it + z + max);
-                }</fold>)
-                .map(it -> Stream.iterate(it, BigDecimal::plus))
-                .map(it -> stream)
+                }</fold><fold text='' expand='false'>)</fold>
+                .map<fold text=' {' expand='false'>(it -></fold> Stream.iterate(it, BigDecimal::plus)<fold text=' }' expand='false'>)</fold>
+                .map<fold text=' {' expand='false'>(it -></fold> stream<fold text=' }' expand='false'>)</fold>
                 .flatMap(Function.identity())<fold text='*.' expand='false'>
                 .map(</fold><fold text='ok()' expand='false'>Data::isOk</fold><fold text='' expand='false'>)</fold>
                 .toList();

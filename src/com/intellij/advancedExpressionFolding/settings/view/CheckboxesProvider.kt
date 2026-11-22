@@ -154,6 +154,11 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinquickreturn")
         }
 
+        registerCheckbox(state::scopeLet, "Null-guarded single statement as x?.let { ... }") {
+            example(ScopeLetTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#scopelet")
+        }
+
         registerCheckbox(state::kotlinPreconditions, "Preconditions as Kotlin require, check, requireNotNull and error") {
             example(KotlinPreconditionsTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinpreconditions")
@@ -162,6 +167,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::kotlinWithLock, "Lock, try, finally unlock as Kotlin withLock") {
             example(WithLockTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinwithlock")
+        }
+
+        registerCheckbox(state::kotlinLambda, "Lambdas in Kotlin syntax: { it.x }") {
+            example(KotlinLambdaTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinlambda")
         }
 
         registerCheckbox(state::assertsCollapse, "Asserts") {
@@ -388,6 +398,11 @@ abstract class CheckboxesProvider {
         registerCheckbox(state::instanceofSwitch, "instanceof chain as pattern switch") {
             example(InstanceofSwitchTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#instanceofswitch")
+        }
+
+        registerCheckbox(state::kotlinIsOperator, "instanceof as Kotlin is / !is") {
+            example(IsOperatorTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#kotlinisoperator")
         }
 
         registerCheckbox(
