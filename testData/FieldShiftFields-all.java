@@ -28,7 +28,7 @@ import java.util.List;
         result.username = source.child.<fold text='<<' expand='true'>username</fold>;
         result.userIdentifier = source.child.child.child.<fold text='<<' expand='true'>userIdentifier</fold>;
         result.active = source.child.<fold text='<<' expand='true'>active</fold>;
-        result.list = List.copyOf(source.<fold text='<<' expand='true'>list</fold>);
+        result.list = List.copyOf(source.list);
         return result;
     }</fold>
 
@@ -63,7 +63,7 @@ import java.util.List;
         var2.active = source.<fold text='<<' expand='true'>active</fold>;
         <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
         result.username = record.userIdentifier;
-        result.username = changer(record.<fold text='<<' expand='true'>username</fold>);
+        result.username = changer(record.username);
         result.username = source.<fold text='<<' expand='true'>username</fold>;
         result.username = var1.child.<fold text='<<' expand='true'>username</fold>;
         result.username =<fold text=' "${' expand='false'> </fold>source.username<fold text='}' expand='false'> + "</fold>1";
@@ -91,7 +91,7 @@ import java.util.List;
         var2.active = source.<fold text='<<' expand='false'><fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>;
         <fold text='val' expand='false'>FieldShiftFields</fold> result = new FieldShiftFields();
         result.username = record.userIdentifier;
-        result.username = changer(record.<fold text='<<' expand='false'>username()</fold>);
+        result.username = changer(record.<fold text='username' expand='false'>username()</fold>);
         result.username = source.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold></fold>;
         result.username = var1.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold></fold>;
         result.username =<fold text=' "${' expand='false'> </fold>source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold><fold text='}' expand='false'> + "</fold>1";
