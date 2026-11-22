@@ -63,7 +63,7 @@ import java.util.List;
         <fold text='u' expand='false'>result.setU</fold>sername<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text=',' expand='false'>);</fold>
         <fold text='u' expand='false'>result.setU</fold>serIdentifier<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text=',' expand='false'>);</fold>
         <fold text='a' expand='false'>result.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.isActive()</fold><fold text=',' expand='false'>);</fold>
-        <fold text='l' expand='false'>result.setL</fold>ist<fold text=' = ' expand='false'>(</fold>List.copyOf(source.<fold text='list' expand='false'>getList()</fold>));
+        <fold text='l' expand='false'>result.setL</fold>ist<fold text=' = ' expand='false'>(</fold>List.copyOf(source.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>));
         result.withUsername(source<fold text='<<' expand='false'>.getUsername()</fold>);
         result.withActive(source<fold text='<<' expand='false'>.isActive()</fold>);
         result.withUserIdentifier(source<fold text='<<' expand='false'>.getUserIdentifier()</fold>);
