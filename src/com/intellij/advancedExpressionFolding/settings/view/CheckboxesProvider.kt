@@ -477,6 +477,10 @@ abstract class CheckboxesProvider {
             example(SwitchArrowTestData::class)
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#switchArrow")
         }
+        registerCheckbox(state::guardReturnWhen, "Guard-if return chain as when") {
+            example(GuardReturnWhenTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#guardreturnwhen")
+        }
         // NEW OPTION
         registerCheckbox(state::memoryImprovement, "Memory improvements")
         registerCheckbox(state::experimental, "Experimental features") {
