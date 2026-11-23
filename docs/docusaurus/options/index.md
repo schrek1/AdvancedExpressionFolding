@@ -468,6 +468,13 @@ Shows a private field and the null-checked lazy getter right below it (`if (fiel
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/LazyPropertyTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/LazyPropertyTestData-folded.java)
 
+## guardReturnWhen
+### Guard-if return chain as when
+Shows two or more guard `if (cond) { return x; }` statements followed by a final `return y;` as a subject-less Kotlin `when`: `when { cond -> return x` ... `else -> return y }`. Order and the conditions and returned values stay as written; a comment, an `else`, or a branch with more than the `return` keeps the code as it is.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/GuardReturnWhenTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/GuardReturnWhenTestData-folded.java)
+- [Documentation](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki/docs/features/guardReturnWhen)
+
 ## pseudoAnnotations
 ### Pseudo-annotations for main method generation
 Provides pseudo-annotations like @Main that automatically generate main methods for testing and prototyping.

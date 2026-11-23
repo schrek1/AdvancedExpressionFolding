@@ -15,13 +15,13 @@ public class GuardIfOneLinerTestData {
     }</fold>
 
     boolean literalGuards(String name, int size) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>size == 0<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return false;<fold text='' expand='false'>
+        <fold text='' expand='false'>if (</fold>size == 0<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return false<fold text='' expand='false'>;
         }</fold></fold>
-        if <fold text='' expand='false'>(</fold>size > 10<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return true;<fold text='' expand='false'>
+        <fold text='' expand='false'>if (</fold>size > 10<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return true<fold text='' expand='false'>;
         }</fold></fold>
-        return name.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>;
+        return name.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold><fold text='' expand='false'>;</fold>
     }</fold>
 
     int numberGuard(List<String> items) <fold text='{...}' expand='true'>{

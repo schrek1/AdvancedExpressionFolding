@@ -6,6 +6,7 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ControlFlowMultiStatementCodeBlockExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ControlFlowSingleStatementCodeBlockExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.GuardIfOneLinerExpression
+import com.intellij.advancedExpressionFolding.expression.controlflow.GuardReturnWhenExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.IfExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.InstanceofSwitchExpression
 import com.intellij.advancedExpressionFolding.processor.language.kotlin.ScopeLetExt
@@ -34,6 +35,9 @@ object PsiCodeBlockExt : IControlFlowState by State()() {
     fun getCodeBlockExpression(element: PsiCodeBlock): Expression? {
         val parent = element.parent
         if (!isSupportedParent(parent, element)) {
+            return null
+        }
+        if ((parent?.parent as? PsiIfStatement)?.let(GuardReturnWhenExpression::foldsAsWhen) == true) {
             return null
         }
         guardReturn(element, parent)?.let { return GuardIfOneLinerExpression(element, it) }

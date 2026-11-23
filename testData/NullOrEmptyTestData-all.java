@@ -36,13 +36,13 @@ public class NullOrEmptyTestData {
     }</fold>
 
     public boolean insideLongerConditions(String name, List<String> items, boolean force) <fold text='{...}' expand='true'>{
-        if <fold text='' expand='false'>(</fold>force || <fold text='' expand='false'>name == null || </fold>name.<fold text='isNullOrEmpty' expand='false'>isEmpty</fold>()<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return true;<fold text='' expand='false'>
+        <fold text='' expand='false'>if (</fold>force || <fold text='' expand='false'>name == null || </fold>name.<fold text='isNullOrEmpty' expand='false'>isEmpty</fold>()<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return true<fold text='' expand='false'>;
         }</fold></fold>
-        if <fold text='' expand='false'>(</fold><fold text='' expand='false'>items != null && !</fold>items.<fold text='isNotEmpty' expand='false'>isEmpty</fold>() && force<fold text='' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
-            </fold>return false;<fold text='' expand='false'>
+        <fold text='' expand='false'>if (</fold><fold text='' expand='false'>items != null && !</fold>items.<fold text='isNotEmpty' expand='false'>isEmpty</fold>() && force<fold text=' ->' expand='false'>)</fold> <fold text='' expand='false'><fold text='{...}' expand='true'>{
+            </fold>return false<fold text='' expand='false'>;
         }</fold></fold>
-        return <fold text='' expand='false'>name == null || </fold>name.<fold text='isNullOrEmpty' expand='false'>isEmpty</fold>() ? <fold text='' expand='false'>items == null || </fold>items.<fold text='isNullOrEmpty' expand='false'>isEmpty</fold>() : force;
+        return <fold text='' expand='false'>name == null || </fold>name.<fold text='isNullOrEmpty' expand='false'>isEmpty</fold>() ? <fold text='' expand='false'>items == null || </fold>items.<fold text='isNullOrEmpty' expand='false'>isEmpty</fold>() : force<fold text='' expand='false'>;</fold>
     }</fold>
 
     public void notFolded(String name, String other, List<String> items, NullOrEmptyTestData data) <fold text='{...}' expand='true'>{
