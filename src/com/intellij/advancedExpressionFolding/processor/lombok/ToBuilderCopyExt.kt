@@ -28,10 +28,9 @@ object ToBuilderCopyExt : IExpressionCollapseState by State()() {
         if (toBuilder.methodExpression.referenceName != "toBuilder" || !toBuilder.argumentList.isEmpty) {
             return null
         }
-        val builderClass = toBuilder.resolveMethod()?.returnType.resolveClass() ?: return null
+        val builderClass = toBuilder.type.resolveClass() ?: return null
         val targetClass = toBuilder.resolveMethod()?.containingClass ?: return null
-        val buildMethod = build.resolveMethod() ?: return null
-        if (!builderClass.isSame(buildMethod.containingClass) || !targetClass.isSame(buildMethod.returnType.resolveClass())) {
+        if (!BuilderChainLinks.isBuildOf(build, builderClass, targetClass)) {
             return null
         }
         val arguments = BuilderChainLinks.namedArguments(setters, builderClass, targetClass, document) ?: return null

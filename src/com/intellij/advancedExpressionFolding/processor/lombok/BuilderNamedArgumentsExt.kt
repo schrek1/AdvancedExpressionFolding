@@ -38,9 +38,8 @@ object BuilderNamedArgumentsExt : IExpressionCollapseState by State()() {
         if (!builderMethod.hasModifierProperty(PsiModifier.STATIC) || !targetClass.isSame(qualifierClass as? PsiClass)) {
             return null
         }
-        val builderClass = builderMethod.returnType.resolveClass() ?: return null
-        val buildMethod = build.resolveMethod() ?: return null
-        if (!builderClass.isSame(buildMethod.containingClass) || !targetClass.isSame(buildMethod.returnType.resolveClass())) {
+        val builderClass = builder.type.resolveClass() ?: return null
+        if (!BuilderChainLinks.isBuildOf(build, builderClass, targetClass)) {
             return null
         }
         val arguments = BuilderChainLinks.namedArguments(setters, builderClass, targetClass, document) ?: return null
