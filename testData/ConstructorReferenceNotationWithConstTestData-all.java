@@ -20,7 +20,7 @@ public class ConstructorReferenceNotationWithConstTestData {
 
         private <fold text='const' expand='false'>static final</fold> List<String> LIST = <fold text='[]' expand='false'>new ArrayList<>()</fold>;
         private <fold text='const' expand='false'>static final</fold> List<String> LIST2 = <fold text='[]' expand='false'>List.of()</fold>;
-        private <fold text='const' expand='false'>static final</fold> List<String> LIST_SINGLE = List.of("1");
+        private <fold text='const' expand='false'>static final</fold> List<String> LIST_SINGLE = <fold text='[' expand='false'>List.of(</fold>"1"<fold text=']' expand='false'>)</fold>;
         private <fold text='const' expand='false'>static final</fold> List<String> LIST_LINKED = <fold text='' expand='false'>new </fold>LinkedList<>();
 
 
@@ -51,7 +51,7 @@ public class ConstructorReferenceNotationWithConstTestData {
         private final Map<String, String> MAP3 = <fold text='[:]' expand='false'>new HashMap<>()</fold>;
 
         private final List<String> LIST = <fold text='[]' expand='false'>new ArrayList<>()</fold>;
-        private final List<String> LIST2 = List.of("1");
+        private final List<String> LIST2 = <fold text='[' expand='false'>List.of(</fold>"1"<fold text=']' expand='false'>)</fold>;
 
         public final ConstClass SELF_PARAM_1 =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>ConstClass</fold>(true);
         public final ConstClass SELF_PARAM_2 =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>ConstClass</fold>(false, LIST2<fold text='.getFirst' expand='false'>.get</fold>(<fold text='' expand='false'>0</fold>));

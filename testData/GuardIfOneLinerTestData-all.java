@@ -143,7 +143,7 @@ public class GuardIfOneLinerTestData {
     private String fallbackName = "shop";
 
     private List<String> defaultItems(String prefix, int count)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>List.of(prefix + count)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='[' expand='false'>List.of(</fold>prefix + count<fold text=']' expand='false'>)</fold><fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     private String lookup(String key)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

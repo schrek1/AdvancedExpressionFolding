@@ -16,7 +16,6 @@ public class InstanceofSwitchTestData {
 
     double area(Shape shape) {
         double area = 0;
-        switch (shape) {
         case Circle c -> area = Math.PI * c.r() * c.r();
         case Square s -> area = s.side() * s.side();
         }
@@ -24,7 +23,6 @@ public class InstanceofSwitchTestData {
     }
 
     String describe(Object value) {
-        switch (value) {
         case Integer number -> return "number " + number;
         case String text -> return "text " + text;
         case Shape _ -> return "shape";
@@ -33,7 +31,6 @@ public class InstanceofSwitchTestData {
     }
 
     double recordPatterns(Shape shape) {
-        switch (shape) {
         case Circle(double r) -> return r * r;
         case Triangle(double base, double height) -> return base * height / 2;
         default -> return 0;
@@ -104,7 +101,6 @@ public class InstanceofSwitchTestData {
     }
 
     double commentedDefault(Object value) {
-        switch (value) {
         case String text -> return Double.parseDouble(text);
         case Long number -> return number.doubleValue();
         default ->
@@ -115,13 +111,41 @@ public class InstanceofSwitchTestData {
     }
 
     String commentedCases(Object value) {
-        switch (value) {
-        case String text -> // already trimmed by the caller
+        case String text -> 
+            // already trimmed by the caller
             return text;
         case Integer number -> 
             // counts start at zero
             return "number " + number;
         case Shape _ -> return "shape";
+        }
+        return "";
+    }
+
+    double toAmount(Object value) {
+        case String text -> return Double.parseDouble(text);
+        case Integer number -> return number.doubleValue();
+        case Long number -> return number.doubleValue();
+        default ->
+            // only the types above are expected
+            throw new IllegalArgumentException("unexpected type: " + value);
+        }
+    }
+
+    String fourCases(Object value) {
+        case String text -> return text;
+        case Integer number -> return "int " + number;
+        case Long number -> return "long " + number;
+        case Shape _ -> return "shape";
+        }
+        return "";
+    }
+
+    String commentedLastCase(Object value) {
+        case String text -> return text;
+        case Integer number -> 
+            // counts start at zero
+            return "number " + number;
         }
         return "";
     }

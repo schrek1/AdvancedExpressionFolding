@@ -1,11 +1,14 @@
 package com.intellij.advancedExpressionFolding.expression.controlflow
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.inlay.VirtualLine
+import com.intellij.advancedExpressionFolding.inlay.VirtualLines
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
 import com.intellij.lang.folding.FoldingDescriptor
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.Document
-import com.intellij.openapi.editor.FoldingGroup
+import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiBlockStatement
 import com.intellij.psi.PsiCodeBlock
@@ -22,6 +25,9 @@ import com.intellij.psi.util.PsiTreeUtil
 /**
  * Shows an `if / else if` chain of `instanceof` checks on one variable as a Java pattern switch:
  * `switch (shape) {` / `case Circle c -> ...` / `default -> ...` / `}`.
+ *
+ * `switch (shape) {` is a virtual line of the fold group ([VirtualLines]) and the cases are indented one level; the
+ * closing `}` is the chain's own last brace.
  *
  * Built for the head `if` of the chain; the `else if` links get an instance with no chain, so their own
  * if-foldings do not overlap the switch regions while the statements inside still fold.
@@ -41,88 +47,80 @@ class InstanceofSwitchExpression private constructor(
         parent: Expression?
     ): Array<FoldingDescriptor> {
         val chain = chain ?: return EMPTY_ARRAY
-        val group = FoldingGroup.newGroup(InstanceofSwitchExpression::class.java.name)
         val head = chain.branches.first()
-        val headStart = element.textRange.startOffset
-        val descriptors = mutableListOf(
-            FoldingDescriptor(element.node, TextRange(headStart, headStart + "if".length), group, "switch"),
-            FoldingDescriptor(
-                element.node,
-                TextRange(head.instanceOf.operand.textRange.endOffset, head.instanceOf.textRange.endOffset),
-                group,
-                ""
-            ),
-        )
-        val firstLineStart = head.body.lines.first().textRange.startOffset
-        // Case labels sit at the `switch` column: the source has no whitespace to indent them deeper without grey padding.
-        val caseStart = minOf(
-            document.getLineStartOffset(document.getLineNumber(firstLineStart)) + indentOf(head.block.rBrace!!).length,
-            firstLineStart - 1,
-        )
-        // The head's type moves from the `switch (x)` line to the branch line, so it can only be shown as a placeholder.
-        val headCase = "case ${head.type.text}${head.unnamedBinding} ->"
-        descriptors += if (firstLineStart - caseStart >= 2) {
-            FoldingDescriptor(element.node, TextRange(caseStart, firstLineStart - 1), group, headCase)
-        } else {
-            FoldingDescriptor(element.node, TextRange(caseStart, firstLineStart), group, "$headCase ")
-        }
+        val regions = branchStart(
+            element, document, previousBlock = null, head.body,
+            kept = head.type, keyword = "case ", replacement = null, arrow = head.unnamedBinding + " ->",
+        ).toMutableList()
         var previousBlock = head.block
         for (branch in chain.branches.drop(1)) {
-            descriptors += branchStart(
-                element, document, group, previousBlock, branch.body,
+            regions += branchStart(
+                element, document, previousBlock, branch.body,
                 kept = branch.type, keyword = "case ", replacement = null, arrow = branch.unnamedBinding + " ->",
             )
             previousBlock = branch.block
         }
         chain.elseBody?.let { elseBody ->
             val elseKeyword = PsiTreeUtil.getParentOfType(elseBody.statement, PsiIfStatement::class.java)!!.elseElement!!
-            descriptors += branchStart(
-                element, document, group, previousBlock, elseBody,
+            regions += branchStart(
+                element, document, previousBlock, elseBody,
                 kept = elseKeyword, keyword = "", replacement = "default", arrow = " ->",
             )
         }
-        return descriptors.toTypedArray()
+        val lastBody = chain.elseBody ?: chain.branches.last().body
+        val group = VirtualLines.group(
+            InstanceofSwitchExpression::class.java.name,
+            above = VirtualLine(
+                listOf("switch" to DefaultLanguageHighlighterColors.KEYWORD, " (${head.instanceOf.operand.text}) {" to HighlighterColors.TEXT)
+            ),
+            below = null,
+            // a commented last body has lines no region touches; they are still part of the switch
+            trailingLines = document.getLineNumber(lastBody.statement.textRange.endOffset) -
+                document.getLineNumber(regions.maxOf { it.first.endOffset }),
+        )
+        return regions.map { (range, placeholder) -> FoldingDescriptor(element.node, range, group, placeholder) }
+            .toTypedArray()
     }
 
     /**
-     * Turns `} else if (x instanceof T t) {` plus the line break after it into `case T t -> `, or `} else {` into
-     * `default -> `. [kept] (`T t`, or the `else` keyword shown as [replacement]) and the space before `{` keep their
-     * place; only the tokens that change are covered.
+     * Turns `if (x instanceof T t) {` (the head, no [previousBlock]) or `} else if (x instanceof T t) {` plus the line
+     * break after it into `case T t -> `, or `} else {` into `default -> `. [kept] (`T t`, or the `else` keyword shown
+     * as [replacement]) and the space before `{` keep their place; only the tokens that change are covered.
      *
      * Split at both braces: the editor drops a region that crosses the platform's `{...}` code-block regions.
      */
     private fun branchStart(
         element: PsiElement,
         document: Document,
-        group: FoldingGroup,
-        previousBlock: PsiCodeBlock,
+        previousBlock: PsiCodeBlock?,
         body: Body,
         kept: PsiElement,
         keyword: String,
         replacement: String?,
         arrow: String,
-    ): List<FoldingDescriptor> {
+    ): List<Pair<TextRange, String>> {
         val statement = body.statement
-        val rBrace = previousBlock.rBrace!!
         val lBrace = (statement.parent as PsiCodeBlock).lBrace!!
-        val descriptors = mutableListOf<FoldingDescriptor>()
+        val regions = mutableListOf<Pair<TextRange, String>>()
         fun fold(start: Int, end: Int, placeholder: String) {
-            descriptors += FoldingDescriptor(element.node, TextRange(start, end), group, placeholder)
+            regions += TextRange(start, end) to placeholder
         }
 
-        val rBraceEnd = rBrace.textRange.endOffset
         val keptStart = kept.textRange.startOffset
-        if (keptStart > rBraceEnd) {
-            fold(rBrace.textRange.startOffset, rBraceEnd, "")
-            // The space before `T t` stays real text, not part of the grey `case`.
-            val keepSpace = keyword.endsWith(' ') && keptStart - rBraceEnd > 1 && document.charsSequence[keptStart - 1] == ' '
-            if (keepSpace) {
-                fold(rBraceEnd, keptStart - 1, keyword.trimEnd())
-            } else {
-                fold(rBraceEnd, keptStart, keyword)
+        var keywordStart = element.textRange.startOffset
+        previousBlock?.rBrace?.let { rBrace ->
+            keywordStart = rBrace.textRange.startOffset
+            if (keptStart > rBrace.textRange.endOffset) {
+                fold(keywordStart, rBrace.textRange.endOffset, "")
+                keywordStart = rBrace.textRange.endOffset
             }
+        }
+        // The space before `T t` stays real text, not part of the grey `case`.
+        val keepSpace = keyword.endsWith(' ') && keptStart - keywordStart > 1 && document.charsSequence[keptStart - 1] == ' '
+        if (keepSpace) {
+            fold(keywordStart, keptStart - 1, keyword.trimEnd())
         } else {
-            fold(rBrace.textRange.startOffset, rBraceEnd, keyword)
+            fold(keywordStart, keptStart, keyword)
         }
         replacement?.let { fold(kept.textRange.startOffset, kept.textRange.endOffset, it) }
 
@@ -145,15 +143,11 @@ class InstanceofSwitchExpression private constructor(
             // A placeholder cannot break a line, so a commented branch drops its braces: `case T t ->`, then its lines.
             fold(lBraceStart, lBraceStart + 1, lBracePlaceholder.trimEnd())
         }
-        return descriptors
+        return regions
     }
-
-    private fun indentOf(rBrace: PsiElement): String = rBrace.prevSibling.text.substringAfterLast('\n')
 
     /** A branch block's single statement and the full-line comments above it. */
-    private class Body(val comments: List<PsiComment>, val statement: PsiStatement) {
-        val lines: List<PsiElement> = comments + statement
-    }
+    private class Body(val comments: List<PsiComment>, val statement: PsiStatement)
 
     private class Branch(
         val instanceOf: PsiInstanceOfExpression,

@@ -54,7 +54,7 @@ import java.util.List;
         <fold text='val' expand='false'>FieldShiftSetters</fold> result = <fold text='' expand='false'>new </fold>FieldShiftSetters<fold text='(' expand='false'>();</fold>
         <fold text='u' expand='false'>result.setU</fold>sername<fold text=' = ' expand='false'>(</fold>source.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.getUsername()</fold><fold text=',' expand='false'>);</fold>
         <fold text='u' expand='false'>result.setU</fold>serIdentifier<fold text=' = ' expand='false'>(</fold>source.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text=',' expand='false'>);</fold>
-        <fold text='a' expand='false'>result.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>source.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.isActive()</fold>);
+        <fold text='a' expand='false'>result.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>source.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold><fold text='<<' expand='false'>.isActive()</fold><fold text='' expand='false'>);</fold>
         return result;
     }</fold>
 
@@ -63,7 +63,7 @@ import java.util.List;
         <fold text='u' expand='false'>result.setU</fold>sername<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getUsername()</fold><fold text=',' expand='false'>);</fold>
         <fold text='u' expand='false'>result.setU</fold>serIdentifier<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.getUserIdentifier()</fold><fold text=',' expand='false'>);</fold>
         <fold text='a' expand='false'>result.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.isActive()</fold><fold text=',' expand='false'>);</fold>
-        <fold text='l' expand='false'>result.setL</fold>ist<fold text=' = ' expand='false'>(</fold>List.copyOf(source.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>));
+        <fold text='l' expand='false'>result.setL</fold>ist<fold text=' = ' expand='false'>(</fold>List.copyOf(source.<fold text='l' expand='false'>getL</fold>ist<fold text='' expand='false'>()</fold>)<fold text='' expand='false'>);</fold>
         <fold text='' expand='false'>result.</fold>withUsername(source<fold text='<<' expand='false'>.getUsername()</fold>)<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>result.</fold>withActive(source<fold text='<<' expand='false'>.isActive()</fold>)<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>result.</fold>withUserIdentifier(source<fold text='<<' expand='false'>.getUserIdentifier()</fold>)<fold text='' expand='false'>;</fold>
@@ -74,7 +74,7 @@ import java.util.List;
         <fold text='val' expand='false'>FieldShiftSetters</fold> result = <fold text='' expand='false'>new </fold>FieldShiftSetters<fold text='(' expand='false'>();</fold>
         <fold text='u' expand='false'>result.setU</fold>sername<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.username()</fold><fold text=',' expand='false'>);</fold>
         <fold text='a' expand='false'>result.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.active()</fold><fold text=',' expand='false'>);</fold>
-        <fold text='u' expand='false'>result.setU</fold>serIdentifier<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.userIdentifier()</fold>);
+        <fold text='u' expand='false'>result.setU</fold>serIdentifier<fold text=' = ' expand='false'>(</fold>source<fold text='<<' expand='false'>.userIdentifier()</fold><fold text='' expand='false'>);</fold>
         <fold text='' expand='false'>result.</fold>withUsername(source<fold text='<<' expand='false'>.username()</fold>)<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>result.</fold>withActive(source<fold text='<<' expand='false'>.active()</fold>)<fold text='' expand='false'>;</fold>
         <fold text='' expand='false'>result.</fold>withUserIdentifier(source<fold text='<<' expand='false'>.userIdentifier()</fold>)<fold text='' expand='false'>;</fold>

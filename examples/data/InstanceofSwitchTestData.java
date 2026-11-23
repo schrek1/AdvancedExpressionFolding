@@ -134,6 +134,42 @@ public class InstanceofSwitchTestData {
         return "";
     }
 
+    double toAmount(Object value) {
+        if (value instanceof String text) {
+            return Double.parseDouble(text);
+        } else if (value instanceof Integer number) {
+            return number.doubleValue();
+        } else if (value instanceof Long number) {
+            return number.doubleValue();
+        } else {
+            // only the types above are expected
+            throw new IllegalArgumentException("unexpected type: " + value);
+        }
+    }
+
+    String fourCases(Object value) {
+        if (value instanceof String text) {
+            return text;
+        } else if (value instanceof Integer number) {
+            return "int " + number;
+        } else if (value instanceof Long number) {
+            return "long " + number;
+        } else if (value instanceof Shape) {
+            return "shape";
+        }
+        return "";
+    }
+
+    String commentedLastCase(Object value) {
+        if (value instanceof String text) {
+            return text;
+        } else if (value instanceof Integer number) {
+            // counts start at zero
+            return "number " + number;
+        }
+        return "";
+    }
+
     String commentInCondition(Object value) {
         if (value /* raw input */ instanceof String text) {
             return text;
