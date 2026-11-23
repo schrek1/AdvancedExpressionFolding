@@ -15,15 +15,26 @@ import com.intellij.lang.folding.FoldingBuilderEx
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.FoldingGroup
+import com.intellij.openapi.project.DumbAware
+import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.project.IndexNotReadyException
+import com.intellij.openapi.util.Key
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiJavaFile
 
-class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()() {
+class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(), DumbAware {
     override fun buildFoldRegions(element: PsiElement, document: Document, quick: Boolean): Array<FoldingDescriptor> {
         if (!globalOn || isFoldingFile(element)) {
             return store.store(Expression.EMPTY_ARRAY, document)
+        }
+        // folding needs indexes; returning nothing here would make the platform drop and later re-add every plugin
+        // fold expanded, so while the text is unchanged the editor keeps the last folds through indexing
+        if (DumbService.isDumb(element.project)) {
+            return element.getUserData(LAST_FOLDS)
+                ?.takeIf { (stamp, _) -> stamp == document.modificationStamp }
+                ?.second
+                ?: Expression.EMPTY_ARRAY
         }
         if (debugFolding) {
             preview(element, document)
@@ -37,6 +48,7 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
         if (memoryImprovement && !quick && cachedDescriptors !== foldingDescriptors) {
             writeCache(element, foldingDescriptors)
         }
+        element.putUserData(LAST_FOLDS, document.modificationStamp to foldingDescriptors)
         return store.store(foldingDescriptors, document)
     }
 
@@ -102,6 +114,10 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
 
     // TODO: Collapse everything by default but use these settings when actually building the folding descriptors
     override fun isCollapsedByDefault(astNode: ASTNode): Boolean {
+        // folds kept through indexing can be re-created then; without indexes assume the usual collapsed state
+        if (DumbService.isDumb(astNode.psi.project)) {
+            return true
+        }
         try {
             val element = astNode.psi
             val document = PsiDocumentManager.getInstance(astNode.psi.project).getDocument(astNode.psi.containingFile)
@@ -116,6 +132,10 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
     }
 
     private val debugFolding = false
+
+    private companion object {
+        val LAST_FOLDS = Key.create<Pair<Long, Array<FoldingDescriptor>>>("advancedExpressionFolding.lastFolds")
+    }
 }
 
 var store: Storage = EmptyStorage
