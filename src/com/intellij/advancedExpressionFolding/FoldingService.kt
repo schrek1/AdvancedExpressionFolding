@@ -1,6 +1,8 @@
 package com.intellij.advancedExpressionFolding
 
 import com.intellij.advancedExpressionFolding.processor.cache.Keys
+import com.intellij.codeInsight.folding.CodeFoldingManager
+import com.intellij.openapi.application.runReadAction
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.editor.Editor
@@ -31,6 +33,19 @@ class FoldingService {
 
     fun clearAllKeys() {
         ProjectManager.getInstance().openProjects.forEach(this::clearAllKeys)
+    }
+
+    /**
+     * Drops the cached folds of every open editor and folds it again, so a settings change shows without an edit.
+     * Must run on the EDT.
+     */
+    fun refoldOpenEditors() {
+        ProjectManager.getInstance().openProjects.forEach { project ->
+            project.openTextEditors.forEach { editor ->
+                runReadAction { clearAllKeys(editor) }
+                CodeFoldingManager.getInstance(project).updateFoldRegions(editor)
+            }
+        }
     }
 
     fun clearAllKeys(project: Project) {

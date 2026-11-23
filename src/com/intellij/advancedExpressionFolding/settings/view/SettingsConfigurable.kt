@@ -1,5 +1,6 @@
 package com.intellij.advancedExpressionFolding.settings.view
 
+import com.intellij.advancedExpressionFolding.FoldingService
 import com.intellij.advancedExpressionFolding.action.UpdateFoldedTextColorsAction
 import com.intellij.advancedExpressionFolding.settings.AdvancedExpressionFoldingSettings
 import com.intellij.advancedExpressionFolding.settings.State
@@ -147,12 +148,16 @@ class SettingsConfigurable : EditorOptionsProvider, CheckboxesProvider() {
     }
 
     override fun apply() {
+        val changed = isModified()
         pendingChanges.forEach { (property, value) ->
             property.set(value)
         }
         pendingChanges.clear()
-        
+
         panel.apply()
+        if (changed) {
+            FoldingService.get().refoldOpenEditors()
+        }
     }
 
     override fun reset() {
