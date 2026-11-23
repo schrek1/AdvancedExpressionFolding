@@ -1,9 +1,12 @@
 package com.intellij.advancedExpressionFolding.processor.language.java
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.expression.literal.NumberLiteral
+import com.intellij.advancedExpressionFolding.expression.literal.StringLiteral
 import com.intellij.advancedExpressionFolding.processor.*
 import com.intellij.advancedExpressionFolding.processor.core.BaseExtension
 import com.intellij.advancedExpressionFolding.processor.core.getAnyExpression
+import com.intellij.advancedExpressionFolding.processor.reference.NewExpressionExt
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiNewExpression
@@ -15,6 +18,9 @@ object ConstructorReferenceExt : BaseExtension() {
         document: Document
     ): Expression? {
         val initializer = field.initializer.asInstance<PsiNewExpression>()
+        if (initializer != null && initializer.foldsAsLiteral(document)) {
+            return null
+        }
         val noParams = initializer?.argumentList?.isEmpty == true
         val anonymousClass = initializer?.anonymousClass
 
@@ -57,6 +63,10 @@ object ConstructorReferenceExt : BaseExtension() {
         return field.initializer == creation && creation.classReference != null &&
             field.sameTypeOfFieldAndInitializer(creation)
     }
+
+    // the literal fold already shows `new BigDecimal("1.5")` as `1.5`, so `::` in front would read `::1.5`
+    private fun PsiNewExpression.foldsAsLiteral(document: Document) =
+        NewExpressionExt.getNewExpression(this, document).let { it is NumberLiteral || it is StringLiteral }
 
     //TODO: extract generic extension method
     private fun PsiField.sameTypeOfFieldAndInitializer(initializer: PsiNewExpression?) =

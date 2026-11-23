@@ -1,6 +1,7 @@
 package data;
 
 import java.util.*;
+import java.math.*;
 
 public class ConstructorReferenceNotationTestData {
 
@@ -64,6 +65,14 @@ public class ConstructorReferenceNotationTestData {
 
         protected ConstClass SELF_NULL = null;
         protected ConstClass EMPTY;
+    }
+
+    static class Literals {
+        private static final BigDecimal PRICE = 3119.5;
+        private static final BigDecimal RATE = 12;
+        private static final BigInteger COUNT = 42;
+        private static final ConstClass ENABLED = ::new(true);
+        private static final ConstClass DEFAULT = ::new;
     }
 
     static class ConstClass {
