@@ -297,6 +297,18 @@ Shows a guard `if` whose braces hold only `return` of a simple value (a literal,
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/GuardIfOneLinerTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/GuardIfOneLinerTestData-folded.java)
 
+## conditionalAsIfElse
+### Ternary as if-else: long, multi-line, nested or string-building ones
+Shows a Java ternary `cond ? a : b` as Kotlin `if (cond) a else b` when it is long, spans several lines, is nested, or has a branch that builds a string (concatenation, `.formatted(...)`, `String.format(...)`). Only ` if (`, `)` and ` else` are folded and the trailing `;` is hidden; the branches stay real code in their order. A null-check ternary that reads as honest Kotlin still folds to Elvis first.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ConditionalAsIfElseTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ConditionalAsIfElseTestData-folded.java)
+
+## conditionalAsIfElseAlways
+### Ternary as if-else: every ternary
+Shows every Java ternary as Kotlin `if (cond) a else b`, not only the long, nested or string-building ones. With both ternary options off, ternaries stay as written.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ConditionalAsIfElseAlwaysTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ConditionalAsIfElseAlwaysTestData-folded.java)
+
 ## controlFlowMultiStatementCodeBlockCollapse
 ### Control flow multi-statement code block braces (read-only files, deprecated)
 Simplifies multi-statement code blocks in control flow statements for read-only files (deprecated).

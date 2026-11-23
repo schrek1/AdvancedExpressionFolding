@@ -25,6 +25,21 @@ interface ControlFlowFoldingTest : FoldingTestSection {
 
     @Test
     fun switchArrowTestData() = testCase.runFoldingTest(foldingState()::switchArrow)
+
+    @Test
+    fun conditionalAsIfElseTestData() = testCase.runFoldingTest(
+        foldingState()::checkExpressionsCollapse,
+        foldingState()::conditionalAsIfElse,
+    )
+
+    @Test
+    fun conditionalAsIfElseAlwaysTestData() = testCase.runFoldingTest(
+        foldingState()::checkExpressionsCollapse,
+        foldingState()::conditionalAsIfElseAlways,
+    )
+
+    @Test
+    fun conditionalAsIfElseNeverTestData() = testCase.runFoldingTest(foldingState()::checkExpressionsCollapse)
 }
 
 @Disabled("Split from FoldingTest")

@@ -43,6 +43,7 @@ object VirtualLines {
         val lastLinePrefix: VirtualLine?,
         val trailingLines: Int,
         val indent: Indent,
+        val firstLineSuffix: VirtualLine?,
     )
 
     // written by the folding builder in a background read action, read on the EDT
@@ -57,6 +58,7 @@ object VirtualLines {
      * @param trailingLines lines below the line of the last region that belong to the group too (a last block's body
      * no region touches); they get the extra indent, and the last of them counts as the group's last line
      * @param indent the lines that get the extra indent
+     * @param firstLineSuffix text drawn after the end of the line of the group's first region
      */
     fun group(
         name: String,
@@ -65,8 +67,9 @@ object VirtualLines {
         lastLinePrefix: VirtualLine? = null,
         trailingLines: Int = 0,
         indent: Indent = Indent.ALL_LINES,
+        firstLineSuffix: VirtualLine? = null,
     ): FoldingGroup = FoldingGroup.newGroup(name).also {
-        specs[it] = Spec(above, below, lastLinePrefix, trailingLines, indent)
+        specs[it] = Spec(above, below, lastLinePrefix, trailingLines, indent, firstLineSuffix)
     }
 
     fun install(editor: Editor) {
@@ -93,7 +96,8 @@ object VirtualLines {
         val inlayModel = editor.inlayModel
         val length = editor.document.textLength
         (inlayModel.getBlockElementsInRange(0, length, LineRenderer::class.java) +
-            inlayModel.getInlineElementsInRange(0, length, IndentRenderer::class.java)).forEach(Disposer::dispose)
+            inlayModel.getInlineElementsInRange(0, length, IndentRenderer::class.java) +
+            inlayModel.getInlineElementsInRange(0, length, SuffixRenderer::class.java)).forEach(Disposer::dispose)
     }
 
     /** Adds the inlays of collapsed groups that are missing and removes the ones whose group is gone or expanded. */
@@ -105,12 +109,14 @@ object VirtualLines {
         val inlayModel = editor.inlayModel
         val length = editor.document.textLength
         val existing = inlayModel.getBlockElementsInRange(0, length, LineRenderer::class.java) +
-            inlayModel.getInlineElementsInRange(0, length, IndentRenderer::class.java)
+            inlayModel.getInlineElementsInRange(0, length, IndentRenderer::class.java) +
+            inlayModel.getInlineElementsInRange(0, length, SuffixRenderer::class.java)
         existing.forEach { inlay ->
             // the renderer keeps its creation offset; the inlay's own offset follows edits
             val current = when (val renderer = inlay.renderer) {
                 is IndentRenderer -> renderer.copy(offset = inlay.offset)
                 is LineRenderer -> renderer.copy(offset = inlay.offset)
+                is SuffixRenderer -> renderer.copy(offset = inlay.offset)
                 else -> renderer
             }
             if (!wanted.remove(current)) {
@@ -121,6 +127,8 @@ object VirtualLines {
             when (renderer) {
                 is IndentRenderer -> inlayModel.addInlineElement(renderer.offset, true, renderer)
                 is LineRenderer -> inlayModel.addBlockElement(renderer.offset, !renderer.above, renderer.above, 0, renderer)
+                // bound to the line break, so a fold ending at the line's end does not hide it
+                is SuffixRenderer -> inlayModel.addInlineElement(renderer.offset, false, renderer)
             }
         }
     }
@@ -146,6 +154,7 @@ object VirtualLines {
                 fun column(line: Int) = codeStarts[line]?.let { editor.offsetToLogicalPosition(it).column } ?: 0
                 spec.above?.let { wanted += LineRenderer(document.getLineStartOffset(firstLine), it, true, column(firstLine)) }
                 spec.below?.let { wanted += LineRenderer(document.getLineEndOffset(lastLine), it, false, column(firstLine)) }
+                spec.firstLineSuffix?.let { wanted += SuffixRenderer(document.getLineEndOffset(firstLine), it) }
                 codeStarts.forEach { (line, codeStart) ->
                     val indented = when (spec.indent) {
                         Indent.ALL_LINES -> true
@@ -210,6 +219,19 @@ object VirtualLines {
             // shifted past the blank indentation character that follows the inlay, so the prefix touches the code
             val shift = if (inIndent) EditorUtil.getPlainSpaceWidth(editor) else 0
             prefix?.paint(editor, g, targetRegion.x + indentWidth(editor) + shift, targetRegion.y)
+        }
+    }
+
+    /** Draws [line] inline at [offset]. */
+    internal data class SuffixRenderer(
+        val offset: Int,
+        val line: VirtualLine,
+    ) : EditorCustomElementRenderer {
+
+        override fun calcWidthInPixels(inlay: Inlay<*>): Int = line.width(inlay.editor)
+
+        override fun paint(inlay: Inlay<*>, g: Graphics, targetRegion: Rectangle, textAttributes: TextAttributes) {
+            line.paint(inlay.editor, g, targetRegion.x, targetRegion.y)
         }
     }
 

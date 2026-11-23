@@ -333,7 +333,35 @@ class VirtualLinesTest : BaseTest() {
         }
     }
 
-    private fun foldedEditor(text: String = source, enableFolds: () -> Unit = { assignState(state::scopeWith) }): Editor {
+    @Test
+    fun sync_ternaryWithQuestionMarkOnNextLine_closingParenthesisAtTheEndOfTheConditionLine() {
+        runInEdtAndWait {
+            // GIVEN - a multi-line ternary folded as if-else, `?` starting the second line
+            @Language("JAVA")
+            val ternary = """
+                class Labels {
+                    String label(String platform) {
+                        return platform == null
+                                ? "generic"
+                                : "device on " + platform;
+                    }
+                }
+            """.trimIndent()
+            val editor = foldedEditor(ternary) { assignState(state::conditionalAsIfElse) }
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - `)` follows the condition on its own line, no other line gets anything
+            val conditionLineEnd = ternary.indexOf("null\n") + "null".length
+            val suffix = editor.inlayModel.getInlineElementsInRange(0, ternary.length, VirtualLines.SuffixRenderer::class.java)
+                .single()
+            assertEquals(conditionLineEnd to ")", suffix.offset to suffix.renderer.line.text())
+            assertEquals(ternary, dump(editor))
+        }
+    }
+
+    private fun foldedEditor(text: String = source,enableFolds: () -> Unit = { assignState(state::scopeWith) }): Editor {
         enableFolds()
         MethodCallFactory.initialize(TestDynamicDataProvider())
         fixture.configureByText("Shop.java", text)

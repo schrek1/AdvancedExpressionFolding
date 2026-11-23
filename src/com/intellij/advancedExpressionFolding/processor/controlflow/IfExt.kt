@@ -4,6 +4,7 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.controlflow.CompactControlFlowExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ElvisExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.GuardReturnWhenExpression
+import com.intellij.advancedExpressionFolding.expression.controlflow.IfElseConditionalExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.IfExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.InstanceofSwitchExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ShortElvisExpression
@@ -34,6 +35,7 @@ import com.intellij.psi.PsiConditionalExpression
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiIfStatement
+import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiPolyadicExpression
 import com.intellij.psi.PsiReference
@@ -240,8 +242,22 @@ object IfExt :
 
     fun getConditionalExpression(element: PsiConditionalExpression, document: Document): Expression? {
         ScopeLetExt.createExpression(element)?.let { return it }
+        if (checkExpressionsCollapse) {
+            getElvisExpression(element, document)?.let { return it }
+        }
+        if (conditionalAsIfElse || conditionalAsIfElseAlways) {
+            return IfElseConditionalExpression.create(element, document, conditionalAsIfElseAlways)
+        }
+        return null
+    }
+
+    /**
+     * `x ?: y`, `x?.foo() ?: y` or `x?.foo()` from a null-check ternary in either orientation, only where that is
+     * honest Kotlin: the non-null branch is the checked value itself or one call or field on it.
+     */
+    private fun getElvisExpression(element: PsiConditionalExpression, document: Document): Expression? {
         val condition = element.condition
-        if (checkExpressionsCollapse && condition is PsiBinaryExpression) {
+        if (condition is PsiBinaryExpression) {
             val operationSign = condition.operationSign.text
             val isInvertedElvis = operationSign == "=="
             val isStandardElvis = operationSign == "!="
@@ -289,20 +305,45 @@ object IfExt :
                             }
                         }
                         .toList()
-                    if (references.isNotEmpty()) {
-                        return ElvisExpression(
-                            element,
-                            element.textRange,
-                            getAnyExpression(nonNullExpression, document),
-                            getAnyExpression(fallbackExpression, document),
-                            references.map { it.textRange },
-                            isInvertedElvis
-                        )
+                    val use = references.singleOrNull() ?: return null
+                    // `x?.a().b()` would not compile and `x?.a()?.b()` would claim `a()` may be null
+                    val receiver = when (nonNullExpression) {
+                        is PsiMethodCallExpression -> nonNullExpression.methodExpression.qualifierExpression
+                        is PsiReferenceExpression -> nonNullExpression.qualifierExpression
+                        else -> null
                     }
+                    if (use != nonNullExpression && use != receiver) {
+                        return null
+                    }
+                    if (isInvertedElvis && !fitsBehindValue(element, fallbackExpression, document)) {
+                        return null
+                    }
+                    return ElvisExpression(
+                        element,
+                        element.textRange,
+                        getAnyExpression(nonNullExpression, document),
+                        getAnyExpression(fallbackExpression, document),
+                        listOf(use.textRange),
+                        isInvertedElvis
+                    )
                 }
             }
         }
         return null
+    }
+
+    /**
+     * The inverted Elvis shows its fallback as a copy behind the value, folded over the `;` that ends the statement,
+     * so only a short literal or name fits; a `null` fallback needs no copy.
+     */
+    private fun fitsBehindValue(element: PsiConditionalExpression, fallback: PsiExpression, document: Document): Boolean {
+        if (fallback is PsiLiteralExpression && fallback.text == "null") {
+            return true
+        }
+        val end = element.textRange.endOffset
+        return (fallback is PsiLiteralExpression || fallback is PsiReferenceExpression) &&
+            '\n' !in fallback.text &&
+            end < document.textLength && document.charsSequence[end] == ';'
     }
 
     fun getPolyadicExpression(element: PsiPolyadicExpression, document: Document): Expression? {

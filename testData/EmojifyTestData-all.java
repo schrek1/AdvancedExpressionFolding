@@ -517,7 +517,7 @@ public class EmojifyTestData {
 
             public void methodWithNullDefaultValue() <fold text='{...}' expand='true'>{
                 <fold text='val' expand='false'>String</fold> value = null;
-                <fold text='val' expand='false'>String</fold> result = <fold text='value ?: "default"' expand='false'>value == null ? "default" : value</fold>;
+                <fold text='val' expand='false'>String</fold> result = <fold text='' expand='false'>value == null ? "default" : </fold>value<fold text=' ?: "default"' expand='false'>;</fold>
             }</fold>
 
             public void methodWithNullAssert() <fold text='{...}' expand='true'>{
