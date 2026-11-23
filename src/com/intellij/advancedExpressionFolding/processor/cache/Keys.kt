@@ -53,6 +53,7 @@ object Keys {
         values.forEach {
             psiElement.putUserData(it, null)
         }
+        psiElement.putCopyableUserData(CLASS_TYPE_KEY, null)
     }
     fun getVersionKey(synthetic: Boolean): Key<Long> {
         return when {
