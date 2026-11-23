@@ -60,7 +60,7 @@ public class ListOfLiteralTestData {
     static PriceBook priceBook(String bestAsk) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>var</fold> book = <fold text='' expand='false'>new </fold>PriceBook<fold text='(' expand='false'>();</fold>
         <fold text='a' expand='false'>book.setA</fold>sks<fold text=' = ' expand='false'>(</fold><fold text='[' expand='false'>List.of(</fold>bestAsk<fold text=']' expand='false'>)</fold><fold text=',' expand='false'>);</fold>
-        <fold text='b' expand='false'>book.setB</fold>ids<fold text=' = ' expand='false'>(</fold><fold text='[]' expand='false'>List.of()</fold>);
+        <fold text='b' expand='false'>book.setB</fold>ids<fold text=' = ' expand='false'>(</fold><fold text='[]' expand='false'>List.of()</fold><fold text='' expand='false'>);</fold>
         return book;
     }</fold>
 
