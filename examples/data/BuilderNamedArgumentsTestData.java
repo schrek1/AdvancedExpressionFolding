@@ -22,6 +22,14 @@ public class BuilderNamedArgumentsTestData {
                 .name("Eve")
                 .manager(Person.builder().name("Frank").build())
                 .build();
+        Person twoArguments = Person.builder()
+                .name("Grace")
+                .age(29).build();
+        Person threeArguments = Person.builder()
+                .name("Heidi")
+                .age(52)
+                .manager(source).build();
+        Person oneLine = Person.builder().name("Ivan").age(33).build();
     }
 
     public void notFolded(Person person) {

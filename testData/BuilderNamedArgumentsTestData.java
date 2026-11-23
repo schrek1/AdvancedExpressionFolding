@@ -6,10 +6,10 @@ public class BuilderNamedArgumentsTestData {
         var alice = Person<fold text='(' expand='false'>.builder()</fold>
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Alice"<fold text=',' expand='false'>)</fold>
             <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>31<fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
         Person bob = Person<fold text='(' expand='false'>.builder().</fold>name<fold text=' = ' expand='false'>(</fold>"Bob")<fold text='' expand='false'>.build()</fold>;
         Person mixed = Person<fold text='(' expand='false'>.builder()</fold><fold text='' expand='false'>.</fold>name<fold text=' = ' expand='false'>(</fold>"Carol"<fold text=',' expand='false'>)</fold>
-            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>40)<fold text='' expand='false'>.build()</fold>;
+            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>40<fold text='' expand='false'>).build();</fold>
         Person mapped = Person<fold text='(' expand='false'>.builder()
                 .</fold>name<fold text=' = ' expand='false'>(</fold>source.getName())<fold text='' expand='false'>
                 .build()</fold>;
@@ -17,11 +17,19 @@ public class BuilderNamedArgumentsTestData {
         Person commented = Person<fold text='(' expand='false'>.builder()</fold>
                 // a comment keeps the chain on its lines
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Dave"<fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
         Person managed = Person<fold text='(' expand='false'>.builder()</fold>
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Eve"<fold text=',' expand='false'>)</fold>
             <fold text='' expand='false'>    .</fold>manager<fold text=' = ' expand='false'>(</fold>Person<fold text='(' expand='false'>.builder().</fold>name<fold text=' = ' expand='false'>(</fold>"Frank")<fold text='' expand='false'>.build()</fold><fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
+        Person twoArguments = Person<fold text='(' expand='false'>.builder()</fold>
+            <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Grace"<fold text=',' expand='false'>)</fold>
+            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>29<fold text='' expand='false'>).build();</fold>
+        Person threeArguments = Person<fold text='(' expand='false'>.builder()</fold>
+            <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Heidi"<fold text=',' expand='false'>)</fold>
+            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>52<fold text=',' expand='false'>)</fold>
+            <fold text='' expand='false'>    .</fold>manager<fold text=' = ' expand='false'>(</fold>source<fold text='' expand='false'>).build();</fold>
+        Person oneLine = Person<fold text='(' expand='false'>.builder()</fold><fold text='' expand='false'>.</fold>name<fold text=' = ' expand='false'>(</fold>"Ivan"<fold text=',' expand='false'>)</fold><fold text=' ' expand='false'>.</fold>age<fold text=' = ' expand='false'>(</fold>33)<fold text='' expand='false'>.build()</fold>;
     }</fold>
 
     public void notFolded(Person person) <fold text='{...}' expand='true'>{
@@ -37,7 +45,7 @@ public class BuilderNamedArgumentsTestData {
         var order = Order<fold text='(' expand='false'>.builder()</fold>
             <fold text='i' expand='false'>    .setI</fold>d<fold text=' = ' expand='false'>(</fold>7<fold text=',' expand='false'>)</fold>
             <fold text='p' expand='false'>    .setP</fold>ayment<fold text=' = ' expand='false'>(</fold>Payment<fold text='(f' expand='false'>.builder().setF</fold>ixedInfo<fold text=' = ' expand='false'>(</fold>"card")<fold text='' expand='false'>.build()</fold><fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
         Order gift = Order<fold text='(n' expand='false'>.builder().setN</fold>ote<fold text=' = ' expand='false'>(</fold>"gift")<fold text='' expand='false'>.build()</fold>;
     }</fold>
 
@@ -47,7 +55,7 @@ public class BuilderNamedArgumentsTestData {
             <fold text='a' expand='false'>    .setA</fold>ccountId<fold text=' = ' expand='false'>(</fold>wallet.getValue()<fold text=',' expand='false'>)</fold>
             <fold text='c' expand='false'>    .setC</fold>urrencyCode<fold text=' = ' expand='false'>(</fold>asset.getCurrencyCode()<fold text=',' expand='false'>)</fold>
             <fold text='c' expand='false'>    .setC</fold>hain<fold text=' = ' expand='false'>(</fold>chain != null ? chain.value() : null<fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
     }</fold>
 
     public void setPrefixNotFolded() <fold text='{...}' expand='true'>{

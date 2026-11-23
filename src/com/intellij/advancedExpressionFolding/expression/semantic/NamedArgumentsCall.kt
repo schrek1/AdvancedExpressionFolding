@@ -1,18 +1,22 @@
 package com.intellij.advancedExpressionFolding.expression.semantic
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.inlay.VirtualLine
+import com.intellij.advancedExpressionFolding.inlay.VirtualLines
 import com.intellij.application.options.CodeStyle
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.FoldingGroup
+import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 
 /**
  * Shows a call chain as one call with named arguments, e.g. `person.copy(name = "Alice", age = 31)`.
  *
- * Only the tokens that change fold: argument names, values, the closing `)` and the shared indentation stay real
- * text. A single argument joins one line; several keep one argument per line, re-indented the Kotlin way. The values
+ * Only the tokens that change fold: argument names, values and the shared indentation stay real text. A single
+ * argument joins one line; several keep one argument per line, re-indented the Kotlin way, and `)` stands alone on
+ * the call's line indentation (a [VirtualLines] line when the source closes on the last argument's line). The values
  * are not folded here: the expression is nested, so their own foldings come from the normal traversal.
  */
 class NamedArgumentsCall(
@@ -45,7 +49,23 @@ class NamedArgumentsCall(
         document: Document,
         parent: Expression?
     ): Array<FoldingDescriptor> {
-        val group = FoldingGroup.newGroup(NamedArgumentsCall::class.java.name)
+        val single = arguments.singleOrNull()
+        val singleLine = single != null &&
+            document.isBlank(openRange.endOffset, single.separatorRange.startOffset) &&
+            document.isBlank(single.suffixRange.endOffset, closeRange.startOffset)
+        val lastSuffix = arguments.last().suffixRange
+        val semicolon = document.semicolonEndingLine(closeRange.endOffset)
+        // a multi-line call closed on its last argument's line ends the statement: `)` and `;` fold away and a
+        // virtual `)` line closes the call at the statement's indentation
+        val virtualClose = !singleLine && semicolon != null &&
+            !document.sameLine(openRange.startOffset, closeRange.endOffset) &&
+            document.sameLine(lastSuffix.endOffset, closeRange.startOffset)
+        val name = NamedArgumentsCall::class.java.name
+        val group = if (virtualClose) {
+            VirtualLines.group(name, above = null, below = CLOSE_LINE, indent = VirtualLines.Indent.NONE)
+        } else {
+            FoldingGroup.newGroup(name)
+        }
         val descriptors = mutableListOf<FoldingDescriptor>()
         fun fold(range: TextRange, text: String) {
             if (!range.isEmpty && document.getText(range) != text) {
@@ -64,11 +84,7 @@ class NamedArgumentsCall(
             fold(TextRange(lineStart + shared, range.endOffset), indent.substring(shared) + suffix)
         }
 
-        val single = arguments.singleOrNull()
-        if (single != null &&
-            document.isBlank(openRange.endOffset, single.separatorRange.startOffset) &&
-            document.isBlank(single.suffixRange.endOffset, closeRange.startOffset)
-        ) {
+        if (single != null && singleLine) {
             fold(openRange.union(single.separatorRange), openText + single.nameText)
             fold(single.assignRange, " = ")
             fold(single.suffixRange.withoutLastCharacter(), "")
@@ -93,8 +109,9 @@ class NamedArgumentsCall(
             }
             previousEnd = argument.suffixRange.endOffset
         }
-        val lastSuffix = arguments.last().suffixRange
-        if (lastSuffix.endOffset == closeRange.startOffset) {
+        if (virtualClose) {
+            fold(TextRange(lastSuffix.startOffset, semicolon!!.endOffset), "")
+        } else if (lastSuffix.endOffset == closeRange.startOffset) {
             fold(lastSuffix.withoutLastCharacter(), "")
             fold(closeRange, "")
         } else {
@@ -105,9 +122,21 @@ class NamedArgumentsCall(
                 fold(closeWithoutParenthesis, "")
             } else {
                 foldIndented(closeWithoutParenthesis, baseIndent)
+                // `)` already stands alone on its line, so only the statement's `;` goes
+                semicolon?.let { fold(TextRange(closeRange.endOffset, it.endOffset), "") }
             }
         }
         return descriptors.toTypedArray()
+    }
+
+    /** The `;` right after [offset] when nothing but blanks follow on its line. */
+    private fun Document.semicolonEndingLine(offset: Int): TextRange? {
+        val rest = charsSequence.subSequence(offset, getLineEndOffset(getLineNumber(offset)))
+        if (rest.toString().trim() != ";") {
+            return null
+        }
+        val semicolon = offset + rest.indexOf(';')
+        return TextRange(semicolon, semicolon + 1)
     }
 
     private fun TextRange.withoutLastCharacter() = TextRange(startOffset, endOffset - 1)
@@ -119,6 +148,11 @@ class NamedArgumentsCall(
     private fun Document.indentOf(offset: Int): String {
         val lineStart = getLineStartOffset(getLineNumber(offset))
         return charsSequence.subSequence(lineStart, offset).takeWhile { it == ' ' || it == '\t' }.toString()
+    }
+
+    companion object {
+        /** The `)` line below a multi-line call whose real `)` and `;` fold away. */
+        val CLOSE_LINE = VirtualLine(listOf(")" to HighlighterColors.TEXT))
     }
 
     private fun indentUnit(element: PsiElement): String {

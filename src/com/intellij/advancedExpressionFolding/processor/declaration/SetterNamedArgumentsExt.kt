@@ -1,6 +1,8 @@
 package com.intellij.advancedExpressionFolding.processor.declaration
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.expression.semantic.NamedArgumentsCall
+import com.intellij.advancedExpressionFolding.inlay.VirtualLines
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.advancedExpressionFolding.processor.util.PropertyUtil.guessPropertyName
@@ -23,7 +25,7 @@ import com.intellij.psi.util.PsiTreeUtil
 
 /**
  * Folds `var p = new Person();` followed by setters on `p` into `val p = Person(name = "Alice", age = 31);`,
- * one argument per line at the setters' own indentation.
+ * one argument per line one level deeper and `)` on a line of its own.
  *
  * The run is the setter statements right after the declaration: `p.setX(value);` with one argument that does
  * not read `p` and sets a property not set earlier in the run. Any other statement or a comment ends it.
@@ -42,6 +44,8 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
             TextRange(newExpression.textRange.startOffset, classReference.textRange.startOffset) to "",
         )
         val open = TextRange(classReference.textRange.endOffset, declaration.textRange.endOffset)
+        val multiLine = setters.size > 1 &&
+            document.getLineNumber(setters.last().textRange.startOffset) != document.getLineNumber(open.startOffset)
         setters.forEachIndexed { index, setter ->
             val value = setter.argumentList.expressions.single().textRange
             val nameRange = setter.methodExpression.referenceNameElement!!.textRange
@@ -58,12 +62,15 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
                 folds += receiverAndSet to shownName
             }
             folds += TextRange(nameRange.endOffset, value.startOffset) to " = "
-            // the last setter keeps its real `);`, which closes the folded call
+            val suffix = TextRange(value.endOffset, setter.parent.textRange.endOffset)
+            // a one-line run keeps the last setter's real `);` to close the call, a multi-line one a virtual `)` line
             if (index < setters.lastIndex) {
-                folds += TextRange(value.endOffset, setter.parent.textRange.endOffset) to ","
+                folds += suffix to ","
+            } else if (multiLine) {
+                folds += suffix to ""
             }
         }
-        return NewObjectNamedArguments(declaration, folds)
+        return NewObjectNamedArguments(declaration, folds, multiLine)
     }
 
     /**
@@ -86,10 +93,14 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
         }
     }
 
-    /** Setters on a new object shown as named arguments; only the changed tokens fold, all in one group. */
+    /**
+     * Setters on a new object shown as named arguments; only the changed tokens fold, all in one group. Over several
+     * lines the arguments get a virtual indent and a virtual `)` line closes the call.
+     */
     private class NewObjectNamedArguments(
         declaration: PsiDeclarationStatement,
         private val folds: List<Pair<TextRange, String>>,
+        private val multiLine: Boolean,
     ) : Expression(declaration, declaration.textRange) {
 
         override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean = true
@@ -102,7 +113,12 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
             document: Document,
             parent: Expression?
         ): Array<FoldingDescriptor> {
-            val group = FoldingGroup.newGroup(NewObjectNamedArguments::class.java.name)
+            val name = NewObjectNamedArguments::class.java.name
+            val group = if (multiLine) {
+                VirtualLines.group(name, above = null, below = NamedArgumentsCall.CLOSE_LINE, indent = VirtualLines.Indent.AFTER_FIRST_LINE)
+            } else {
+                FoldingGroup.newGroup(name)
+            }
             return folds.map { (range, text) -> FoldingDescriptor(element.node, range, group, text) }.toTypedArray()
         }
     }

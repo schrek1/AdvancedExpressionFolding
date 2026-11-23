@@ -6,14 +6,14 @@ public class SetterNamedArgumentsTestData {
         <fold text='val' expand='false'>var</fold> alice = <fold text='' expand='false'>new </fold>Person<fold text='(' expand='false'>();</fold>
         <fold text='n' expand='false'>alice.setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Alice"<fold text=',' expand='false'>);</fold>
         <fold text='a' expand='false'>alice.setA</fold>ge<fold text=' = ' expand='false'>(</fold>31<fold text=',' expand='false'>);</fold>
-        <fold text='a' expand='false'>alice.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>true);
+        <fold text='a' expand='false'>alice.setA</fold>ctive<fold text=' = ' expand='false'>(</fold>true<fold text='' expand='false'>);</fold>
 
         <fold text='val' expand='false'>Person</fold> bob = <fold text='' expand='false'>new </fold>Person<fold text='(n' expand='false'>();
         bob.setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Bob");
 
         <fold text='val' expand='false'>var</fold> copy = <fold text='' expand='false'>new </fold>Person<fold text='(' expand='false'>();</fold>
         <fold text='n' expand='false'>copy.setN</fold>ame<fold text=' = ' expand='false'>(</fold>source.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold><fold text=',' expand='false'>);</fold>
-        <fold text='a' expand='false'>copy.setA</fold>ge<fold text=' = ' expand='false'>(</fold>source.<fold text='a' expand='false'>getA</fold>ge<fold text='' expand='false'>()</fold> + 1);
+        <fold text='a' expand='false'>copy.setA</fold>ge<fold text=' = ' expand='false'>(</fold>source.<fold text='a' expand='false'>getA</fold>ge<fold text='' expand='false'>()</fold> + 1<fold text='' expand='false'>);</fold>
         System.out.println(copy);
 
         <fold text='val' expand='false'>var</fold> partial = <fold text='' expand='false'>new </fold>Person<fold text='(n' expand='false'>();

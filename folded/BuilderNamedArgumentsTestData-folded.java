@@ -6,20 +6,28 @@ public class BuilderNamedArgumentsTestData {
         var alice = Person(
             name = "Alice",
             age = 31
-        );
+        )
         Person bob = Person(name = "Bob");
         Person mixed = Person(name = "Carol",
-            age = 40);
+            age = 40
         Person mapped = Person(name = source.getName());
         Person titled = Person(name = "Dr. " + source.getName());
         Person commented = Person(
                 // a comment keeps the chain on its lines
             name = "Dave"
-        );
+        )
         Person managed = Person(
             name = "Eve",
             manager = Person(name = "Frank")
-        );
+        )
+        Person twoArguments = Person(
+            name = "Grace",
+            age = 29
+        Person threeArguments = Person(
+            name = "Heidi",
+            age = 52,
+            manager = source
+        Person oneLine = Person(name = "Ivan", age = 33);
     }
 
     public void notFolded(Person person) {
@@ -32,11 +40,20 @@ public class BuilderNamedArgumentsTestData {
     }
 
     public void setPrefixed() {
-        var order = Order.builder()
-                .setId(7)
-                .setPayment(Payment.builder().setFixedInfo("card").build())
-                .build();
-        Order gift = Order.builder().setNote("gift").build();
+        var order = Order(
+            id = 7,
+            payment = Payment(fixedInfo = "card")
+        )
+        Order gift = Order(note = "gift");
+    }
+
+    public void nestedClassBuilder(Wallet wallet, Asset asset, Chain chain) {
+        Payment.PaymentDetails details = Payment.PaymentDetails(
+            type = PaymentType.CARD,
+            accountId = wallet.getValue(),
+            currencyCode = asset.getCurrencyCode(),
+            chain = chain != null ? chain.value() : null
+        )
     }
 
     public void setPrefixNotFolded() {
@@ -174,6 +191,67 @@ public class BuilderNamedArgumentsTestData {
             public Payment build() {
                 return new Payment(fixedInfo);
             }
+        }
+
+        static class PaymentDetails {
+            private PaymentType type;
+            private String accountId;
+            private String currencyCode;
+            private String chain;
+
+            public static PaymentDetailsBuilder builder() {
+                return new PaymentDetailsBuilder();
+            }
+
+            static class PaymentDetailsBuilder {
+                private final PaymentDetails details = new PaymentDetails();
+
+                public PaymentDetailsBuilder setType(PaymentType type) {
+                    details.type = type;
+                    return this;
+                }
+
+                public PaymentDetailsBuilder setAccountId(String accountId) {
+                    details.accountId = accountId;
+                    return this;
+                }
+
+                public PaymentDetailsBuilder setCurrencyCode(String currencyCode) {
+                    details.currencyCode = currencyCode;
+                    return this;
+                }
+
+                public PaymentDetailsBuilder setChain(String chain) {
+                    details.chain = chain;
+                    return this;
+                }
+
+                public PaymentDetails build() {
+                    return details;
+                }
+            }
+        }
+    }
+
+    enum PaymentType {
+        CARD, TRANSFER
+    }
+
+    static class Wallet {
+        public String getValue() {
+            return "w-1";
+        }
+    }
+
+    static class Asset {
+        public String getCurrencyCode() {
+            return "EUR";
+        }
+    }
+
+    static class Chain {
+        public String value() {
+            return "main";
         }
     }
 }

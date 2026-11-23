@@ -6,16 +6,20 @@ public class ToBuilderCopyTestData {
         var renamed = person.copy(
             name = "Alice",
             age = 31
-        );
+        )
         Person older = person.copy(age = person.getAge() + 1);
         Person mixed = person.copy(name = "Bob",
-            age = 40);
+            age = 40
         Person mapped = person.copy(name = source.getName());
         Person titled = person.copy(name = "Dr. " + person.getName());
         Person commented = person.copy(
                 // a comment keeps the chain on its lines
             name = "Carol"
-        );
+        )
+        Person twoArguments = person.copy(
+            name = "Grace",
+            age = 29
+        Person oneLine = person.copy(name = "Ivan", age = 33);
     }
 
     public void notFolded(Person person) {
@@ -31,7 +35,7 @@ public class ToBuilderCopyTestData {
         var shipped = order.copy(
             status = Status.SHIPPED,
             note = "left at the door"
-        );
+        )
         Order cancelled = order.copy(status = Status.CANCELLED, note = "out of stock");
     }
 

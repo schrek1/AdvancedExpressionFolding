@@ -80,7 +80,7 @@ class ListLiteral(
             ListLiteral::class.java.name,
             above = null,
             below = VirtualLine(listOf(closingLine to HighlighterColors.TEXT)),
-            indentBody = false,
+            indent = VirtualLines.Indent.NONE,
         )
         return listOf(open(group), FoldingDescriptor(element.node, TextRange(last.endOffset, tailEnd), group, ""))
     }
