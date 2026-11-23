@@ -90,6 +90,13 @@ public class LogBrackets {
         return data;
     }
 
+    public void logWrappedMessage(Data data, String city, Exception exception) {
+        String name = "John";
+        log.info("Shop $name kept in $city: it has no owner yet, so the order cannot move; owner ${data.name} was asked");
+        log.warn("Shop $name could not be closed by $city: it still has orders", exception);
+        log.info("Shop {} " + 1 + " stays", name);
+    }
+
     public static class Data {
         private Data data;
         private String name;

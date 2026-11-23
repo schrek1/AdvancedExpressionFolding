@@ -11,6 +11,7 @@ import com.intellij.psi.JavaTokenType
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiClassType
 import com.intellij.psi.PsiJavaToken
+import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiType
 
@@ -20,7 +21,8 @@ internal object BuilderChainLinks {
     /**
      * Named arguments for `links`, or null when the chain must stay unfolded.
      *
-     * A link is a one-argument builder method returning the builder. Links named like a builder field show as is;
+     * A link is a one-argument method of the builder or of a superclass of it whose call evaluates to the builder, so
+     * a self-typed `B setName(…)` of a generic base builder counts. Links named like a builder field show as is;
      * `setName(…)` links (Lombok `setterPrefix = "set"`, hand-written ones) fold only when every link has the prefix
      * and `targetClass` has each property, and then only `set` + the first letter hide.
      */
@@ -33,7 +35,7 @@ internal object BuilderChainLinks {
         if (!links.all { it.isBuilderLinkOf(builderClass, document) }) {
             return null
         }
-        val prefixed = !links.all { builderClass.findFieldByName(it.name(), false) != null }
+        val prefixed = !links.all { builderClass.findFieldByName(it.name(), true) != null }
         if (prefixed && !links.all { it.isPropertySetterOf(targetClass) }) {
             return null
         }
@@ -58,10 +60,21 @@ internal object BuilderChainLinks {
         val method = resolveMethod() ?: return false
         val value = argumentList.expressions.singleOrNull() ?: return false
         return method.parameterList.parametersCount == 1 &&
-            builderClass.isSame(method.containingClass) &&
-            builderClass.isSame(method.returnType.resolveClass()) &&
+            builderClass.hasMember(method) &&
+            builderClass.isSame(type.resolveClass()) &&
             // shortcut: a concatenation folded into "…$x" also folds the call's parentheses, so it is left unfolded
             !BuildExpressionExt.getAnyExpression(value, document).isOverflow()
+    }
+
+    /** Whether `build` is a method of `builderClass` (or a superclass of it) whose call evaluates to `targetClass`. */
+    fun isBuildOf(build: PsiMethodCallExpression, builderClass: PsiClass, targetClass: PsiClass): Boolean {
+        val method = build.resolveMethod() ?: return false
+        return builderClass.hasMember(method) && targetClass.isSame(build.type.resolveClass())
+    }
+
+    private fun PsiClass.hasMember(method: PsiMethod): Boolean {
+        val owner = method.containingClass ?: return false
+        return isSame(owner) || isInheritor(owner, true)
     }
 
     private fun PsiMethodCallExpression.isPropertySetterOf(targetClass: PsiClass) =

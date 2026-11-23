@@ -5,6 +5,8 @@ import com.intellij.advancedExpressionFolding.expression.SyntheticExpressionImpl
 import com.intellij.advancedExpressionFolding.processor.cache.CacheExt.getExpression
 import com.intellij.advancedExpressionFolding.processor.util.Helper
 import com.intellij.lang.folding.FoldingDescriptor
+import com.intellij.openapi.diagnostic.ControlFlowException
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.project.IndexNotReadyException
 import com.intellij.openapi.util.TextRange
@@ -52,7 +54,7 @@ object BuildExpressionExt {
         uniqueSet: MutableSet<Expression>,
         allDescriptors: MutableList<FoldingDescriptor>
     ) {
-        val expression = getNonSyntheticExpression(element, document)
+        val expression = expressionOrNull(element, document)
         val unique = expression != null && uniqueSet.add(expression)
         if (expression != null && unique && expression.supportsFoldRegions(document, null)) {
             val descriptors = expression.buildFoldRegions(expression.element, document, null)
@@ -66,4 +68,21 @@ object BuildExpressionExt {
             }
         }
     }
+
+    /**
+     * The element's expression, or null when building it fails: one broken element (an IDE error from a resolve, say)
+     * then costs only its own fold, and its children are still folded. Cancellation and dumb mode are rethrown.
+     */
+    private fun expressionOrNull(element: PsiElement, document: Document): Expression? =
+        try {
+            getNonSyntheticExpression(element, document)
+        } catch (e: Throwable) {
+            if (e is ControlFlowException || e is IndexNotReadyException) {
+                throw e
+            }
+            LOG.warn("Folding skipped ${element.javaClass.simpleName} at ${element.textRange}", e)
+            null
+        }
+
+    private val LOG = Logger.getInstance(BuildExpressionExt::class.java)
 }

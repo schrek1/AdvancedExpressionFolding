@@ -36,6 +36,14 @@ public class LogFoldingKeepMessageTextTestData {
         System.out.println("Shop %s saved".formatted(shopId, user));
     }
 
+    public void wrappedMessages(String shopId, Settings previous, String user, Exception exception) {
+        log.info("Shop {} kept in {}: it has no owner yet, so the"
+                + " order cannot move; owner {} was asked", shopId, previous.getMode(), user);
+        log.warn("Shop '{}' could not be closed by {}:"
+                + " it still has orders", shopId, user, exception);
+        log.info("Shop {} " + 1 + " stays", shopId);
+    }
+
     private int countOrders(String shopId, Settings settings) {
         return 0;
     }

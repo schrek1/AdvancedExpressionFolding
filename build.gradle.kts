@@ -120,6 +120,8 @@ dependencies {
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.params)
     testImplementation(libs.junit.pioneer)
+    // attached as a library in tests, so the bundled Lombok plugin generates its PSI
+    testRuntimeOnly(libs.lombok)
     testImplementation(libs.junit.vintage.engine)
     implementation(libs.kodein.di.conf)
 
@@ -132,6 +134,8 @@ dependencies {
 
         // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file for plugin from JetBrains Marketplace.
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
+        // tests fold over the PSI Lombok generates; the plugin itself does not depend on Lombok
+        testBundledPlugin("Lombook Plugin")
         testFramework(TestFrameworkType.JUnit5)
         testFramework(TestFrameworkType.Plugin.Java)
         testFramework(TestFrameworkType.Platform)

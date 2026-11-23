@@ -20,7 +20,9 @@ object MethodDefaultParameterExt : BaseExtension(){
         it.body != null
     }.groupBy {
         it.name
-    }.values.mapNotNull { methods ->
+    }.values.filter {
+        it.size > 1
+    }.mapNotNull { methods ->
         methods.groupBy {
             getParentMethod(it)
         }.filterKeys {
@@ -79,8 +81,14 @@ object MethodDefaultParameterExt : BaseExtension(){
     private fun asPsiParameter(psiExpression: PsiExpression?) =
         psiExpression.asInstance<PsiReferenceExpression>()?.resolve().asInstance<PsiParameter>()
 
+    // This pass runs for every class on the first fold pass: resolving every one-statement body there reached into
+    // jars and broke the IDE's bytecode analysis, so only a call to a same-named method is resolved.
     private fun getParentMethod(candidate: PsiMethod): PsiMethod? {
-        return getFirstMethodCallExpression(candidate)?.methodExpression?.resolve().asInstance<PsiMethod>()
+        val call = getFirstMethodCallExpression(candidate) ?: return null
+        if (call.methodExpression.referenceName != candidate.name) {
+            return null
+        }
+        return call.methodExpression.resolve().asInstance<PsiMethod>()
             ?.takeIf { parentMethod ->
                 hasSameAttributes(parentMethod, candidate)
             }

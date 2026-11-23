@@ -36,6 +36,14 @@ import org.slf4j.MarkerFactory;</fold>
         <fold text='' expand='false'>System.out.</fold>println("Shop <fold text='$shopId' expand='false'>%s</fold> saved".formatted(<fold text='' expand='false'>shopId, </fold>user));
     }</fold>
 
+    public void wrappedMessages(String shopId, Settings previous, String user, Exception exception) <fold text='{...}' expand='true'>{
+        log.info("Shop <fold text='$shopId' expand='false'>{}</fold> kept in <fold text='${previous.mode}' expand='false'>{}</fold>: it has no owner yet, so the<fold text='' expand='false'>"
+                + "</fold> order cannot move; owner <fold text='$user' expand='false'>{}</fold> was asked"<fold text='' expand='false'>, shopId, previous.<fold text='m' expand='false'>getM</fold>ode<fold text='' expand='false'>()</fold>, user</fold>);
+        log.warn("Shop '<fold text='$shopId' expand='false'>{}</fold>' could not be closed by <fold text='$user' expand='false'>{}</fold>:<fold text='' expand='false'>"
+                + "</fold> it still has orders"<fold text='' expand='false'>, shopId, user</fold>, exception);
+        log.info("Shop {} <fold text='${' expand='false'>" + </fold>1<fold text='}' expand='false'> + "</fold> stays", shopId);
+    }</fold>
+
     private int countOrders(String shopId, Settings settings)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
         </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>0<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>

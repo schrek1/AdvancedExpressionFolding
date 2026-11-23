@@ -96,6 +96,12 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     fun builderNamedArgumentsTestData() = testCase.runFoldingTest(foldingState()::builderNamedArguments)
 
     @Test
+    fun selfTypedBuilderTestData() = testCase.runFoldingTest(
+        foldingState()::toBuilderCopy,
+        foldingState()::builderNamedArguments,
+    )
+
+    @Test
     fun setterNamedArgumentsTestData() = testCase.runFoldingTest(
         foldingState()::setterNamedArguments,
         foldingState()::getSetExpressionsCollapse,

@@ -1,5 +1,6 @@
 package com.intellij.advancedExpressionFolding.folding.base.folding
 
+import com.intellij.advancedExpressionFolding.folding.util.SLF4J_STUBS
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
@@ -61,6 +62,21 @@ interface LombokFoldingTest : FoldingTestSection {
 
     @Test
     fun lombokSneakyThrowsTestData() = testCase.runFoldingTest(foldingState()::lombokSneakyThrows)
+
+    @Test
+    fun lombokGeneratedTestData() {
+        testCase.addLibraryStubs(*SLF4J_STUBS)
+        testCase.withLombokLibrary {
+            testCase.runFoldingTest(
+                foldingState()::logFolding,
+                foldingState()::logFoldingKeepMessageText,
+                foldingState()::getSetExpressionsCollapse,
+                foldingState()::toBuilderCopy,
+                foldingState()::builderNamedArguments,
+                foldingState()::mapAndEmptyCollectionLiterals,
+            )
+        }
+    }
 
     @Test
     fun lombokPatternOffTestData() {
