@@ -55,7 +55,7 @@
                                               nameKey="inlay.map.literal.pair.index.name"
                                               descriptionKey="inlay.map.literal.pair.index.description"/>
         <codeInsight.parameterNameHintsSuppressor
-                implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapLiteralParameterHintsSuppressor"/>
+                implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.CollectionLiteralParameterHintsSuppressor"/>
 
         <!-- Shows plugin options under Settings | Editor | Code Folding -->
         <editorOptionsProvider

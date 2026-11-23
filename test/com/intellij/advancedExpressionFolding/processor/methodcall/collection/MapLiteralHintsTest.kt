@@ -123,15 +123,40 @@ class MapLiteralHintsTest : BaseTest() {
     }
 
     @Test
-    fun suppressed_otherFactory_hintsStay() {
-        // GIVEN - List.of with arguments is not folded by this option
-        configure("""java.util.List<String> names = java.util.List.of("a", "b");""")
+    fun suppressed_listOfArguments_elementHintsHidden() {
+        // GIVEN - a nested List.of folded into list literals
+        configure("""java.util.List<java.util.List<String>> asks = java.util.List.of(java.util.List.of("12", "14.5"));""")
 
-        // WHEN - its e1: hint is checked
-        val listHint = isSuppressedAt("\"a\"")
+        // WHEN - the e1: hint of the outer list and the e1: / e2: hints of the inner list are checked
+        val outerHint = isSuppressedAt("java.util.List.of(\"12\"")
+        val innerHints = listOf(isSuppressedAt("\"12\""), isSuppressedAt("\"14.5\""))
+
+        // THEN - all are hidden
+        assertEquals(listOf(true, true, true), listOf(outerHint) + innerHints)
+    }
+
+    @Test
+    fun suppressed_listOfArray_hintStays() {
+        // GIVEN - List.of(array) passes the array as the varargs and stays unfolded
+        configure("""java.util.List<String> names = java.util.List.of(new String[]{"a"});""")
+
+        // WHEN - its elements: hint is checked
+        val arrayHint = isSuppressedAt("new String")
 
         // THEN - it stays
-        assertEquals(false, listHint)
+        assertEquals(false, arrayHint)
+    }
+
+    @Test
+    fun suppressed_setOf_hintsStay() {
+        // GIVEN - Set.of with arguments is not folded, `[...]` would claim a list
+        configure("""java.util.Set<String> names = java.util.Set.of("a", "b");""")
+
+        // WHEN - its e1: hint is checked
+        val setHint = isSuppressedAt("\"a\"")
+
+        // THEN - it stays
+        assertEquals(false, setHint)
     }
 
     @Test
@@ -155,6 +180,6 @@ class MapLiteralHintsTest : BaseTest() {
 
     private fun isSuppressedAt(textAtHint: String): Boolean = runReadAction {
         val offset = fixture.file.text.indexOf(textAtHint)
-        MapLiteralParameterHintsSuppressor().isSuppressedFor(fixture.file, InlayInfo("name", offset))
+        CollectionLiteralParameterHintsSuppressor().isSuppressedFor(fixture.file, InlayInfo("name", offset))
     }
 }

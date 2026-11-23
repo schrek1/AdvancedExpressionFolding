@@ -34,7 +34,12 @@ data class VirtualLine(val segments: List<Pair<String, TextAttributesKey>>)
  */
 object VirtualLines {
 
-    private class Spec(val above: VirtualLine?, val below: VirtualLine?, val lastLinePrefix: VirtualLine?)
+    private class Spec(
+        val above: VirtualLine?,
+        val below: VirtualLine?,
+        val lastLinePrefix: VirtualLine?,
+        val indentBody: Boolean,
+    )
 
     // written by the folding builder in a background read action, read on the EDT
     private val specs: MutableMap<FoldingGroup, Spec> = Collections.synchronizedMap(WeakHashMap())
@@ -45,13 +50,16 @@ object VirtualLines {
      * @param above line drawn above the line of the group's first region
      * @param below line drawn below the line of the group's last region
      * @param lastLinePrefix text drawn after the extra indent of the last line, before its code (e.g. `else -> `)
+     * @param indentBody false keeps the spanned lines where they are and draws [below] at the indentation of the
+     *   group's first line, as a closing `]` under the line that opens the list
      */
     fun group(
         name: String,
         above: VirtualLine?,
         below: VirtualLine?,
         lastLinePrefix: VirtualLine? = null,
-    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix) }
+        indentBody: Boolean = true,
+    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix, indentBody) }
 
     fun install(editor: Editor) {
         val foldingModel = editor.foldingModel as? FoldingModelEx ?: return
@@ -126,7 +134,11 @@ object VirtualLines {
                 }
                 fun column(line: Int) = codeStarts[line]?.let { editor.offsetToLogicalPosition(it).column } ?: 0
                 spec.above?.let { wanted += LineRenderer(document.getLineStartOffset(firstLine), it, true, column(firstLine)) }
-                spec.below?.let { wanted += LineRenderer(document.getLineEndOffset(lastLine), it, false, column(lastLine)) }
+                val belowColumn = column(if (spec.indentBody) lastLine else firstLine)
+                spec.below?.let { wanted += LineRenderer(document.getLineEndOffset(lastLine), it, false, belowColumn) }
+                if (!spec.indentBody) {
+                    return@forEach
+                }
                 codeStarts.forEach { (line, codeStart) ->
                     if (codeStart == null) {
                         return@forEach

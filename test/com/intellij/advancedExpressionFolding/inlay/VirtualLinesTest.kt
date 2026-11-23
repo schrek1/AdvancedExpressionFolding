@@ -109,6 +109,48 @@ class VirtualLinesTest : BaseTest() {
     }
 
     @Test
+    fun sync_multiLineListOfClosedOnLastElement_closingBracketLineUnderTheStatement() {
+        runInEdtAndWait {
+            // GIVEN - a List.of with one element per line and `);` glued to the last element
+            assignState(state::mapAndEmptyCollectionLiterals)
+            MethodCallFactory.initialize(TestDynamicDataProvider())
+            @Language("JAVA")
+            val listSource = """
+                import java.util.List;
+
+                class Shop {
+                    List<String> colors = List.of(
+                            "red",
+                            "blue");
+                }
+            """.trimIndent()
+            fixture.configureByText("Shop.java", listSource)
+            val editor = fixture.editor
+            EditorTestUtil.buildInitialFoldingsInBackground(editor)
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - `];` gets its own line under the statement, the elements keep their lines without extra indent
+            assertEquals(
+                """
+                class Shop {
+                    List<String> colors = List.of(
+                            "red",
+                            "blue");
+                [];]
+                }
+                """.trimIndent(),
+                dump(editor).lines().drop(2).joinToString("\n"),
+            )
+            val closingLine = editor.inlayModel.getBlockElementsInRange(0, listSource.length, VirtualLines.LineRenderer::class.java)
+                .single().renderer
+            val statementColumn = 4
+            assertEquals(statementColumn, closingLine.column)
+        }
+    }
+
+    @Test
     fun foldingListener_expandThenCollapse_linesFollowTheFold() {
         runInEdtAndWait {
             // GIVEN - a with fold showing its virtual lines
