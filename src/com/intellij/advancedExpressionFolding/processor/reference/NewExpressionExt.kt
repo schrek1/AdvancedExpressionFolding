@@ -22,6 +22,7 @@ import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiAnonymousClass
 import com.intellij.psi.PsiArrayInitializerExpression
+import com.intellij.psi.PsiArrayType
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiExpressionList
@@ -31,6 +32,7 @@ import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiNewExpression
+import com.intellij.psi.PsiPrimitiveType
 import com.intellij.psi.PsiReferenceExpression
 import com.intellij.psi.PsiStatement
 import java.util.ArrayList
@@ -49,8 +51,8 @@ object NewExpressionExt :
             handleConstructorArguments(element, document, erasedType, argumentList)?.let { return it }
         }
         val arrayInitializer = element.arrayInitializer
-        if (type != null && arrayInitializer != null && getExpressionsCollapse) {
-            return createArrayLiteral(element, document, arrayInitializer)
+        if (type is PsiArrayType && arrayInitializer != null && getExpressionsCollapse) {
+            return createArrayLiteral(element, document, type, arrayInitializer)
         }
         val anonymousClass = element.anonymousClass
         if (type != null && anonymousClass != null && anonymousClass.lBrace != null && anonymousClass.rBrace != null) {
@@ -86,7 +88,7 @@ object NewExpressionExt :
                 if (erasedType == "java.util.ArrayList") {
                     val methodCallExpression = MethodCallExpressionExt.getMethodCallExpression(arg, document)
                     if (methodCallExpression is ListLiteral && getExpressionsCollapse) {
-                        ListLiteral(element, element.textRange, methodCallExpression.items)
+                        ListLiteral(element, element.textRange, methodCallExpression.items, methodCallExpression.spread)
                     } else {
                         null
                     }
@@ -133,13 +135,20 @@ object NewExpressionExt :
         return constructorReferenceNotation && element.classReference?.resolve() == field.typeResolved
     }
 
+    // a nested `{...}` of a multi-dimensional array has no Kotlin form, so those stay Java
     private fun createArrayLiteral(
         element: PsiNewExpression,
         document: Document,
+        type: PsiArrayType,
         arrayInitializer: PsiArrayInitializerExpression
-    ): Expression {
+    ): Expression? {
+        val factory = when (val component = type.componentType) {
+            is PsiArrayType -> return null
+            is PsiPrimitiveType -> "${component.name}ArrayOf"
+            else -> "arrayOf"
+        }
         val items = arrayInitializer.initializers.map { BuildExpressionExt.getAnyExpression(it, document) }
-        return ArrayLiteral(element, element.textRange, items)
+        return ArrayLiteral(element, element.textRange, items, factory)
     }
 
     private fun handleAnonymousClass(

@@ -35,8 +35,8 @@ class MapLiteralPairIndexInlayProvider : InlayHintsProvider {
     }
 }
 
-/** Hides Java's `k1:` / `v1:` parameter name hints inside a folded `Map.of(...)`; the pair index replaces them. */
-class MapLiteralParameterHintsSuppressor : ParameterNameHintsSuppressor {
+/** Hides Java's parameter name hints (`k1:`, `e1:`, `elements:`) inside a folded `Map.of`, `List.of` or `Set.of`. */
+class CollectionLiteralParameterHintsSuppressor : ParameterNameHintsSuppressor {
 
     override fun isSuppressedFor(file: PsiFile, inlayInfo: InlayInfo): Boolean {
         if (!mapLiteralsOn()) return false
@@ -45,7 +45,7 @@ class MapLiteralParameterHintsSuppressor : ParameterNameHintsSuppressor {
             .takeWhile { it.textRange.startOffset == offset }
             .lastOrNull() ?: return false
         val call = (argument.parent as? PsiExpressionList)?.parent as? PsiMethodCallExpression ?: return false
-        return call.isFoldedMapOf()
+        return COLLECTION_FACTORIES.any { call.isQualifiedNonEmptyOf(it) }
     }
 }
 
@@ -54,9 +54,13 @@ private fun mapLiteralsOn(): Boolean {
     return state.globalOn && state.mapAndEmptyCollectionLiterals
 }
 
+private val COLLECTION_FACTORIES = listOf("java.util.Map", "java.util.List", "java.util.Set")
+
 // same scope as CollectionLiteralMethodCall: a qualified, non-empty Map.of
-private fun PsiMethodCallExpression.isFoldedMapOf(): Boolean =
+private fun PsiMethodCallExpression.isFoldedMapOf(): Boolean = isQualifiedNonEmptyOf("java.util.Map")
+
+private fun PsiMethodCallExpression.isQualifiedNonEmptyOf(className: String): Boolean =
     methodExpression.referenceName == "of" &&
         methodExpression.qualifierExpression != null &&
         argumentList.expressionCount > 0 &&
-        resolveMethod()?.containingClass?.qualifiedName == "java.util.Map"
+        resolveMethod()?.containingClass?.qualifiedName == className

@@ -45,6 +45,12 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
         testCase.runFoldingTest(foldingState()::mapAndEmptyCollectionLiterals)
 
     @Test
+    fun listOfLiteralTestData() = testCase.runFoldingTest(
+        foldingState()::mapAndEmptyCollectionLiterals,
+        foldingState()::getExpressionsCollapse,
+    )
+
+    @Test
     fun sliceTestData() = testCase.runFoldingTest(foldingState()::slicingExpressionsCollapse)
 
     @Test

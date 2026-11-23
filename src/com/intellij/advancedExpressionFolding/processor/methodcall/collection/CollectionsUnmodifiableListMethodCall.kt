@@ -25,7 +25,8 @@ class CollectionsUnmodifiableListMethodCall : AbstractMethodCall(), NeedsQualifi
             return ListLiteral(
                 element,
                 element.textRange,
-                argumentExpression.items
+                argumentExpression.items,
+                argumentExpression.spread
             )
         }
         return null
