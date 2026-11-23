@@ -12,7 +12,6 @@ import com.intellij.testFramework.runInEdtAndWait
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import kotlin.reflect.KMutableProperty0
 
 class VirtualLinesTest : BaseTest() {
 
@@ -204,7 +203,7 @@ class VirtualLinesTest : BaseTest() {
     fun sync_multiLineNamedArguments_closingParenthesisOnItsOwnLine() {
         runInEdtAndWait {
             // GIVEN - a builder chain and a setter run over several lines, plus a one-line builder chain
-            val editor = foldedEditor(namedArgumentsSource, state::builderNamedArguments, state::setterNamedArguments)
+            val editor = foldedEditor(namedArgumentsSource) { assignState(state::builderNamedArguments, state::setterNamedArguments) }
 
             // WHEN - the virtual lines are synced with the collapsed folds
             VirtualLines.sync(editor)
@@ -229,10 +228,57 @@ class VirtualLinesTest : BaseTest() {
     }
 
     @Test
+    fun sync_collapsedInstanceofSwitch_casesOneLevelInCommentedDefaultBodyTwo() {
+        runInEdtAndWait {
+            // GIVEN - an instanceof chain with a commented else, folded as a pattern switch
+            @Language("JAVA")
+            val chain = """
+                class Prices {
+                    double toAmount(Object value) {
+                        if (value instanceof String text) {
+                            return Double.parseDouble(text);
+                        } else if (value instanceof Integer number) {
+                            return number.doubleValue();
+                        } else {
+                            // only the types above are expected
+                            throw new IllegalArgumentException("unexpected type: " + value);
+                        }
+                    }
+                }
+            """.trimIndent()
+            val editor = foldedEditor(chain) { assignState(state::instanceofSwitch) }
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - `switch (value) {` at the if's column, each case one level in (a joined `} else if` line
+            // only once), the default's lines two levels in, and the real `}` back at the if's column
+            val space = EditorUtil.getPlainSpaceWidth(editor)
+            fun column(text: String) = editor.offsetToXY(chain.indexOf(text)).x / space
+            val switchLine = editor.inlayModel.getBlockElementsInRange(0, chain.length, VirtualLines.LineRenderer::class.java)
+                .map { it.renderer }.single()
+            assertEquals("switch (value) {" to 8, switchLine.line.text() to switchLine.column)
+            assertEquals(
+                listOf(12, 32, 12, 35, 12, 16, 16, 8),
+                listOf(
+                    column("if (value"),
+                    column("return Double"),
+                    column("} else if"),
+                    column("return number"),
+                    column("} else {"),
+                    column("// only"),
+                    column("throw"),
+                    chain.indexOf("        }\n    }").let { editor.offsetToXY(it + 8).x / space },
+                ),
+            )
+        }
+    }
+
+    @Test
     fun sync_multiLineNamedArguments_closingParenthesisInTheStatementColumn() {
         runInEdtAndWait {
             // GIVEN - a builder chain and a setter run over several lines
-            val editor = foldedEditor(namedArgumentsSource, state::builderNamedArguments, state::setterNamedArguments)
+            val editor = foldedEditor(namedArgumentsSource) { assignState(state::builderNamedArguments, state::setterNamedArguments) }
 
             // WHEN - the virtual lines are synced with the collapsed folds
             VirtualLines.sync(editor)
@@ -245,11 +291,8 @@ class VirtualLinesTest : BaseTest() {
         }
     }
 
-    private fun foldedEditor(
-        text: String = source,
-        vararg options: KMutableProperty0<Boolean> = arrayOf(state::scopeWith),
-    ): Editor {
-        assignState(*options)
+    private fun foldedEditor(text: String = source, enableFolds: () -> Unit = { assignState(state::scopeWith) }): Editor {
+        enableFolds()
         MethodCallFactory.initialize(TestDynamicDataProvider())
         fixture.configureByText("Shop.java", text)
         val editor = fixture.editor

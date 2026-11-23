@@ -37,7 +37,13 @@ object VirtualLines {
     /** Which real lines of a group get the extra indent. */
     enum class Indent { ALL_LINES, AFTER_FIRST_LINE, NONE }
 
-    private class Spec(val above: VirtualLine?, val below: VirtualLine?, val lastLinePrefix: VirtualLine?, val indent: Indent)
+    private class Spec(
+        val above: VirtualLine?,
+        val below: VirtualLine?,
+        val lastLinePrefix: VirtualLine?,
+        val trailingLines: Int,
+        val indent: Indent,
+    )
 
     // written by the folding builder in a background read action, read on the EDT
     private val specs: MutableMap<FoldingGroup, Spec> = Collections.synchronizedMap(WeakHashMap())
@@ -48,6 +54,8 @@ object VirtualLines {
      * @param above line drawn above the line of the group's first region
      * @param below line drawn below the line of the group's last region, in the column of the first line's code
      * @param lastLinePrefix text drawn after the extra indent of the last line, before its code (e.g. `else -> `)
+     * @param trailingLines lines below the line of the last region that belong to the group too (a last block's body
+     * no region touches); they get the extra indent, and the last of them counts as the group's last line
      * @param indent the lines that get the extra indent
      */
     fun group(
@@ -55,8 +63,11 @@ object VirtualLines {
         above: VirtualLine?,
         below: VirtualLine?,
         lastLinePrefix: VirtualLine? = null,
+        trailingLines: Int = 0,
         indent: Indent = Indent.ALL_LINES,
-    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix, indent) }
+    ): FoldingGroup = FoldingGroup.newGroup(name).also {
+        specs[it] = Spec(above, below, lastLinePrefix, trailingLines, indent)
+    }
 
     fun install(editor: Editor) {
         val foldingModel = editor.foldingModel as? FoldingModelEx ?: return
@@ -125,7 +136,10 @@ object VirtualLines {
             .forEach { (group, regions) ->
                 val spec = specs[group] ?: return@forEach
                 val firstLine = document.getLineNumber(regions.minOf { it.startOffset })
-                val lastLine = document.getLineNumber(regions.maxOf { it.endOffset })
+                val lastLine = minOf(
+                    document.getLineNumber(regions.maxOf { it.endOffset }) + spec.trailingLines,
+                    document.lineCount - 1,
+                )
                 val codeStarts = (firstLine..lastLine).associateWith { line ->
                     codeStart(document.getLineStartOffset(line), document.getLineEndOffset(line), chars)
                 }
