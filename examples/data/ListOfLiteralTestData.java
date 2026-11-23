@@ -36,12 +36,25 @@ public class ListOfLiteralTestData {
 
         System.out.println(checkout("best", "sold out"));
 
-        // not folded: a set is not a list, and an array passed as the varargs
         Set<String> ids = Set.of("a", "b");
         System.out.println(ids);
         String[] names = {"x", "y"};
         List<String> fromArray = List.of(names);
         System.out.println(fromArray);
+        Set<String> idsFromArray = Set.of(names);
+        System.out.println(idsFromArray);
+        List<String> copy = new ArrayList<>(List.of(names));
+        System.out.println(copy);
+        System.out.println(List.of(new String[]{"p", "q"}));
+
+        System.out.println(Arrays.toString(new String[]{"x", "y"}));
+        System.out.println(Arrays.toString(new int[]{1, 2}));
+        System.out.println(Arrays.toString(new String[]{}));
+        System.out.println(Arrays.deepToString(new int[][]{{1}, {2}}));
+    }
+
+    static String[] codes() {
+        return new String[]{"red", "blue"};
     }
 
     static PriceBook priceBook(String bestAsk) {

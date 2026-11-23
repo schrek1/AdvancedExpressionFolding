@@ -13,13 +13,16 @@ import com.intellij.psi.PsiElement
 /**
  * A list factory call shown as `[a, b]`. When the elements start on the line after the call, each keeps its own line
  * and `]` gets a line of its own: the real `)` when it already stands alone, otherwise a virtual line under the line
- * that opens the list.
+ * that opens the list. A [spread] array reads `[*array]`.
  */
 class ListLiteral(
     element: PsiElement,
     textRange: TextRange,
-    val items: List<Expression>
+    val items: List<Expression>,
+    val spread: Boolean = false,
 ) : Expression(element, textRange) {
+
+    private val openText = if (spread) "[*" else "["
 
     override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean = true
 
@@ -36,7 +39,7 @@ class ListLiteral(
         val descriptors = if (document.getLineNumber(textRange.startOffset) == document.getLineNumber(first.startOffset)) {
             val group = newGroup()
             listOfNotNull(
-                FoldingDescriptor(element.node, TextRange(textRange.startOffset, first.startOffset), group, "["),
+                FoldingDescriptor(element.node, TextRange(textRange.startOffset, first.startOffset), group, openText),
                 closing(last.endOffset, group),
             )
         } else {
@@ -57,7 +60,7 @@ class ListLiteral(
         val text = document.charsSequence
         val openParen = (textRange.startOffset until first.startOffset).last { text[it] == '(' }
         fun open(group: FoldingGroup) =
-            FoldingDescriptor(element.node, TextRange(textRange.startOffset, openParen + 1), group, "[")
+            FoldingDescriptor(element.node, TextRange(textRange.startOffset, openParen + 1), group, openText)
 
         val closeParen = textRange.endOffset - 1
         if (document.getLineNumber(closeParen) != document.getLineNumber(last.endOffset)) {

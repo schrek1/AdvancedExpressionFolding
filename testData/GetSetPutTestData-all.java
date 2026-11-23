@@ -33,7 +33,7 @@ public class GetSetPutTestData {
             }</fold></fold><fold text='' expand='false'>
         </fold><fold text=']' expand='false'>}</fold></fold><fold text='' expand='false'>)</fold>;
         <fold text='' expand='false'>System.out.</fold>println(copyOfSet);
-        <fold text='val' expand='false'>String[]</fold> strings = <fold text='[' expand='false'>new String[] {</fold>"one", "two"<fold text=']' expand='false'>}</fold>;
+        <fold text='val' expand='false'>String[]</fold> strings = <fold text='arrayOf(' expand='false'>new String[] {</fold>"one", "two"<fold text=')' expand='false'>}</fold>;
         <fold text='' expand='false'>System.out.</fold>println(Arrays.toString(strings));
         <fold text='' expand='false'>System.out.</fold>println(System<fold text='[' expand='false'>.getProperty(</fold>"user.dir"<fold text=']' expand='false'>)</fold>);
         <fold text='' expand='false'>System.out.</fold>println(System.getProperty("user.dir", "c:/windows"));

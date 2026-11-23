@@ -7,10 +7,12 @@ import com.intellij.openapi.editor.FoldingGroup
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 
+/** `new String[]{a, b}` shown as Kotlin's `arrayOf(a, b)`; [factory] is `arrayOf`, `intArrayOf`, ... */
 class ArrayLiteral(
     element: PsiElement,
     textRange: TextRange,
-    val items: List<Expression>
+    val items: List<Expression>,
+    private val factory: String,
 ) : Expression(element, textRange) {
 
     override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean {
@@ -27,20 +29,20 @@ class ArrayLiteral(
     ): Array<FoldingDescriptor> {
         val group = FoldingGroup.newGroup(ArrayLiteral::class.java.name)
         if (items.isEmpty()) {
-            return arrayOf(FoldingDescriptor(element.node, textRange, group, "[]"))
+            return arrayOf(FoldingDescriptor(element.node, textRange, group, "$factory()"))
         }
         val descriptors = mutableListOf<FoldingDescriptor>()
         descriptors += FoldingDescriptor(
             element.node,
             TextRange.create(textRange.startOffset, items.first().textRange.startOffset),
             group,
-            "["
+            "$factory("
         )
         descriptors += FoldingDescriptor(
             element.node,
             TextRange.create(items.last().textRange.endOffset, textRange.endOffset),
             group,
-            "]"
+            ")"
         )
         for (item in items) {
             if (item.supportsFoldRegions(document, this)) {

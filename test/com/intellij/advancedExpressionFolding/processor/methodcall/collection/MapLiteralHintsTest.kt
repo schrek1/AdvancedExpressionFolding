@@ -136,27 +136,39 @@ class MapLiteralHintsTest : BaseTest() {
     }
 
     @Test
-    fun suppressed_listOfArray_hintStays() {
-        // GIVEN - List.of(array) passes the array as the varargs and stays unfolded
+    fun suppressed_listOfArray_elementsHintHidden() {
+        // GIVEN - List.of(array) spreads the array, folded as [*array]
         configure("""java.util.List<String> names = java.util.List.of(new String[]{"a"});""")
 
         // WHEN - its elements: hint is checked
         val arrayHint = isSuppressedAt("new String")
 
-        // THEN - it stays
-        assertEquals(false, arrayHint)
+        // THEN - it is hidden
+        assertEquals(true, arrayHint)
     }
 
     @Test
-    fun suppressed_setOf_hintsStay() {
-        // GIVEN - Set.of with arguments is not folded, `[...]` would claim a list
+    fun suppressed_setOf_elementHintsHidden() {
+        // GIVEN - Set.of folded as setOf(...)
         configure("""java.util.Set<String> names = java.util.Set.of("a", "b");""")
 
         // WHEN - its e1: hint is checked
         val setHint = isSuppressedAt("\"a\"")
 
+        // THEN - it is hidden
+        assertEquals(true, setHint)
+    }
+
+    @Test
+    fun suppressed_otherCall_hintsStay() {
+        // GIVEN - a call that is not a collection factory
+        configure("""String joined = String.join(",", "a", "b");""")
+
+        // WHEN - its delimiter: hint is checked
+        val joinHint = isSuppressedAt("\",\"")
+
         // THEN - it stays
-        assertEquals(false, setHint)
+        assertEquals(false, joinHint)
     }
 
     @Test

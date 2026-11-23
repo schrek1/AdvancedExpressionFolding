@@ -36,12 +36,25 @@ public class ListOfLiteralTestData {
 
         System.out.println(checkout("best", "sold out"));
 
-        // not folded: a set is not a list, and an array passed as the varargs
-        Set<String> ids = Set.of("a", "b");
+        Set<String> ids = <fold text='setOf' expand='false'>Set.of</fold>("a", "b");
         System.out.println(ids);
         String[] names = {"x", "y"};
-        List<String> fromArray = List.of(names);
+        List<String> fromArray = <fold text='[*' expand='false'>List.of(</fold>names<fold text=']' expand='false'>)</fold>;
         System.out.println(fromArray);
+        Set<String> idsFromArray = <fold text='setOf(*' expand='false'>Set.of(</fold>names);
+        System.out.println(idsFromArray);
+        List<String> copy = <fold text='[*' expand='false'>new ArrayList<>(List.of(</fold>names<fold text=']' expand='false'>))</fold>;
+        System.out.println(copy);
+        System.out.println(<fold text='[*' expand='false'>List.of(</fold><fold text='arrayOf(' expand='false'>new String[]{</fold>"p", "q"<fold text=')' expand='false'>}</fold><fold text=']' expand='false'>)</fold>);
+
+        System.out.println(Arrays.toString(<fold text='arrayOf(' expand='false'>new String[]{</fold>"x", "y"<fold text=')' expand='false'>}</fold>));
+        System.out.println(Arrays.toString(<fold text='intArrayOf(' expand='false'>new int[]{</fold>1, 2<fold text=')' expand='false'>}</fold>));
+        System.out.println(Arrays.toString(<fold text='arrayOf()' expand='false'>new String[]{}</fold>));
+        System.out.println(Arrays.deepToString(new int[][]{{1}, {2}}));
+    }</fold>
+
+    static String[] codes()<fold text=' { ' expand='false'> {
+        </fold>return <fold text='arrayOf(' expand='false'>new String[]{</fold>"red", "blue"<fold text=')' expand='false'>}</fold>;<fold text=' }' expand='false'>
     }</fold>
 
     static PriceBook priceBook(String bestAsk) <fold text='{...}' expand='true'>{

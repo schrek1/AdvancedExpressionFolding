@@ -45,10 +45,10 @@
         <!-- Submits plugin errors to JetBrains Marketplace for diagnostics -->
         <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
 
-        <!-- mapAndEmptyCollectionLiterals: pair index 1#, 2# in a folded Map.of instead of Java's k1: / v1: hints -->
+        <!-- mapAndEmptyCollectionLiterals: optional pair index 1#, 2# in a folded Map.of; off by default, the map reads [k: v] -->
         <codeInsight.declarativeInlayProvider language="JAVA"
                                               implementationClass="com.intellij.advancedExpressionFolding.processor.methodcall.collection.MapLiteralPairIndexInlayProvider"
-                                              isEnabledByDefault="true"
+                                              isEnabledByDefault="false"
                                               group="OTHER_GROUP"
                                               providerId="advancedExpressionFolding.mapLiteralPairIndex"
                                               bundle="Bundle"
