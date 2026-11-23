@@ -16,6 +16,7 @@ interface IExpressionCollapseState {
     var toBuilderCopy: Boolean
     var builderNamedArguments: Boolean
     var getOrDefaultElvis: Boolean
+    var requireNonNullElseElvis: Boolean
     var mapAndEmptyCollectionLiterals: Boolean
     var setterNamedArguments: Boolean
 }
@@ -36,6 +37,7 @@ data class ExpressionCollapseState(
     override var toBuilderCopy: Boolean = true,
     override var builderNamedArguments: Boolean = true,
     override var getOrDefaultElvis: Boolean = true,
+    override var requireNonNullElseElvis: Boolean = true,
     override var mapAndEmptyCollectionLiterals: Boolean = true,
     override var setterNamedArguments: Boolean = true,
 ) : IExpressionCollapseState

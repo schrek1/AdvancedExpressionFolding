@@ -20,7 +20,7 @@ public class FieldShiftFields {
         this.userIdentifier = <fold text='<<' expand='false'>userIdentifier</fold>;
         this.child = <fold text='<<' expand='false'>child</fold>;
         this.userIdentifier = child.<fold text='<<' expand='true'>userIdentifier</fold>;
-        this.userIdentifier = child.<fold text='<<' expand='false'>getUserIdentifier()</fold>;
+        this.userIdentifier = child.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>serIdentifier<fold text='' expand='false'>()</fold></fold>;
     }</fold>
 
     public static FieldShiftFields mapPojoChain(FieldShiftFields source) <fold text='{...}' expand='true'>{
@@ -28,7 +28,7 @@ public class FieldShiftFields {
         result.username = source.child.<fold text='<<' expand='true'>username</fold>;
         result.userIdentifier = source.child.child.child.<fold text='<<' expand='true'>userIdentifier</fold>;
         result.active = source.child.<fold text='<<' expand='true'>active</fold>;
-        result.list = List.copyOf(source.<fold text='<<' expand='true'>list</fold>);
+        result.list = List.copyOf(source.list);
         return result;
     }</fold>
 
@@ -63,7 +63,7 @@ public class FieldShiftFields {
         var2.active = source.<fold text='<<' expand='true'>active</fold>;
         FieldShiftFields result = new FieldShiftFields();
         result.username = record.userIdentifier;
-        result.username = changer(record.<fold text='<<' expand='true'>username</fold>);
+        result.username = changer(record.username);
         result.username = source.<fold text='<<' expand='true'>username</fold>;
         result.username = var1.child.<fold text='<<' expand='true'>username</fold>;
         result.username = source.username + "1";
@@ -88,28 +88,28 @@ public class FieldShiftFields {
         FieldShiftFields var1 = getters;
         var1.username = record.<fold text='<<' expand='false'>username()</fold>;
         FieldShiftFields var2 = var1;
-        var2.active = source.<fold text='<<' expand='false'>isActive()</fold>;
+        var2.active = source.<fold text='<<' expand='false'><fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>;
         FieldShiftFields result = new FieldShiftFields();
         result.username = record.userIdentifier;
-        result.username = changer(record.<fold text='<<' expand='false'>username()</fold>);
-        result.username = source.<fold text='<<' expand='false'>getUsername()</fold>;
-        result.username = var1.<fold text='child' expand='false'>getChild()</fold>.<fold text='<<' expand='false'>getUsername()</fold>;
-        result.username = source.<fold text='username' expand='false'>getUsername()</fold> + "1";
-        result.username = source.<fold text='username' expand='false'>getUsername()</fold> + source.<fold text='userIdentifier' expand='false'>getUserIdentifier()</fold>;
-        result.active = source.<fold text='<<' expand='false'>isActive()</fold>;
-        result.userIdentifier = source.<fold text='<<' expand='false'>getUserIdentifier()</fold>;
+        result.username = changer(record.<fold text='username' expand='false'>username()</fold>);
+        result.username = source.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold></fold>;
+        result.username = var1.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold></fold>;
+        result.username = source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold> + "1";
+        result.username = source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold> + source.<fold text='u' expand='false'>getU</fold>serIdentifier<fold text='' expand='false'>()</fold>;
+        result.active = source.<fold text='<<' expand='false'><fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>;
+        result.userIdentifier = source.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>serIdentifier<fold text='' expand='false'>()</fold></fold>;
         FieldShiftFields setters2 = new FieldShiftFields();
-        setters2.child = var1.<fold text='<<' expand='false'>getChild()</fold>;
-        var1.userIdentifier = (source.<fold text='username' expand='false'>getUsername()</fold>);
-        var1.username = source.<fold text='<<' expand='false'>getUsername()</fold>;
-        setters2.<fold text='child' expand='false'>getChild()</fold>;
-        setters2.active = getters.<fold text='<<' expand='false'>isActive()</fold>;
-        setters2.username = getters.<fold text='<<' expand='false'>getUsername()</fold>;
+        setters2.child = var1.<fold text='<<' expand='false'><fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold></fold>;
+        var1.userIdentifier = (source.<fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold>);
+        var1.username = source.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold></fold>;
+        setters2.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>;
+        setters2.active = getters.<fold text='<<' expand='false'><fold text='a' expand='false'>isA</fold>ctive<fold text='' expand='false'>()</fold></fold>;
+        setters2.username = getters.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold></fold>;
         setters2.userIdentifier = record.<fold text='<<' expand='false'>userIdentifier()</fold>;
-        result.child = setters2.<fold text='<<' expand='false'>getChild()</fold>;
+        result.child = setters2.<fold text='<<' expand='false'><fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold></fold>;
         FieldShiftFields childBuilder2 = new FieldShiftFields();
-        childBuilder2.username = source.<fold text='<<' expand='false'>getUsername()</fold>;
-        result.child = childBuilder2.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold>.<fold text='child' expand='false'>getChild()</fold>.<fold text='<<' expand='false'>getChild()</fold>;
+        childBuilder2.username = source.<fold text='<<' expand='false'><fold text='u' expand='false'>getU</fold>sername<fold text='' expand='false'>()</fold></fold>;
+        result.child = childBuilder2.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold>.<fold text='<<' expand='false'><fold text='c' expand='false'>getC</fold>hild<fold text='' expand='false'>()</fold></fold>;
         return result;
     }</fold>
 

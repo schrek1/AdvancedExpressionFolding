@@ -40,7 +40,7 @@ public class SingletonObjectTestData {
 
         static LazyCatalog getInstance() <fold text='{...}' expand='true'>{
             if <fold text='' expand='false'>(</fold>instance == null<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-                instance = new LazyCatalog();
+                instance = <fold text='' expand='false'>new </fold>LazyCatalog();
             }</fold>
             return instance;
         }</fold>

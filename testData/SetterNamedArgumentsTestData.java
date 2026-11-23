@@ -12,13 +12,13 @@ public class SetterNamedArgumentsTestData {
         bob.setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Bob");
 
         <fold text='val' expand='false'>var</fold> copy = <fold text='' expand='false'>new </fold>Person<fold text='(' expand='false'>();</fold>
-        <fold text='n' expand='false'>copy.setN</fold>ame<fold text=' = ' expand='false'>(</fold>source.<fold text='name' expand='false'>getName()</fold><fold text=',' expand='false'>);</fold>
-        <fold text='a' expand='false'>copy.setA</fold>ge<fold text=' = ' expand='false'>(</fold>source.<fold text='age' expand='false'>getAge()</fold> + 1);
+        <fold text='n' expand='false'>copy.setN</fold>ame<fold text=' = ' expand='false'>(</fold>source.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold><fold text=',' expand='false'>);</fold>
+        <fold text='a' expand='false'>copy.setA</fold>ge<fold text=' = ' expand='false'>(</fold>source.<fold text='a' expand='false'>getA</fold>ge<fold text='' expand='false'>()</fold> + 1);
         System.out.println(copy);
 
         <fold text='val' expand='false'>var</fold> partial = <fold text='' expand='false'>new </fold>Person<fold text='(n' expand='false'>();
         partial.setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Carol");
-        partial.<fold text='a' expand='false'>setA</fold>ge<fold text=' = ' expand='false'>(</fold>partial.<fold text='age' expand='false'>getAge()</fold> + 1<fold text='' expand='false'>)</fold>;
+        partial.<fold text='a' expand='false'>setA</fold>ge<fold text=' = ' expand='false'>(</fold>partial.<fold text='a' expand='false'>getA</fold>ge<fold text='' expand='false'>()</fold> + 1<fold text='' expand='false'>)</fold>;
 
         <fold text='val' expand='false'>var</fold> renamed = <fold text='' expand='false'>new </fold>Person<fold text='(n' expand='false'>();
         renamed.setN</fold>ame<fold text=' = ' expand='false'>(</fold>"Heidi");

@@ -1,16 +1,21 @@
 package com.intellij.advancedExpressionFolding.processor.token
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.expression.semantic.kotlin.KotlinIsOperator
 import com.intellij.advancedExpressionFolding.processor.expr
 import com.intellij.advancedExpressionFolding.processor.takeIfTrue
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IEmojiVisibilityState
+import com.intellij.advancedExpressionFolding.settings.state.IKotlinLanguageState
 import com.intellij.psi.JavaTokenType.*
 import com.intellij.psi.PsiJavaToken
 
-object PsiJavaTokenExt : IEmojiVisibilityState by State()() {
+object PsiJavaTokenExt : IEmojiVisibilityState by State()(), IKotlinLanguageState by State()() {
 
     fun createExpression(element: PsiJavaToken): Expression? {
+        if (kotlinIsOperator && element.tokenType == INSTANCEOF_KEYWORD) {
+            KotlinIsOperator.create(element)?.let { return it }
+        }
         emojify.takeIfTrue() ?: return null
 
         val emoji = when (element.tokenType) {

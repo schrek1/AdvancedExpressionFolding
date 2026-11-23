@@ -5,6 +5,7 @@ import com.intellij.advancedExpressionFolding.inlay.VirtualLine
 import com.intellij.advancedExpressionFolding.inlay.VirtualLines
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
+import com.intellij.openapi.editor.FoldingGroup
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 
@@ -16,8 +17,8 @@ class ScopeFunctionExpression(
     element: PsiElement,
     textRange: TextRange,
     private val folds: List<Pair<TextRange, String>>,
-    private val above: VirtualLine,
-    private val below: VirtualLine,
+    private val above: VirtualLine? = null,
+    private val below: VirtualLine? = null,
 ) : Expression(element, textRange) {
 
     override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean = true
@@ -30,7 +31,9 @@ class ScopeFunctionExpression(
         document: Document,
         parent: Expression?
     ): Array<FoldingDescriptor> {
-        val group = VirtualLines.group(ScopeFunctionExpression::class.java.name, above, below)
+        val name = ScopeFunctionExpression::class.java.name
+        // a VirtualLines group also indents its lines, so a block without virtual lines (`let`) stays a plain group
+        val group = if (above == null && below == null) FoldingGroup.newGroup(name) else VirtualLines.group(name, above, below)
         return folds.map { (range, text) -> FoldingDescriptor(element.node, range, group, text) }.toTypedArray()
     }
 }

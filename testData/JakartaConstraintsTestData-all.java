@@ -43,7 +43,7 @@ public class JakartaConstraintsTestData {
     }</fold>
 
     public void notFoldedOtherException(String sku)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='check(!' expand='false'>if (</fold>sku.<fold text='blank' expand='false'>isBlank()</fold>)<fold text=' { ' expand='false'> throw new IllegalStateException(</fold>"sku"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='check(!' expand='false'>if (</fold>sku.<fold text='b' expand='false'>isB</fold>lank<fold text='' expand='false'>()</fold>)<fold text=' { ' expand='false'> throw new IllegalStateException(</fold>"sku"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     public void notFoldedDecimalBound(double weight)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
@@ -51,7 +51,7 @@ public class JakartaConstraintsTestData {
     </fold>}</fold>
 
     public void notFoldedOptional(Optional<String> note) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='require(!' expand='false'>if (</fold>note.<fold text='empty' expand='false'>isEmpty()</fold>)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"note"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'>
+        </fold><fold text='require(!' expand='false'>if (</fold>note.<fold text='e' expand='false'>isE</fold>mpty<fold text='' expand='false'>()</fold>)<fold text=' { ' expand='false'> throw new IllegalArgumentException(</fold>"note"<fold text=' }' expand='false'>);</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     public void notFoldedConstantBound(List<String> items) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
@@ -74,10 +74,10 @@ public class JakartaConstraintsTestData {
     public void notFoldedBranches(int quantity) <fold text='{...}' expand='true'>{
         if <fold text='' expand='false'>(</fold>quantity < 1<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println("too few");
-            throw new IllegalArgumentException("quantity");
+            throw <fold text='' expand='false'>new </fold>IllegalArgumentException("quantity");
         }</fold>
         if <fold text='' expand='false'>(</fold>quantity > 99<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
-            throw new IllegalArgumentException("quantity");
+            throw <fold text='' expand='false'>new </fold>IllegalArgumentException("quantity");
         }</fold> else <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(quantity);
         }</fold>

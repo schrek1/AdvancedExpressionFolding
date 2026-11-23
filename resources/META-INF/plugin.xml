@@ -38,6 +38,9 @@
         <!-- Hides parameter name hints inside a folded `map[key] ?: default` -->
         <codeInsight.parameterNameHintsSuppressor
                 implementation="com.intellij.advancedExpressionFolding.processor.methodcall.collection.GetOrDefaultHintsSuppressor"/>
+        <!-- Hides parameter name hints inside a folded `value ?: fallback` -->
+        <codeInsight.parameterNameHintsSuppressor
+                implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.RequireNonNullElseHintsSuppressor"/>
 
         <!-- Submits plugin errors to JetBrains Marketplace for diagnostics -->
         <errorHandler implementation="com.intellij.diagnostic.JetBrainsMarketplaceErrorReportSubmitter"/>
@@ -186,6 +189,7 @@
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.EqualsMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.PrintlnMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.RequireNonNullMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.RequireNonNullElseMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.SubstringOrSubListMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.StringJoinMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.basic.ToStringMethodCall"/>
@@ -223,6 +227,7 @@
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.optional.OptionalOfNullableMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.optional.OptionalOrElseMethodCall"/>
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.optional.OptionalStreamMethodCall"/>
+        <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.optional.OptionalOrElseThrowMethodCall"/>
 
         <!-- Stream Method Calls -->
         <methodCallFolding implementation="com.intellij.advancedExpressionFolding.processor.methodcall.stream.StreamCollectMethodCall"/>

@@ -67,15 +67,21 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
     }
 
     /**
-     * Where the hidden `set` part of a setter name ends and what replaces it, so the rest of the name stays real
-     * text: `setCustomer` hides `setC` behind `c`, `setURL` hides only `set`.
+     * Where the hidden accessor prefix of a method name ends and what replaces it, so the rest of the name stays real
+     * text: `setCustomer` hides `setC` behind `c`, `setURL` hides only `set`; the same for `get` and `is`.
      */
-    fun propertyNameFold(setterName: String, propertyName: String, nameRange: TextRange): Pair<Int, String> {
-        val afterSet = setterName.removePrefix("set")
+    fun propertyNameFold(
+        methodName: String,
+        propertyName: String,
+        nameRange: TextRange,
+        prefix: String = "set"
+    ): Pair<Int, String> {
+        val afterPrefix = methodName.removePrefix(prefix)
         return when {
-            afterSet.isEmpty() || afterSet == setterName -> nameRange.endOffset to propertyName
-            propertyName == afterSet -> nameRange.startOffset + 3 to ""
-            propertyName.drop(1) == afterSet.drop(1) -> nameRange.startOffset + 4 to propertyName.take(1)
+            afterPrefix.isEmpty() || afterPrefix == methodName -> nameRange.endOffset to propertyName
+            propertyName == afterPrefix -> nameRange.startOffset + prefix.length to ""
+            propertyName.drop(1) == afterPrefix.drop(1) ->
+                nameRange.startOffset + prefix.length + 1 to propertyName.take(1)
             else -> nameRange.endOffset to propertyName
         }
     }
@@ -111,6 +117,16 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
         val declaration = variable.parent as? PsiDeclarationStatement ?: return false
         return declaration.newObjectVariable() == variable &&
             setterRun(declaration, variable, document).contains(call)
+    }
+
+    /** Whether `creation` opens a setter run, whose fold already hides its `new`. */
+    fun opensSetterRun(creation: PsiNewExpression, document: Document): Boolean {
+        if (!setterNamedArguments) {
+            return false
+        }
+        val variable = creation.parent as? PsiLocalVariable ?: return false
+        val declaration = variable.parent as? PsiDeclarationStatement ?: return false
+        return declaration.newObjectVariable() == variable && setterRun(declaration, variable, document).isNotEmpty()
     }
 
     private fun setterRun(

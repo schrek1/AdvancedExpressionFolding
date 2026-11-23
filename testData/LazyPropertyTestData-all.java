@@ -20,7 +20,7 @@ public class LazyPropertyTestData {
 
     public List<String> getCategories() </fold><fold text='{...}' expand='true'>{<fold text=' ' expand='false'>
         if (null == this.categories)
-            this.categories = </fold>new ArrayList<>(List.of("books", "games"))<fold text=' ' expand='false'>;
+            this.categories = </fold><fold text='' expand='false'>new </fold>ArrayList<>(List.of("books", "games"))<fold text=' ' expand='false'>;
         return this.categories;
     </fold>}</fold>
 
@@ -106,7 +106,7 @@ public class LazyPropertyTestData {
     }</fold>
 
     private Properties loadConfig()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new Properties()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Properties()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 
     private String buildReport()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>

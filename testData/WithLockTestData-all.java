@@ -7,9 +7,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;</fold>
 
 @SuppressWarnings("ALL")
 public class WithLockTestData {
-    private final Lock lock = new ReentrantLock();
-    private final Lock otherLock = new ReentrantLock();
-    private final ReadWriteLock stockLock = new ReentrantReadWriteLock();
+    private final Lock lock = <fold text='' expand='false'>new </fold>ReentrantLock();
+    private final Lock otherLock = <fold text='' expand='false'>new </fold>ReentrantLock();
+    private final ReadWriteLock stockLock = <fold text='' expand='false'>new </fold>ReentrantReadWriteLock();
     private int balance;
 
     public void deposit(int amount) <fold text='{...}' expand='true'>{
@@ -109,6 +109,6 @@ public class WithLockTestData {
     }</fold>
 
     private Lock newLock()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>new ReentrantLock()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>ReentrantLock()<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
     </fold>}</fold>
 }
