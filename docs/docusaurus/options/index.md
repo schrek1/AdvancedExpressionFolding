@@ -165,6 +165,12 @@ Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeLetTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeLetTestData-folded.java)
 
+## scopeWith
+### Calls on the same receiver as with
+Shows three or more consecutive calls on the same variable, `order.validate(); order.reserveStock(); order.notifyCustomer("Thanks");`, as a `with(order) {` block: `with(order) {` and `}` get lines of their own (virtual lines shown while the fold is collapsed), the receivers and semicolons disappear and the calls are indented one level.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeWithTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeWithTestData-folded.java)
+
 ## assertsCollapse
 ### Asserts
 Simplifies assert statements.

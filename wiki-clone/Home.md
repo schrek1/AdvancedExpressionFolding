@@ -162,6 +162,12 @@ Shows `if (email != null) { contact.setEmail(email); }` as `email?.let { contact
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeLetTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeLetTestData-folded.java)
 
+## scopeWith
+### Calls on the same receiver as with
+Shows three or more consecutive calls on the same variable, `order.validate(); order.reserveStock(); order.notifyCustomer("Thanks");`, as a `with(order) {` block: `with(order) {` and `}` get lines of their own (virtual lines shown while the fold is collapsed), the receivers and semicolons disappear and the calls are indented one level.
+- [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ScopeWithTestData.java)
+- [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ScopeWithTestData-folded.java)
+
 ## kotlinPreconditions
 ### Preconditions as Kotlin require, check, requireNotNull and error
 Shows argument and state checks the way Kotlin writes them: an `if` whose whole body throws `IllegalArgumentException` becomes `require(...)`, one that throws `IllegalStateException` becomes `check(...)`, any other `throw new IllegalStateException(message)` becomes `error(message)`, and `Objects.requireNonNull(x)` becomes `x!!` (with a message: `requireNotNull(x) { message }`). Takes precedence over the Asserts folding for these two exceptions.

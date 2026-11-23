@@ -1,5 +1,6 @@
 package com.intellij.advancedExpressionFolding
 
+import com.intellij.advancedExpressionFolding.inlay.VirtualLines
 import com.intellij.openapi.application.EDT
 import com.intellij.openapi.application.runWriteAction
 import com.intellij.openapi.editor.event.EditorFactoryEvent
@@ -14,6 +15,7 @@ import kotlin.time.Duration.Companion.seconds
 class FoldingEditorCreatedListener : EditorFactoryListener {
 
     override fun editorCreated(event: EditorFactoryEvent) {
+        VirtualLines.install(event.editor)
         CoroutineScope(Dispatchers.EDT).launch {
             delay(1.seconds)
             runWriteAction {
