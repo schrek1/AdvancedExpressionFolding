@@ -18,10 +18,13 @@ import com.intellij.openapi.editor.FoldingGroup
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.DumbService
 import com.intellij.openapi.project.IndexNotReadyException
-import com.intellij.openapi.util.Key
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
+import com.intellij.util.containers.CollectionFactory
+import java.util.concurrent.ConcurrentHashMap
 
 class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(), DumbAware {
     override fun buildFoldRegions(element: PsiElement, document: Document, quick: Boolean): Array<FoldingDescriptor> {
@@ -31,9 +34,9 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
         // folding needs indexes; returning nothing here would make the platform drop and later re-add every plugin
         // fold expanded, so while the text is unchanged the editor keeps the last folds through indexing
         if (DumbService.isDumb(element.project)) {
-            return element.getUserData(LAST_FOLDS)
-                ?.takeIf { (stamp, _) -> stamp == document.modificationStamp }
-                ?.second
+            return lastFoldsByFile[element.containingFile]
+                ?.takeIf { lastFolds -> lastFolds.stamp == document.modificationStamp }
+                ?.descriptors
                 ?: Expression.EMPTY_ARRAY
         }
         if (debugFolding) {
@@ -48,7 +51,12 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
         if (memoryImprovement && !quick && cachedDescriptors !== foldingDescriptors) {
             writeCache(element, foldingDescriptors)
         }
-        element.putUserData(LAST_FOLDS, document.modificationStamp to foldingDescriptors)
+        // the IDE also builds folds outside a fold pass, where nobody asks for defaults; the text is the same, so are they
+        val defaultsOfSameText = lastFoldsByFile[element.containingFile]
+            ?.takeIf { lastFolds -> lastFolds.stamp == document.modificationStamp }
+            ?.collapsedByDefault
+        lastFoldsByFile[element.containingFile] =
+            LastFolds(document.modificationStamp, foldingDescriptors, defaultsOfSameText ?: ConcurrentHashMap())
         return store.store(foldingDescriptors, document)
     }
 
@@ -131,11 +139,28 @@ class AdvancedExpressionFoldingBuilder : FoldingBuilderEx(), IConfig by State()(
         return false
     }
 
+    // the platform rebuilds a fold expanded when its default differs from the previous pass, and without indexes the
+    // default can't be computed, so a fold kept through indexing must report the default it got before
+    override fun isCollapsedByDefault(foldingDescriptor: FoldingDescriptor): Boolean {
+        val file = foldingDescriptor.element.psi?.containingFile
+        val lastFolds = file?.let(lastFoldsByFile::get)
+            ?.takeIf { lastFolds -> lastFolds.stamp == file.viewProvider.document?.modificationStamp }
+            ?: return super.isCollapsedByDefault(foldingDescriptor)
+        return lastFolds.collapsedByDefault.getOrPut(foldingDescriptor.range) {
+            super.isCollapsedByDefault(foldingDescriptor)
+        }
+    }
+
     private val debugFolding = false
 
-    private companion object {
-        val LAST_FOLDS = Key.create<Pair<Long, Array<FoldingDescriptor>>>("advancedExpressionFolding.lastFolds")
-    }
+    // held by the builder, not on the PSI, so a plugin unload doesn't leave plugin objects on PSI that outlives it
+    private val lastFoldsByFile = CollectionFactory.createConcurrentWeakMap<PsiFile, LastFolds>()
+
+    private class LastFolds(
+        val stamp: Long,
+        val descriptors: Array<FoldingDescriptor>,
+        val collapsedByDefault: ConcurrentHashMap<TextRange, Boolean>
+    )
 }
 
 var store: Storage = EmptyStorage
