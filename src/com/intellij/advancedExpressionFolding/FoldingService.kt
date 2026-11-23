@@ -41,9 +41,12 @@ class FoldingService {
      */
     fun refoldOpenEditors() {
         ProjectManager.getInstance().openProjects.forEach { project ->
+            val foldingManager = CodeFoldingManager.getInstance(project)
             project.openTextEditors.forEach { editor ->
                 runReadAction { clearAllKeys(editor) }
-                CodeFoldingManager.getInstance(project).updateFoldRegions(editor)
+                // drops the platform's per-editor fold cache, which otherwise survives until the text changes
+                foldingManager.scheduleAsyncFoldingUpdate(editor)
+                foldingManager.updateFoldRegions(editor)
             }
         }
     }

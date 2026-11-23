@@ -3,6 +3,7 @@ package com.intellij.advancedExpressionFolding.settings
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Storage
+import com.intellij.util.xmlb.XmlSerializerUtil
 import org.jetbrains.annotations.NotNull
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty
@@ -12,11 +13,12 @@ import kotlin.reflect.jvm.javaType
 
 @com.intellij.openapi.components.State(name = "AdvancedExpressionFoldingSettings", storages = [Storage("editor.codeinsight.xml")])
 class AdvancedExpressionFoldingSettings : PersistentStateComponent<State> {
-    private var myState = State()
+    // never replaced: actions, the folding builder and processors hold this instance from `State()()`
+    private val myState = State()
     override fun getState(): State = myState
 
     override fun loadState(state: State) {
-        myState = state.copy()
+        XmlSerializerUtil.copyBean(state, myState)
     }
 
     private fun updateAllState(value: Boolean, vararg excludeProperties: KMutableProperty<Boolean>) {
@@ -36,7 +38,7 @@ class AdvancedExpressionFoldingSettings : PersistentStateComponent<State> {
     fun disableAll() = updateAllState(false)
     fun enableAll(vararg excludeProperties: KMutableProperty0<Boolean>) = updateAllState(true, *excludeProperties)
     fun restoreDefaults() {
-        myState = State()
+        XmlSerializerUtil.copyBean(State(), myState)
     }
 
     // used in integrationStubs

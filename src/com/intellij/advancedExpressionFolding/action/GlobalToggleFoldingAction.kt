@@ -1,5 +1,6 @@
 package com.intellij.advancedExpressionFolding.action
 
+import com.intellij.advancedExpressionFolding.FoldingService
 import com.intellij.advancedExpressionFolding.settings.IConfig
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.openapi.actionSystem.ActionUpdateThread
@@ -16,7 +17,8 @@ class GlobalToggleFoldingAction :
 
     override fun setSelected(e: AnActionEvent, state: Boolean) {
         globalOn = state
+        FoldingService.get().refoldOpenEditors()
     }
 
-    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.EDT
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 }
