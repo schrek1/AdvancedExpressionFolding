@@ -6,13 +6,13 @@ public class SetterNamedArgumentsTestData {
         val alice = Person(
         name = "Alice",
         age = 31,
-        active = true);
+        active = true
 
         val bob = Person(name = "Bob");
 
         val copy = Person(
         name = source.name,
-        age = source.age + 1);
+        age = source.age + 1
         System.out.println(copy);
 
         val partial = Person(name = "Carol");

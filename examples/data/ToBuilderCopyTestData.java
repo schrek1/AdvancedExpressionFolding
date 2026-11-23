@@ -18,6 +18,10 @@ public class ToBuilderCopyTestData {
                 // a comment keeps the chain on its lines
                 .name("Carol")
                 .build();
+        Person twoArguments = person.toBuilder()
+                .name("Grace")
+                .age(29).build();
+        Person oneLine = person.toBuilder().name("Ivan").age(33).build();
     }
 
     public void notFolded(Person person) {
