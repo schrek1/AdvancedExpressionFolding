@@ -1,13 +1,24 @@
 package com.intellij.advancedExpressionFolding.processor.language.kotlin
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.expression.controlflow.ElvisExpression
+import com.intellij.advancedExpressionFolding.expression.controlflow.IfElseConditionalExpression
 import com.intellij.advancedExpressionFolding.processor.*
 import com.intellij.advancedExpressionFolding.processor.core.BaseExtension
+import com.intellij.advancedExpressionFolding.processor.controlflow.IfExt
 import com.intellij.advancedExpressionFolding.processor.core.getAnyExpression
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.*
 
 object SingleExpressionFunctionExt : BaseExtension() {
+    private const val MAX_BODY_LENGTH = 145
+
+    /** Whether [statement] is the whole body of a method shown as a single-expression function. */
+    fun foldsReturnOf(statement: PsiReturnStatement): Boolean {
+        val body = statement.parent as? PsiCodeBlock ?: return false
+        return expressionFunc && body.parent is PsiMethod && body.statements.singleOrNull() == statement &&
+            body.text.length < MAX_BODY_LENGTH && !isDebugSessionActive(statement)
+    }
 
     fun createSingleExpressionFunctions(method: PsiMethod, document: Document): Expression? {
         if (isDebugSessionActive(method)) {
@@ -15,13 +26,13 @@ object SingleExpressionFunctionExt : BaseExtension() {
         }
         val single = method.body?.statements?.singleOrNull()
         val statement = single?.takeIf {
-            method.body!!.text.length < 145
+            method.body!!.text.length < MAX_BODY_LENGTH
         } ?: return null
 
         val singleExpression = getAnyExpression(single.children.first(), document)
 
         return statement.asInstance<PsiReturnStatement>()?.let {
-            onSingleExpressionReturn(it, method, singleExpression)
+            onSingleExpressionReturn(it, method, singleExpression, document)
         } ?: onSingleExpressionNoReturn(statement, method, singleExpression)
     }
 
@@ -52,6 +63,7 @@ object SingleExpressionFunctionExt : BaseExtension() {
         statement: PsiReturnStatement,
         method: PsiMethod,
         singleExpression: Expression,
+        document: Document,
     ): Expression? {
         val keyword = statement.children.firstOrNull().asInstance<PsiKeyword>()
         val keywordNextWhitespace = keyword?.nextWhiteSpace()
@@ -60,13 +72,23 @@ object SingleExpressionFunctionExt : BaseExtension() {
         val preBracketSpace = statement.nextSibling
         val endingSemicolon = statement.children.lastOrNull().asInstance<PsiJavaToken>()//;
 
-        val exprList = sequenceOf(keyword, keywordNextWhitespace).mapNotNull {
-            it.exprHide()
-        }.toMutableList<Expression?>()
+        val exprList = mutableListOf<Expression?>(keyword.exprHide())
+        // a returned ternary folded as if-else or inverted Elvis leaves ` if (` / ` ?: y` to the blank and `;` this
+        // group owns
+        val returnedTernary = statement.returnValue.asInstance<PsiConditionalExpression>()
+            ?.let { IfExt.getConditionalExpression(it, document) }
+        exprList.add(
+            if (returnedTernary is IfElseConditionalExpression) {
+                keywordNextWhitespace?.expr("if (")
+            } else {
+                keywordNextWhitespace.exprHide()
+            }
+        )
+        val semicolonText = (returnedTernary as? ElvisExpression)?.tailBehindValue(document)
         exprList.add(preBracketSpace.expr(if (expressionFuncEquals) "" else " "))
         method.body?.let { exprList.addEqualsInsteadOfBraces(it) }
         exprList.add(returnPrevSpace?.expr(" "))
-        exprList.add(endingSemicolon?.exprHide())
+        exprList.add(if (semicolonText != null) endingSemicolon?.expr(semicolonText) else endingSemicolon.exprHide())
         exprList.add(singleExpression)
 
         statement.returnValue.asLiteral()?.let {

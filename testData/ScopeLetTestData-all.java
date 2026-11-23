@@ -52,7 +52,7 @@ public class ScopeLetTestData {
     public byte[] ternary(String body) <fold text='{...}' expand='true'>{
         <fold text='val' expand='false'>byte[]</fold> payload = body<fold text='?.let { ' expand='false'> != null ? </fold>toBytes(<fold text='it' expand='false'>body</fold>)<fold text=' }' expand='false'> : null</fold>;
         <fold text='val' expand='false'>String</fold> trimmed = <fold text='' expand='false'>body != null ? </fold>body<fold text='?.' expand='false'>.</fold>trim()<fold text='' expand='false'> : null</fold>;
-        <fold text='val' expand='false'>byte[]</fold> fallback = <fold text='' expand='false'>body != null ? </fold>toBytes(body<fold text='?)' expand='false'>)</fold><fold text=' ?: ' expand='false'> : </fold>new byte[0];
+        <fold text='val' expand='false'>byte[]</fold> fallback = body != null ? toBytes(body) : new byte[0];
         return payload;
     }</fold>
 

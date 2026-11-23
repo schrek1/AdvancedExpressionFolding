@@ -7,6 +7,8 @@ interface IControlFlowState {
     var assertsCollapse: Boolean
     var guardIfOneLiner: Boolean
     var switchArrow: Boolean
+    var conditionalAsIfElse: Boolean
+    var conditionalAsIfElseAlways: Boolean
 }
 
 data class ControlFlowState(
@@ -16,4 +18,6 @@ data class ControlFlowState(
     override var assertsCollapse: Boolean = true,
     override var guardIfOneLiner: Boolean = false,
     override var switchArrow: Boolean = true,
+    override var conditionalAsIfElse: Boolean = true,
+    override var conditionalAsIfElseAlways: Boolean = false,
 ): IControlFlowState

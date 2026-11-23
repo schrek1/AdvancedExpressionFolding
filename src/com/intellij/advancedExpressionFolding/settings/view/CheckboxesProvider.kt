@@ -284,6 +284,16 @@ abstract class CheckboxesProvider {
             link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#guardifoneliner")
         }
 
+        registerCheckbox(state::conditionalAsIfElse, "Ternary as if-else: long, multi-line, nested or string-building ones") {
+            example(ConditionalAsIfElseTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#conditionalasifelse")
+        }
+
+        registerCheckbox(state::conditionalAsIfElseAlways, "Ternary as if-else: every ternary") {
+            example(ConditionalAsIfElseAlwaysTestData::class)
+            link("https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/wiki#conditionalasifelsealways")
+        }
+
         registerCheckbox(
             state::controlFlowMultiStatementCodeBlockCollapse,
             "Control flow multi-statement code block braces (read-only files, deprecated)"

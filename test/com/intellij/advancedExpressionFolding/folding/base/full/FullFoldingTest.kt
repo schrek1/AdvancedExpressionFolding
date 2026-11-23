@@ -13,7 +13,14 @@ class FullFoldingTest : FoldingTest() {
     override fun assignState(turnOnProperties: Array<out KMutableProperty0<Boolean>>) = with(AdvancedExpressionFoldingSettings.Companion.getInstance()) {
         // the settings are shared across tests: an excluded option would keep what the previous test left on
         disableAll()
-        enableAll(state::emojify, state::finalEmoji, state::arithmeticExpressions, state::expressionFuncEquals)
+        enableAll(
+            state::emojify,
+            state::finalEmoji,
+            state::arithmeticExpressions,
+            state::expressionFuncEquals,
+            // supersedes the default mode, which the full run shows; ConditionalAsIfElseAlwaysTestData covers it
+            state::conditionalAsIfElseAlways,
+        )
     }
 
     override fun getTestFileName(testName: String): String {
