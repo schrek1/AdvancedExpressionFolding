@@ -53,7 +53,7 @@ public class KotlinConstructorCallTestData {
             }</fold>
         }</fold>;
         <fold text='val' expand='false'>int[]</fold> counts = new int[3];
-        <fold text='val' expand='false'>String[]</fold> labels = <fold text='[' expand='false'>new String[]{</fold>"a", "b"<fold text=']' expand='false'>}</fold>;
+        <fold text='val' expand='false'>String[]</fold> labels = <fold text='arrayOf(' expand='false'>new String[]{</fold>"a", "b"<fold text=')' expand='false'>}</fold>;
         <fold text='val' expand='false'>Line</fold> line = outer.new Line();
     }</fold>
 }
