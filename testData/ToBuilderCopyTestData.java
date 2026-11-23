@@ -6,10 +6,10 @@ public class ToBuilderCopyTestData {
         var renamed = person.<fold text='copy(' expand='false'>toBuilder()</fold>
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Alice"<fold text=',' expand='false'>)</fold>
             <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>31<fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
         Person older = person.<fold text='copy(' expand='false'>toBuilder().</fold>age<fold text=' = ' expand='false'>(</fold>person.getAge() + 1)<fold text='' expand='false'>.build()</fold>;
         Person mixed = person.<fold text='copy(' expand='false'>toBuilder()</fold><fold text='' expand='false'>.</fold>name<fold text=' = ' expand='false'>(</fold>"Bob"<fold text=',' expand='false'>)</fold>
-            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>40)<fold text='' expand='false'>.build()</fold>;
+            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>40<fold text='' expand='false'>).build();</fold>
         Person mapped = person.<fold text='copy(' expand='false'>toBuilder()
                 .</fold>name<fold text=' = ' expand='false'>(</fold>source.getName())<fold text='' expand='false'>
                 .build()</fold>;
@@ -17,7 +17,11 @@ public class ToBuilderCopyTestData {
         Person commented = person.<fold text='copy(' expand='false'>toBuilder()</fold>
                 // a comment keeps the chain on its lines
             <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Carol"<fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
+        Person twoArguments = person.<fold text='copy(' expand='false'>toBuilder()</fold>
+            <fold text='' expand='false'>    .</fold>name<fold text=' = ' expand='false'>(</fold>"Grace"<fold text=',' expand='false'>)</fold>
+            <fold text='' expand='false'>    .</fold>age<fold text=' = ' expand='false'>(</fold>29<fold text='' expand='false'>).build();</fold>
+        Person oneLine = person.<fold text='copy(' expand='false'>toBuilder()</fold><fold text='' expand='false'>.</fold>name<fold text=' = ' expand='false'>(</fold>"Ivan"<fold text=',' expand='false'>)</fold><fold text=' ' expand='false'>.</fold>age<fold text=' = ' expand='false'>(</fold>33)<fold text='' expand='false'>.build()</fold>;
     }</fold>
 
     public void notFolded(Person person) <fold text='{...}' expand='true'>{
@@ -33,7 +37,7 @@ public class ToBuilderCopyTestData {
         var shipped = order.<fold text='copy(' expand='false'>toBuilder()</fold>
             <fold text='s' expand='false'>    .setS</fold>tatus<fold text=' = ' expand='false'>(</fold>Status.SHIPPED<fold text=',' expand='false'>)</fold>
             <fold text='n' expand='false'>    .setN</fold>ote<fold text=' = ' expand='false'>(</fold>"left at the door"<fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
         Order cancelled = order.<fold text='copy(' expand='false'>toBuilder()</fold><fold text='s' expand='false'>.setS</fold>tatus<fold text=' = ' expand='false'>(</fold>Status.CANCELLED<fold text=',' expand='false'>)</fold><fold text=' n' expand='false'>.setN</fold>ote<fold text=' = ' expand='false'>(</fold>"out of stock")<fold text='' expand='false'>.build()</fold>;
     }</fold>
 

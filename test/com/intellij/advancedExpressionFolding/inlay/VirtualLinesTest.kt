@@ -12,6 +12,7 @@ import com.intellij.testFramework.runInEdtAndWait
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.reflect.KMutableProperty0
 
 class VirtualLinesTest : BaseTest() {
 
@@ -130,10 +131,127 @@ class VirtualLinesTest : BaseTest() {
         }
     }
 
-    private fun foldedEditor(): Editor {
-        assignState(state::scopeWith)
+    @Language("JAVA")
+    private val namedArgumentsSource = """
+        import java.util.List;
+
+        class Market {
+            void open() {
+                var orderBook = OrderBook.builder()
+                        .asks(List.of(List.of("12", "14.5")))
+                        .bids(null).build();
+                OrderBook quiet = OrderBook.builder().asks(null).bids(null).build();
+                var ticket = new Ticket();
+                ticket.setSymbol("ACME");
+                ticket.setVenue("XNAS");
+                ticket.setSize(5);
+            }
+
+            static class OrderBook {
+                private final List<List<String>> asks;
+                private final List<List<String>> bids;
+
+                OrderBook(List<List<String>> asks, List<List<String>> bids) {
+                    this.asks = asks;
+                    this.bids = bids;
+                }
+
+                static Builder builder() {
+                    return new Builder();
+                }
+
+                static class Builder {
+                    private List<List<String>> asks;
+                    private List<List<String>> bids;
+
+                    Builder asks(List<List<String>> asks) {
+                        this.asks = asks;
+                        return this;
+                    }
+
+                    Builder bids(List<List<String>> bids) {
+                        this.bids = bids;
+                        return this;
+                    }
+
+                    OrderBook build() {
+                        return new OrderBook(asks, bids);
+                    }
+                }
+            }
+
+            static class Ticket {
+                private String symbol;
+                private String venue;
+                private int size;
+
+                public void setSymbol(String symbol) {
+                    this.symbol = symbol;
+                }
+
+                public void setVenue(String venue) {
+                    this.venue = venue;
+                }
+
+                public void setSize(int size) {
+                    this.size = size;
+                }
+            }
+        }
+    """.trimIndent()
+
+    @Test
+    fun sync_multiLineNamedArguments_closingParenthesisOnItsOwnLine() {
+        runInEdtAndWait {
+            // GIVEN - a builder chain and a setter run over several lines, plus a one-line builder chain
+            val editor = foldedEditor(namedArgumentsSource, state::builderNamedArguments, state::setterNamedArguments)
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - a `)` line closes each multi-line call; only the setters get an extra indent, the one-liner nothing
+            assertEquals(
+                """
+                        var orderBook = OrderBook.builder()
+                                .asks(List.of(List.of("12", "14.5")))
+                                .bids(null).build();
+                [)]
+                        OrderBook quiet = OrderBook.builder().asks(null).bids(null).build();
+                        var ticket = new Ticket();
+                       >> ticket.setSymbol("ACME");
+                       >> ticket.setVenue("XNAS");
+                       >> ticket.setSize(5);
+                [)]
+                """.trimIndent(),
+                dump(editor).lines().drop(4).take(10).joinToString("\n"),
+            )
+        }
+    }
+
+    @Test
+    fun sync_multiLineNamedArguments_closingParenthesisInTheStatementColumn() {
+        runInEdtAndWait {
+            // GIVEN - a builder chain and a setter run over several lines
+            val editor = foldedEditor(namedArgumentsSource, state::builderNamedArguments, state::setterNamedArguments)
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - both `)` lines start where `var` starts, not at the arguments' indentation
+            val closingColumns = editor.inlayModel
+                .getBlockElementsInRange(0, editor.document.textLength, VirtualLines.LineRenderer::class.java)
+                .map { it.renderer.column }
+            assertEquals(listOf(8, 8), closingColumns)
+        }
+    }
+
+    private fun foldedEditor(
+        text: String = source,
+        vararg options: KMutableProperty0<Boolean> = arrayOf(state::scopeWith),
+    ): Editor {
+        assignState(*options)
         MethodCallFactory.initialize(TestDynamicDataProvider())
-        fixture.configureByText("Shop.java", source)
+        fixture.configureByText("Shop.java", text)
         val editor = fixture.editor
         EditorTestUtil.buildInitialFoldingsInBackground(editor)
         val regions = editor.foldingModel.allFoldRegions

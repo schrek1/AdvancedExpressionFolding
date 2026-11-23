@@ -26,7 +26,7 @@ data class VirtualLine(val segments: List<Pair<String, TextAttributesKey>>)
 
 /**
  * Lines of text above and below a fold group that exist only while the group is collapsed, plus an invisible extra
- * indent on every line the group spans; folds cannot insert line breaks, so Kotlin-style blocks get their own
+ * indent on the lines the group spans; folds cannot insert line breaks, so Kotlin-style blocks get their own
  * `with(x) {` / `}` lines this way. Nothing is added to the document.
  *
  * A fold opts in by creating its [FoldingGroup] through [group]; [install] keeps an editor's inlays in step with its
@@ -34,7 +34,10 @@ data class VirtualLine(val segments: List<Pair<String, TextAttributesKey>>)
  */
 object VirtualLines {
 
-    private class Spec(val above: VirtualLine?, val below: VirtualLine?, val lastLinePrefix: VirtualLine?)
+    /** Which real lines of a group get the extra indent. */
+    enum class Indent { ALL_LINES, AFTER_FIRST_LINE, NONE }
+
+    private class Spec(val above: VirtualLine?, val below: VirtualLine?, val lastLinePrefix: VirtualLine?, val indent: Indent)
 
     // written by the folding builder in a background read action, read on the EDT
     private val specs: MutableMap<FoldingGroup, Spec> = Collections.synchronizedMap(WeakHashMap())
@@ -43,15 +46,17 @@ object VirtualLines {
 
     /**
      * @param above line drawn above the line of the group's first region
-     * @param below line drawn below the line of the group's last region
+     * @param below line drawn below the line of the group's last region, in the column of the first line's code
      * @param lastLinePrefix text drawn after the extra indent of the last line, before its code (e.g. `else -> `)
+     * @param indent the lines that get the extra indent
      */
     fun group(
         name: String,
         above: VirtualLine?,
         below: VirtualLine?,
         lastLinePrefix: VirtualLine? = null,
-    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix) }
+        indent: Indent = Indent.ALL_LINES,
+    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix, indent) }
 
     fun install(editor: Editor) {
         val foldingModel = editor.foldingModel as? FoldingModelEx ?: return
@@ -126,9 +131,14 @@ object VirtualLines {
                 }
                 fun column(line: Int) = codeStarts[line]?.let { editor.offsetToLogicalPosition(it).column } ?: 0
                 spec.above?.let { wanted += LineRenderer(document.getLineStartOffset(firstLine), it, true, column(firstLine)) }
-                spec.below?.let { wanted += LineRenderer(document.getLineEndOffset(lastLine), it, false, column(lastLine)) }
+                spec.below?.let { wanted += LineRenderer(document.getLineEndOffset(lastLine), it, false, column(firstLine)) }
                 codeStarts.forEach { (line, codeStart) ->
-                    if (codeStart == null) {
+                    val indented = when (spec.indent) {
+                        Indent.ALL_LINES -> true
+                        Indent.AFTER_FIRST_LINE -> line != firstLine
+                        Indent.NONE -> false
+                    }
+                    if (codeStart == null || !indented) {
                         return@forEach
                     }
                     // an inline inlay on the edge of a collapsed fold is hidden with it, so anchor inside the indentation
