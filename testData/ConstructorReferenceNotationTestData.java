@@ -1,6 +1,7 @@
 package data;
 
-import java.util.*;
+import <fold text='...' expand='false'>java.util.*;
+import java.math.*;</fold>
 
 public class ConstructorReferenceNotationTestData {
 
@@ -66,6 +67,14 @@ public class ConstructorReferenceNotationTestData {
 
         protected ConstClass SELF_NULL = null;
         protected ConstClass EMPTY;
+    }</fold>
+
+    static class Literals <fold text='{...}' expand='true'>{
+        private static final BigDecimal PRICE = <fold text='' expand='false'>new BigDecimal(</fold><fold text='3119.5' expand='false'>"3119.5"</fold><fold text='' expand='false'>)</fold>;
+        private static final BigDecimal RATE = <fold text='' expand='false'>new BigDecimal(</fold>12<fold text='' expand='false'>)</fold>;
+        private static final BigInteger COUNT = <fold text='' expand='false'>new BigInteger(</fold><fold text='42' expand='false'>"42"</fold><fold text='' expand='false'>)</fold>;
+        private static final ConstClass ENABLED =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>ConstClass</fold>(true);
+        private static final ConstClass DEFAULT =<fold text=' ::' expand='true'> </fold>new<fold text='' expand='true'> </fold><fold text='' expand='true'>ConstClass</fold><fold text='' expand='true'>()</fold>;
     }</fold>
 
     static class ConstClass <fold text='{...}' expand='true'>{
