@@ -34,7 +34,12 @@ data class VirtualLine(val segments: List<Pair<String, TextAttributesKey>>)
  */
 object VirtualLines {
 
-    private class Spec(val above: VirtualLine?, val below: VirtualLine?, val lastLinePrefix: VirtualLine?)
+    private class Spec(
+        val above: VirtualLine?,
+        val below: VirtualLine?,
+        val lastLinePrefix: VirtualLine?,
+        val trailingLines: Int,
+    )
 
     // written by the folding builder in a background read action, read on the EDT
     private val specs: MutableMap<FoldingGroup, Spec> = Collections.synchronizedMap(WeakHashMap())
@@ -45,13 +50,16 @@ object VirtualLines {
      * @param above line drawn above the line of the group's first region
      * @param below line drawn below the line of the group's last region
      * @param lastLinePrefix text drawn after the extra indent of the last line, before its code (e.g. `else -> `)
+     * @param trailingLines lines below the line of the last region that belong to the group too (a last block's body
+     * no region touches); they get the extra indent, and the last of them counts as the group's last line
      */
     fun group(
         name: String,
         above: VirtualLine?,
         below: VirtualLine?,
         lastLinePrefix: VirtualLine? = null,
-    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix) }
+        trailingLines: Int = 0,
+    ): FoldingGroup = FoldingGroup.newGroup(name).also { specs[it] = Spec(above, below, lastLinePrefix, trailingLines) }
 
     fun install(editor: Editor) {
         val foldingModel = editor.foldingModel as? FoldingModelEx ?: return
@@ -120,7 +128,10 @@ object VirtualLines {
             .forEach { (group, regions) ->
                 val spec = specs[group] ?: return@forEach
                 val firstLine = document.getLineNumber(regions.minOf { it.startOffset })
-                val lastLine = document.getLineNumber(regions.maxOf { it.endOffset })
+                val lastLine = minOf(
+                    document.getLineNumber(regions.maxOf { it.endOffset }) + spec.trailingLines,
+                    document.lineCount - 1,
+                )
                 val codeStarts = (firstLine..lastLine).associateWith { line ->
                     codeStart(document.getLineStartOffset(line), document.getLineEndOffset(line), chars)
                 }
