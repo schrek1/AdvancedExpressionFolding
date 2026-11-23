@@ -29,6 +29,19 @@ public class ToBuilderCopyTestData {
         String text = person.toBuilder().name("Alice").toString();
     }</fold>
 
+    public void setPrefixed(Order order) <fold text='{...}' expand='true'>{
+        var shipped = order.<fold text='copy(' expand='false'>toBuilder()</fold>
+            <fold text='s' expand='false'>    .setS</fold>tatus<fold text=' = ' expand='false'>(</fold>Status.SHIPPED<fold text=',' expand='false'>)</fold>
+            <fold text='n' expand='false'>    .setN</fold>ote<fold text=' = ' expand='false'>(</fold>"left at the door"<fold text='' expand='false'>)</fold>
+        <fold text='' expand='false'>        .build(</fold>);
+        Order cancelled = order.<fold text='copy(' expand='false'>toBuilder()</fold><fold text='s' expand='false'>.setS</fold>tatus<fold text=' = ' expand='false'>(</fold>Status.CANCELLED<fold text=',' expand='false'>)</fold><fold text=' n' expand='false'>.setN</fold>ote<fold text=' = ' expand='false'>(</fold>"out of stock")<fold text='' expand='false'>.build()</fold>;
+    }</fold>
+
+    public void setPrefixNotFolded(Order order) <fold text='{...}' expand='true'>{
+        Order mixed = order.toBuilder().setStatus(Status.SHIPPED).note("gift").build();
+        Order tracked = order.toBuilder().setTracking("T-1").build();
+    }</fold>
+
     static class Person <fold text='{...}' expand='true'>{
         private final String name;
         private final int age;
@@ -79,6 +92,52 @@ public class ToBuilderCopyTestData {
 
             public Person build()<fold text=' { ' expand='false'> {
                 </fold>return new Person(name, age);<fold text=' }' expand='false'>
+            }</fold>
+        }</fold>
+    }</fold>
+
+    enum Status <fold text='{...}' expand='true'>{
+        NEW, SHIPPED, CANCELLED
+    }</fold>
+
+    static class Order <fold text='{...}' expand='true'>{
+        private final Status status;
+        private final String note;
+
+        Order(Status status, String note) <fold text='{...}' expand='true'>{
+            this.status = status;
+            this.note = note;
+        }</fold>
+
+        public OrderBuilder toBuilder()<fold text=' { ' expand='false'> {
+            </fold>return new OrderBuilder().setStatus(status).setNote(note);<fold text=' }' expand='false'>
+        }</fold>
+
+        static class OrderBuilder <fold text='{...}' expand='true'>{
+            private Status status;
+            private String note;
+
+            public OrderBuilder setStatus(Status status) <fold text='{...}' expand='true'>{
+                this.status = status;
+                return this;
+            }</fold>
+
+            public OrderBuilder setNote(String note) <fold text='{...}' expand='true'>{
+                this.note = note;
+                return this;
+            }</fold>
+
+            public OrderBuilder note(String note) <fold text='{...}' expand='true'>{
+                this.note = note;
+                return this;
+            }</fold>
+
+            public OrderBuilder setTracking(String tracking)<fold text=' { ' expand='false'> {
+                </fold>return this;<fold text=' }' expand='false'>
+            }</fold>
+
+            public Order build()<fold text=' { ' expand='false'> {
+                </fold>return new Order(status, note);<fold text=' }' expand='false'>
             }</fold>
         }</fold>
     }</fold>

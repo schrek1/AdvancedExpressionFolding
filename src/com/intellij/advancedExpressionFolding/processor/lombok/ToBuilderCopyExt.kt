@@ -2,24 +2,17 @@ package com.intellij.advancedExpressionFolding.processor.lombok
 
 import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.semantic.NamedArgumentsCall
-import com.intellij.advancedExpressionFolding.expression.semantic.NamedArgumentsCall.NamedArgument
-import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.IExpressionCollapseState
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
-import com.intellij.psi.JavaTokenType
-import com.intellij.psi.PsiClass
-import com.intellij.psi.PsiClassType
-import com.intellij.psi.PsiJavaToken
 import com.intellij.psi.PsiMethodCallExpression
-import com.intellij.psi.PsiType
 
 /**
  * Folds `person.toBuilder().name("Alice").age(31).build()` into `person.copy(name = "Alice", age = 31)`.
  *
- * Only a clean chain folds: `toBuilder()`, then one-argument calls of builder methods that set a builder field
- * of the same name and return the builder, then `build()` returning the receiver's class.
+ * Only a clean chain folds: `toBuilder()`, then the setter links [BuilderChainLinks] accepts, then `build()`
+ * returning the receiver's class.
  */
 object ToBuilderCopyExt : IExpressionCollapseState by State()() {
 
@@ -41,47 +34,15 @@ object ToBuilderCopyExt : IExpressionCollapseState by State()() {
         if (!builderClass.isSame(buildMethod.containingClass) || !targetClass.isSame(buildMethod.returnType.resolveClass())) {
             return null
         }
-        if (!setters.all { it.isFieldSetterOf(builderClass, document) }) {
-            return null
-        }
+        val arguments = BuilderChainLinks.namedArguments(setters, builderClass, targetClass, document) ?: return null
         toBuilder.dotOffset() ?: return null
+        val toBuilderName = toBuilder.methodExpression.referenceNameElement?.textRange ?: return null
         return NamedArgumentsCall(
             element = build,
-            openRange = TextRange(toBuilder.nameStart() ?: return null, toBuilder.textRange.endOffset),
+            openRange = TextRange(toBuilderName.startOffset, toBuilder.textRange.endOffset),
             openText = "copy(",
-            arguments = setters.map { setter ->
-                val name = setter.methodExpression.referenceNameElement?.textRange ?: return null
-                val value = setter.argumentList.expressions.single().textRange
-                NamedArgument(
-                    separatorRange = TextRange(setter.dotOffset() ?: return null, name.startOffset),
-                    assignRange = TextRange(name.endOffset, value.startOffset),
-                    suffixRange = TextRange(value.endOffset, setter.textRange.endOffset),
-                )
-            },
+            arguments = arguments,
             closeRange = TextRange(build.dotOffset() ?: return null, build.textRange.endOffset),
         )
     }
-
-    private fun PsiMethodCallExpression.isFieldSetterOf(builderClass: PsiClass, document: Document): Boolean {
-        val method = resolveMethod() ?: return false
-        val value = argumentList.expressions.singleOrNull() ?: return false
-        return method.parameterList.parametersCount == 1 &&
-            builderClass.isSame(method.containingClass) &&
-            builderClass.isSame(method.returnType.resolveClass()) &&
-            builderClass.findFieldByName(method.name, false) != null &&
-            // shortcut: a concatenation folded into "…$x" also folds the call's parentheses, so it is left unfolded
-            !BuildExpressionExt.getAnyExpression(value, document).isOverflow()
-    }
-
-    private fun PsiMethodCallExpression.qualifierCall() = methodExpression.qualifierExpression as? PsiMethodCallExpression
-
-    private fun PsiMethodCallExpression.dotOffset() = methodExpression.children
-        .firstOrNull { it is PsiJavaToken && it.tokenType == JavaTokenType.DOT }
-        ?.textRange?.startOffset
-
-    private fun PsiMethodCallExpression.nameStart() = methodExpression.referenceNameElement?.textRange?.startOffset
-
-    private fun PsiType?.resolveClass() = (this as? PsiClassType)?.resolve()
-
-    private fun PsiClass.isSame(other: PsiClass?) = manager.areElementsEquivalent(this, other)
 }

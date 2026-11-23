@@ -29,6 +29,19 @@ public class ToBuilderCopyTestData {
         <fold text='val' expand='false'>String</fold> text = person.toBuilder().name("Alice").toString();
     }</fold>
 
+    public void setPrefixed(Order order) <fold text='{...}' expand='true'>{
+        <fold text='val' expand='false'>var</fold> shipped = order.<fold text='copy(' expand='false'>toBuilder()</fold>
+            <fold text='s' expand='false'>    .setS</fold>tatus<fold text=' = ' expand='false'>(</fold>Status.SHIPPED<fold text=',' expand='false'>)</fold>
+            <fold text='n' expand='false'>    .setN</fold>ote<fold text=' = ' expand='false'>(</fold>"left at the door"<fold text='' expand='false'>)</fold>
+        <fold text='' expand='false'>        .build(</fold>);
+        <fold text='val' expand='false'>Order</fold> cancelled = order.<fold text='copy(' expand='false'>toBuilder()</fold><fold text='s' expand='false'>.setS</fold>tatus<fold text=' = ' expand='false'>(</fold>Status.CANCELLED<fold text=',' expand='false'>)</fold><fold text=' n' expand='false'>.setN</fold>ote<fold text=' = ' expand='false'>(</fold>"out of stock")<fold text='' expand='false'>.build()</fold>;
+    }</fold>
+
+    public void setPrefixNotFolded(Order order) <fold text='{...}' expand='true'>{
+        <fold text='val' expand='false'>Order</fold> mixed = order.toBuilder().setStatus(Status.SHIPPED).note("gift").build();
+        <fold text='val' expand='false'>Order</fold> tracked = order.toBuilder().setTracking("T-1").build();
+    }</fold>
+
     <fold text='@HasBuilder @LightValue s' expand='false'>s</fold>tatic class Person <fold text='{...}' expand='true'>{
         private final String name;
         private final int age;<fold text='' expand='false'>
@@ -79,6 +92,52 @@ public class ToBuilderCopyTestData {
 
             public Person build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
                 </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Person(name, age)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold>}</fold>
+        }</fold>
+    }</fold>
+
+    enum Status <fold text='{...}' expand='true'>{
+        NEW, SHIPPED, CANCELLED
+    }</fold>
+
+    <fold text='@HasBuilder @RequiredArgsConstructor(default) s' expand='false'>s</fold>tatic class Order <fold text='{...}' expand='true'>{
+        private final Status status;
+        private final String note;<fold text='' expand='false'>
+
+        </fold><fold text='' expand='false'>Order(Status status, String note) <fold text='{...}' expand='true'>{
+            this.status = <fold text='<<' expand='false'>status</fold>;
+            this.note = <fold text='<<' expand='false'>note</fold>;
+        }</fold></fold>
+
+        public OrderBuilder toBuilder()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>OrderBuilder().setStatus(status).setNote(note)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+        </fold>}</fold>
+
+        static class OrderBuilder <fold text='{...}' expand='true'>{
+            private Status status;
+            private String note;
+
+            public OrderBuilder setStatus(Status status) <fold text='{...}' expand='true'>{
+                this.status = <fold text='<<' expand='false'>status</fold>;
+                return this;
+            }</fold>
+
+            public OrderBuilder setNote(String note) <fold text='{...}' expand='true'>{
+                this.note = <fold text='<<' expand='false'>note</fold>;
+                return this;
+            }</fold>
+
+            public OrderBuilder note(String note) <fold text='{...}' expand='true'>{
+                this.note = <fold text='<<' expand='false'>note</fold>;
+                return this;
+            }</fold>
+
+            public OrderBuilder setTracking(String tracking)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>this<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold>}</fold>
+
+            public Order build()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
+                </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold><fold text='' expand='false'>new </fold>Order(status, note)<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
             </fold>}</fold>
         }</fold>
     }</fold>
