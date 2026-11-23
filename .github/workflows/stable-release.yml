@@ -23,11 +23,6 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.pages.outputs.base_url }}/updatePlugins.xml
     steps:
       - uses: actions/checkout@v5
         with:
@@ -112,11 +107,23 @@ jobs:
           EOF
           cat site/updatePlugins.xml
 
-      - uses: actions/configure-pages@v6
-        id: pages
-
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site
 
+  # A job of its own: deploy-pages in the uploading job sometimes saw no artifact yet, and re-running a failed deploy
+  # must not re-run the release, which would tag the next version for the same commit.
+  deploy:
+    needs: release
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}updatePlugins.xml
+    steps:
+      - uses: actions/configure-pages@v6
+
       - uses: actions/deploy-pages@v5
+        id: deployment
