@@ -100,6 +100,15 @@ public class LogBrackets {
         return data;
     }</fold>
 
+    public void logWrappedMessage(Data data, String city, Exception exception) <fold text='{...}' expand='true'>{
+        String name = "John";
+        log.info("Shop <fold text='$' expand='false'>{} kept in {}: it has no owner yet, so the"<fold text=' + ' expand='false'>
+                + </fold>" order cannot move; owner {} was asked", </fold>name<fold text=' kept in $' expand='false'>, </fold>city<fold text=': it has no owner yet, so the order cannot move; owner ${' expand='false'>, </fold>data.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold><fold text='} was asked")' expand='false'>)</fold>;
+        log.warn("Shop <fold text='$' expand='false'>{} could not be closed by {}:"<fold text=' + ' expand='false'>
+                + </fold>" it still has orders", </fold>name<fold text=' could not be closed by $' expand='false'>, </fold>city<fold text=': it still has orders",' expand='false'>,</fold> exception);
+        log.info("Shop {} " + 1 + " stays", name);
+    }</fold>
+
     public static class Data <fold text='{...}' expand='true'>{
         private Data data;
         private String name;

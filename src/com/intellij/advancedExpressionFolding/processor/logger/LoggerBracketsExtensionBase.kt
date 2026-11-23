@@ -4,7 +4,6 @@ import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.operation.basic.Variable
 import com.intellij.advancedExpressionFolding.expression.semantic.logging.LoggerBracketExpression
 import com.intellij.advancedExpressionFolding.expression.semantic.logging.LoggerBracketParentExpression
-import com.intellij.advancedExpressionFolding.processor.asInstance
 import com.intellij.advancedExpressionFolding.processor.argumentExpressions
 import com.intellij.advancedExpressionFolding.processor.core.BuildExpressionExt
 import com.intellij.advancedExpressionFolding.processor.end
@@ -20,7 +19,6 @@ import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
 import com.intellij.psi.PsiLambdaExpression
-import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiReferenceExpression
 import com.intellij.psi.PsiSwitchExpression
@@ -33,17 +31,17 @@ open class LoggerBracketsExtensionBase(
 ) : ILogFoldingState by State()() {
 
     fun processExpression(): Expression? {
-        val logLiteral = element.argumentExpressions.takeIf {
+        val logMessage = element.argumentExpressions.takeIf {
             it.hasEnoughElements()
-        }?.extractLiteral() ?: return null
-        if (!logFoldingTextBlocks && logLiteral.isTextBlock) return null
-        val logText = logLiteral.text ?: return null
+        }?.extractMessage()?.let(LogMessage::of) ?: return null
+        if (!logFoldingTextBlocks && logMessage.isTextBlock) return null
+        val logText = logMessage.text
         val split = logText.splitTextPattern() ?: return null
 
         val arguments = element.argumentExpressions.toMutableList().prepareArguments()
         if (arguments.isEmpty()) return null
         if (logFoldingKeepMessageText) {
-            foldArgumentsIntoMessage(logLiteral, arguments)?.let { return it }
+            foldArgumentsIntoMessage(logMessage, arguments)?.let { return it }
         }
         var nextStringAddon = ""
         val hasTooManyArguments = split.size <= arguments.size
@@ -83,7 +81,7 @@ open class LoggerBracketsExtensionBase(
                 }
                 val prevSibling = argument.prevSibling
                 if (index == 0) {
-                    val countChars = logLiteral.start() + nextString.length
+                    val countChars = logMessage.offsetOf(nextString.length)
                     val textRange = (countChars..prevSibling.end()).toTextRange()
                     LoggerBracketExpression(element, textRange, text, expression)
                 } else {
@@ -128,8 +126,8 @@ open class LoggerBracketsExtensionBase(
      *
      * @return `null` when an argument would not read well inside the message; the caller then folds as before
      */
-    private fun foldArgumentsIntoMessage(logLiteral: PsiLiteralExpression, arguments: List<PsiExpression>): Expression? {
-        val logText = logLiteral.text
+    private fun foldArgumentsIntoMessage(logMessage: LogMessage, arguments: List<PsiExpression>): Expression? {
+        val logText = logMessage.text
         val placeholders = logText.placeholderRanges()
         val consumed = arguments.take(placeholders.size)
         val placeholderFolds = consumed.zip(placeholders) { argument, placeholder ->
@@ -140,13 +138,13 @@ open class LoggerBracketsExtensionBase(
             } else {
                 "\${$argumentText}"
             }
-            val range = TextRange(logLiteral.start() + placeholder.first, logLiteral.start() + placeholder.last + 1)
+            val range = TextRange(logMessage.offsetOf(placeholder.first), logMessage.offsetOf(placeholder.last) + 1)
             LoggerBracketExpression(element, range, text, null)
         }
         val extraArguments = arguments.drop(consumed.size)
         val hiddenArguments = LoggerBracketExpression(
             element,
-            hiddenArgumentsRange(logLiteral, consumed.last(), extraArguments.firstOrNull()),
+            hiddenArgumentsRange(logMessage, consumed.last(), extraArguments.firstOrNull()),
             "",
             null
         )
@@ -154,12 +152,12 @@ open class LoggerBracketsExtensionBase(
         return LoggerBracketParentExpression(element, element.textRange, placeholderFolds + hiddenArguments + extraExpressions)
     }
 
-    /** The source span of the arguments that went into the message; the literal's closing quote stays real. */
+    /** The source span of the arguments that went into the message; the message's closing quote stays real. */
     open fun hiddenArgumentsRange(
-        logLiteral: PsiLiteralExpression,
+        logMessage: LogMessage,
         lastConsumed: PsiExpression,
         firstExtra: PsiExpression?
-    ) = TextRange(logLiteral.end(), lastConsumed.end())
+    ) = TextRange(logMessage.end, lastConsumed.end())
 
     private fun PsiExpression.inlineText(): String? {
         if (textContains('\n') || hasPartUnreadableInMessage()) return null
@@ -206,7 +204,8 @@ open class LoggerBracketsExtensionBase(
 
     open fun Array<PsiExpression>.hasEnoughElements() = size > 1
 
-    open fun Array<PsiExpression>.extractLiteral(): PsiLiteralExpression? = firstOrNull().asStringLiteral()
+    /** The message argument: a string literal or literals joined by `+`, checked by [LogMessage.of]. */
+    open fun Array<PsiExpression>.extractMessage(): PsiExpression? = firstOrNull()
 
     open fun MutableList<PsiExpression>.prepareArguments(): MutableList<PsiExpression> {
         removeAt(0) // remove logLiteral
@@ -226,12 +225,6 @@ open class LoggerBracketsExtensionBase(
         }.reduce(Int::plus)
         return logLiteral.substring(startIndex)
     }
-
-
-    internal fun PsiExpression?.asStringLiteral() =
-        asInstance<PsiLiteralExpression>()?.takeIf {
-            it.value is String
-        }
 
 }
 

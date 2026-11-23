@@ -101,6 +101,15 @@ import java.util.Formatter;</fold>
         return data;
     }</fold>
 
+    public void logWrappedMessage(Data data, String city, Exception exception) <fold text='{...}' expand='true'>{
+        <fold text='val' expand='false'>String</fold> name = "John";
+        log.info("Shop <fold text='$name' expand='false'>{}</fold> kept in <fold text='$city' expand='false'>{}</fold>: it has no owner yet, so the<fold text='' expand='false'>"
+                + "</fold> order cannot move; owner <fold text='${data.name}' expand='false'>{}</fold> was asked"<fold text='' expand='false'>, name, city, data.<fold text='n' expand='false'>getN</fold>ame<fold text='' expand='false'>()</fold></fold>);
+        log.warn("Shop <fold text='$name' expand='false'>{}</fold> could not be closed by <fold text='$city' expand='false'>{}</fold>:<fold text='' expand='false'>"
+                + "</fold> it still has orders"<fold text='' expand='false'>, name, city</fold>, exception);
+        log.info("Shop {} <fold text='${' expand='false'>" + </fold>1<fold text='}' expand='false'> + "</fold> stays", name);
+    }</fold>
+
     <fold text='@Getter p' expand='false'>p</fold>ublic static class Data <fold text='{...}' expand='true'>{
         private Data data;
         private String name;<fold text='' expand='false'>

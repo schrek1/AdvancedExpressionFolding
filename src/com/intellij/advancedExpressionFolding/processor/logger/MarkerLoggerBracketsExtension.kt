@@ -2,7 +2,6 @@ package com.intellij.advancedExpressionFolding.processor.logger
 
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.PsiExpression
-import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethodCallExpression
 
 class MarkerLoggerBracketsExtension(
@@ -10,7 +9,7 @@ class MarkerLoggerBracketsExtension(
         document: Document
     ) : LoggerBracketsExtensionBase(element, document) {
 
-        override fun Array<PsiExpression>.extractLiteral(): PsiLiteralExpression? = this[1].asStringLiteral()
+        override fun Array<PsiExpression>.extractMessage(): PsiExpression? = this[1]
 
         override fun MutableList<PsiExpression>.prepareArguments(): MutableList<PsiExpression> {
             removeAt(0)  // remove marker

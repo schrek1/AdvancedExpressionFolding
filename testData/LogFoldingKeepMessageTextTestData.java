@@ -36,6 +36,14 @@ public class LogFoldingKeepMessageTextTestData {
         System.out.println("Shop <fold text='$shopId' expand='false'>%s</fold> saved".formatted(<fold text='' expand='false'>shopId, </fold>user));
     }</fold>
 
+    public void wrappedMessages(String shopId, Settings previous, String user, Exception exception) <fold text='{...}' expand='true'>{
+        log.info("Shop <fold text='$shopId' expand='false'>{}</fold> kept in <fold text='${previous.mode}' expand='false'>{}</fold>: it has no owner yet, so the"<fold text=' + ' expand='false'>
+                + </fold>" order cannot move; owner <fold text='$user' expand='false'>{}</fold> was asked"<fold text='' expand='false'>, shopId, previous.<fold text='m' expand='false'>getM</fold>ode<fold text='' expand='false'>()</fold>, user</fold>);
+        log.warn("Shop '<fold text='$shopId' expand='false'>{}</fold>' could not be closed by <fold text='$user' expand='false'>{}</fold>:"<fold text=' + ' expand='false'>
+                + </fold>" it still has orders"<fold text='' expand='false'>, shopId, user</fold>, exception);
+        log.info("Shop {} " + 1 + " stays", shopId);
+    }</fold>
+
     private int countOrders(String shopId, Settings settings)<fold text=' { ' expand='false'> {
         </fold>return 0;<fold text=' }' expand='false'>
     }</fold>

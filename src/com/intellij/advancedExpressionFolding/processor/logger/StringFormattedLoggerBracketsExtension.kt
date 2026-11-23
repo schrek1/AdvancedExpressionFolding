@@ -6,7 +6,6 @@ import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
-import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethodCallExpression
 
 class StringFormattedLoggerBracketsExtension(
@@ -27,17 +26,16 @@ class StringFormattedLoggerBracketsExtension(
         }
 
         override fun hiddenArgumentsRange(
-            logLiteral: PsiLiteralExpression,
+            logMessage: LogMessage,
             lastConsumed: PsiExpression,
             firstExtra: PsiExpression?
         ) = if (firstExtra == null) {
-            TextRange(logLiteral.end(), element.end())
+            TextRange(logMessage.end, element.end())
         } else {
             TextRange(element.argumentList.firstChild.end(), firstExtra.start())
         }
 
         override fun Array<PsiExpression>.hasEnoughElements() = isNotEmpty()
 
-        override fun Array<PsiExpression>.extractLiteral(): PsiLiteralExpression? =
-            element.methodExpression.qualifierExpression.asStringLiteral()
+        override fun Array<PsiExpression>.extractMessage(): PsiExpression? = element.methodExpression.qualifierExpression
     }

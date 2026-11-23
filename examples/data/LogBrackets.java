@@ -100,6 +100,15 @@ public class LogBrackets {
         return data;
     }
 
+    public void logWrappedMessage(Data data, String city, Exception exception) {
+        String name = "John";
+        log.info("Shop {} kept in {}: it has no owner yet, so the"
+                + " order cannot move; owner {} was asked", name, city, data.getName());
+        log.warn("Shop {} could not be closed by {}:"
+                + " it still has orders", name, city, exception);
+        log.info("Shop {} " + 1 + " stays", name);
+    }
+
     public static class Data {
         private Data data;
         private String name;
