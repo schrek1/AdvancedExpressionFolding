@@ -29,10 +29,11 @@ typealias ClassName = String
  * **Lifecycle:**
  * 1. Lazy initialization during first PsiMethodCallExpression folding
  * 2. Background reads during method call folding operations
- * 3. Runtime updates via AddDynamicMethodFoldingIntention
+ * 3. Rebuilt on the first read after a settings change switches a method-call fold on or off
+ * 4. Runtime updates via AddDynamicMethodFoldingIntention
  *
  * **Performance characteristics:**
- * - Reads: O(1) HashMap lookup, no synchronization overhead
+ * - Reads: a check of the method-call options, then an O(1) HashMap lookup; no lock while settings are unchanged
  * - Writes: O(n) reconstruction of all mappings, synchronized but infrequent
  */
 object MethodCallFactory : IGlobalSettingsState by State()() {
@@ -40,14 +41,24 @@ object MethodCallFactory : IGlobalSettingsState by State()() {
     @Volatile
     private var dynamicProvider: IDynamicDataProvider? = ConfigurationParser
 
+    /**
+     * The mappings built for one combination of settings: `enabledOptions` holds `canExecute()` of each
+     * [MethodCallManager.methodCalls] entry, then `dynamic`.
+     */
+    private class Mappings(
+        val enabledOptions: BooleanArray,
+        val methodCallMap: Map<MethodName?, List<AbstractMethodCall>>,
+        val supportedClasses: Collection<ClassName>,
+        val supportedMethods: Collection<MethodName>,
+        val classlessMethods: Collection<MethodName>,
+    )
+
     @Volatile
-    private var methodCallMap: Map<MethodName?, List<AbstractMethodCall>> = emptyMap()
-    @Volatile
-    var supportedClasses: Collection<ClassName> = emptyList()
-    @Volatile
-    var supportedMethods: Collection<MethodName> = emptyList()
-    @Volatile
-    var classlessMethods: Collection<MethodName> = emptyList()
+    private var mappings = Mappings(BooleanArray(0), emptyMap(), emptyList(), emptyList(), emptyList())
+
+    val supportedClasses: Collection<ClassName> get() = currentMappings().supportedClasses
+    val supportedMethods: Collection<MethodName> get() = currentMappings().supportedMethods
+    val classlessMethods: Collection<MethodName> get() = currentMappings().classlessMethods
 
     fun refreshMethodCallMappings(dynamicProvider: IDynamicDataProvider? = null) {
         synchronized(this) {
@@ -55,14 +66,42 @@ object MethodCallFactory : IGlobalSettingsState by State()() {
                 // for tests
                 this.dynamicProvider = dynamicProvider
             }
-
-            methodCallMap = createMethodCalls()
-
-            supportedClasses = createSupportedClasses()
-            supportedMethods = createSupportedMethods()
-
-            classlessMethods = createClasslessMethods()
+            mappings = createMappings()
         }
+    }
+
+    // A settings change (Settings Apply, settings sync, tests) only flips the options, so every read checks them.
+    private fun currentMappings(): Mappings {
+        mappings.takeIf { it.matchesSettings() }?.let { return it }
+        synchronized(this) {
+            if (!mappings.matchesSettings()) {
+                mappings = createMappings()
+            }
+            return mappings
+        }
+    }
+
+    private fun Mappings.matchesSettings(): Boolean {
+        val methodCalls = MethodCallManager.methodCalls
+        return enabledOptions.size == methodCalls.size + 1 &&
+            enabledOptions[methodCalls.size] == dynamic &&
+            methodCalls.indices.all { enabledOptions[it] == methodCalls[it].canExecute() }
+    }
+
+    private fun createMappings(): Mappings {
+        val methodCalls = MethodCallManager.methodCalls
+        // read before building, so a change made meanwhile is caught by the next read
+        val enabledOptions = BooleanArray(methodCalls.size + 1) { index ->
+            if (index < methodCalls.size) methodCalls[index].canExecute() else dynamic
+        }
+        val methodCallMap = createMethodCalls(methodCalls)
+        return Mappings(
+            enabledOptions = enabledOptions,
+            methodCallMap = methodCallMap,
+            supportedClasses = createSupportedClasses(methodCallMap),
+            supportedMethods = createSupportedMethods(methodCallMap),
+            classlessMethods = createClasslessMethods(methodCallMap),
+        )
     }
 
     fun initialize(dynamicProvider: IDynamicDataProvider? = ConfigurationParser): MethodCallFactory {
@@ -73,8 +112,8 @@ object MethodCallFactory : IGlobalSettingsState by State()() {
         return this
     }
 
-    private fun createMethodCalls(): Map<MethodName?, List<AbstractMethodCall>> =
-        getAllMethodCalls().filter {
+    private fun createMethodCalls(methodCalls: List<AbstractMethodCall>): Map<MethodName?, List<AbstractMethodCall>> =
+        (methodCalls + loadDynamicMethods().orEmpty()).filter {
             it.canExecute()
         }.flatMap { methodCall ->
             methodCall.methodNames.map { methodName ->
@@ -89,11 +128,9 @@ object MethodCallFactory : IGlobalSettingsState by State()() {
             })
         }
 
-    private fun getAllMethodCalls(): List<AbstractMethodCall> = MethodCallManager.methodCalls + loadDynamicMethods().orEmpty()
-
     private fun loadDynamicMethods(): List<DynamicMethodCall>? = dynamic.takeIfTrue()?.let { dynamicProvider?.parse() }
 
-    private fun createSupportedClasses(): Collection<ClassName> =
+    private fun createSupportedClasses(methodCallMap: Map<MethodName?, List<AbstractMethodCall>>): Collection<ClassName> =
         methodCallMap.values
             .asSequence()
             .flatten()
@@ -104,14 +141,14 @@ object MethodCallFactory : IGlobalSettingsState by State()() {
             }.distinct().flatten()
             .toList()
 
-    private fun createSupportedMethods(): List<MethodName> =
+    private fun createSupportedMethods(methodCallMap: Map<MethodName?, List<AbstractMethodCall>>): List<MethodName> =
         methodCallMap.values
             .flatten()
             .map {
                 it.methodNames
             }.flatten()
 
-    private fun createClasslessMethods(): List<MethodName> =
+    private fun createClasslessMethods(methodCallMap: Map<MethodName?, List<AbstractMethodCall>>): List<MethodName> =
         methodCallMap.values
             .flatten()
             .filter {
@@ -121,5 +158,5 @@ object MethodCallFactory : IGlobalSettingsState by State()() {
             }.flatten() + Consts.UNSUPPORTED_CLASSES_METHODS_EXCEPTIONS
 
     fun findByMethodName(methodName: MethodName?): List<AbstractMethodCall>? =
-        methodCallMap[methodName]
+        currentMappings().methodCallMap[methodName]
 }

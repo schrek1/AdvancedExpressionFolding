@@ -45,9 +45,8 @@ abstract class BaseTest : LightJavaCodeInsightFixtureTestCase5(TEST_JDK) {
     }
 
     /**
-     * Rebuilds [MethodCallFactory] from the current settings. The factory keeps the method-call folds of the
-     * settings it was last built with, so a test that changes settings and folds without this sees the previous
-     * test's folds.
+     * Rebuilds [MethodCallFactory] from the current settings with the test dynamic-method provider. A settings
+     * change alone needs no rebuild; the factory picks it up on its next read.
      */
     protected fun rebuildMethodCallFactory() {
         MethodCallFactory.initialize(TestDynamicDataProvider())
