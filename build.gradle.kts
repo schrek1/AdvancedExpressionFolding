@@ -88,6 +88,13 @@ tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile>("compileTestKotl
 tasks.test {
     systemProperty("file.encoding", "UTF-8")
     systemProperty("line.separator", "\n")
+    // The IntelliJ JUnit 5 framework turns on extension autodetection, which also loads the IDE Starter's
+    // KillOutdatedProcesses: it reads every OS process's command line before and after each test class,
+    // ~1 min per call on Windows. Only IntegrationTest launches Starter IDEs, and it registers the extension itself.
+    systemProperty(
+        "junit.jupiter.extensions.autodetection.exclude",
+        "com.intellij.ide.starter.junit5.config.KillOutdatedProcesses",
+    )
     useJUnitPlatform()
     dependsOn(":examples:testClasses")
 }
