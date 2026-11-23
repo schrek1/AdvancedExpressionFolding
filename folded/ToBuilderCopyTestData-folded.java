@@ -27,6 +27,19 @@ public class ToBuilderCopyTestData {
         String text = person.toBuilder().name("Alice").toString();
     }
 
+    public void setPrefixed(Order order) {
+        var shipped = order.copy(
+            status = Status.SHIPPED,
+            note = "left at the door"
+        );
+        Order cancelled = order.copy(status = Status.CANCELLED, note = "out of stock");
+    }
+
+    public void setPrefixNotFolded(Order order) {
+        Order mixed = order.toBuilder().setStatus(Status.SHIPPED).note("gift").build();
+        Order tracked = order.toBuilder().setTracking("T-1").build();
+    }
+
     static class Person {
         private final String name;
         private final int age;
@@ -77,6 +90,52 @@ public class ToBuilderCopyTestData {
 
             public Person build() {
                 return new Person(name, age);
+            }
+        }
+    }
+
+    enum Status {
+        NEW, SHIPPED, CANCELLED
+    }
+
+    static class Order {
+        private final Status status;
+        private final String note;
+
+        Order(Status status, String note) {
+            this.status = status;
+            this.note = note;
+        }
+
+        public OrderBuilder toBuilder() {
+            return new OrderBuilder().setStatus(status).setNote(note);
+        }
+
+        static class OrderBuilder {
+            private Status status;
+            private String note;
+
+            public OrderBuilder setStatus(Status status) {
+                this.status = status;
+                return this;
+            }
+
+            public OrderBuilder setNote(String note) {
+                this.note = note;
+                return this;
+            }
+
+            public OrderBuilder note(String note) {
+                this.note = note;
+                return this;
+            }
+
+            public OrderBuilder setTracking(String tracking) {
+                return this;
+            }
+
+            public Order build() {
+                return new Order(status, note);
             }
         }
     }
