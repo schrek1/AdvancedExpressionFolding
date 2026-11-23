@@ -1,6 +1,7 @@
 package com.intellij.advancedExpressionFolding.inlay
 
 import com.intellij.application.options.CodeStyle
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.EditorCustomElementRenderer
 import com.intellij.openapi.editor.FoldingGroup
@@ -13,6 +14,7 @@ import com.intellij.openapi.editor.ex.util.EditorUIUtil
 import com.intellij.openapi.editor.ex.util.EditorUtil
 import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.util.Disposer
+import com.intellij.openapi.util.Key
 import java.awt.Font
 import java.awt.Graphics
 import java.awt.Rectangle
@@ -37,6 +39,8 @@ object VirtualLines {
     // written by the folding builder in a background read action, read on the EDT
     private val specs: MutableMap<FoldingGroup, Spec> = Collections.synchronizedMap(WeakHashMap())
 
+    private val INSTALLED = Key.create<Disposable>("AEF virtual lines")
+
     /**
      * @param above line drawn above the line of the group's first region
      * @param below line drawn below the line of the group's last region
@@ -51,12 +55,29 @@ object VirtualLines {
 
     fun install(editor: Editor) {
         val foldingModel = editor.foldingModel as? FoldingModelEx ?: return
+        if (editor.getUserData(INSTALLED) != null) {
+            return
+        }
         val disposable = Disposer.newDisposable("AEF virtual lines")
         EditorUtil.disposeWithEditor(editor, disposable)
+        editor.putUserData(INSTALLED, disposable)
         foldingModel.addListener(object : FoldingListener {
             override fun onFoldProcessingEnd() = sync(editor)
         }, disposable)
         sync(editor)
+    }
+
+    /** Takes the listener and the inlays of [install] off the editor; both are plugin code the editor would keep alive. */
+    fun uninstall(editor: Editor) {
+        editor.getUserData(INSTALLED)?.let(Disposer::dispose)
+        editor.putUserData(INSTALLED, null)
+        if (editor.isDisposed) {
+            return
+        }
+        val inlayModel = editor.inlayModel
+        val length = editor.document.textLength
+        (inlayModel.getBlockElementsInRange(0, length, LineRenderer::class.java) +
+            inlayModel.getInlineElementsInRange(0, length, IndentRenderer::class.java)).forEach(Disposer::dispose)
     }
 
     /** Adds the inlays of collapsed groups that are missing and removes the ones whose group is gone or expanded. */

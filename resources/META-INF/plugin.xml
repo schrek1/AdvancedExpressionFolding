@@ -80,6 +80,12 @@
                 implementationClass="com.intellij.advancedExpressionFolding.pseudo.TracingLoggableAnnotationCompletionContributor"/>
     </extensions>
 
+    <applicationListeners>
+        <!-- Clears what the plugin left on editors and PSI before an unload and re-attaches after a load, so an update needs no restart -->
+        <listener class="com.intellij.advancedExpressionFolding.PluginUpdateListener"
+                  topic="com.intellij.ide.plugins.DynamicPluginListener"/>
+    </applicationListeners>
+
     <actions>
         <group id="com.intellij.advancedExpressionFolding.AdvancedExpressionFoldingGroup"
                popup="true">
