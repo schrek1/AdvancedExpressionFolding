@@ -23,6 +23,7 @@ class CompactConstructorFoldingTest : BaseTest() {
                 globalOn = true
                 optional = true
             }
+            rebuildMethodCallFactory()
             store = FoldingDataStorage()
             fixture.configureByText(
                 "Shape.java",

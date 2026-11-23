@@ -24,6 +24,7 @@ class RequireNonNullElseHintsTest : BaseTest() {
         requireNonNullElseElvisBefore = state.requireNonNullElseElvis
         state.globalOn = true
         state.requireNonNullElseElvis = true
+        rebuildMethodCallFactory()
     }
 
     @AfterEach

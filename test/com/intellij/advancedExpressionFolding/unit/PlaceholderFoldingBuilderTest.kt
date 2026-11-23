@@ -22,6 +22,7 @@ class PlaceholderFoldingBuilderTest : BaseTest() {
                 globalOn = true
                 optional = true
             }
+            rebuildMethodCallFactory()
             store = FoldingDataStorage()
 
             val javaCode = """
