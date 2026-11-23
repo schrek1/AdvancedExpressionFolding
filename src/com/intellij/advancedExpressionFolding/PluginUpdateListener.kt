@@ -28,6 +28,7 @@ class PluginUpdateListener : DynamicPluginListener {
         }
         EditorFactory.getInstance().allEditors.forEach { editor ->
             VirtualLines.uninstall(editor)
+            FoldingEditorCreatedListener.stopCollapsingOnFirstFolds(editor)
             runReadAction { FoldingService.get().clearAllKeys(editor) }
         }
     }

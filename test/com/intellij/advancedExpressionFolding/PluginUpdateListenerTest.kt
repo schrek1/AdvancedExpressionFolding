@@ -4,14 +4,17 @@ import com.intellij.advancedExpressionFolding.folding.BaseTest
 import com.intellij.advancedExpressionFolding.folding.util.TestDynamicDataProvider
 import com.intellij.advancedExpressionFolding.inlay.VirtualLines
 import com.intellij.advancedExpressionFolding.processor.methodcall.MethodCallFactory
+import com.intellij.codeInsight.folding.CodeFoldingManager
 import com.intellij.ide.plugins.IdeaPluginDescriptor
 import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.editor.FoldRegion
 import com.intellij.openapi.util.UserDataHolderBase
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiRecursiveElementWalkingVisitor
 import com.intellij.testFramework.EditorTestUtil
+import com.intellij.testFramework.PlatformTestUtil
 import com.intellij.testFramework.runInEdtAndWait
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -67,6 +70,26 @@ class PluginUpdateListenerTest : BaseTest() {
 
             // THEN - the editor's folding listener is gone, so nothing draws the virtual lines again
             assertEquals(emptyList<Any>(), virtualLineInlays(editor))
+        }
+    }
+
+    @Test
+    fun beforePluginUnload_editorStillWaitingForItsFirstFolds_leavesNoListenerThatCollapsesThem() {
+        runInEdtAndWait {
+            // GIVEN - an open editor whose plugin folds have not arrived yet
+            assignState(state::scopeWith)
+            MethodCallFactory.initialize(TestDynamicDataProvider())
+            fixture.configureByText("Shop.java", source)
+
+            // WHEN - the plugin unloads and the folds arrive afterwards
+            PluginUpdateListener().beforePluginUnload(ownDescriptor(), isUpdate = true)
+            CodeFoldingManager.getInstance(fixture.project).updateFoldRegions(fixture.editor)
+            PlatformTestUtil.dispatchAllInvocationEventsInIdeEventQueue()
+
+            // THEN - nothing of the unloaded plugin is left on the editor to collapse them
+            val pluginRegions = fixture.editor.foldingModel.allFoldRegions.filter(FoldRegion::isAdvancedExpressionFoldingGroup)
+            assertTrue(pluginRegions.isNotEmpty(), "no plugin folds arrived")
+            assertTrue(pluginRegions.all(FoldRegion::isExpanded), "a listener left on the editor collapsed the folds")
         }
     }
 

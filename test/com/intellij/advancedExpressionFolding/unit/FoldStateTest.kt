@@ -9,6 +9,7 @@ import com.intellij.lang.folding.LanguageFolding
 import com.intellij.lang.java.JavaLanguage
 import com.intellij.openapi.editor.FoldRegion
 import com.intellij.testFramework.DumbModeTestUtils
+import com.intellij.testFramework.PlatformTestUtil
 import com.intellij.testFramework.runInEdtAndWait
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -75,6 +76,45 @@ class FoldStateTest : BaseTest() {
         // THEN - no fold opened up
         val pluginRegions = pluginRegions()
         assertTrue(pluginRegions.none(FoldRegion::isExpanded), "folds opened after indexing: ${describe(pluginRegions)}")
+    }
+
+    @Test
+    fun openFile_firstFoldPassDone_showsPluginFoldsCollapsed() {
+        // GIVEN - a newly opened file
+        openFile()
+
+        // WHEN - its first fold pass with plugin folds is applied
+        runInEdtAndWait {
+            CodeFoldingManager.getInstance(fixture.project).updateFoldRegions(fixture.editor)
+            PlatformTestUtil.dispatchAllInvocationEventsInIdeEventQueue()
+        }
+
+        // THEN - the plugin folds are collapsed at once, not after a delay
+        val pluginRegions = pluginRegions()
+        assertTrue(pluginRegions.isNotEmpty(), "the file shows no plugin fold")
+        assertTrue(pluginRegions.none(FoldRegion::isExpanded), "folds expanded after the first pass: ${describe(pluginRegions)}")
+    }
+
+    @Test
+    fun foldPass_afterTheFirstOne_leavesAFoldTheUserOpenedOpen() {
+        // GIVEN - an opened file whose plugin folds were collapsed on open, then one of them opened by the user
+        openFile()
+        lateinit var openedByUser: FoldRegion
+        runInEdtAndWait {
+            CodeFoldingManager.getInstance(fixture.project).updateFoldRegions(fixture.editor)
+            PlatformTestUtil.dispatchAllInvocationEventsInIdeEventQueue()
+            openedByUser = fixture.editor.foldingModel.allFoldRegions.first(FoldRegion::isAdvancedExpressionFoldingGroup)
+            fixture.editor.foldingModel.runBatchFoldingOperation { openedByUser.isExpanded = true }
+        }
+
+        // WHEN - the editor folds again
+        runInEdtAndWait {
+            CodeFoldingManager.getInstance(fixture.project).updateFoldRegions(fixture.editor)
+            PlatformTestUtil.dispatchAllInvocationEventsInIdeEventQueue()
+        }
+
+        // THEN - the fold stays open
+        assertTrue(openedByUser.isValid && openedByUser.isExpanded)
     }
 
     private fun openFile() {
