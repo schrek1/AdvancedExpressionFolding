@@ -1,5 +1,6 @@
 package data;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,14 @@ public class LombokGeneratedTestData {
                 .build();
     }
 
+    public OrderBook book(boolean open, List<String> asks, List<String> bids) {
+        List<String> none = List.of();
+        return OrderBook.builder()
+                .asks(open ? asks : List.of())
+                .bids(bids)
+                .build();
+    }
+
     enum Status {
         NEW, CANCELLED
     }
@@ -28,5 +37,12 @@ public class LombokGeneratedTestData {
     static class Order {
         String id;
         Status status;
+    }
+
+    @Value
+    @Builder
+    static class OrderBook {
+        List<String> asks;
+        List<String> bids;
     }
 }

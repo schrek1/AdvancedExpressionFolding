@@ -1,6 +1,7 @@
 package data;
 
-import <fold text='...' expand='false'>lombok.Builder;
+import <fold text='...' expand='false'>java.util.List;
+import lombok.Builder;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;</fold>
 
@@ -19,6 +20,14 @@ public class LombokGeneratedTestData {
                 .build()</fold>;
     }</fold>
 
+    public OrderBook book(boolean open, List<String> asks, List<String> bids) <fold text='{...}' expand='true'>{
+        <fold text='val' expand='false'>List<String></fold> none = <fold text='[]' expand='false'>List.of()</fold>;
+        return OrderBook<fold text='(' expand='false'>.builder()</fold>
+            <fold text='' expand='false'>    .</fold>asks<fold text=' = ' expand='false'>(</fold>open ? asks : <fold text='[]' expand='false'>List.of()</fold><fold text=',' expand='false'>)</fold>
+            <fold text='' expand='false'>    .</fold>bids<fold text=' = ' expand='false'>(</fold>bids<fold text='' expand='false'>)</fold>
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold>
+    }</fold>
+
     enum Status <fold text='{...}' expand='true'>{
         NEW, CANCELLED
     }</fold>
@@ -28,5 +37,12 @@ public class LombokGeneratedTestData {
     static class Order <fold text='{...}' expand='true'>{
         String id;
         Status status;
+    }</fold>
+
+    @Value
+    @Builder
+    static class OrderBook <fold text='{...}' expand='true'>{
+        List<String> asks;
+        List<String> bids;
     }</fold>
 }

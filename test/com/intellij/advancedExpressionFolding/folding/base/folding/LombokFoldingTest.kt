@@ -72,6 +72,8 @@ interface LombokFoldingTest : FoldingTestSection {
                 foldingState()::logFoldingKeepMessageText,
                 foldingState()::getSetExpressionsCollapse,
                 foldingState()::toBuilderCopy,
+                foldingState()::builderNamedArguments,
+                foldingState()::mapAndEmptyCollectionLiterals,
             )
         }
     }
