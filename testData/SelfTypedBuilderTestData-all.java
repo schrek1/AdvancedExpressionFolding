@@ -13,7 +13,7 @@ package data;
         </fold><fold text='val' expand='false'>Order</fold> fresh = Order<fold text='(' expand='false'>.builder()</fold>
             <fold text='i' expand='false'>    .setI</fold>d<fold text=' = ' expand='false'>(</fold>7<fold text=',' expand='false'>)</fold>
             <fold text='s' expand='false'>    .setS</fold>tatus<fold text=' = ' expand='false'>(</fold>Order.Status.NEW<fold text='' expand='false'>)</fold>
-        <fold text='' expand='false'>        .build(</fold>);<fold text=' ' expand='true'>
+        <fold text='' expand='false'>        .build(</fold>)<fold text='' expand='false'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     public void notFolded(Order order) <fold text='{...}' expand='true'>{

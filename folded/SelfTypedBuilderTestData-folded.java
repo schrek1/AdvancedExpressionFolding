@@ -11,7 +11,7 @@ public class SelfTypedBuilderTestData {
         Order fresh = Order(
             id = 7,
             status = Order.Status.NEW
-        );
+        )
     }
 
     public void notFolded(Order order) {
