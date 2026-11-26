@@ -299,7 +299,7 @@ Shows a guard `if` whose braces hold only `return` of a simple value (a literal,
 
 ## conditionalAsIfElse
 ### Ternary as if-else: long, multi-line, nested or string-building ones
-Shows a Java ternary `cond ? a : b` as Kotlin `if (cond) a else b` when it is long, spans several lines, is nested, or has a branch that builds a string (concatenation, `.formatted(...)`, `String.format(...)`). Only ` if (`, `)` and ` else` are folded and the trailing `;` is hidden; the branches stay real code in their order. A null-check ternary that reads as honest Kotlin still folds to Elvis first.
+Shows a Java ternary `cond ? a : b` as Kotlin `if (cond) a else b` when it is long or spans several lines and a branch is not simple (a variable, a field or getter chain, a literal, `null` or `this` are simple, so such a ternary stays as written however long), is nested, or has a branch that builds a string (concatenation, `.formatted(...)`, `String.format(...)`). Only ` if (`, `)` and ` else` are folded and the trailing `;` is hidden; the branches stay real code in their order. A null-check ternary that reads as honest Kotlin still folds to Elvis first.
 - [Example](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/examples/data/ConditionalAsIfElseTestData.java)
 - [Folded](https://github.com/AntoniRokitnicki/AdvancedExpressionFolding/blob/main/folded/ConditionalAsIfElseTestData-folded.java)
 
