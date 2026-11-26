@@ -36,6 +36,11 @@ class IfElseConditionalExpression private constructor(
     private val closingParenAtLineEnd: Boolean,
 ) : Expression(element, element.textRange) {
 
+    /** Whether the blank before the ternary is folded to ` if (`, so an enclosing fold must not cover it. */
+    val foldsBlankBefore: Boolean = folds.any { (range, placeholder) ->
+        placeholder == " if (" && range.endOffset == element.textRange.startOffset
+    }
+
     override fun isNested(): Boolean = true
 
     override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean = true

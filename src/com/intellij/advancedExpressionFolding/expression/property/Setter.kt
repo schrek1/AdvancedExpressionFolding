@@ -1,6 +1,7 @@
 package com.intellij.advancedExpressionFolding.expression.property
 
 import com.intellij.advancedExpressionFolding.expression.Expression
+import com.intellij.advancedExpressionFolding.expression.controlflow.IfElseConditionalExpression
 import com.intellij.advancedExpressionFolding.processor.declaration.SetterNamedArgumentsExt.propertyNameFold
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
@@ -18,7 +19,13 @@ class Setter(
     private val value: Expression
 ) : Expression(element, textRange) {
 
+    private val valueIfElse = (value as? IfElseConditionalExpression)?.takeIf { it.foldsBlankBefore }
+
     override fun supportsFoldRegions(document: Document, parent: Expression?): Boolean = true
+
+    // an if-else value folds its own children (the condition and the branches), which the setter would otherwise
+    // skip: the walk goes on into the call's receiver and argument, so they are not built here
+    override fun isNested(): Boolean = valueIfElse != null || super.isNested()
 
     override fun buildFoldRegions(
         element: PsiElement,
@@ -45,11 +52,12 @@ class Setter(
                 group,
                 shownName
             )
+            // an if-else value folds the blank before it to ` if (`: the setter stops short of it
             descriptors += FoldingDescriptor(
                 element.node,
-                TextRange.create(nameRange.endOffset, value.textRange.startOffset),
+                TextRange.create(nameRange.endOffset, value.textRange.startOffset - if (valueIfElse != null) 1 else 0),
                 group,
-                " = "
+                if (valueIfElse != null) " =" else " = "
             )
         }
         if (!value.isRightOverflow()) {
@@ -61,6 +69,9 @@ class Setter(
                     ""
                 )
             }
+        }
+        if (valueIfElse != null) {
+            return descriptors.toTypedArray()
         }
         receiver?.takeIf { it.supportsFoldRegions(document, this) }?.let { obj ->
             descriptors += obj.buildFoldRegions(obj.element, document, this).toList()
