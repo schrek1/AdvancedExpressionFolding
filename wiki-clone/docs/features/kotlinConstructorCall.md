@@ -39,6 +39,6 @@ Rules:
 - Anonymous classes, arrays and qualified `outer.new Inner()` keep `new`.
 - Where another folding already rewrites the creation (collection literals, `::new`, builder or setter arguments), that folding wins.
 
-Default: Off
+Default: On
 Controlled by: `kotlinConstructorCall`
 Related features: `constructorReferenceNotation`

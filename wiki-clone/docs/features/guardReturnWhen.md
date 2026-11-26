@@ -38,6 +38,6 @@ Only `if (`, `)`, the braces and the `;`s are folded. `when {`, `else -> ` and t
 by the editor while the chain is collapsed, and the branches are indented one level the same way; the document is
 unchanged and the code keeps its order and syntax colours.
 
-Default: Off
+Default: On
 Controlled by: `guardReturnWhen`
 Related features: `kotlinQuickReturn`, `compactControlFlowSyntaxCollapse`

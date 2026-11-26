@@ -34,5 +34,5 @@ its own folds (getters, streams, interpolated strings) keep working.
 - A lambda inside a call that another fold already rewrites (for example `orElseGet` shown as `?:`) stays Java.
 - Method references are not changed.
 
-Default: Off
+Default: On
 Controlled by: `kotlinLambda`

@@ -28,6 +28,6 @@ folded/IsOperatorTestData-folded.java:
         if (shape !is Square square) {
 ```
 
-Default: Off
+Default: On
 Controlled by: `kotlinIsOperator`
 Related features: `patternMatchingInstanceof`, `emojify`

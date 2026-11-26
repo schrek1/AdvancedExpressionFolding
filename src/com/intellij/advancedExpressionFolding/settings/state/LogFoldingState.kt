@@ -9,5 +9,5 @@ interface ILogFoldingState {
 data class LogFoldingState(
     override var logFolding: Boolean = true,
     override var logFoldingTextBlocks: Boolean = true,
-    override var logFoldingKeepMessageText: Boolean = false,
+    override var logFoldingKeepMessageText: Boolean = true,
 ) : ILogFoldingState

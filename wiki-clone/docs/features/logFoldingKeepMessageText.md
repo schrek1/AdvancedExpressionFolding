@@ -25,6 +25,6 @@ Rules:
   lambda, spans several lines or is longer than about 40 characters keeps the classic log folding;
 - marker loggers, `String.format`, `printf` and `String.formatted` follow the same rules.
 
-Default: Off
+Default: On
 Controlled by: `logFoldingKeepMessageText`
 Related features: `logFolding`

@@ -29,6 +29,6 @@ an `else` or an `else if` chain keeps the braces. Guards that `throw` are left a
 Unlike the read-only brace folding, the whole `if` sits on one line, so there is no indented body line a new
 statement could be mistaken for: a line added after it lands outside the `if`, where it looks to be.
 
-Default: Off
+Default: On
 Controlled by: `guardIfOneLiner`
 Related features: `controlFlowSingleStatementCodeBlockCollapse`, `compactControlFlowSyntaxCollapse`
