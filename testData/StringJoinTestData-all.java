@@ -30,9 +30,9 @@ import java.util.Set;</fold>
         <fold text='val' expand='false'>String</fold> noArgs = String.join(", ");
         <fold text='val' expand='false'>String</fold> ternary = String.join(", ", flag ? names : <fold text='[]' expand='false'>List.of()</fold>);
         <fold text='val' expand='false'>String</fold> multiLine = String.join(
-               <fold text=' if (' expand='false'> </fold>flag
-                        <fold text='' expand='false'>? </fold>", "
-                        <fold text='else' expand='false'>:</fold> ";",
+                flag
+                        ? ", "
+                        : ";",
                 names);
     }</fold>
 }

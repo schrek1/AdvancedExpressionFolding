@@ -115,6 +115,32 @@ public class ConditionalAsIfElseTestData {
         System.out.println(active ? "active: " + name : "inactive");
     }
 
+    // I1 - long ternary, both branches a getter chain: stays a ternary
+    String contactEmail(Device device, Device fallback) {
+        String email = device.getOwner().isActive() ? device.getOwner().getEmail() : fallback.getOwner().getEmail();
+        return email;
+    }
+
+    // I2 - multi-line ternary, both branches a getter chain: stays a ternary
+    String contactEmailMultiLine(Device device, Device fallback) {
+        String email = device.getOwner().isActive()
+                ? device.getOwner().getEmail()
+                : fallback.getOwner().getEmail();
+        return email;
+    }
+
+    // I3 - long ternary, a getter chain and `null`: stays a ternary
+    String activeOwnerEmail(Device device, Device fallback) {
+        String email = device.getOwner().isActive() && fallback.getOwner().isActive() ? device.getOwner().getEmail() : null;
+        return email;
+    }
+
+    // I4 - long ternary, branches are calls with arguments: if/else
+    int pageLimit(Device device, int requested, int defaultSize, int maxSize) {
+        int limit = device.getOwner().isActive() ? Math.max(requested, defaultSize) : Math.min(requested, maxSize);
+        return limit;
+    }
+
     private static String format(LocalDateTime time) {
         return time.toString();
     }
@@ -139,6 +165,11 @@ public class ConditionalAsIfElseTestData {
 
     static class Owner {
         private String email;
+        private boolean active;
+
+        public boolean isActive() {
+            return active;
+        }
 
         public String getEmail() {
             return email;

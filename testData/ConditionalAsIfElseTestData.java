@@ -115,6 +115,32 @@ public class ConditionalAsIfElseTestData {
         </fold>System.out.println(active ? "active: " + name : "inactive");<fold text=' }' expand='false'>
     }</fold>
 
+    // I1 - long ternary, both branches a getter chain: stays a ternary
+    String contactEmail(Device device, Device fallback) <fold text='{...}' expand='true'>{
+        String email = device.getOwner().isActive() ? device.getOwner().getEmail() : fallback.getOwner().getEmail();
+        return email;
+    }</fold>
+
+    // I2 - multi-line ternary, both branches a getter chain: stays a ternary
+    String contactEmailMultiLine(Device device, Device fallback) <fold text='{...}' expand='true'>{
+        String email = device.getOwner().isActive()
+                ? device.getOwner().getEmail()
+                : fallback.getOwner().getEmail();
+        return email;
+    }</fold>
+
+    // I3 - long ternary, a getter chain and `null`: stays a ternary
+    String activeOwnerEmail(Device device, Device fallback) <fold text='{...}' expand='true'>{
+        String email = device.getOwner().isActive() && fallback.getOwner().isActive() ? device.getOwner().getEmail() : null;
+        return email;
+    }</fold>
+
+    // I4 - long ternary, branches are calls with arguments: if/else
+    int pageLimit(Device device, int requested, int defaultSize, int maxSize) <fold text='{...}' expand='true'>{
+        int limit =<fold text=' if (' expand='false'> </fold>device.getOwner().isActive()<fold text=')' expand='false'> ?</fold> Math.max(requested, defaultSize) <fold text='else' expand='false'>:</fold> Math.min(requested, maxSize)<fold text='' expand='false'>;</fold>
+        return limit;
+    }</fold>
+
     private static String format(LocalDateTime time)<fold text=' { ' expand='false'> {
         </fold>return time.toString();<fold text=' }' expand='false'>
     }</fold>
@@ -139,6 +165,11 @@ public class ConditionalAsIfElseTestData {
 
     static class Owner <fold text='{...}' expand='true'>{
         private String email;
+        private boolean active;
+
+        public boolean isActive()<fold text=' { ' expand='false'> {
+            </fold>return active;<fold text=' }' expand='false'>
+        }</fold>
 
         public String getEmail()<fold text=' { ' expand='false'> {
             </fold>return email;<fold text=' }' expand='false'>

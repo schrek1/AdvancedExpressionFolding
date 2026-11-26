@@ -14,9 +14,12 @@ import com.intellij.psi.PsiComment
 import com.intellij.psi.PsiConditionalExpression
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiExpression
+import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiPolyadicExpression
+import com.intellij.psi.PsiReferenceExpression
 import com.intellij.psi.PsiReturnStatement
+import com.intellij.psi.PsiThisExpression
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.PsiUtil
 
@@ -62,7 +65,7 @@ class IfElseConditionalExpression private constructor(
         private const val LONG_CONDITIONAL_LENGTH = 80
 
         /**
-         * @param always every ternary, not only a long, multi-line, nested one or one with a string-building branch
+         * @param always every ternary, not only a long or multi-line one with a non-simple branch, a nested one or one with a string-building branch
          * @return null when the ternary stays as it is
          */
         fun create(element: PsiConditionalExpression, document: Document, always: Boolean): Expression? {
@@ -126,13 +129,24 @@ class IfElseConditionalExpression private constructor(
             thenBranch: PsiExpression,
             elseBranch: PsiExpression,
         ): Boolean =
-            element.textLength > LONG_CONDITIONAL_LENGTH ||
-                '\n' in element.text ||
-                element.parent is PsiConditionalExpression ||
+            element.parent is PsiConditionalExpression ||
                 listOf(thenBranch, elseBranch).any { branch ->
                     val unwrapped = PsiUtil.skipParenthesizedExprDown(branch)
                     unwrapped is PsiConditionalExpression || buildsString(unwrapped)
-                }
+                } ||
+                // length alone does not help: two simple branches read best as a ternary however long it is
+                (element.textLength > LONG_CONDITIONAL_LENGTH || '\n' in element.text) &&
+                !(isSimple(thenBranch) && isSimple(elseBranch))
+
+        /** A variable, a field or getter chain without arguments (`a.b.getC()`), a literal, `null` or `this`. */
+        private fun isSimple(expression: PsiExpression?): Boolean =
+            when (val unwrapped = PsiUtil.skipParenthesizedExprDown(expression)) {
+                is PsiLiteralExpression, is PsiThisExpression -> true
+                is PsiReferenceExpression -> unwrapped.qualifierExpression?.let(::isSimple) != false
+                is PsiMethodCallExpression -> unwrapped.argumentList.isEmpty &&
+                    unwrapped.methodExpression.qualifierExpression?.let(::isSimple) != false
+                else -> false
+            }
 
         /** A concatenation, `.formatted(…)` or `String.format(…)`: the branches the template folds turn into `"…"`. */
         private fun buildsString(expression: PsiExpression?): Boolean = when (expression) {
