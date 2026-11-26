@@ -50,6 +50,6 @@ folded/KotlinPreconditionsTestData-folded.java:
 
 Takes precedence over Asserts (`assertsCollapse`) for `IllegalArgumentException` and `IllegalStateException`.
 
-Default: Off
+Default: On
 Controlled by: `kotlinPreconditions`
 Related features: `assertsCollapse`, `concatenationExpressionsCollapse`

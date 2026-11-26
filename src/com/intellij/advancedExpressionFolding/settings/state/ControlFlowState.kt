@@ -16,7 +16,7 @@ data class ControlFlowState(
     override var controlFlowMultiStatementCodeBlockCollapse: Boolean = false,
     override var controlFlowSingleStatementCodeBlockCollapse: Boolean = false,
     override var assertsCollapse: Boolean = true,
-    override var guardIfOneLiner: Boolean = false,
+    override var guardIfOneLiner: Boolean = true,
     override var switchArrow: Boolean = true,
     override var conditionalAsIfElse: Boolean = true,
     override var conditionalAsIfElseAlways: Boolean = false,
