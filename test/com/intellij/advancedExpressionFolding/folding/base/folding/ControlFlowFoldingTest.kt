@@ -33,7 +33,14 @@ interface ControlFlowFoldingTest : FoldingTestSection {
     )
 
     @Test
-    fun conditionalAsIfElseAlwaysTestData() = testCase.runFoldingTest(
+    fun conditionalAsIfElseSetterTestData() = testCase.runFoldingTest(
+        foldingState()::checkExpressionsCollapse,
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::conditionalAsIfElse,
+    )
+
+    @Test
+    fun conditionalAsIfElseAlwaysTestData() =testCase.runFoldingTest(
         foldingState()::checkExpressionsCollapse,
         foldingState()::conditionalAsIfElseAlways,
     )
