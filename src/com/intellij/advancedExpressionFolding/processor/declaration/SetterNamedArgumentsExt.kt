@@ -44,8 +44,7 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
             TextRange(newExpression.textRange.startOffset, classReference.textRange.startOffset) to "",
         )
         val open = TextRange(classReference.textRange.endOffset, declaration.textRange.endOffset)
-        val multiLine = setters.size > 1 &&
-            document.getLineNumber(setters.last().textRange.startOffset) != document.getLineNumber(open.startOffset)
+        val multiLine = isMultiLine(setters, document, open.startOffset)
         setters.forEachIndexed { index, setter ->
             val value = setter.argumentList.expressions.single().textRange
             val nameRange = setter.methodExpression.referenceNameElement!!.textRange
@@ -124,15 +123,35 @@ object SetterNamedArgumentsExt : IExpressionCollapseState by State()() {
     }
 
     /** Whether `call` is a setter folded into a named argument, so it must not get its own setter folding. */
-    fun isInSetterRun(call: PsiMethodCallExpression, document: Document): Boolean {
-        if (!setterNamedArguments || !Helper.isSetter(call.methodExpression.referenceName ?: return false)) {
-            return false
+    fun isInSetterRun(call: PsiMethodCallExpression, document: Document): Boolean =
+        setterRunOf(call, document)?.contains(call) == true
+
+    /**
+     * Whether [element] sits in a setter statement of a run folded over several lines, where every line after the
+     * first gets a virtual extra indent that a re-indented nested call has to account for.
+     */
+    fun isInMultiLineRun(element: PsiElement, document: Document): Boolean {
+        val call = PsiTreeUtil.getParentOfType(element, PsiExpressionStatement::class.java)?.expression
+            as? PsiMethodCallExpression ?: return false
+        val setters = setterRunOf(call, document)?.takeIf { it.contains(call) } ?: return false
+        val declaration = (call.methodExpression.qualifierExpression as PsiReferenceExpression)
+            .resolve()?.parent as PsiDeclarationStatement
+        val classReference = (declaration.newObjectVariable()!!.initializer as PsiNewExpression).classReference!!
+        return isMultiLine(setters, document, classReference.textRange.endOffset)
+    }
+
+    private fun isMultiLine(setters: List<PsiMethodCallExpression>, document: Document, openOffset: Int) =
+        setters.size > 1 &&
+            document.getLineNumber(setters.last().textRange.startOffset) != document.getLineNumber(openOffset)
+
+    private fun setterRunOf(call: PsiMethodCallExpression, document: Document): List<PsiMethodCallExpression>? {
+        if (!setterNamedArguments || !Helper.isSetter(call.methodExpression.referenceName ?: return null)) {
+            return null
         }
-        val qualifier = call.methodExpression.qualifierExpression as? PsiReferenceExpression ?: return false
-        val variable = qualifier.resolve() as? PsiLocalVariable ?: return false
-        val declaration = variable.parent as? PsiDeclarationStatement ?: return false
-        return declaration.newObjectVariable() == variable &&
-            setterRun(declaration, variable, document).contains(call)
+        val qualifier = call.methodExpression.qualifierExpression as? PsiReferenceExpression ?: return null
+        val variable = qualifier.resolve() as? PsiLocalVariable ?: return null
+        val declaration = variable.parent as? PsiDeclarationStatement ?: return null
+        return declaration.takeIf { it.newObjectVariable() == variable }?.let { setterRun(it, variable, document) }
     }
 
     /** Whether `creation` opens a setter run, whose fold already hides its `new`. */

@@ -3,6 +3,7 @@ package com.intellij.advancedExpressionFolding.expression.semantic
 import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.inlay.VirtualLine
 import com.intellij.advancedExpressionFolding.inlay.VirtualLines
+import com.intellij.advancedExpressionFolding.processor.declaration.SetterNamedArgumentsExt
 import com.intellij.application.options.CodeStyle
 import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
@@ -73,6 +74,8 @@ class NamedArgumentsCall(
             }
         }
 
+        val runIndent = if (SetterNamedArgumentsExt.isInMultiLineRun(element, document)) indentUnit(element) else ""
+
         // Re-indents a range that starts its line; the indentation both layouts share stays real text.
         fun foldIndented(range: TextRange, indent: String, suffix: String = "") {
             val lineStart = document.getLineStartOffset(document.getLineNumber(range.startOffset))
@@ -80,7 +83,10 @@ class NamedArgumentsCall(
                 fold(range, suffix)
                 return
             }
-            val shared = document.getText(TextRange(lineStart, range.startOffset)).commonPrefixWith(indent).length
+            val blanks = document.getText(TextRange(lineStart, range.startOffset))
+            // inside a virtually indented run the fold has to cover the last blank, or the run's indent inlay shows too
+            val common = blanks.commonPrefixWith(indent).length
+            val shared = if (runIndent.isEmpty()) common else common.coerceAtMost((blanks.length - 1).coerceAtLeast(0))
             fold(TextRange(lineStart + shared, range.endOffset), indent.substring(shared) + suffix)
         }
 
@@ -93,7 +99,7 @@ class NamedArgumentsCall(
         }
 
         // Kotlin layout: arguments one indent level deeper than the line the call starts on, `)` back on that level
-        val baseIndent = document.indentOf(openRange.startOffset)
+        val baseIndent = document.indentOf(openRange.startOffset) + runIndent
         val argumentIndent = baseIndent + indentUnit(element)
         fold(openRange, openText)
         var previousEnd = openRange.endOffset
