@@ -13,12 +13,9 @@ class StringFormattedLoggerBracketsExtension(
         document: Document
     ) : LoggerBracketsExtensionBase(element, document) {
 
-        override fun PsiElement.createLastString(hasTooManyArguments: Boolean) = buildString {
-            append(".formatted(")
-            if (!hasTooManyArguments) {
-                append(")")
-            }
-        }
+        // Extra arguments stay real source, so only then the call's head must be shown; otherwise the whole tail hides.
+        override fun PsiElement.createLastString(hasTooManyArguments: Boolean) =
+            if (hasTooManyArguments) ".formatted(" else ""
 
         override fun MutableList<PsiExpression>.prepareArguments(): MutableList<PsiExpression> {
             // No need to remove anything
