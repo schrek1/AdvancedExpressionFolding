@@ -9,11 +9,13 @@ import com.intellij.openapi.editor.Document
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.JavaTokenType
 import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiCapturedWildcardType
 import com.intellij.psi.PsiClassType
 import com.intellij.psi.PsiJavaToken
 import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.PsiType
+import com.intellij.psi.PsiTypeParameter
 
 /** The setter links of a builder chain (`builder()` or `toBuilder()` … `build()`) folded into named arguments. */
 internal object BuilderChainLinks {
@@ -89,6 +91,14 @@ internal fun PsiMethodCallExpression.dotOffset() = methodExpression.children
     .firstOrNull { it is PsiJavaToken && it.tokenType == JavaTokenType.DOT }
     ?.textRange?.startOffset
 
-internal fun PsiType?.resolveClass() = (this as? PsiClassType)?.resolve()
+/** The class of a type; a captured wildcard or type parameter (Lombok `@SuperBuilder`'s `B`, `C`) resolves to its bound. */
+internal fun PsiType?.resolveClass(): PsiClass? = when (this) {
+    is PsiCapturedWildcardType -> upperBound.resolveClass()
+    is PsiClassType -> when (val resolved = resolve()) {
+        is PsiTypeParameter -> resolved.extendsListTypes.firstOrNull().resolveClass()
+        else -> resolved
+    }
+    else -> null
+}
 
 internal fun PsiClass.isSame(other: PsiClass?) = manager.areElementsEquivalent(this, other)
