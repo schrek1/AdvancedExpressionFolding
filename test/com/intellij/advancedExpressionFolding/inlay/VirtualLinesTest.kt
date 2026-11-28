@@ -270,6 +270,88 @@ class VirtualLinesTest : BaseTest() {
     }
 
     @Test
+    fun sync_builderChainAsSetterValue_closingParenthesisUnderTheArgumentName() {
+        runInEdtAndWait {
+            // GIVEN - a setter run whose second value is a multi-line builder chain ending in `.build());`
+            @Language("JAVA")
+            val source = """
+                class Shop {
+                    void open() {
+                        var account = new Account();
+                        account.setId("acc1");
+                        account.setSecurity(Security.builder()
+                                .active(false)
+                                .deadline("2027")
+                                .build());
+                        account.setRole("MEMBER");
+                    }
+
+                    static class Account {
+                        public void setId(String id) {
+                        }
+
+                        public void setSecurity(Security security) {
+                        }
+
+                        public void setRole(String role) {
+                        }
+                    }
+
+                    static class Security {
+                        private final boolean active;
+                        private final String deadline;
+
+                        Security(boolean active, String deadline) {
+                            this.active = active;
+                            this.deadline = deadline;
+                        }
+
+                        static Builder builder() {
+                            return new Builder();
+                        }
+
+                        static class Builder {
+                            private boolean active;
+                            private String deadline;
+
+                            Builder active(boolean active) {
+                                this.active = active;
+                                return this;
+                            }
+
+                            Builder deadline(String deadline) {
+                                this.deadline = deadline;
+                                return this;
+                            }
+
+                            Security build() {
+                                return new Security(active, deadline);
+                            }
+                        }
+                    }
+                }
+            """.trimIndent()
+            val editor = foldedEditor(source) { assignState(state::builderNamedArguments, state::setterNamedArguments) }
+
+            // WHEN - the virtual lines are synced with the collapsed folds
+            VirtualLines.sync(editor)
+
+            // THEN - the nested call's arguments sit one level under `security = Security(` and its `)` under `security`
+            val space = EditorUtil.getPlainSpaceWidth(editor)
+            fun column(offset: Int) = editor.offsetToXY(offset).x / space
+            assertEquals(
+                listOf(12, 16, 16, 12),
+                listOf(
+                    column(source.indexOf("account.setSecurity")),
+                    column(source.indexOf("active(false)")),
+                    column(source.indexOf("deadline(\"2027")),
+                    column(source.indexOf(".build()") + ".build(".length),
+                ),
+            )
+        }
+    }
+
+    @Test
     fun sync_collapsedInstanceofSwitch_casesOneLevelInCommentedDefaultBodyTwo() {
         runInEdtAndWait {
             // GIVEN - an instanceof chain with a commented else, folded as a pattern switch
