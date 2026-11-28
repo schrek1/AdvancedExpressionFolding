@@ -72,6 +72,9 @@ interface ExpressionCollapseFoldingTest : FoldingTestSection {
     fun getterSetterTestData() = testCase.runFoldingTest(foldingState()::getSetExpressionsCollapse)
 
     @Test
+    fun unqualifiedGetterTestData() = testCase.runFoldingTest(foldingState()::getSetExpressionsCollapse)
+
+    @Test
     fun fieldShiftBuilder() = testCase.runFoldingTest(
         foldingState()::fieldShift,
         foldingState()::getSetExpressionsCollapse,

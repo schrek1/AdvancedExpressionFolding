@@ -52,7 +52,7 @@ public class EmojifyTestData {
         </fold>}</fold></fold>
 
         public void printField()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='val' expand='false'>int</fold> value = <fold text='f' expand='false'>getF</fold>ield<fold text='' expand='false'>()</fold>;<fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='val' expand='false'>int</fold> value = getField();<fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 

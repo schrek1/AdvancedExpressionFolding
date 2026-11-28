@@ -157,7 +157,7 @@ object MethodCallExpressionExt :
         experimental: Boolean
     ): Expression? {
         val resolvedMethod = element.resolveMethod()
-        if (isGetter(identifier, element)) {
+        if (qualifier != null && isGetter(identifier, element)) {
             val expression = qualifier?.let { BuildExpressionExt.getAnyExpression(it, document) }
             return Getter(
                 element,

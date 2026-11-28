@@ -80,7 +80,7 @@ public class PatternMatchingInstanceofTestData {
         }</fold>
 
         public void negativeTest(Object o) <fold text='{...}' expand='true'>{
-            if <fold text='' expand='false'>(</fold><fold text='o' expand='false'>getO</fold>bject<fold text='' expand='false'>()</fold> <fold text='is' expand='false'>instanceof</fold> String<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{ // Method call instead of variable
+            if <fold text='' expand='false'>(</fold>getObject() <fold text='is' expand='false'>instanceof</fold> String<fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{ // Method call instead of variable
                 <fold text='val' expand='false'>String</fold> s = <fold text='' expand='false'>(String) </fold>o;
                 <fold text='' expand='false'>System.out.</fold>println(s.length());
             }</fold>

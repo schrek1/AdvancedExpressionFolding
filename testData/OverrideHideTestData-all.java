@@ -77,7 +77,7 @@ public class OverrideHideTestData {
         </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public boolean equals(Object obj) <fold text='{...}' expand='true'>{
             if <fold text='' expand='false'>(</fold>this == obj<fold text='' expand='false'>)</fold> return true;
-            if <fold text='' expand='false'>(</fold>obj == null || <fold text='c' expand='false'>getC</fold>lass<fold text='' expand='false'>()</fold> != obj.<fold text='c' expand='false'>getC</fold>lass<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> return false;
+            if <fold text='' expand='false'>(</fold>obj == null || getClass() != obj.<fold text='c' expand='false'>getC</fold>lass<fold text='' expand='false'>()</fold><fold text='' expand='false'>)</fold> return false;
             <fold text='val' expand='false'>Circle</fold> circle = <fold text='' expand='false'>(Circle) </fold>obj;
             return Double.compare(circle.radius, radius) == 0;
         }</fold></fold><fold text='' expand='false'>
