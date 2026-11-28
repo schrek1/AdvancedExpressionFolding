@@ -9,6 +9,7 @@ import com.intellij.advancedExpressionFolding.processor.declaration.JakartaConst
 import com.intellij.advancedExpressionFolding.processor.expr
 import com.intellij.advancedExpressionFolding.processor.group
 import com.intellij.advancedExpressionFolding.processor.lombok.LombokNonNullExt
+import com.intellij.advancedExpressionFolding.processor.nextWhiteSpace
 import com.intellij.advancedExpressionFolding.processor.prevWhiteSpace
 import com.intellij.advancedExpressionFolding.settings.State
 import com.intellij.advancedExpressionFolding.settings.state.ILombokState
@@ -32,13 +33,26 @@ object LeadingParameterChecksExt : ILombokState by State()() {
         val enabled: Boolean,
     )
 
-    /** Hides a leading parameter check, with the whitespace before it, as one non-nested fold. */
+    /**
+     * Hides a leading parameter check as one non-nested fold. Normally the check's own line (indentation, statement,
+     * line break): a fold starting right after the `{` would swallow the inlay anchored there. A check sharing its line
+     * with other code hides the whitespace before it instead.
+     */
     fun hiddenCheck(statement: PsiStatement): Expression? {
         if (!hides(statement)) {
             return null
         }
         val group = LeadingParameterChecksExt::class.group()
-        val hidden = listOfNotNull(statement.prevWhiteSpace(), statement).map { HideExpression(it, group = group) }
+        val before = statement.prevWhiteSpace()
+        val after = statement.nextWhiteSpace()
+        val lineBreakBefore = before?.text?.lastIndexOf('\n') ?: -1
+        val lineBreakAfter = after?.text?.indexOf('\n') ?: -1
+        val hidden = if (before != null && after != null && lineBreakBefore >= 0 && lineBreakAfter >= 0) {
+            val range = TextRange(before.textRange.startOffset + lineBreakBefore + 1, after.textRange.startOffset + lineBreakAfter + 1)
+            listOf(HideExpression(statement, range, group))
+        } else {
+            listOfNotNull(before, statement).map { HideExpression(it, group = group) }
+        }
         return WrapperExpression(statement, chain = hidden, nested = false)
     }
 

@@ -1,6 +1,9 @@
 package com.intellij.advancedExpressionFolding.processor.lombok
 
 import com.intellij.advancedExpressionFolding.folding.BaseTest
+import com.intellij.advancedExpressionFolding.folding.util.TestDynamicDataProvider
+import com.intellij.advancedExpressionFolding.processor.methodcall.MethodCallFactory
+import com.intellij.testFramework.EditorTestUtil
 import com.intellij.codeInsight.hints.InlayDumpUtil
 import com.intellij.codeInsight.hints.declarative.impl.DeclarativeInlayHintsPassFactory
 import com.intellij.codeInsight.hints.declarative.impl.inlayRenderer.DeclarativeInlayRenderer
@@ -112,6 +115,63 @@ class SummaryParentOverrideInlayProviderTest : BaseTest() {
 
         // THEN - the note follows the closing brace of a one-liner and the opening brace otherwise
         assertEquals(withExpectedInlays, rendered)
+    }
+
+    @Test
+    fun inlay_overridingMethodWithLeadingNullCheck_noFoldStartsAtBraceNoteAnchor() {
+        // GIVEN - overriding methods whose first statement is a null check that folds into `@NonNull`
+        assignState(state::lombokNonNull)
+        MethodCallFactory.initialize(TestDynamicDataProvider())
+        @Language("JAVA")
+        val source = """
+            import java.util.Objects;
+            import static java.util.Objects.requireNonNull;
+
+            interface Shop {
+                void open(String name);
+                void close(String name);
+                void sell(String name);
+                void buy(String name);
+            }
+
+            class Market implements Shop {
+                @Override
+                public void open(String name) {
+                    Objects.requireNonNull(name);
+                    System.out.println(name);
+                }
+
+                @Override
+                public void close(String name) {
+                    requireNonNull(name, "name");
+                    System.out.println(name);
+                }
+
+                @Override
+                public void sell(String name) {
+                    if (name == null) throw new NullPointerException("name");
+                    System.out.println(name);
+                }
+
+                @Override
+                public void buy(String name) {
+                    requireNonNull(name);
+                }
+            }
+        """.trimIndent()
+
+        // WHEN - the file is folded
+        val bracesEnd = Regex("""\)\s*\{""").findAll(source).map { match -> match.range.last + 1 }.toSet()
+        runInEdtAndWait { fixture.configureByText("Market.java", source) }
+        runInEdtAndWait { EditorTestUtil.buildInitialFoldingsInBackground(fixture.editor) }
+        val foldStarts = runInEdtAndGet {
+            fixture.editor.foldingModel.allFoldRegions.filter { region -> region.group != null }
+                .map { region -> region.startOffset }
+        }
+
+        // THEN - the null checks are folded, and no fold starts where the brace note is anchored
+        assertTrue(foldStarts.isNotEmpty())
+        assertTrue(foldStarts.none { start -> start in bracesEnd }, "fold at a brace end: $foldStarts vs $bracesEnd")
     }
 
     @Test
