@@ -72,13 +72,13 @@ public class LogBrackets {
         }
 
         // 6. String with formatted
-        System.out.println("Debug message with 1 parameter - Name: $name".formatted());
-        System.out.println("Trace message - Name: ${data.name}, log:${logPrintfStyle(data)}    $".formatted());
-        System.out.println("Warning message with three parameters - Name: $name, Age: ${data.data.name}, City: $city".formatted());
+        System.out.println("Debug message with 1 parameter - Name: $name");
+        System.out.println("Trace message - Name: ${data.name}, log:${logPrintfStyle(data)}    $");
+        System.out.println("Warning message with three parameters - Name: $name, Age: ${data.data.name}, City: $city");
 
-        System.out.println("Missing 1 parameter - 1: $name, 2: $age, 3: $city, empty: %s".formatted());
-        System.out.println("Missing 2 parameters - 1: $name, 2: $age, empty: %s, empty: %s".formatted());
-        System.out.println("Missing 3 parameters - 1: $name, empty: %s, empty: %s, empty: %s".formatted());
+        System.out.println("Missing 1 parameter - 1: $name, 2: $age, 3: $city, empty: %s");
+        System.out.println("Missing 2 parameters - 1: $name, 2: $age, empty: %s, empty: %s");
+        System.out.println("Missing 3 parameters - 1: $name, empty: %s, empty: %s, empty: %s");
         System.out.println("Missing all parameters - - empty: %s, empty: %s, empty: %s, empty: %s".formatted());
         System.out.println("Additional 1 parameter - Name: $name".formatted( data));
         System.out.println("Additional 2 parameters - Name: $name".formatted( data, logPrintfStyle(data)));

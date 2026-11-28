@@ -11,6 +11,15 @@ interface LogFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun formattedInExpressionFunctionTestData() = testCase.runFoldingTest(
+        foldingState()::getSetExpressionsCollapse,
+        foldingState()::logFolding,
+        foldingState()::expressionFunc,
+        foldingState()::checkExpressionsCollapse,
+        foldingState()::conditionalAsIfElse,
+    )
+
+    @Test
     fun logFoldingTextBlocksTestData() = testCase.runFoldingTest(
         foldingState()::getSetExpressionsCollapse,
         foldingState()::logFolding,
