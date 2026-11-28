@@ -117,6 +117,33 @@ class FoldStateTest : BaseTest() {
         assertTrue(openedByUser.isValid && openedByUser.isExpanded)
     }
 
+    @Test
+    fun foldPass_bringingFoldsAfterTheFirstPassThatHadSome_showsThemCollapsed() {
+        // GIVEN - an opened file whose first plugin folds (only `val`) were collapsed on open
+        assignState(state::globalOn, state::varExpressionsCollapse)
+        openFile()
+        runInEdtAndWait {
+            CodeFoldingManager.getInstance(fixture.project).updateFoldRegions(fixture.editor)
+            PlatformTestUtil.dispatchAllInvocationEventsInIdeEventQueue()
+        }
+        val foldsOfFirstPass = pluginRegions().size
+        assertTrue(foldsOfFirstPass > 0, "the first pass brought no plugin fold")
+
+        // WHEN - a later fold pass brings more plugin folds (the destructuring), as when a fold needs a resolve that
+        // is not ready during the first pass
+        assignState(state::globalOn, state::varExpressionsCollapse, state::destructuring)
+        rebuildMethodCallFactory()
+        runInEdtAndWait {
+            FoldingService.get().refoldOpenEditors()
+            PlatformTestUtil.dispatchAllInvocationEventsInIdeEventQueue()
+        }
+
+        // THEN - the late folds are collapsed as well
+        val pluginRegions = pluginRegions()
+        assertTrue(pluginRegions.size > foldsOfFirstPass, "the later pass brought no new plugin fold")
+        assertTrue(pluginRegions.none(FoldRegion::isExpanded), "folds expanded after the later pass: ${describe(pluginRegions)}")
+    }
+
     private fun openFile() {
         fixture.configureByText("Pairs.java", PAIRS)
     }
