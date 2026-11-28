@@ -79,6 +79,16 @@ interface LombokFoldingTest : FoldingTestSection {
     }
 
     @Test
+    fun lombokSuperBuilderTestData() {
+        testCase.withLombokLibrary {
+            testCase.runFoldingTest(
+                foldingState()::toBuilderCopy,
+                foldingState()::builderNamedArguments,
+            )
+        }
+    }
+
+    @Test
     fun lombokPatternOffTestData() {
         val state = foldingState()
         state.lombokPatternOff = "LombokPa[t]{2}ernOffTestData"
