@@ -62,7 +62,7 @@ public class NullOrEmptyTestData {
         if <fold text='' expand='false'>(</fold><fold text='' expand='false'>StringUtils.isNotEmpty(</fold>name<fold text='.isNotEmpty()' expand='false'>)</fold><fold text='' expand='false'>)</fold> <fold text='{...}' expand='true'>{
             <fold text='' expand='false'>System.out.</fold>println(name);
         }</fold>
-        <fold text='val' expand='false'>boolean</fold> noTitle = <fold text='' expand='false'>StringUtils.isEmpty(</fold><fold text='t' expand='false'>getT</fold>itle<fold text='' expand='false'>()</fold><fold text='.isNullOrEmpty()' expand='false'>)</fold>;
+        <fold text='val' expand='false'>boolean</fold> noTitle = <fold text='' expand='false'>StringUtils.isEmpty(</fold>getTitle()<fold text='.isNullOrEmpty()' expand='false'>)</fold>;
         <fold text='val' expand='false'>boolean</fold> hasItems = <fold text='' expand='false'>CollectionUtils.isNotEmpty(</fold>items<fold text='.isNotEmpty()' expand='false'>)</fold>;
         <fold text='val' expand='false'>boolean</fold> anyItems = <fold text='' expand='false'>!CollectionUtils.isEmpty(</fold>items<fold text='.isNotEmpty()' expand='false'>)</fold>;
         <fold text='val' expand='false'>boolean</fold> noStock = <fold text='' expand='false'>org.apache.commons.collections4.MapUtils.isEmpty(</fold>stock<fold text='.isNullOrEmpty()' expand='false'>)</fold>;
