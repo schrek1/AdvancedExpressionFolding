@@ -3,6 +3,7 @@ package com.intellij.advancedExpressionFolding.processor.lombok
 import com.intellij.advancedExpressionFolding.folding.BaseTest
 import com.intellij.codeInsight.hints.InlayDumpUtil
 import com.intellij.codeInsight.hints.declarative.impl.DeclarativeInlayHintsPassFactory
+import com.intellij.codeInsight.hints.declarative.impl.inlayRenderer.DeclarativeInlayRenderer
 import com.intellij.codeInsight.hints.declarative.impl.util.DeclarativeHintsDumpUtil
 import com.intellij.codeInsight.hints.declarative.impl.views.TextInlayPresentationEntry
 import com.intellij.codeInsight.multiverse.codeInsightContext
@@ -13,6 +14,7 @@ import com.intellij.testFramework.runInEdtAndWait
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -110,6 +112,34 @@ class SummaryParentOverrideInlayProviderTest : BaseTest() {
 
         // THEN - the note follows the closing brace of a one-liner and the opening brace otherwise
         assertEquals(withExpectedInlays, rendered)
+    }
+
+    @Test
+    fun inlay_overridingMethod_noteTooltipCarriesFullText() {
+        // GIVEN - a method overriding an interface method with a long name
+        @Language("JAVA")
+        val source = """
+            interface AuthenticationEntryPointProvider {
+                String label();
+            }
+
+            class Circle implements AuthenticationEntryPointProvider {
+                @Override
+                public String label() { return "circle"; }
+            }
+        """.trimIndent()
+
+        // WHEN - inlay hints are collected for the file
+        renderInlays(source)
+        val tooltips = runInEdtAndGet {
+            fixture.editor.inlayModel.getInlineElementsInRange(0, fixture.editor.document.textLength)
+                .mapNotNull { inlay -> inlay.renderer as? DeclarativeInlayRenderer }
+                .flatMap { renderer -> renderer.toInlayData(false) }
+                .mapNotNull { data -> data.tooltip }
+        }
+
+        // THEN - the brace note carries its own text as tooltip, so a cut note can still be read in full
+        assertTrue(tooltips.contains("// overrides from AuthenticationEntryPointProvider"), tooltips.toString())
     }
 
     @Test

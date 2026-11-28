@@ -40,7 +40,7 @@ class SummaryParentOverrideInlayProvider : InlayHintsProvider {
             }
             clazz.overriddenMethodNotes().forEach { (brace, note) ->
                 val afterBrace = InlineInlayPosition(brace.textRange.endOffset, relatedToPrevious = true)
-                sink.addPresentation(afterBrace, hasBackground = true) {
+                sink.addPresentation(afterBrace, tooltip = note, hasBackground = true) {
                     text(note)
                 }
             }
