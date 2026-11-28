@@ -186,6 +186,13 @@ interface KotlinLanguageFoldingTest : FoldingTestSection {
     fun kotlinConstructorCallTestData() = testCase.runFoldingTest(foldingState()::kotlinConstructorCall)
 
     @Test
+    fun collectionConstructorCapacityTestData() = testCase.runFoldingTest(
+        foldingState()::kotlinConstructorCall,
+        foldingState()::constructorReferenceNotation,
+        foldingState()::getExpressionsCollapse,
+    )
+
+    @Test
     fun guardReturnWhenTestData() = testCase.runFoldingTest(foldingState()::guardReturnWhen)
 
     @Test
