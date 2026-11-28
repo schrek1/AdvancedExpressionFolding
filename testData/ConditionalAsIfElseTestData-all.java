@@ -17,7 +17,7 @@ public class ConditionalAsIfElseTestData {
 
     // B1 - checked value inside a concatenation, `== null` orientation
     String changedSuffixNullFirst(LocalDateTime changedAt) <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
-        </fold><fold text='' expand='true'>return</fold><fold text='if (' expand='true'> </fold>changedAt == null<fold text=')' expand='false'> ?</fold> "" <fold text='else' expand='false'>:</fold> ", changed at <fold text='$' expand='false'>" + </fold>changedAt<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+        </fold><fold text='' expand='true'>return</fold><fold text='if (' expand='true'> </fold>changedAt == null<fold text=')' expand='false'> ?</fold> "" <fold text='else' expand='false'>:</fold> ", changed at <fold text='$' expand='false'>" + </fold>changedAt<fold text='"' expand='true'>;</fold><fold text=' ' expand='true'>
     </fold>}</fold>
 
     // B2 - checked value inside a concatenation, `!= null` orientation

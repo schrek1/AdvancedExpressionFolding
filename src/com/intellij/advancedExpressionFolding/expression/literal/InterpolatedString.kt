@@ -217,6 +217,25 @@ class InterpolatedString(
         return descriptors.toTypedArray()
     }
 
+    /// What a hidden `;` right behind this string must show: the closing quote the string would otherwise borrow
+    /// the `;` for. Null when the string closes itself (an operand fold or the last operand carries the quote).
+    fun closingForHiddenSemicolon(document: Document): String? {
+        val last = operands.last()
+        val end = last.textRange.endOffset
+        if (last.isQuoteCharacter() || last is CharSequenceLiteral || document.textLength <= end + 1) {
+            return null
+        }
+        val lastHost = if (last.supportsFoldRegions(document, this)) {
+            last.buildFoldRegions(last.element, document, this).toList().hostAt(document, end, atStart = false)
+        } else {
+            null
+        }
+        if (lastHost != null || !OVERFLOW_CHARACTERS.contains(document.getText(TextRange.create(end, end + 1)))) {
+            return null
+        }
+        return (if (last.isPlainName()) "" else "}") + "\""
+    }
+
     /// The operand's own fold that starts (or ends) exactly at `offset` and changes its text, the widest one.
     private fun List<FoldingDescriptor>.hostAt(document: Document, offset: Int, atStart: Boolean): FoldingDescriptor? =
         filter { if (atStart) it.range.startOffset == offset else it.range.endOffset == offset }

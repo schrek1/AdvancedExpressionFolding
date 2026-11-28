@@ -71,7 +71,7 @@ public class OverrideHideTestData {
 
         </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
         </fold>public String toString()<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>"Circle with radius: <fold text='$' expand='false'>" + </fold>radius<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>"Circle with radius: <fold text='$' expand='false'>" + </fold>radius<fold text='"' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold></fold><fold text='' expand='false'>
 
         </fold><fold text='' expand='false'><fold text='' expand='true'>@Override</fold><fold text='' expand='true'>
