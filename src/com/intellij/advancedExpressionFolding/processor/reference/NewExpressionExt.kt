@@ -198,6 +198,11 @@ object NewExpressionExt :
     }
 
     fun getConstructorExpression(parent: PsiElement, argument: PsiLiteralExpression, classQualifiedNameNoGenerics: String?): Expression? {
+        // only constructors that wrap their argument read as that literal; `ArrayList(10)` is a capacity
+        val isStringBuilderCapacity = classQualifiedNameNoGenerics == "java.lang.StringBuilder" && argument.value !is String
+        if (classQualifiedNameNoGenerics !in VALUE_WRAPPING_TYPES || isStringBuilderCapacity) {
+            return null
+        }
         val literalExpression = LiteralExpressionExt.getLiteralExpression(argument)
         if (literalExpression is NumberLiteral) {
             return NumberLiteral(parent, parent.textRange, literalExpression.textRange, literalExpression.number, false)
@@ -219,4 +224,17 @@ object NewExpressionExt :
             else -> null
         }
     }
+
+    private val VALUE_WRAPPING_TYPES = setOf(
+        "java.lang.Long",
+        "java.lang.Integer",
+        "java.lang.Float",
+        "java.lang.Double",
+        "java.lang.Short",
+        "java.lang.Byte",
+        "java.math.BigDecimal",
+        "java.math.BigInteger",
+        "java.lang.StringBuilder",
+        "java.lang.String",
+    )
 }
