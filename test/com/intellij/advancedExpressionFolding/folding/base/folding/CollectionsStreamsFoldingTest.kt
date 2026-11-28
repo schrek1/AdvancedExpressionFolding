@@ -12,6 +12,14 @@ interface CollectionsStreamsFoldingTest : FoldingTestSection {
     )
 
     @Test
+    fun templateInExpressionFunctionTestData() = testCase.runFoldingTest(
+        foldingState()::concatenationExpressionsCollapse,
+        foldingState()::expressionFunc,
+        foldingState()::checkExpressionsCollapse,
+        foldingState()::conditionalAsIfElse,
+    )
+
+    @Test
     fun optionalTestData() = testCase.runFoldingTest(
         foldingState()::concatenationExpressionsCollapse,
         foldingState()::optional,

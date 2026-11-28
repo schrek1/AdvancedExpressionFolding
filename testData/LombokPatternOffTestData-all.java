@@ -133,7 +133,7 @@ public class LombokPatternOffTestData {
             </fold>public String toString() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
                 </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>"ToStringPartial{<fold text='' expand='false'>" +
                         "</fold>data=<fold text='$' expand='false'>" + </fold>data<fold text='${' expand='false'> +
-                        </fold>'}'<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+                        </fold>'}'<fold text='}"' expand='true'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
         }</fold>
 
@@ -146,7 +146,7 @@ public class LombokPatternOffTestData {
             </fold>public String toString() <fold text='{...}' expand='true'>{<fold text=' ' expand='true'>
                 </fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>"ToStringPartial{<fold text='' expand='false'>" +
                         "</fold>data=<fold text='$' expand='false'>" + </fold>data<fold text='${' expand='false'> +
-                        </fold>'}'<fold text='' expand='true'>;</fold><fold text=' ' expand='true'>
+                        </fold>'}'<fold text='}"' expand='true'>;</fold><fold text=' ' expand='true'>
             </fold>}</fold>
         }</fold>
     }</fold>

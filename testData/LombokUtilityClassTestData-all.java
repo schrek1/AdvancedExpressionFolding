@@ -74,7 +74,7 @@ public class LombokUtilityClassTestData {
         </fold>}</fold>
 
         public static String greet(String name)<fold text=' { ' expand='false'> {<fold text=' ' expand='true'>
-            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>"Hello <fold text='$' expand='false'>" + </fold>name<fold text='' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
+            </fold></fold><fold text='' expand='true'>return</fold><fold text='' expand='true'> </fold>"Hello <fold text='$' expand='false'>" + </fold>name<fold text='"' expand='true'>;</fold><fold text=' ' expand='true'><fold text=' }' expand='false'>
         </fold>}</fold>
     }</fold>
 

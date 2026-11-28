@@ -3,6 +3,7 @@ package com.intellij.advancedExpressionFolding.processor.language.kotlin
 import com.intellij.advancedExpressionFolding.expression.Expression
 import com.intellij.advancedExpressionFolding.expression.controlflow.ElvisExpression
 import com.intellij.advancedExpressionFolding.expression.controlflow.IfElseConditionalExpression
+import com.intellij.advancedExpressionFolding.expression.literal.InterpolatedString
 import com.intellij.advancedExpressionFolding.processor.*
 import com.intellij.advancedExpressionFolding.processor.core.BaseExtension
 import com.intellij.advancedExpressionFolding.processor.controlflow.IfExt
@@ -85,6 +86,7 @@ object SingleExpressionFunctionExt : BaseExtension() {
             }
         )
         val semicolonText = (returnedTernary as? ElvisExpression)?.tailBehindValue(document)
+            ?: closingQuoteBehindValue(statement.returnValue, document)
         exprList.add(preBracketSpace.expr(if (expressionFuncEquals) "" else " "))
         method.body?.let { exprList.addEqualsInsteadOfBraces(it) }
         exprList.add(returnPrevSpace?.expr(" "))
@@ -95,6 +97,16 @@ object SingleExpressionFunctionExt : BaseExtension() {
             method.foldForLiteral(exprList)
         }
         return exprList.exprWrap(method, group())
+    }
+
+    /** The `;` hidden here is the character a template at the end of the value takes for its closing quote. */
+    private fun closingQuoteBehindValue(value: PsiExpression?, document: Document): String? {
+        var last = value
+        while (last is PsiConditionalExpression) {
+            last = last.elseExpression
+        }
+        return last?.let { getAnyExpression(it, document) }.asInstance<InterpolatedString>()
+            ?.closingForHiddenSemicolon(document)
     }
 
     private fun MutableList<Expression?>.addEqualsInsteadOfBraces(body: PsiCodeBlock) {
